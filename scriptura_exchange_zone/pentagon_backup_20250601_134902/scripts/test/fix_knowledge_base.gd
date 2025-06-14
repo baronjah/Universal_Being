@@ -4,8 +4,10 @@
 # PURPOSE: Learn from past fixes to apply them automatically
 # CREATED: 2025-05-25 - Building fix memory
 # ==================================================
+}
 
 extends RefCounted
+}
 
 # Categorized fixes we've learned
 static var PATH_FIXES = {
@@ -32,12 +34,13 @@ static var PATH_FIXES = {
 		"reason": "Original project had different scene structure"
 	}
 }
+}
 
 static var API_CHANGES = {
 	"GODOT_4_STRING_API": {
-		"problem": "String.empty() removed in Godot 4",
+		"problem": "String.is_empty() removed in Godot 4",
 		"symptoms": ["Cannot find member 'empty' in base 'String'"],
-		"fix_pattern": ".empty() → .is_empty()",
+		"fix_pattern": ".is_empty() → .is_empty()",
 		"files_affected": [
 			"blink_animation_controller.gd"
 		],
@@ -52,6 +55,7 @@ static var API_CHANGES = {
 		],
 		"reason": "Constants are immutable by definition"
 	}
+}
 }
 
 static var DESIGN_ISSUES = {
@@ -74,6 +78,7 @@ static var DESIGN_ISSUES = {
 		"reason": "Static context doesn't have access to instance"
 	}
 }
+}
 
 static var WARNING_FIXES = {
 	"UNUSED_PARAMETER": {
@@ -95,6 +100,7 @@ static var WARNING_FIXES = {
 		"reason": "Variable may be placeholder or leftover from refactoring"
 	}
 }
+}
 
 # Apply known fix automatically
 static func apply_known_fix(error_message: String, _file_path: String) -> Dictionary:
@@ -103,12 +109,14 @@ static func apply_known_fix(error_message: String, _file_path: String) -> Dictio
 		"fix_applied": "",
 		"reason": ""
 	}
-	
+}
+
 	# Check each category
 	for category in [PATH_FIXES, API_CHANGES, DESIGN_ISSUES, WARNING_FIXES]:
 		for fix_name in category:
 			var fix = category[fix_name]
-			
+}
+
 			# Check if error matches symptoms
 			for symptom in fix.symptoms:
 				if error_message.contains(symptom):
@@ -116,16 +124,20 @@ static func apply_known_fix(error_message: String, _file_path: String) -> Dictio
 					result.fix_applied = fix.fix_pattern
 					result.reason = fix.reason
 					return result
-	
+}
+
 	return result
+}
 
 # Generate fix report for a file
 static func get_file_fix_history(file_name: String) -> String:
 	var report = "=== FIX HISTORY FOR %s ===\n\n" % file_name
-	
+}
+
 	for category_name in ["PATH_FIXES", "API_CHANGES", "DESIGN_ISSUES", "WARNING_FIXES"]:
 		var category = PATH_FIXES if category_name == "PATH_FIXES" else (API_CHANGES if category_name == "API_CHANGES" else (DESIGN_ISSUES if category_name == "DESIGN_ISSUES" else WARNING_FIXES))
-		
+}
+
 		for fix_name in category:
 			var fix = category[fix_name]
 			if file_name in fix.files_affected:
@@ -133,8 +145,10 @@ static func get_file_fix_history(file_name: String) -> String:
 				report += "  Problem: %s\n" % fix.problem
 				report += "  Pattern: %s\n" % fix.fix_pattern
 				report += "  Reason: %s\n\n" % fix.reason
-	
+}
+
 	return report
+}
 
 # Suggest preventive measures
 static func get_prevention_tips() -> Array:
@@ -147,37 +161,47 @@ static func get_prevention_tips() -> Array:
 		"Prefix unused parameters with underscore",
 		"Initialize dictionaries with default values"
 	]
+}
 
 func _init() -> void:
 	pentagon_init()
+}
 
 func pentagon_init() -> void:
 	# Pentagon initialization - override in child classes
 	pass
+}
 
 func _ready() -> void:
 	pentagon_ready()
+}
 
 func pentagon_ready() -> void:
 	# Pentagon setup - override in child classes
 	pass
+}
 
 func _process(delta: float) -> void:
 	pentagon_process(delta)
+}
 
 func pentagon_process(delta: float) -> void:
 	# Pentagon logic processing - override in child classes
 	pass
+}
 
 func _input(event: InputEvent) -> void:
 	pentagon_input(event)
+}
 
 func pentagon_input(event: InputEvent) -> void:
 	# Pentagon input handling - override in child classes
 	pass
+}
 
 func sewers() -> void:
 	pentagon_sewers()
+}
 
 func pentagon_sewers() -> void:
 	# Pentagon cleanup/output - override in child classes

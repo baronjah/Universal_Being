@@ -3,12 +3,12 @@
 importer="glsl"
 type="RDShaderFile"
 uid="uid://mww5gnlm4wts"
-path="res://.godot/imported/mipmap_generator_rgbaf_3d.glsl-3e17e37831b0ee72153f4da622ec9368.res"
+path="res://.godot/imported/mipmap_generator_rgbaf_3d.glsl-241eab27a1b71aac23d6a02d26498471.res"
 
 [deps]
 
-source_file="res://addons/marching_cubes_viewer/addons/marching_cubes_viewer/shaders/mipmap_generator_rgbaf_3d.glsl"
-dest_files=["res://.godot/imported/mipmap_generator_rgbaf_3d.glsl-3e17e37831b0ee72153f4da622ec9368.res"]
+source_file="res://scriptura_exchange_zone/Godot_Eden/Eden_May/the_palace_pf/addons/marching_cubes_viewer/addons/marching_cubes_viewer/shaders/mipmap_generator_rgbaf_3d.glsl"
+dest_files=["res://.godot/imported/mipmap_generator_rgbaf_3d.glsl-241eab27a1b71aac23d6a02d26498471.res"]
 
 [params]
 

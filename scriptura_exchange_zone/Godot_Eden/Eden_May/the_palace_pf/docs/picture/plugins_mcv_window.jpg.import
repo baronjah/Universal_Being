@@ -3,21 +3,23 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://diyacl5c6gqte"
-path="res://.godot/imported/plugins_mcv_window.jpg-3d7eda91ba694aa033241b226eb1f7aa.ctex"
+path="res://.godot/imported/plugins_mcv_window.jpg-2b5e2d5c86a296a5070eb4b3142fdfcb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://docs/picture/plugins_mcv_window.jpg"
-dest_files=["res://.godot/imported/plugins_mcv_window.jpg-3d7eda91ba694aa033241b226eb1f7aa.ctex"]
+source_file="res://scriptura_exchange_zone/Godot_Eden/Eden_May/the_palace_pf/docs/picture/plugins_mcv_window.jpg"
+dest_files=["res://.godot/imported/plugins_mcv_window.jpg-2b5e2d5c86a296a5070eb4b3142fdfcb.ctex"]
 
 [params]
 
 compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0

@@ -3,12 +3,12 @@
 importer="image"
 type="Image"
 uid="uid://bvu2gnj8fv2kw"
-path="res://.godot/imported/export.svg-d2d18132258a7a219ec1af1f0316c91c.image"
+path="res://.godot/imported/export.svg-25aa3a80c54962de8f227eee44cb377d.image"
 
 [deps]
 
-source_file="res://addons/script-ide/icon/export.svg"
-dest_files=["res://.godot/imported/export.svg-d2d18132258a7a219ec1af1f0316c91c.image"]
+source_file="res://scriptura_exchange_zone/Godot_Eden/Eden_May/the_palace_pf/addons/script-ide/icon/export.svg"
+dest_files=["res://.godot/imported/export.svg-25aa3a80c54962de8f227eee44cb377d.image"]
 
 [params]
 

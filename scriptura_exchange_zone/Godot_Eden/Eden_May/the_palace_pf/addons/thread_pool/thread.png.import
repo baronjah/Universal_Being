@@ -3,21 +3,23 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ci4bfkgri5b0p"
-path="res://.godot/imported/thread.png-a8c2a33aab16e470fb95550c56d782fe.ctex"
+path="res://.godot/imported/thread.png-231a0be53bad3fb9713e8c835a9c2214.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/thread_pool/thread.png"
-dest_files=["res://.godot/imported/thread.png-a8c2a33aab16e470fb95550c56d782fe.ctex"]
+source_file="res://scriptura_exchange_zone/Godot_Eden/Eden_May/the_palace_pf/addons/thread_pool/thread.png"
+dest_files=["res://.godot/imported/thread.png-231a0be53bad3fb9713e8c835a9c2214.ctex"]
 
 [params]
 
 compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.0
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0

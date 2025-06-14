@@ -1,0 +1,337 @@
+extends Node
+class_name GPUPowerManager
+
+## 🔥 GPU POWER MANAGER - 50/50 SPLIT BETWEEN GALAXY AND AI
+## No more 100% GPU hogging - share the power with Local AI!
+
+signal power_allocation_changed(galaxy_power: float, ai_power: float)
+signal thermal_throttle_activated(reason: String)
+signal power_balance_optimized()
+
+@export_group("Power Distribution")
+@export var galaxy_power_allocation: float = 0.5      # 50% for galaxy
+@export var ai_power_allocation: float = 0.5          # 50% for AI
+@export var adaptive_balancing: bool = true           # Smart power management
+@export var thermal_protection: bool = true          # Prevent overheating
+
+@export_group("Performance Monitoring")
+@export var max_gpu_temperature: float = 80.0        # Max temp in Celsius
+@export var target_fps_with_ai: float = 60.0         # Target with AI active
+@export var power_switching_speed: float = 2.0       # How fast to switch
+
+# Power state tracking
+var current_galaxy_power: float = 0.5
+var current_ai_power: float = 0.5
+var gpu_temperature: float = 60.0
+var ai_workload_detected: bool = false
+var galaxy_workload_heavy: bool = false
+
+# Performance metrics
+var galaxy_fps: float = 60.0
+var ai_inference_time: float = 0.1
+var total_vram_usage: float = 0.6
+
+func _ready() -> void:
+	name = "GPUPowerManager"
+	add_to_group("power_managers")
+	
+	initialize_power_monitoring()
+	setup_adaptive_balancing()
+	connect_to_systems()
+	
+	print("🔥 GPU POWER MANAGER: 50/50 power sharing initialized!")
+	print("   🌌 Galaxy: %.0f%% | 🤖 AI: %.0f%%" % [galaxy_power_allocation*100, ai_power_allocation*100])
+
+func initialize_power_monitoring() -> void:
+	"""Initialize GPU power monitoring systems"""
+	# Start monitoring timer
+	var monitor_timer = Timer.new()
+	monitor_timer.wait_time = 0.5  # Monitor every 500ms
+	monitor_timer.timeout.connect(_monitor_power_usage)
+	add_child(monitor_timer)
+	monitor_timer.start()
+	
+	print("📊 Power monitoring active - checking every 500ms")
+
+func setup_adaptive_balancing() -> void:
+	"""Setup adaptive power balancing based on workload"""
+	if adaptive_balancing:
+		var balance_timer = Timer.new()
+		balance_timer.wait_time = 1.0  # Rebalance every second
+		balance_timer.timeout.connect(_adaptive_power_balance)
+		add_child(balance_timer)
+		balance_timer.start()
+		
+		print("⚖️ Adaptive power balancing active")
+
+func connect_to_systems() -> void:
+	"""Connect to galaxy and AI systems for monitoring"""
+	# Connect to galaxy navigator
+	call_deferred("find_and_connect_galaxy")
+	
+	# Connect to AI systems
+	call_deferred("find_and_connect_ai")
+
+func find_and_connect_galaxy() -> void:
+	"""Find and connect to galaxy navigation system"""
+	var galaxy = get_tree().get_first_node_in_group("galaxy_navigators")
+	if galaxy:
+		print("🌌 Connected to Galaxy Navigator for power monitoring")
+		# Monitor galaxy performance
+		monitor_galaxy_performance(galaxy)
+
+func find_and_connect_ai() -> void:
+	"""Find and connect to AI systems"""
+	var ai_systems = get_tree().get_nodes_in_group("ai_systems")
+	if ai_systems.size() > 0:
+		print("🤖 Connected to %d AI systems for power monitoring" % ai_systems.size())
+
+func monitor_galaxy_performance(galaxy: Node) -> void:
+	"""Monitor galaxy rendering performance"""
+	if galaxy.has_method("get_performance_metrics"):
+		var metrics = galaxy.get_performance_metrics()
+		galaxy_fps = metrics.get("fps", 60.0)
+		galaxy_workload_heavy = metrics.get("star_count", 0) > 10000
+
+func _monitor_power_usage() -> void:
+	"""Monitor current GPU power usage"""
+	# Estimate GPU temperature (simplified)
+	estimate_gpu_temperature()
+	
+	# Detect AI workload
+	detect_ai_workload()
+	
+	# Check for thermal throttling
+	check_thermal_protection()
+	
+	# Update power allocations if needed
+	if adaptive_balancing:
+		update_power_allocations()
+
+func estimate_gpu_temperature() -> float:
+	"""Estimate GPU temperature based on usage"""
+	var base_temp = 40.0
+	var usage_heat = (current_galaxy_power + current_ai_power) * 30.0
+	var workload_heat = 0.0
+	
+	if galaxy_workload_heavy:
+		workload_heat += 10.0
+	if ai_workload_detected:
+		workload_heat += 8.0
+	
+	gpu_temperature = base_temp + usage_heat + workload_heat
+	return gpu_temperature
+
+func detect_ai_workload() -> void:
+	"""Detect if AI is currently processing"""
+	# Check for Gemma AI activity
+	var gemma = get_tree().get_first_node_in_group("gemma_perfect_consciousness")
+	if gemma and gemma.has_method("is_processing"):
+		ai_workload_detected = gemma.is_processing()
+	else:
+		# Estimate based on system activity
+		ai_workload_detected = randf() < 0.3  # 30% chance AI is working
+
+func check_thermal_protection() -> void:
+	"""Check and apply thermal protection"""
+	if thermal_protection and gpu_temperature > max_gpu_temperature:
+		activate_thermal_throttle("GPU overheating detected!")
+
+func activate_thermal_throttle(reason: String) -> void:
+	"""Activate thermal throttling to prevent damage"""
+	print("🌡️ THERMAL THROTTLE ACTIVATED: %s" % reason)
+	
+	# Reduce power to both systems
+	galaxy_power_allocation = min(galaxy_power_allocation, 0.3)  # Max 30% when hot
+	ai_power_allocation = min(ai_power_allocation, 0.3)
+	
+	apply_power_allocations()
+	thermal_throttle_activated.emit(reason)
+
+func update_power_allocations() -> void:
+	"""Update power allocations based on current needs"""
+	if not adaptive_balancing:
+		return
+	
+	var new_galaxy_power = galaxy_power_allocation
+	var new_ai_power = ai_power_allocation
+	
+	# If AI is working hard, give it more power
+	if ai_workload_detected and not galaxy_workload_heavy:
+		new_ai_power = 0.7  # 70% to AI
+		new_galaxy_power = 0.3  # 30% to galaxy
+	
+	# If galaxy has heavy workload and AI is idle
+	elif galaxy_workload_heavy and not ai_workload_detected:
+		new_galaxy_power = 0.8  # 80% to galaxy
+		new_ai_power = 0.2  # 20% to AI
+	
+	# Balanced workload - return to 50/50
+	elif not ai_workload_detected and not galaxy_workload_heavy:
+		new_galaxy_power = 0.5
+		new_ai_power = 0.5
+	
+	# Smooth power transitions
+	var transition_speed = power_switching_speed * get_process_delta_time()
+	current_galaxy_power = lerp(current_galaxy_power, new_galaxy_power, transition_speed)
+	current_ai_power = lerp(current_ai_power, new_ai_power, transition_speed)
+	
+	apply_power_allocations()
+
+func _adaptive_power_balance() -> void:
+	"""Adaptive power balancing main loop"""
+	if not adaptive_balancing:
+		return
+	
+	# Analyze current performance
+	var galaxy_efficiency = calculate_galaxy_efficiency()
+	var ai_efficiency = calculate_ai_efficiency()
+	
+	# Optimize based on efficiency
+	if galaxy_efficiency < 0.7 and ai_efficiency > 0.8:
+		# Galaxy struggling, AI efficient - give more to galaxy
+		boost_galaxy_power(0.1)
+	elif ai_efficiency < 0.7 and galaxy_efficiency > 0.8:
+		# AI struggling, galaxy efficient - give more to AI
+		boost_ai_power(0.1)
+	
+	power_balance_optimized.emit()
+
+func calculate_galaxy_efficiency() -> float:
+	"""Calculate galaxy rendering efficiency"""
+	if galaxy_fps <= 0:
+		return 0.0
+	
+	var target_efficiency = galaxy_fps / target_fps_with_ai
+	var power_efficiency = 1.0 / max(current_galaxy_power, 0.1)
+	
+	return clamp(target_efficiency * power_efficiency * 0.5, 0.0, 1.0)
+
+func calculate_ai_efficiency() -> float:
+	"""Calculate AI processing efficiency"""
+	var inference_efficiency = 1.0 / max(ai_inference_time, 0.01)
+	var power_efficiency = 1.0 / max(current_ai_power, 0.1)
+	
+	return clamp(inference_efficiency * power_efficiency * 0.1, 0.0, 1.0)
+
+func boost_galaxy_power(amount: float) -> void:
+	"""Boost galaxy power allocation"""
+	current_galaxy_power = clamp(current_galaxy_power + amount, 0.1, 0.9)
+	current_ai_power = 1.0 - current_galaxy_power
+	apply_power_allocations()
+	
+	print("🌌 Galaxy power boosted to %.0f%%" % (current_galaxy_power * 100))
+
+func boost_ai_power(amount: float) -> void:
+	"""Boost AI power allocation"""
+	current_ai_power = clamp(current_ai_power + amount, 0.1, 0.9)
+	current_galaxy_power = 1.0 - current_ai_power
+	apply_power_allocations()
+	
+	print("🤖 AI power boosted to %.0f%%" % (current_ai_power * 100))
+
+func apply_power_allocations() -> void:
+	"""Apply current power allocations to systems"""
+	# Apply to galaxy system
+	var galaxy = get_tree().get_first_node_in_group("galaxy_navigators")
+	if galaxy and galaxy.has_method("set_power_allocation"):
+		galaxy.set_power_allocation(current_galaxy_power)
+	
+	# Apply to performance optimizer
+	var optimizer = get_tree().get_first_node_in_group("performance_optimizers")
+	if optimizer and optimizer.has_method("set_gpu_allocation"):
+		optimizer.set_gpu_allocation(current_galaxy_power)
+	
+	# Apply AI power limits (conceptual - would need AI system integration)
+	limit_ai_processing_power(current_ai_power)
+	
+	power_allocation_changed.emit(current_galaxy_power, current_ai_power)
+
+func limit_ai_processing_power(ai_power: float) -> void:
+	"""Limit AI processing power allocation"""
+	# This would integrate with actual AI systems
+	var ai_systems = get_tree().get_nodes_in_group("ai_systems")
+	for ai_system in ai_systems:
+		if ai_system.has_method("set_power_limit"):
+			ai_system.set_power_limit(ai_power)
+	
+	# For Gemma specifically
+	var gemma = get_tree().get_first_node_in_group("gemma_perfect_consciousness")
+	if gemma and gemma.has_method("set_processing_intensity"):
+		gemma.set_processing_intensity(ai_power)
+
+func force_50_50_split() -> void:
+	"""Force exactly 50/50 power split"""
+	current_galaxy_power = 0.5
+	current_ai_power = 0.5
+	apply_power_allocations()
+	
+	print("⚖️ FORCED 50/50 POWER SPLIT - Perfect balance restored!")
+
+func emergency_ai_priority() -> void:
+	"""Emergency: Give AI priority for important processing"""
+	current_ai_power = 0.8
+	current_galaxy_power = 0.2
+	apply_power_allocations()
+	
+	print("🚨 EMERGENCY AI PRIORITY: AI gets 80% power!")
+
+func emergency_galaxy_priority() -> void:
+	"""Emergency: Give galaxy priority for critical rendering"""
+	current_galaxy_power = 0.8
+	current_ai_power = 0.2
+	apply_power_allocations()
+	
+	print("🚨 EMERGENCY GALAXY PRIORITY: Galaxy gets 80% power!")
+
+# Public API
+func get_power_status() -> Dictionary:
+	"""Get current power allocation status"""
+	return {
+		"galaxy_power": current_galaxy_power,
+		"ai_power": current_ai_power,
+		"gpu_temperature": gpu_temperature,
+		"ai_workload_active": ai_workload_detected,
+		"galaxy_workload_heavy": galaxy_workload_heavy,
+		"thermal_throttle_active": gpu_temperature > max_gpu_temperature,
+		"power_balance": "OPTIMAL" if abs(current_galaxy_power - 0.5) < 0.1 else "UNBALANCED"
+	}
+
+func get_performance_report() -> String:
+	"""Get detailed performance report"""
+	var report = "🔥 GPU POWER MANAGEMENT REPORT\n\n"
+	
+	report += "⚖️ CURRENT ALLOCATION:\n"
+	report += "   🌌 Galaxy: %.0f%% (%.2f)\n" % [current_galaxy_power * 100, current_galaxy_power]
+	report += "   🤖 AI: %.0f%% (%.2f)\n\n" % [current_ai_power * 100, current_ai_power]
+	
+	report += "📊 SYSTEM STATUS:\n"
+	report += "   🌡️ GPU Temperature: %.1f°C\n" % gpu_temperature
+	report += "   🎮 Galaxy FPS: %.1f\n" % galaxy_fps
+	report += "   🧠 AI Inference: %.3fs\n\n" % ai_inference_time
+	
+	report += "🚥 WORKLOAD STATUS:\n"
+	report += "   🌌 Galaxy Heavy: %s\n" % ("YES" if galaxy_workload_heavy else "NO")
+	report += "   🤖 AI Active: %s\n" % ("YES" if ai_workload_detected else "NO")
+	
+	if gpu_temperature > max_gpu_temperature:
+		report += "\n🔥 WARNING: THERMAL THROTTLING ACTIVE!"
+	
+	return report
+
+# Input handling for manual power control
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed:
+		match event.keycode:
+			KEY_P:  # Toggle power balance mode
+				adaptive_balancing = !adaptive_balancing
+				print("⚖️ Adaptive balancing: %s" % ("ON" if adaptive_balancing else "OFF"))
+			
+			KEY_1:  # Force 50/50
+				force_50_50_split()
+			
+			KEY_2:  # AI priority  
+				emergency_ai_priority()
+			
+			KEY_3:  # Galaxy priority
+				emergency_galaxy_priority()

@@ -3,6 +3,7 @@
 # Created: May 31, 2025, 23:28 CEST
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
+}
 
 #
 extends UniversalBeingBase
@@ -25,7 +26,7 @@ class_name JSHSceneTreeSystem
 #   `Y888P                            
 #
 # JSH Scene Tree System
-
+}
 
 signal branch_added(branch_path, branch_data)
 signal branch_removed(branch_path)
@@ -33,20 +34,25 @@ signal branch_status_changed(branch_path, new_status)
 # TODO: Implement branch moving functionality
 # signal branch_moved(old_path, new_path)
 signal tree_updated()
+}
 
 # Debug control
 var debug_verbose: bool = false  # Set to true to see all node updates
+}
 
 # Main tree storage
 var scene_tree_jsh = {}
 var tree_mutex = Mutex.new()
+}
 
 # Cached branches for quick reuse
 var cached_jsh_tree_branches = {}
 var cached_tree_mutex = Mutex.new()
+}
 
 # Node path cache for handling removed nodes
 var _node_path_cache = {}
+}
 
 # Tree visualization
 var tree_data = {
@@ -54,6 +60,7 @@ var tree_data = {
 	"snapshot": "",
 	"timestamp": 0,
 	"node_count": 0
+}
 }
 
 # Status symbols for visualization
@@ -63,15 +70,18 @@ var status_symbol = {
 	"disabled": "✗",
 	"cached": "◎"
 }
+}
 
 # Reference to main node
 var main_ref
+}
 
 # Node type to script mapping
 var node_type_scripts = {
 	# Updated paths to actual location
 	"datapoint": preload("res://scripts/jsh_framework/core/data_point.gd"),
 	"container": preload("res://scripts/jsh_framework/core/container.gd")
+}
 }
 
 #    oooo  .oooooo..o ooooo   ooooo 
@@ -82,6 +92,7 @@ var node_type_scripts = {
 #     888 oo     .d8P  888     888  
 # .o. 88P 8""88888P'  o888o   o888o 
 # `Y888P                            
+}
 
 #class_name TreeBlueprints #TreeBlueprints.SCENE_TREE_BLUEPRINT BRANCH_BLUEPRINT
 const SCENE_TREE_BLUEPRINT = {
@@ -128,28 +139,34 @@ const JSH_TREE = {
 		"creation_order": 0
 	}
 }
+}
 
 #
 func _init() -> void:
 	pentagon_init()
+}
 
 func pentagon_init() -> void:
 	super.pentagon_init()
 	name = "JSH_scene_tree_system"
-	
+}
+
 func _ready() -> void:
 	pentagon_ready()
+}
 
 func pentagon_ready() -> void:
 	super.pentagon_ready()
 	# Get reference to main scene - for ragdoll game this is the current scene
 	main_ref = get_tree().current_scene if get_tree() else null
-	
+}
+
 	if not main_ref:
 		print("[JSHSceneTree] Warning: No main scene found, deferring initialization")
 		await get_tree().process_frame
 		main_ref = get_tree().current_scene
-	
+}
+
 	# Initialize the scene tree
 	if main_ref:
 		start_up_scene_tree()
@@ -157,10 +174,11 @@ func pentagon_ready() -> void:
 		_setup_scene_tree_monitoring()
 	else:
 		print("[JSHSceneTree] Error: Could not find main scene")
-	
+}
+
 	# Debug info
 	print("JSH Scene Tree System initialized")
-
+}
 
 #    oooo  .oooooo..o ooooo   ooooo 
 #    `888 d8P'    `Y8 `888'   `888' 
@@ -174,24 +192,29 @@ func pentagon_ready() -> void:
 ####################
 # Tree Initialization
 ####################
-
+}
 
 func _process(delta: float) -> void:
 	pentagon_process(delta)
+}
 
 func pentagon_process(delta: float) -> void:
 	# Pentagon logic processing - override in child classes
 	pass
+}
 
 func _input(event: InputEvent) -> void:
 	pentagon_input(event)
+}
 
 func pentagon_input(event: InputEvent) -> void:
 	# Pentagon input handling - override in child classes
 	pass
+}
 
 func sewers() -> void:
 	pentagon_sewers()
+}
 
 func pentagon_sewers() -> void:
 	# Pentagon cleanup/output - override in child classes
@@ -208,30 +231,36 @@ func start_up_scene_tree():
 	scene_tree_jsh["main_root"]["status"] = "active"
 	tree_mutex.unlock()
 	emit_signal("tree_updated")
+}
 
 ####################
 # Branch Management
 ####################
+}
 
 func add_branch(branch_path: String, branch_data: Dictionary) -> bool:
 	tree_mutex.lock()
-	
+}
+
 	var path_parts = branch_path.split("/")
 	var current = scene_tree_jsh["main_root"]["branches"]
 	var success = false
 	var current_path = ""
-	
+}
+
 	for i in range(path_parts.size()):
 		var part = path_parts[i]
 		current_path = current_path + "/" + part if current_path else part
-		
+}
+
 		if i == path_parts.size() - 1:
 			# This is the branch we want to add
 			if !current.has(part):
 				current[part] = branch_data
 				success = true
 			break
-			
+}
+
 		if !current.has(part):
 			# Create intermediate branches if needed
 			var new_branch = TreeBlueprints.BRANCH_BLUEPRINT.duplicate(true)
@@ -240,36 +269,45 @@ func add_branch(branch_path: String, branch_data: Dictionary) -> bool:
 			new_branch["jsh_type"] = "container"
 			new_branch["status"] = "pending"
 			current[part] = new_branch
-		
+}
+
 		# Move deeper into the tree
 		if !current[part].has("children"):
 			current[part]["children"] = {}
 		current = current[part]["children"]
-	
+}
+
 	tree_mutex.unlock()
-	
+}
+
 	if success:
 		emit_signal("branch_added", branch_path, branch_data)
 		emit_signal("tree_updated")
-	
+}
+
 	return success
+}
 
 func remove_branch(branch_path: String) -> bool:
 	tree_mutex.lock()
-	
+}
+
 	var path_parts = branch_path.split("/")
 	var parent_parts = path_parts.slice(0, -1)
 	var branch_name = path_parts[-1]
-	
+}
+
 	var current = scene_tree_jsh["main_root"]["branches"]
 	var success = false
-	
+}
+
 	# Navigate to parent branch
 	for part in parent_parts:
 		if !current.has(part):
 			tree_mutex.unlock()
 			return false
-			
+}
+
 		if part != parent_parts[-1]:
 			if !current[part].has("children"):
 				tree_mutex.unlock()
@@ -280,221 +318,286 @@ func remove_branch(branch_path: String) -> bool:
 				tree_mutex.unlock()
 				return false
 			current = current[part]["children"]
-	
+}
+
 	# Remove the branch
 	if current.has(branch_name):
 		cache_branch_data(branch_path, current[branch_name])
 		success = current.erase(branch_name)
-	
+}
+
 	tree_mutex.unlock()
-	
+}
+
 	if success:
 		emit_signal("branch_removed", branch_path)
 		emit_signal("tree_updated")
-	
+}
+
 	return success
+}
 
 func get_branch(branch_path: String) -> Dictionary:
 	tree_mutex.lock()
-	
+}
+
 	var path_parts = branch_path.split("/")
 	var current = scene_tree_jsh["main_root"]["branches"]
 	var result = {}
-	
+}
+
 	for i in range(path_parts.size()):
 		var part = path_parts[i]
-		
+}
+
 		if !current.has(part):
 			tree_mutex.unlock()
 			return {}
-			
+}
+
 		if i == path_parts.size() - 1:
 			result = current[part].duplicate(true)
 			break
-			
+}
+
 		if !current[part].has("children"):
 			tree_mutex.unlock()
 			return {}
-			
+}
+
 		current = current[part]["children"]
-	
+}
+
 	tree_mutex.unlock()
 	return result
+}
 
 ####################
 # Status Management
 ####################
+}
 
 func set_branch_status(branch_path: String, status: String) -> bool:
 	tree_mutex.lock()
-	
+}
+
 	var path_parts = branch_path.split("/")
 	var current = scene_tree_jsh["main_root"]["branches"]
 	var success = false
-	
+}
+
 	for i in range(path_parts.size()):
 		var part = path_parts[i]
-		
+}
+
 		if !current.has(part):
 			tree_mutex.unlock()
 			return false
-			
+}
+
 		if i == path_parts.size() - 1:
 			var _old_status = current[part]["status"]
 			current[part]["status"] = status
 			success = true
 			tree_mutex.unlock()
-			
+}
+
 			emit_signal("branch_status_changed", branch_path, status)
 			emit_signal("tree_updated")
-			
+}
+
 			return true
-			
+}
+
 		if !current[part].has("children"):
 			tree_mutex.unlock()
 			return false
-			
+}
+
 		current = current[part]["children"]
-	
+}
+
 	tree_mutex.unlock()
 	return success
+}
 
 func get_branch_status(branch_path: String) -> String:
 	var branch = get_branch(branch_path)
 	return branch.get("status", "unknown")
+}
 
 func disable_branch(branch_path: String) -> bool:
 	return set_branch_status(branch_path, "disabled")
+}
 
 func activate_branch(branch_path: String) -> bool:
 	return set_branch_status(branch_path, "active")
+}
 
 ####################
 # Node Operations
 ####################
+}
 
 func set_branch_node(branch_path: String, node: Node) -> bool:
 	tree_mutex.lock()
-	
+}
+
 	var path_parts = branch_path.split("/")
 	var current = scene_tree_jsh["main_root"]["branches"]
 	var success = false
-	
+}
+
 	for i in range(path_parts.size()):
 		var part = path_parts[i]
-		
+}
+
 		if !current.has(part):
 			tree_mutex.unlock()
 			return false
-			
+}
+
 		if i == path_parts.size() - 1:
 			current[part]["node"] = node
 			success = true
 			break
-			
+}
+
 		if !current[part].has("children"):
 			tree_mutex.unlock()
 			return false
-			
+}
+
 		current = current[part]["children"]
-	
+}
+
 	tree_mutex.unlock()
-	
+}
+
 	if success:
 		emit_signal("tree_updated")
-	
+}
+
 	return success
+}
 
 func get_branch_node(branch_path: String) -> Node:
 	var branch = get_branch(branch_path)
 	return branch.get("node")
+}
 
 func jsh_tree_get_node(node_path: String) -> Node:
 	var path_parts = node_path.split("/")
-	
+}
+
 	tree_mutex.lock()
 	var current = scene_tree_jsh["main_root"]["branches"]
 	tree_mutex.unlock()
-	
+}
+
 	for i in range(path_parts.size()):
 		var part = path_parts[i]
-		
+}
+
 		tree_mutex.lock()
 		if !current.has(part):
 			tree_mutex.unlock()
 			return null
-			
+}
+
 		current = current[part]
-		
+}
+
 		if i == path_parts.size() - 1:
 			var node = current.get("node")
 			tree_mutex.unlock()
 			return node
-			
+}
+
 		if !current.has("children"):
 			tree_mutex.unlock()
 			return null
-			
+}
+
 		current = current["children"]
 		tree_mutex.unlock()
-	
+}
+
 	return null
+}
 
 func validate_branch_nodes(branch_path: String) -> Array:
 	var branch = get_branch(branch_path)
 	var missing_nodes = []
-	
-	if branch.empty():
+}
+
+	if branch.is_empty():
 		return ["branch_not_found"]
-	
+}
+
 	if !branch.has("node") or !is_instance_valid(branch["node"]):
 		missing_nodes.append("main_node")
-	
+}
+
 	if branch.has("children"):
 		for child_name in branch["children"]:
 			var child = branch["children"][child_name]
 			if !child.has("node") or !is_instance_valid(child["node"]):
 				missing_nodes.append(child_name)
-	
+}
+
 	return missing_nodes
+}
 
 ####################
 # Branch Caching
 ####################
+}
 
 func cache_branch_data(branch_path: String, branch_data: Dictionary):
 	cached_tree_mutex.lock()
-	
+}
+
 	var path_parts = branch_path.split("/")
 	var branch_name = path_parts[-1]
-	
+}
+
 	# Store a copy of the branch with status changed to "cached"
 	var cached_branch = branch_data.duplicate(true)
 	cached_branch["status"] = "cached"
 	cached_branch["node"] = null  # Don't cache node references
-	
+}
+
 	# Clear node references in children too
 	if cached_branch.has("children"):
 		for child_name in cached_branch["children"]:
 			cached_branch["children"][child_name]["node"] = null
 			cached_branch["children"][child_name]["status"] = "cached"
-	
+}
+
 	cached_jsh_tree_branches[branch_name] = cached_branch
-	
+}
+
 	cached_tree_mutex.unlock()
+}
 
 func restore_cached_branch(branch_name: String) -> Dictionary:
 	cached_tree_mutex.lock()
-	
+}
+
 	var branch_data = {}
-	
+}
+
 	if cached_jsh_tree_branches.has(branch_name):
 		branch_data = cached_jsh_tree_branches[branch_name].duplicate(true)
 		cached_jsh_tree_branches.erase(branch_name)
-	
+}
+
 	cached_tree_mutex.unlock()
-	
+}
+
 	return branch_data
+}
 
 func has_cached_branch(branch_name: String) -> bool:
 	cached_tree_mutex.lock()
@@ -502,6 +605,7 @@ func has_cached_branch(branch_name: String) -> bool:
 	cached_tree_mutex.unlock()
 	return result
 #
+}
 
 func _append_branch_to_output(branch: Dictionary, output: String, prefix: String):
 	if branch.has("children"):
@@ -510,28 +614,33 @@ func _append_branch_to_output(branch: Dictionary, output: String, prefix: String
 			var child_name = keys[i]
 			var child = branch["children"][child_name]
 			var status = child.get("status", "pending")
-			
+}
+
 			if i == keys.size() - 1:
 				output += prefix + "┗━ " + child_name + " (" + child["type"] + ") " + status_symbol[status] + "\n"
 				_append_branch_to_output(child, output, prefix + "   ")
 			else:
 				output += prefix + "┣━ " + child_name + " (" + child["type"] + ") " + status_symbol[status] + "\n"
 				_append_branch_to_output(child, output, prefix + "┃  ")
+}
 
 func build_pretty_print(node: Node, prefix: String = "", is_last: bool = true) -> String:
 	var output = ""
 	output += prefix
 	output += "┖╴" if is_last else "┠╴"
 	output += node.name + "\n"
-	
+}
+
 	var children = node.get_children()
 	for i in range(children.size()):
 		var child = children[i]
 		var child_prefix = prefix + ("   " if is_last else "┃  ")
 		var child_is_last = i == children.size() - 1
 		output += build_pretty_print(child, child_prefix, child_is_last)
-	
+}
+
 	return output
+}
 
 func capture_tree_state() -> Dictionary:
 	var root = get_tree().get_root()
@@ -540,6 +649,7 @@ func capture_tree_state() -> Dictionary:
 	tree_data.timestamp = Time.get_unix_time_from_system()
 	tree_data.node_count = 0  # Reset counter
 	return tree_data
+}
 
 func capture_node_structure(node: Node) -> Dictionary:
 	var data = {
@@ -548,16 +658,20 @@ func capture_node_structure(node: Node) -> Dictionary:
 		"path": str(node.get_path()),
 		"children": []
 	}
-	
+}
+
 	for child in node.get_children():
 		data.children.append(capture_node_structure(child))
 		tree_data.node_count += 1
-	
+}
+
 	return data
+}
 
 ####################
 # Node Type Helpers
 ####################
+}
 
 func match_node_type(type: String) -> String:
 	match type:
@@ -577,76 +691,96 @@ func match_node_type(type: String) -> String:
 			return "Node3D"
 		_:
 			return "Node3D"
+}
 
 ####################
 # Container Management
 ####################
+}
 
 func check_if_container_available(container: String) -> bool:
 	tree_mutex.lock()
 	var result = false
-	
+}
+
 	if scene_tree_jsh["main_root"]["branches"].has(container):
 		result = true
-	
+}
+
 	tree_mutex.unlock()
 	return result
+}
 
 func check_if_datapoint_available(container: String) -> bool:
 	tree_mutex.lock()
 	var result = false
-	
+}
+
 	if scene_tree_jsh["main_root"]["branches"].has(container):
 		if scene_tree_jsh["main_root"]["branches"][container].has("datapoint"):
 			result = true
-	
+}
+
 	tree_mutex.unlock()
 	return result
+}
 
 func check_if_datapoint_node_available(container: String) -> String:
 	tree_mutex.lock()
 	var datapoint_path = ""
-	
+}
+
 	if scene_tree_jsh["main_root"]["branches"].has(container):
 		if scene_tree_jsh["main_root"]["branches"][container].has("datapoint"):
 			datapoint_path = scene_tree_jsh["main_root"]["branches"][container]["datapoint"]["datapoint_path"]
-	
+}
+
 	tree_mutex.unlock()
 	return datapoint_path
+}
 
 ####################
 # Node Management & Instantiation
 ####################
+}
 
 func jsh_tree_get_node_status_changer(node_path: String, _node_name: String, node_to_check: Node):
 	var path_parts = node_path.split("/")
-	
+}
+
 	tree_mutex.lock()
 	var current = scene_tree_jsh["main_root"]["branches"]
-	
+}
+
 	for i in range(path_parts.size()):
 		var part = path_parts[i]
-		
+}
+
 		if !current.has(part):
 			tree_mutex.unlock()
 			return
-		
+}
+
 		if i == path_parts.size() - 1:
 			if node_to_check:
 				current[part]["status"] = "active"
 				current[part]["node"] = node_to_check
 				emit_signal("branch_status_changed", node_path, "active")
 			break
-		
+}
+
 		if !current[part].has("children"):
 			tree_mutex.unlock()
 			return
-			
+}
+
 		current = current[part]["children"]
-	
+}
+
 	tree_mutex.unlock()
 	emit_signal("tree_updated")
 #
+}
 
 #    oooo  .oooooo..o ooooo   ooooo 
 #    `888 d8P'    `Y8 `888'   `888' 
@@ -657,6 +791,7 @@ func jsh_tree_get_node_status_changer(node_path: String, _node_name: String, nod
 # .o. 88P 8""88888P'  o888o   o888o 
 # `Y888P                            
 #
+}
 
 #####################
 ## Visualization
@@ -687,6 +822,7 @@ func jsh_tree_get_node_status_changer(node_path: String, _node_name: String, nod
 ## jsh_scene_tree_system.gd
 ## node too, JSH_scene_tree_system
 ## /root/main/
+}
 
 # needs work
 # JSH_Core/JSH_scene_tree_system
@@ -763,6 +899,7 @@ func jsh_tree_get_node_status_changer(node_path: String, _node_name: String, nod
 	#
 	#tree_mutex.unlock()
 	#emit_signal("tree_updated")
+}
 
 ####################
 # Utility Functions
@@ -810,27 +947,33 @@ func jsh_tree_get_node_status_changer(node_path: String, _node_name: String, nod
 	#}
 	#
 	#emit_signal("tree_updated")
+}
 
 ####################
 # Scene Tree Monitoring (NEW)
 ####################
+}
 
 func _setup_scene_tree_monitoring() -> void:
 	print("[JSHSceneTreeSystem] Setting up scene tree monitoring...")
-	
+}
+
 	# Connect to Godot's scene tree signals for automatic propagation
 	get_tree().node_added.connect(_on_godot_node_added)
 	get_tree().node_removed.connect(_on_godot_node_removed)
 	get_tree().node_renamed.connect(_on_godot_node_renamed)
-	
+}
+
 	# Start monitoring timer for periodic sync
 	var sync_timer = TimerManager.get_timer()
 	sync_timer.wait_time = 1.0  # Sync every second
 	sync_timer.timeout.connect(_sync_with_godot_tree)
 	sync_timer.autostart = true
 	add_child(sync_timer)
-	
+}
+
 	print("[JSHSceneTreeSystem] Scene tree monitoring setup complete")
+}
 
 func _on_godot_node_added(node: Node) -> void:
 	# When a node is added to Godot's scene tree, add it to JSH tree
@@ -840,22 +983,26 @@ func _on_godot_node_added(node: Node) -> void:
 		add_branch(node_path, branch_data)
 		if debug_verbose:
 			print("[JSHSceneTreeSystem] Auto-added node: " + node_path)
+}
 
 func _on_godot_node_removed(node: Node) -> void:
 	# When a node is removed from Godot's scene tree, remove it from JSH tree
 	# Safety check for null/invalid nodes during removal
 	if not node or not is_instance_valid(node):
 		return
-	
+}
+
 	var node_path = _get_jsh_path_for_node(node)
 	if node_path != "":
 		remove_branch(node_path)
 		if debug_verbose:
 			print("[JSHSceneTreeSystem] Auto-removed node: " + node_path)
-	
+}
+
 	# Clean up cache for this node
 	if _node_path_cache.has(node):
 		_node_path_cache.erase(node)
+}
 
 func _on_godot_node_renamed(node: Node) -> void:
 	# When a node is renamed, update JSH tree
@@ -868,15 +1015,18 @@ func _on_godot_node_renamed(node: Node) -> void:
 			tree_updated.emit()
 		if debug_verbose:
 			print("[JSHSceneTreeSystem] Auto-renamed node: " + node_path)
+}
 
 func _sync_with_godot_tree() -> void:
 	# Periodic sync to catch any missed changes
 	var current_scene = get_tree().current_scene
 	if current_scene:
 		_sync_node_recursive(current_scene, "main_root/scene")
-	
+}
+
 	# Clean up stale entries from node path cache
 	_cleanup_node_path_cache()
+}
 
 func _sync_node_recursive(node: Node, jsh_path: String) -> void:
 	# Ensure this node exists in JSH tree
@@ -888,66 +1038,80 @@ func _sync_node_recursive(node: Node, jsh_path: String) -> void:
 		# Update existing branch data
 		branch["node"] = node
 		branch["status"] = "active"
-	
+}
+
 	# Sync all children
 	for child in node.get_children():
 		var child_path = jsh_path + "/" + child.name
 		_sync_node_recursive(child, child_path)
+}
 
 func _get_jsh_path_for_node(node: Node) -> String:
 	# Convert Godot node path to JSH path format
 	if not node or not is_instance_valid(node):
 		return ""
-	
+}
+
 	var path_parts = []
 	var current_node = node
-	
+}
+
 	# Build path from node to root - use Engine for safety during node removal
 	var tree = Engine.get_main_loop() as SceneTree
 	if not tree:
 		return ""
-	
+}
+
 	# Check if node is still in tree
 	if not node.is_inside_tree():
 		# For nodes being removed, try to use cached path if available
 		if _node_path_cache.has(node):
 			return _node_path_cache[node]
 		return ""
-	
+}
+
 	while current_node and current_node != tree.root:
 		path_parts.push_front(current_node.name)
 		current_node = current_node.get_parent()
 		if not current_node:
 			break
-	
+}
+
 	# Create JSH-style path
 	if path_parts.size() > 0:
 		var jsh_path = "main_root/scene/" + "/".join(path_parts)
 		# Cache the path for later removal
 		_node_path_cache[node] = jsh_path
 		return jsh_path
-	
+}
+
 	return ""
+}
 
 func _create_branch_data_from_node(node: Node) -> Dictionary:
 	# Create JSH branch data structure from Godot node
 	var branch_data = BRANCH_BLUEPRINT.duplicate(true)
-	
+}
+
 	branch_data["name"] = node.name
 	branch_data["type"] = node.get_class()
 	branch_data["jsh_type"] = _get_jsh_type_for_node(node)
 	branch_data["status"] = "active"
 	branch_data["node"] = node
-	
+}
+
 	# Add position if it's a Node3D
 	if node is Node3D:
 		branch_data["metadata"]["position"] = node.position
 		branch_data["metadata"]["rotation"] = node.rotation
-	
+}
+
 	# Add creation time
 	branch_data["metadata"]["creation_time"] = Time.get_ticks_msec()
-	
+}
+
 	return branch_data
+}
 
 func _get_jsh_type_for_node(node: Node) -> String:
 	# Map Godot node types to JSH types
@@ -969,6 +1133,7 @@ func _get_jsh_type_for_node(node: Node) -> String:
 		return "ui"
 	else:
 		return "node"
+}
 
 # Enhanced public API for scene monitoring
 func force_full_sync() -> void:
@@ -981,27 +1146,32 @@ func force_full_sync() -> void:
 	_sync_with_godot_tree()
 	tree_updated.emit()
 	print("[JSHSceneTreeSystem] Full sync completed")
+}
 
 func get_sync_status() -> Dictionary:
 	# Get information about sync status
 	var godot_node_count = _count_godot_nodes(get_tree().current_scene)
 	var jsh_node_count = _count_jsh_nodes(scene_tree_jsh)
-	
+}
+
 	return {
 		"godot_nodes": godot_node_count,
 		"jsh_nodes": jsh_node_count,
 		"sync_ratio": float(jsh_node_count) / float(godot_node_count) if godot_node_count > 0 else 0.0,
 		"last_sync": Time.get_ticks_msec()
 	}
+}
 
 func _count_godot_nodes(node: Node) -> int:
 	if not node:
 		return 0
-	
+}
+
 	var count = 1
 	for child in node.get_children():
 		count += _count_godot_nodes(child)
 	return count
+}
 
 func _count_jsh_nodes(tree_dict: Dictionary) -> int:
 	var count = 0
@@ -1010,6 +1180,7 @@ func _count_jsh_nodes(tree_dict: Dictionary) -> int:
 		if tree_dict[key].has("children"):
 			count += _count_jsh_nodes(tree_dict[key]["children"])
 	return count
+}
 
 func _cleanup_node_path_cache() -> void:
 	# Remove entries for nodes that are no longer valid or in tree
@@ -1017,6 +1188,8 @@ func _cleanup_node_path_cache() -> void:
 	for node in _node_path_cache:
 		if not is_instance_valid(node) or (is_instance_valid(node) and not node.is_inside_tree()):
 			nodes_to_remove.append(node)
-	
+}
+
 	for node in nodes_to_remove:
 		_node_path_cache.erase(node)
+}

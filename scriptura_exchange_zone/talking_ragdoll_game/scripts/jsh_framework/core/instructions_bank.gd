@@ -738,4 +738,4 @@ func sewers() -> void:
 
 func pentagon_sewers() -> void:
 	# Pentagon cleanup/output - override in child classes
-	pass
+	pass}

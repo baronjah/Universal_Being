@@ -3,21 +3,23 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://8htjq1txc6bl"
-path="res://.godot/imported/marching_cubes_viewer_properties.jpg-784fb0cd9d312c547ba2be4c221424fd.ctex"
+path="res://.godot/imported/marching_cubes_viewer_properties.jpg-49e3b60f33900e8f466b44965c47cc49.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://docs/picture/marching_cubes_viewer_properties.jpg"
-dest_files=["res://.godot/imported/marching_cubes_viewer_properties.jpg-784fb0cd9d312c547ba2be4c221424fd.ctex"]
+source_file="res://scriptura_exchange_zone/Godot_Eden/Eden_May/the_palace_pf/docs/picture/marching_cubes_viewer_properties.jpg"
+dest_files=["res://.godot/imported/marching_cubes_viewer_properties.jpg-49e3b60f33900e8f466b44965c47cc49.ctex"]
 
 [params]
 
 compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0

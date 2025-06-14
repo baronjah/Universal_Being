@@ -3,12 +3,12 @@
 importer="glsl"
 type="RDShaderFile"
 uid="uid://b1wy4yb4iu10g"
-path="res://.godot/imported/sobel_gradient_3d.glsl-8360c5ee9665a41534b479d693701ae1.res"
+path="res://.godot/imported/sobel_gradient_3d.glsl-48fb9eda23ca433b32ab2578d5dd54a0.res"
 
 [deps]
 
-source_file="res://addons/marching_cubes_viewer/addons/marching_cubes_viewer/shaders/sobel_gradient_3d.glsl"
-dest_files=["res://.godot/imported/sobel_gradient_3d.glsl-8360c5ee9665a41534b479d693701ae1.res"]
+source_file="res://scriptura_exchange_zone/Godot_Eden/Eden_May/the_palace_pf/addons/marching_cubes_viewer/addons/marching_cubes_viewer/shaders/sobel_gradient_3d.glsl"
+dest_files=["res://.godot/imported/sobel_gradient_3d.glsl-48fb9eda23ca433b32ab2578d5dd54a0.res"]
 
 [params]
 

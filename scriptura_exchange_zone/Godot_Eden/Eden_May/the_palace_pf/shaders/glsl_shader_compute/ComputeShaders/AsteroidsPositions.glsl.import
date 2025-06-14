@@ -3,12 +3,12 @@
 importer="glsl"
 type="RDShaderFile"
 uid="uid://bholryjqkwrxo"
-path="res://.godot/imported/AsteroidsPositions.glsl-5918398075561cf0d42eab074bdc2f71.res"
+path="res://.godot/imported/AsteroidsPositions.glsl-33925cfc780aff51eae596c9cb3dc471.res"
 
 [deps]
 
-source_file="res://shaders/glsl_shader_compute/ComputeShaders/AsteroidsPositions.glsl"
-dest_files=["res://.godot/imported/AsteroidsPositions.glsl-5918398075561cf0d42eab074bdc2f71.res"]
+source_file="res://scriptura_exchange_zone/Godot_Eden/Eden_May/the_palace_pf/shaders/glsl_shader_compute/ComputeShaders/AsteroidsPositions.glsl"
+dest_files=["res://.godot/imported/AsteroidsPositions.glsl-33925cfc780aff51eae596c9cb3dc471.res"]
 
 [params]
 

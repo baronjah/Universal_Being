@@ -3,21 +3,23 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ccs3sj12nql30"
-path="res://.godot/imported/crosshair.png-37849b45659c1ad3e67bf1b4d7044e7d.ctex"
+path="res://.godot/imported/crosshair.png-ecad3e4b33f3859e961470376f3690ba.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/ShaderLib/UV/crosshair.png"
-dest_files=["res://.godot/imported/crosshair.png-37849b45659c1ad3e67bf1b4d7044e7d.ctex"]
+source_file="res://scriptura_exchange_zone/Godot_Eden/Eden_May/the_palace_pf/addons/ShaderLib/UV/crosshair.png"
+dest_files=["res://.godot/imported/crosshair.png-ecad3e4b33f3859e961470376f3690ba.ctex"]
 
 [params]
 
 compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0

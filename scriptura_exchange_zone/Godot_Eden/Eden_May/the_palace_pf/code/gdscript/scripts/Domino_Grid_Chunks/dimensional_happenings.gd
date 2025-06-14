@@ -620,3 +620,5 @@
 	#randomItem.activate({ impact: 1 + Math.random() * 2 });
 	#
 	#this
+}
+}

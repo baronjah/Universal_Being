@@ -4911,3 +4911,4 @@ func etheric_download_system_information_data():
 #print(" here we can check 
 #int_of_truth_zero_five = 0	
 #print(" here we check quick stuff")\
+}

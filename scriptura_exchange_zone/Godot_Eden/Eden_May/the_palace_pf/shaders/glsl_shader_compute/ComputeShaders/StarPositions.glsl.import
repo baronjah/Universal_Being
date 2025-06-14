@@ -3,12 +3,12 @@
 importer="glsl"
 type="RDShaderFile"
 uid="uid://c0qdli58q5byy"
-path="res://.godot/imported/StarPositions.glsl-cf02a13253efbad9c2861ff2709ad4c4.res"
+path="res://.godot/imported/StarPositions.glsl-1bd5283474538125db66733f4041b536.res"
 
 [deps]
 
-source_file="res://shaders/glsl_shader_compute/ComputeShaders/StarPositions.glsl"
-dest_files=["res://.godot/imported/StarPositions.glsl-cf02a13253efbad9c2861ff2709ad4c4.res"]
+source_file="res://scriptura_exchange_zone/Godot_Eden/Eden_May/the_palace_pf/shaders/glsl_shader_compute/ComputeShaders/StarPositions.glsl"
+dest_files=["res://.godot/imported/StarPositions.glsl-1bd5283474538125db66733f4041b536.res"]
 
 [params]
 

@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(godot:*)",
+      "Bash(ls:*)",
+      "Bash(sudo ln:*)",
+      "Bash(sudo chmod:*)",
+      "Bash(\"/mnt/c/Users/Percision 15/twelve_folders/godot_four_and_five_so_on/Godot_v4.5-dev4_mono_win64_console.exe\" --version 2 >& 1)",
+      "Bash(grep:*)",
+      "Bash(env)",
+      "Bash(rg:*)",
+      "Bash(find:*)",
+      "Bash(python3:*)"
+    ],
+    "deny": []
+  }
+}

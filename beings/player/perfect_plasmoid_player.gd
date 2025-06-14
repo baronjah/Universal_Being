@@ -1,5 +1,11 @@
-extends UniversalBeing
+extends CharacterBody3D
 class_name PerfectPlasmoidPlayer
+
+# Universal Being properties (inherited conceptually)
+@export var being_uuid: String = ""
+@export var being_name: String = "Perfect Plasmoid Player"
+@export var being_type: String = "perfect_plasmoid_player"
+@export var consciousness_level: int = 5
 
 ## 🌟 PERFECT PLASMOID PLAYER - THE ULTIMATE UNIVERSAL BEING
 ## 1. ✅ Plasmoid with sockets
@@ -57,8 +63,8 @@ var crosshair_ui: Control
 var cursor_ui: Control
 var interaction_panel: Control
 
-func pentagon_init() -> void:
-	super.pentagon_init()
+func _ready() -> void:
+	# Pentagon-style initialization (adapted for CharacterBody3D)
 	being_name = "Perfect Plasmoid Player"
 	consciousness_level = 5  # Transcendent
 	
@@ -154,8 +160,7 @@ func connect_to_gemma_consciousness() -> void:
 	else:
 		print("🧠 Waiting for Gemma perfect consciousness to awaken...")
 
-func pentagon_input(event: InputEvent) -> void:
-	super.pentagon_input(event)
+func _input(event: InputEvent) -> void:
 	
 	# 2. Camera orbital control with middle mouse
 	if event is InputEventMouseButton:
@@ -220,8 +225,7 @@ func apply_camera_tilt() -> void:
 	camera.rotation.z = deg_to_rad(camera_tilt)
 	print("📹 Camera tilt: %.1f degrees" % camera_tilt)
 
-func pentagon_process(delta: float) -> void:
-	super.pentagon_process(delta)
+func _physics_process(delta: float) -> void:
 	
 	# 5. WASD movement (look where you go)
 	handle_perfect_movement(delta)
@@ -236,29 +240,34 @@ func pentagon_process(delta: float) -> void:
 	update_socket_visualizations()
 
 func handle_perfect_movement(delta: float) -> void:
-	"""5. ✅ WASD movement - look where you go"""
+	"""5. ✅ WASD movement - look where you go - FIXED MOVEMENT!"""
 	var input_vector = Vector3.ZERO
 	
 	# Get movement relative to camera direction
-	var camera_forward = -camera.global_transform.basis.z
-	var camera_right = camera.global_transform.basis.x
+	if camera and camera_system:
+		var camera_forward = -camera.global_transform.basis.z
+		var camera_right = camera.global_transform.basis.x
+		
+		# Project to horizontal plane (no up/down movement as requested)
+		camera_forward.y = 0
+		camera_right.y = 0
+		camera_forward = camera_forward.normalized()
+		camera_right = camera_right.normalized()
+		
+		if Input.is_action_pressed("move_forward") or Input.is_key_pressed(KEY_W):
+			input_vector += camera_forward
+		if Input.is_action_pressed("move_backward") or Input.is_key_pressed(KEY_S):
+			input_vector -= camera_forward
+		if Input.is_action_pressed("move_left") or Input.is_key_pressed(KEY_A):
+			input_vector -= camera_right
+		if Input.is_action_pressed("move_right") or Input.is_key_pressed(KEY_D):
+			input_vector += camera_right
 	
-	# Project to horizontal plane (no up/down movement as requested)
-	camera_forward.y = 0
-	camera_right.y = 0
-	camera_forward = camera_forward.normalized()
-	camera_right = camera_right.normalized()
+	# Normalize input for consistent speed
+	if input_vector.length() > 0:
+		input_vector = input_vector.normalized()
 	
-	if Input.is_key_pressed(KEY_W):
-		input_vector += camera_forward
-	if Input.is_key_pressed(KEY_S):
-		input_vector -= camera_forward
-	if Input.is_key_pressed(KEY_A):
-		input_vector -= camera_right
-	if Input.is_key_pressed(KEY_D):
-		input_vector += camera_right
-	
-	# Calculate target velocity
+	# Calculate target velocity with acceleration
 	var target_velocity = Vector3.ZERO
 	if input_vector.length() > 0:
 		target_velocity = input_vector.normalized() * movement_speed
@@ -267,14 +276,18 @@ func handle_perfect_movement(delta: float) -> void:
 	var accel_rate = acceleration if input_vector.length() > 0 else deceleration
 	velocity = velocity.lerp(target_velocity, accel_rate * delta)
 	
-	# Apply movement
-	global_position += velocity * delta
+	# Apply CharacterBody3D physics movement (FIXED!)
+	move_and_slide()
 	
 	# Look where you go (optional rotation towards movement)
 	if velocity.length() > 1.0:
 		var look_direction = velocity.normalized()
 		var target_rotation = atan2(-look_direction.x, -look_direction.z)
 		rotation.y = lerp_angle(rotation.y, target_rotation, 3.0 * delta)
+	
+	# Debug movement
+	if input_vector.length() > 0:
+		print("🚀 Moving! Input: %s, Velocity: %s" % [input_vector, velocity])
 
 func update_crosshair_targeting() -> void:
 	"""4. ✅ Crosshair targeting system"""
@@ -427,7 +440,7 @@ func connect_to_socket(socket: Area3D) -> void:
 		show_ub_visual("🔌 Connected to socket: %s" % socket.get_meta("socket_name", "unnamed"))
 		print("🔌 Socket connection established!")
 
-func pentagon_sewers() -> void:
+func _exit_tree() -> void:
 	"""10. ✅ Perfect cleanup"""
 	if crosshair_ui:
 		crosshair_ui.queue_free()
@@ -435,7 +448,6 @@ func pentagon_sewers() -> void:
 		cursor_ui.queue_free()
 	
 	print("🌟 Perfect Plasmoid Player: Transcending to higher dimension...")
-	super.pentagon_sewers()
 
 # Public interface for perfection
 func get_perfect_status() -> Dictionary:

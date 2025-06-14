@@ -5,6 +5,7 @@
 [ext_resource type="Script" path="res://beings/gemma/gemma_perfect_consciousness.gd" id="3_gemma_consciousness"]
 [ext_resource type="Script" path="res://systems/consciousness_visualizer_evolved.gd" id="4_consciousness_viz"]
 [ext_resource type="Script" path="res://systems/ultimate_performance_optimizer.gd" id="5_performance_optimizer"]
+[ext_resource type="Script" path="res://systems/gpu_power_manager.gd" id="6_gpu_power_manager"]
 
 [sub_resource type="Environment" id="Environment_galaxy"]
 background_mode = 4
@@ -434,10 +435,18 @@ script = SubResource("GDScript_performance_monitor")
 [node name="UltimatePerformanceOptimizer" type="Node" parent="."]
 script = ExtResource("5_performance_optimizer")
 target_fps = 144.0
-max_gpu_utilization = 0.99
+max_gpu_utilization = 0.5
 quantum_optimizations = true
 archaeological_mode = true
-cpu_overclock_factor = 1.5
-gpu_overclock_factor = 1.8
-ram_overclock_factor = 1.3
-rendering_overclock = 2.0
+cpu_overclock_factor = 1.2
+gpu_overclock_factor = 1.3
+ram_overclock_factor = 1.1
+rendering_overclock = 1.5
+
+[node name="GPUPowerManager" type="Node" parent="."]
+script = ExtResource("res://systems/gpu_power_manager.gd")
+galaxy_power_allocation = 0.5
+ai_power_allocation = 0.5
+adaptive_balancing = true
+thermal_protection = true
+target_fps_with_ai = 60.0

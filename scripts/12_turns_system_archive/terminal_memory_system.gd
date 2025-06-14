@@ -1,7 +1,9 @@
 extends Control
+}
 
 # Terminal Memory System with Concurrent Processing Capabilities
 # Integrates with TDIC (Temporal Dictionary) and supports executing 2-3 functions simultaneously
+}
 
 # Memory storage systems
 var memory_buffer = []
@@ -10,6 +12,7 @@ var tdic_entries = {
 	"past": [],
 	"present": [],
 	"future": []
+}
 }
 
 # Terminal display properties
@@ -21,31 +24,38 @@ var terminal_colors = {
 	"future": Color(0.9, 0.6, 0.6),  # Soft red for future
 	"sad": Color(0.5, 0.5, 0.7)      # Sad colors as requested
 }
+}
 
 # UI elements
 var terminal
 var input_field
+}
 
 # Concurrent processor
 var processor
+}
 
 func _ready():
 	# Initialize the concurrent processor
 	processor = ConcurrentProcessor.new()
 	add_child(processor)
-	processor.connect("task_completed", self, "_on_task_completed")
-	processor.connect("all_tasks_completed", self, "_on_all_tasks_completed")
-	
+	processor.connect(_on_task_completed)
+	processor.connect(_on_all_tasks_completed)
+}
+
 	# Load saved memories
 	processor.schedule_task("load_data", self, "load_offline_memories")
-	
+}
+
 	# Setup terminal display
 	setup_terminal_display()
-	
+}
+
 	# Initialize with welcome message
 	add_memory_text("Terminal Memory System initialized with concurrent processing.", "system")
 	add_memory_text("Using TDIC protocol for temporal organization of data.", "system")
 	add_memory_text("Type '#help' for available commands.", "system")
+}
 
 # Setup the terminal display elements
 func setup_terminal_display():
@@ -55,40 +65,48 @@ func setup_terminal_display():
 	terminal.rect_min_size = Vector2(600, 400)
 	terminal.scroll_following = true
 	add_child(terminal)
-	
+}
+
 	input_field = LineEdit.new()
 	input_field.rect_min_size = Vector2(600, 30)
-	input_field.connect("text_entered", self, "_on_text_entered")
+	input_field.connect(_on_text_entered)
 	add_child(input_field)
-	
+}
+
 	# Set layout (would be replaced by proper UI in real implementation)
 	terminal.rect_position = Vector2(10, 10)
 	input_field.rect_position = Vector2(10, 420)
+}
 
 # Process input with command parsing
 func _on_text_entered(text):
 	input_field.text = ""
-	
-	if text.empty():
+}
+
+	if text.is_empty():
 		return
-		
+}
+
 	# Process commands
 	if text.begins_with("#"):
 		process_command(text)
 	else:
 		# Add as regular memory entry
 		processor.schedule_task("add_memory", self, "add_memory_text", [text])
-		
+}
+
 		# Also process as TDIC entry if it has temporal markers
 		if text.begins_with("[past]") or text.begins_with("[present]") or text.begins_with("[future]"):
 			processor.schedule_task("process_tdic", self, "process_tdic_entry", [text])
+}
 
 # Process special commands with # prefix
 func process_command(command):
 	var cmd_parts = command.split(" ", true, 1)
 	var cmd = cmd_parts[0].to_lower()
 	var args = cmd_parts[1] if cmd_parts.size() > 1 else ""
-	
+}
+
 	match cmd:
 		"#help":
 			display_help()
@@ -113,11 +131,13 @@ func process_command(command):
 			process_system_command(args)
 		_:
 			add_memory_text("Unknown command: " + cmd, "error")
+}
 
 # Auto Text Wrap for Terminal Output
 func add_memory_text(text, category="general"):
 	var wrapped_text = auto_wrap_text(text, terminal_width)
-	
+}
+
 	# Add to memory buffer
 	memory_buffer.append({
 		"text": wrapped_text,
@@ -125,11 +145,14 @@ func add_memory_text(text, category="general"):
 		"category": category,
 		"offline": true
 	})
-	
+}
+
 	# Update terminal display
 	update_terminal_display()
-	
+}
+
 	return true  # For task completion
+}
 
 # TDIC (Temporal Dictionary) Implementation
 func process_tdic_entry(text):
@@ -143,15 +166,18 @@ func process_tdic_entry(text):
 		text = text.substr(8).strip_edges()
 	elif text.begins_with("[present]"):
 		text = text.substr(9).strip_edges()
-		
+}
+
 	# Store in temporal dictionary
 	tdic_entries[timeframe].append({
 		"content": text,
 		"timestamp": OS.get_unix_time()
 	})
-	
+}
+
 	add_memory_text("Entry added to " + timeframe + " TDIC registry.", "system")
 	return true  # For task completion
+}
 
 # Offline Data Storage & Retrieval
 func save_offline_memories():
@@ -162,9 +188,11 @@ func save_offline_memories():
 		"tdic_entries": tdic_entries
 	})
 	file.close()
-	
+}
+
 	add_memory_text("Memories saved to offline storage.", "system")
 	return true  # For task completion
+}
 
 func load_offline_memories():
 	var file = File.new()
@@ -174,93 +202,116 @@ func load_offline_memories():
 		memory_buffer = data.memory_buffer
 		tdic_entries = data.tdic_entries
 		file.close()
-		
+}
+
 		add_memory_text("Memories loaded from offline storage.", "system")
 	else:
 		add_memory_text("No offline memory file found.", "system")
-	
+}
+
 	return true  # For task completion
+}
 
 # Terminal Display with Temporal Awareness
 func display_memories(timeframe="all"):
 	terminal.clear()
-	
+}
+
 	add_memory_text("Displaying " + timeframe + " memories...", "system")
-	
+}
+
 	for memory in memory_buffer:
 		var memory_timeframe = get_memory_timeframe(memory)
 		if timeframe == "all" or memory_timeframe == timeframe:
 			var color = terminal_colors.default
-			
+}
+
 			if memory_timeframe in terminal_colors:
 				color = terminal_colors[memory_timeframe]
-				
+}
+
 			if memory.category == "sad":
 				color = terminal_colors.sad
-				
+}
+
 			terminal.append_bbcode("[color=#" + color.to_html() + "]" + memory.text + "[/color]\n")
-	
+}
+
 	return true  # For task completion
+}
 
 # Helper function to get memory timeframe
 func get_memory_timeframe(memory):
 	var text = memory.text
-	
+}
+
 	if text.begins_with("[past]"):
 		return "past"
 	elif text.begins_with("[future]"):
 		return "future"
 	elif text.begins_with("[present]"):
 		return "present"
-		
+}
+
 	# Default to present if no explicit timeframe
 	return "present"
+}
 
 # Clear the terminal display
 func clear_terminal():
 	terminal.clear()
 	add_memory_text("Terminal display cleared.", "system")
 	return true  # For task completion
+}
 
 # Auto-wrap text to fit terminal width
 func auto_wrap_text(text, width):
 	var wrapped = ""
 	var line = ""
 	var words = text.split(" ")
-	
+}
+
 	for word in words:
 		if line.length() + word.length() + 1 <= width:
-			if line.empty():
+			if line.is_empty():
 				line = word
 			else:
 				line += " " + word
 		else:
 			wrapped += line + "\n"
 			line = word
-	
-	if not line.empty():
+}
+
+	if not line.is_empty():
 		wrapped += line
-		
+}
+
 	return wrapped
+}
 
 # Update the terminal display with current buffer
 func update_terminal_display():
 	# Get the last few entries to display
 	var display_count = min(10, memory_buffer.size())
 	var start_index = max(0, memory_buffer.size() - display_count)
-	
+}
+
 	for i in range(start_index, memory_buffer.size()):
 		var memory = memory_buffer[i]
 		var color = terminal_colors.default
-		
+}
+
 		var timeframe = get_memory_timeframe(memory)
 		if timeframe in terminal_colors:
 			color = terminal_colors[timeframe]
-			
+}
+
 		if memory.category == "sad":
 			color = terminal_colors.sad
-			
+}
+
 		terminal.append_bbcode("[color=#" + color.to_html() + "]" + memory.text + "[/color]\n")
+}
 
 # Display help information
 func display_help():
@@ -279,13 +330,15 @@ func display_help():
 	add_memory_text("  [past] Text... - Mark entry as past memory", "system")
 	add_memory_text("  [present] Text... - Mark entry as present memory", "system")
 	add_memory_text("  [future] Text... - Mark entry as future memory", "system")
+}
 
 # Process advanced commands (##)
 func process_advanced_command(args):
 	var parts = args.split(" ", true, 1)
 	var subcmd = parts[0].to_lower()
 	var subargs = parts[1] if parts.size() > 1 else ""
-	
+}
+
 	match subcmd:
 		"color":
 			set_color_theme(subargs)
@@ -295,13 +348,15 @@ func process_advanced_command(args):
 			search_memories(subargs)
 		_:
 			add_memory_text("Unknown advanced command: " + subcmd, "error")
+}
 
 # Process system commands (###)
 func process_system_command(args):
 	var parts = args.split(" ", true, 1)
 	var subcmd = parts[0].to_lower()
 	var subargs = parts[1] if parts.size() > 1 else ""
-	
+}
+
 	match subcmd:
 		"reset":
 			reset_system()
@@ -311,6 +366,7 @@ func process_system_command(args):
 			set_concurrency(subargs)
 		_:
 			add_memory_text("Unknown system command: " + subcmd, "error")
+}
 
 # Set color theme
 func set_color_theme(theme):
@@ -329,27 +385,33 @@ func set_color_theme(theme):
 		_:
 			add_memory_text("Unknown color theme: " + theme, "error")
 			return
-			
+}
+
 	add_memory_text("Color theme changed to: " + theme, "system")
 	update_terminal_display()
+}
 
 # Export memories to file
 func export_memories(format):
 	add_memory_text("Exporting memories in " + format + " format...", "system")
 	# Implementation would vary based on format
+}
 
 # Search through memories
 func search_memories(query):
 	add_memory_text("Searching for: " + query, "system")
 	var results = []
-	
+}
+
 	for memory in memory_buffer:
 		if memory.text.to_lower().find(query.to_lower()) >= 0:
 			results.append(memory)
-	
+}
+
 	add_memory_text("Found " + str(results.size()) + " results:", "system")
 	for result in results:
 		add_memory_text(result.text, "search_result")
+}
 
 # Reset the entire system
 func reset_system():
@@ -363,11 +425,13 @@ func reset_system():
 	}
 	save_offline_memories()
 	add_memory_text("Memory system reset complete.", "system")
+}
 
 # Optimize memory storage
 func optimize_memory():
 	add_memory_text("Optimizing memory storage...", "system")
 	# Implementation would compress and optimize storage
+}
 
 # Set concurrency level
 func set_concurrency(level):
@@ -377,13 +441,15 @@ func set_concurrency(level):
 		add_memory_text("Concurrency level set to: " + str(value), "system")
 	else:
 		add_memory_text("Invalid concurrency level. Use 1-5.", "error")
+}
 
 # Run multiple functions in parallel
 func run_parallel_functions(function_list):
 	var functions = function_list.split(",")
 	if functions.size() > 0:
 		add_memory_text("Running " + str(functions.size()) + " functions in parallel...", "system")
-		
+}
+
 		var function_map = {
 			"save": "save_offline_memories",
 			"load": "load_offline_memories",
@@ -392,10 +458,12 @@ func run_parallel_functions(function_list):
 			"search": "search_memories",
 			"optimize": "optimize_memory"
 		}
-		
+}
+
 		var valid_functions = []
 		var args_list = []
-		
+}
+
 		for func_name in functions:
 			func_name = func_name.strip_edges()
 			if func_name in function_map:
@@ -403,18 +471,21 @@ func run_parallel_functions(function_list):
 				args_list.append([])
 			else:
 				add_memory_text("Unknown function: " + func_name, "error")
-		
+}
+
 		if valid_functions.size() > 0:
 			processor.create_parallel_tasks("parallel_run", self, valid_functions, args_list)
 	else:
 		add_memory_text("No functions specified.", "error")
+}
 
 # Run functions in sequence
 func run_chained_functions(function_list):
 	var functions = function_list.split(",")
 	if functions.size() > 0:
 		add_memory_text("Running " + str(functions.size()) + " functions in sequence...", "system")
-		
+}
+
 		var function_map = {
 			"save": "save_offline_memories",
 			"load": "load_offline_memories",
@@ -423,10 +494,12 @@ func run_chained_functions(function_list):
 			"search": "search_memories",
 			"optimize": "optimize_memory"
 		}
-		
+}
+
 		var valid_functions = []
 		var args_list = []
-		
+}
+
 		for func_name in functions:
 			func_name = func_name.strip_edges()
 			if func_name in function_map:
@@ -434,15 +507,18 @@ func run_chained_functions(function_list):
 				args_list.append([])
 			else:
 				add_memory_text("Unknown function: " + func_name, "error")
-		
+}
+
 		if valid_functions.size() > 0:
 			processor.create_task_chain("chain_run", self, valid_functions, args_list)
 	else:
 		add_memory_text("No functions specified.", "error")
+}
 
 # Signal handlers
 func _on_task_completed(task_id, result):
 	add_memory_text("Task completed: " + task_id, "system")
+}
 
 func _on_all_tasks_completed():
 	add_memory_text("All scheduled tasks completed.", "system")

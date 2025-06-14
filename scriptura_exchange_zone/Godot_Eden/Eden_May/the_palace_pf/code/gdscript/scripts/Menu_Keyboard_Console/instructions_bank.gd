@@ -697,3 +697,4 @@ const instructions_set_7 = {
 
 # size number scale duration frequency connect combo
 # command commander commands lists segments
+}

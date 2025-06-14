@@ -3,21 +3,23 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dogccurt350q5"
-path="res://.godot/imported/number_6.jpg-b28a6c5eb695568f90702e5dc1348ac8.ctex"
+path="res://.godot/imported/number_6.jpg-4bd04c58276ec08c4fc6f81e4dcf0ca0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://docs/picture/numbers but meh/number_6.jpg"
-dest_files=["res://.godot/imported/number_6.jpg-b28a6c5eb695568f90702e5dc1348ac8.ctex"]
+source_file="res://scriptura_exchange_zone/Godot_Eden/Eden_May/the_palace_pf/docs/picture/numbers but meh/number_6.jpg"
+dest_files=["res://.godot/imported/number_6.jpg-4bd04c58276ec08c4fc6f81e4dcf0ca0.ctex"]
 
 [params]
 
 compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0

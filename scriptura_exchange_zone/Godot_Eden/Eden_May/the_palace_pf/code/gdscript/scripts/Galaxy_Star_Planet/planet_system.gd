@@ -1,5 +1,6 @@
 extends Resource
 class_name PlanetSystem
+}
 
 # Planet Types
 enum PlanetType {
@@ -11,6 +12,7 @@ enum PlanetType {
 	TERRESTRIAL,
 	DESERT,
 	BARREN
+}
 }
 
 # Planet type parameters
@@ -112,6 +114,7 @@ var planet_type_params = {
 		}
 	}
 }
+}
 
 # Planet properties
 var id: int
@@ -131,11 +134,13 @@ var resources: Dictionary = {}
 var moons: Array = []
 var element_composition: Dictionary = {}
 var surface_features: Array = []
+}
 
 func _init(planet_data: Dictionary = {}):
-	if planet_data.empty():
+	if planet_data.is_empty():
 		return
-		
+}
+
 	# Set basic properties from data
 	if planet_data.has("id"):
 		id = planet_data.id
@@ -163,19 +168,23 @@ func _init(planet_data: Dictionary = {}):
 		resources = planet_data.resources
 	if planet_data.has("moons"):
 		moons = planet_data.moons
-		
+}
+
 	# Generate extra properties if not provided
 	seed_value = id if id != 0 else randi()
 	if not planet_data.has("planet_name"):
 		planet_name = generate_planet_name()
-		
+}
+
 	# Generate element composition based on planet type
 	if not planet_data.has("element_composition") and planet_type_params.has(planet_type):
 		element_composition = planet_type_params[planet_type].elements.duplicate()
-		
+}
+
 	# Generate surface features if applicable
 	if not planet_data.has("surface_features") and can_have_surface_features():
 		generate_surface_features()
+}
 
 # Check if planet can have surface features
 func can_have_surface_features() -> bool:
@@ -183,20 +192,25 @@ func can_have_surface_features() -> bool:
 	if planet_type == PlanetType.GAS_GIANT or planet_type == PlanetType.ICE_GIANT:
 		return false
 	return true
+}
 
 # Generate surface features
 func generate_surface_features() -> void:
 	var rng = RandomNumberGenerator.new()
 	rng.seed = seed_value
-	
+}
+
 	surface_features = []
-	
+}
+
 	# Number of features depends on planet size
 	var feature_count = int(size * rng.randf_range(5, 15))
-	
+}
+
 	# Different feature types by planet type
 	var possible_features = []
-	
+}
+
 	match planet_type:
 		PlanetType.ROCKY:
 			possible_features = ["crater", "mountain", "canyon", "plateau", "ridge"]
@@ -210,7 +224,8 @@ func generate_surface_features() -> void:
 			possible_features = ["dune", "mesa", "canyon", "crater", "dry_lake", "plateau"]
 		PlanetType.BARREN:
 			possible_features = ["crater", "ridge", "plain", "canyon", "mountain"]
-	
+}
+
 	# Generate features
 	for i in range(feature_count):
 		var feature_type = possible_features[rng.randi() % possible_features.size()]
@@ -224,22 +239,26 @@ func generate_surface_features() -> void:
 			}
 		}
 		surface_features.append(feature)
+}
 
 # Generate planet name
 func generate_planet_name() -> String:
 	var rng = RandomNumberGenerator.new()
 	rng.seed = seed_value
-	
+}
+
 	# Different naming schemes
 	var naming_scheme = rng.randi() % 4
-	
+}
+
 	match naming_scheme:
 		0:  # Mythological names
 			var names = ["Zeus", "Ares", "Apollo", "Athena", "Hermes", "Hades", "Poseidon", 
 						"Thor", "Odin", "Isis", "Osiris", "Shiva", "Vishnu", "Krishna", 
 						"Quetzalcoatl", "Tlaloc", "Marduk", "Ishtar", "Enlil", "Enki"]
 			return names[rng.randi() % names.size()]
-			
+}
+
 		1:  # Earth-like naming (after people, places)
 			var prefixes = ["New ", ""]
 			var bases = ["Terra", "Earth", "Gaia", "Eden", "Elysium", "Arcadia", "Avalon", 
@@ -247,51 +266,62 @@ func generate_planet_name() -> String:
 			var prefix = prefixes[rng.randi() % prefixes.size()]
 			var base = bases[rng.randi() % bases.size()]
 			return prefix + base
-			
+}
+
 		2:  # Designation with number
 			var letters = ["Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Theta", 
 						  "Iota", "Kappa", "Lambda", "Sigma", "Omega", "Omicron", "Tau"]
 			var letter = letters[rng.randi() % letters.size()]
 			var number = rng.randi_range(1, 999)
 			return letter + "-" + str(number)
-			
+}
+
 		3:  # Exoplanet-style naming
 			var base = "Kepler"
 			var number = rng.randi_range(1, 9999)
 			var suffix = ["b", "c", "d", "e", "f", "g", "h", "i", "j", "k"][rng.randi() % 10]
 			return base + "-" + str(number) + suffix
-	
+}
+
 	# Default fallback
 	return "Planet-" + str(seed_value % 1000)
+}
 
 # Calculate gravitational parameters
 func calculate_gravity() -> float:
 	# Gravity relative to Earth
 	return mass / (size * size)
+}
 
 # Get orbital position at a given time
 func get_orbital_position(time: float) -> Vector2:
 	# Calculate angular position based on orbital period
 	var angle = fmod(time / orbit_period * TAU, TAU)
-	
+}
+
 	# Simple circular orbit
 	var x = orbit_distance * cos(angle)
 	var z = orbit_distance * sin(angle)
-	
+}
+
 	return Vector2(x, z)
+}
 
 # Get habitable status
 func is_habitable() -> bool:
 	# Check if planet is potentially habitable
 	if not atmosphere:
 		return false
-		
+}
+
 	# Temperature should be moderate
 	if temperature < 250 or temperature > 320:
 		return false
-		
+}
+
 	# Check planet type
 	return planet_type == PlanetType.TERRESTRIAL or planet_type == PlanetType.WATER_WORLD
+}
 
 # Get basic planet info
 func get_info() -> Dictionary:
@@ -305,10 +335,12 @@ func get_info() -> Dictionary:
 		"moon_count": moons.size(),
 		"habitable": is_habitable()
 	}
+}
 
 # Get resource info
 func get_resources() -> Dictionary:
 	return resources
+}
 
 # Serialize planet data for saving
 func serialize() -> Dictionary:
@@ -331,6 +363,7 @@ func serialize() -> Dictionary:
 		"element_composition": element_composition,
 		"surface_features": surface_features
 	}
+}
 
 # Deserialize from saved data
 func deserialize(data: Dictionary) -> void:

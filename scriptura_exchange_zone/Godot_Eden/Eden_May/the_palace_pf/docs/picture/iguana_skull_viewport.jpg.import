@@ -3,21 +3,23 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dkpb3ucbxfasa"
-path="res://.godot/imported/iguana_skull_viewport.jpg-fc60beb02141983dff4f456c089c16b7.ctex"
+path="res://.godot/imported/iguana_skull_viewport.jpg-52715ccb9356a585f7a381a8edeece16.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://docs/picture/iguana_skull_viewport.jpg"
-dest_files=["res://.godot/imported/iguana_skull_viewport.jpg-fc60beb02141983dff4f456c089c16b7.ctex"]
+source_file="res://scriptura_exchange_zone/Godot_Eden/Eden_May/the_palace_pf/docs/picture/iguana_skull_viewport.jpg"
+dest_files=["res://.godot/imported/iguana_skull_viewport.jpg-52715ccb9356a585f7a381a8edeece16.ctex"]
 
 [params]
 
 compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0

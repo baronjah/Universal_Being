@@ -4,14 +4,14 @@ importer="wavefront_obj"
 importer_version=1
 type="Mesh"
 uid="uid://d3ykq7vakvf8u"
-path="res://.godot/imported/Dome.obj-afaabc94ec2b916dec7f2403bd7cf814.mesh"
+path="res://.godot/imported/Dome.obj-e768ff72fd8bcc6bbc66d0d262174f65.mesh"
 
 [deps]
 
-files=["res://.godot/imported/Dome.obj-afaabc94ec2b916dec7f2403bd7cf814.mesh"]
+files=["res://.godot/imported/Dome.obj-e768ff72fd8bcc6bbc66d0d262174f65.mesh"]
 
-source_file="res://docs/3dmodels/Dome.obj"
-dest_files=["res://.godot/imported/Dome.obj-afaabc94ec2b916dec7f2403bd7cf814.mesh", "res://.godot/imported/Dome.obj-afaabc94ec2b916dec7f2403bd7cf814.mesh"]
+source_file="res://scriptura_exchange_zone/Godot_Eden/Eden_May/the_palace_pf/docs/3dmodels/Dome.obj"
+dest_files=["res://.godot/imported/Dome.obj-e768ff72fd8bcc6bbc66d0d262174f65.mesh", "res://.godot/imported/Dome.obj-e768ff72fd8bcc6bbc66d0d262174f65.mesh"]
 
 [params]
 

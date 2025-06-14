@@ -1,5 +1,6 @@
 # state_transition_manager.gd
 extends Node
+}
 
 # State transition rules
 var state_transitions = {
@@ -25,16 +26,19 @@ var state_transitions = {
 	},
 	# Other elements...
 }
+}
 
 func can_transition(element, from_state, to_state):
 	if element in state_transitions:
 		if to_state in state_transitions[element]:
 			return true
 	return false
-	
+}
+
 func get_transition_conditions(element, to_state):
 	return state_transitions[element][to_state].conditions
-	
+}
+
 func transition_element(element, new_state):
 	if can_transition(element.type, element.current_state, new_state):
 		# Play effects
@@ -46,18 +50,22 @@ func transition_element(element, new_state):
 			state_transitions[element.type][new_state].sound_effect,
 			element.global_position
 		)
-		
+}
+
 		# Change state
 		element.change_state(new_state)
 		return true
 	return false
-	
+}
+
 func play_visual_effect(effect_name, position):
-	var effect = load("res://effects/visual/" + effect_name + ".tscn").instance()
+	var effect = load("res://effects/visual/" + effect_name + ".tscn").instantiate()
 	effect.global_position = position
 	get_tree().get_root().add_child(effect)
-	
+}
+
 func play_sound_effect(effect_name, position):
-	var effect = load("res://effects/sound/" + effect_name + ".tscn").instance()
+	var effect = load("res://effects/sound/" + effect_name + ".tscn").instantiate()
 	effect.global_position = position
 	get_tree().get_root().add_child(effect)
+}

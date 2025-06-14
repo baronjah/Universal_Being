@@ -3,12 +3,12 @@
 importer="glsl"
 type="RDShaderFile"
 uid="uid://c8bnegb5s8a7x"
-path="res://.godot/imported/kernel_convolution_3d.glsl-819e09b051d537fe690cdd17dc62285b.res"
+path="res://.godot/imported/kernel_convolution_3d.glsl-f12d52e8d4f4d0e4d37c35d229761b6b.res"
 
 [deps]
 
-source_file="res://addons/marching_cubes_viewer/shaders/kernel_convolution_3d.glsl"
-dest_files=["res://.godot/imported/kernel_convolution_3d.glsl-819e09b051d537fe690cdd17dc62285b.res"]
+source_file="res://scriptura_exchange_zone/Godot_Eden/Eden_May/the_palace_pf/addons/marching_cubes_viewer/shaders/kernel_convolution_3d.glsl"
+dest_files=["res://.godot/imported/kernel_convolution_3d.glsl-f12d52e8d4f4d0e4d37c35d229761b6b.res"]
 
 [params]
 

@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://ctveffo5gmino"
+
+[deps]
+
+files=["res://scriptura_exchange_zone/claude_desktop/kamisama_tests/genesis project/data/system-config.value.translation", "res://scriptura_exchange_zone/claude_desktop/kamisama_tests/genesis project/data/system-config.description.translation"]
+
+source_file="res://scriptura_exchange_zone/claude_desktop/kamisama_tests/genesis project/data/system-config.csv"
+dest_files=["res://scriptura_exchange_zone/claude_desktop/kamisama_tests/genesis project/data/system-config.value.translation", "res://scriptura_exchange_zone/claude_desktop/kamisama_tests/genesis project/data/system-config.description.translation"]
+
+[params]
+
+compress=true
+delimiter=0

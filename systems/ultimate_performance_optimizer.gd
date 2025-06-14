@@ -91,8 +91,8 @@ func optimize_rendering_pipeline() -> void:
 	"""Optimize rendering pipeline for maximum performance"""
 	var viewport = get_viewport()
 	if viewport:
-		# Maximum quality settings for performance
-		viewport.set_render_data_format(RenderingServer.VIEWPORT_RENDER_DATA_FORMAT_RGBA8)
+		# Maximum quality settings for performance (Godot 4 compatible)
+		# viewport.set_render_data_format() - Not available in Godot 4
 		
 		# Disable expensive effects that aren't needed for maximum performance
 		var render_server = RenderingServer

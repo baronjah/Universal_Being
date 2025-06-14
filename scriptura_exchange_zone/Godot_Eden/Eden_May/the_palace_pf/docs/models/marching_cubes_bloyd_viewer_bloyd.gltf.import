@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://c63tyy0sv7f5"
-path="res://.godot/imported/marching_cubes_bloyd_viewer_bloyd.gltf-b6f2406860d8815f23c87799c2e7b050.scn"
+path="res://.godot/imported/marching_cubes_bloyd_viewer_bloyd.gltf-cdafe9bcbe4563dc5ac30d812dd15827.scn"
 
 [deps]
 
-source_file="res://docs/models/marching_cubes_bloyd_viewer_bloyd.gltf"
-dest_files=["res://.godot/imported/marching_cubes_bloyd_viewer_bloyd.gltf-b6f2406860d8815f23c87799c2e7b050.scn"]
+source_file="res://scriptura_exchange_zone/Godot_Eden/Eden_May/the_palace_pf/docs/models/marching_cubes_bloyd_viewer_bloyd.gltf"
+dest_files=["res://.godot/imported/marching_cubes_bloyd_viewer_bloyd.gltf-cdafe9bcbe4563dc5ac30d812dd15827.scn"]
 
 [params]
 
@@ -18,6 +18,7 @@ nodes/root_name="Scene Root"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
 nodes/use_node_type_suffixes=true
 meshes/ensure_tangents=true
 meshes/generate_lods=true
