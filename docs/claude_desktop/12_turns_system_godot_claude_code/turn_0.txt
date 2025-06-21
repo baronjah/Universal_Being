@@ -1,0 +1,149 @@
+Large Codebase Analysis Prompt System
+For 10k+ Lines of Code Understanding
+Phase 1: Initial Project Mapping
+Claude, I need you to analyze a large codebase (10k+ lines) systematically. Here's my approach:
+
+**PROJECT OVERVIEW REQUEST:**
+- Scan all file names and folder structure first
+- Identify main categories: scripts/, scenes/, assets/, etc.
+- Create a hierarchical map of the project
+- Note file sizes and prioritize smaller files first
+- Flag large files (>500 lines) for later detailed analysis
+
+**FOLDER CATEGORIZATION:**
+- Core Systems (player, game logic, managers)
+- UI/Interface components
+- Utilities and helpers
+- Scene-specific scripts
+- Data structures and configurations
+- Third-party integrations
+
+Please start with: "PROJECT STRUCTURE OVERVIEW" and map everything before diving into code.
+Phase 2: Iterative Code Analysis
+**ANALYSIS RULES:**
+1. If file > 500 lines: Add to "LARGE_FILES_QUEUE" - analyze last
+2. Process files in order: Core → UI → Utils → Scene-specific → Large files
+3. For each file, provide:
+   - Purpose summary (2-3 sentences)
+   - Key classes/functions
+   - Dependencies (what it imports/uses)
+   - Connections (what uses this file)
+   - Notable patterns or design decisions
+
+**ANALYSIS FORMAT:**
+FILE: [filename.gd]
+SIZE: [line count]
+CATEGORY: [Core/UI/Utils/Scene/Large]
+PURPOSE: [brief description]
+KEY_COMPONENTS: [main classes/functions]
+DEPENDENCIES: [what this needs]
+USED_BY: [what depends on this]
+PATTERNS: [notable code patterns]
+COMPLEXITY: [Low/Medium/High]
+
+Continue with next file automatically unless I say "PAUSE" or "SUMMARIZE".
+Phase 3: Connection Mapping
+**CONNECTION ANALYSIS:**
+After analyzing individual files, create:
+
+1. **DEPENDENCY GRAPH:**
+   - Core dependencies (what everything needs)
+   - Circular dependencies (potential issues)
+   - Isolated components (standalone modules)
+
+2. **DATA FLOW MAPPING:**
+   - How data moves through the system
+   - Main data structures and their lifecycle
+   - Communication patterns between components
+
+3. **ARCHITECTURAL PATTERNS:**
+   - Singleton usage
+   - Observer/Signal patterns
+   - State management approaches
+   - Scene organization logic
+
+**OUTPUT FORMAT:**
+Create a visual text diagram showing relationships and data flow.
+Phase 4: Large File Deep Dive
+**LARGE FILE STRATEGY:**
+For files >500 lines, break analysis into chunks:
+
+1. **SECTION MAPPING:** Divide file into logical sections
+2. **CHUNK ANALYSIS:** Analyze 100-150 lines at a time
+3. **INTEGRATION:** Show how chunks connect within the file
+4. **FILE SUMMARY:** Consolidate understanding
+
+**CHUNK ANALYSIS FORMAT:**
+LARGE_FILE: [filename.gd] - CHUNK [X/Y]
+LINES: [start-end]
+SECTION: [initialization/main_logic/helpers/etc]
+KEY_FUNCTIONS: [main functions in this chunk]
+STATE_CHANGES: [what variables/states are modified]
+CONNECTIONS: [how this chunk relates to others]
+COMPLEXITY_FOCUS: [most complex part of this chunk]
+
+Process chunks sequentially, maintaining context between them.
+Phase 5: Final Synthesis
+**COMPREHENSIVE SUMMARY REQUEST:**
+Create a single, comprehensive document containing:
+
+1. **EXECUTIVE SUMMARY** (2-3 paragraphs)
+   - What this codebase does
+   - Main architectural approach
+   - Key strengths and potential issues
+
+2. **SYSTEM ARCHITECTURE**
+   - Core components and their roles
+   - Main design patterns used
+   - Data flow overview
+
+3. **FILE HIERARCHY** (by importance)
+   - Critical files (system breaks without them)
+   - Important files (major features)
+   - Supporting files (utilities, helpers)
+   - Scene-specific files
+
+4. **DEVELOPMENT INSIGHTS**
+   - Code quality assessment
+   - Potential refactoring opportunities
+   - Areas of technical debt
+   - Extension points for new features
+
+5. **QUICK REFERENCE**
+   - Key functions/classes to remember
+   - Important file locations
+   - Common patterns used throughout
+
+**FORMAT:** Single markdown document, well-structured, ready for future reference.
+Usage Instructions
+Step 1: Start with Phase 1 prompt to get project overview
+Step 2: Use Phase 2 for systematic file-by-file analysis
+Step 3: Apply Phase 3 for understanding connections
+Step 4: Deploy Phase 4 for complex files that were deferred
+Step 5: Request Phase 5 for final comprehensive summary
+Size Management Rules
+
+Small files (1-100 lines): Analyze immediately, full context
+Medium files (101-500 lines): Analyze with focused sections
+Large files (501-1000 lines): Queue for chunked analysis
+Very large files (1000+ lines): Break into multiple sessions
+
+Context Preservation
+Between analysis sessions, always include:
+**CONTEXT CARRY-FORWARD:**
+- Files already analyzed: [list]
+- Current understanding level: [percentage]
+- Key discoveries so far: [bullet points]
+- Priority files remaining: [list]
+- Questions/concerns identified: [list]
+Godot-Specific Considerations
+
+Scene structure (.tscn files and their script connections)
+Autoload/Singleton usage patterns
+Signal/Observer implementations
+Resource management (preload vs load)
+Node tree organization and access patterns
+Export variables and their usage
+Custom classes and inheritance hierarchies
+
+This system ensures no code goes unanalyzed while maintaining manageable chunk sizes and preserving overall project understanding.

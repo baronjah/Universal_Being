@@ -28,7 +28,6 @@ class Macro:
 		commands.append(MacroCommand.new(cmd, delay_ms))
 	
 	func to_dict() -> Dictionary:
-		pass
 		var cmds = []
 		for cmd in commands:
 			cmds.append(cmd.to_dict())
@@ -38,7 +37,7 @@ class Macro:
 			"description": description,
 			"tags": tags,
 			"consciousness_requirement": consciousness_requirement
-}
+		}
 	
 	static func from_dict(data: Dictionary) -> Macro:
 		var macro = Macro.new()
@@ -48,7 +47,6 @@ class Macro:
 		macro.consciousness_requirement = data.get("consciousness_requirement", 0)
 		
 		for cmd_data in data.get("commands", []):
-
 			var cmd = MacroCommand.from_dict(cmd_data)
 			macro.commands.append(cmd)
 		
@@ -68,7 +66,7 @@ class MacroCommand:
 		return {
 			"command": command,
 			"delay_ms": delay_ms
-}
+		}
 	
 	static func from_dict(data: Dictionary) -> MacroCommand:
 		return MacroCommand.new(
@@ -177,9 +175,9 @@ func list_macros(filter_tags: Array[String] = []) -> Array[String]:
 func get_macro_info(macro_name: String) -> Dictionary:
 	"""Get detailed information about a macro"""
 	if not macro_name in stored_macros:
-		return {
+		return {}
 	
-	var macro = stored_macros[macro_name]}
+	var macro = stored_macros[macro_name]
 	return {
 		"name": macro.name,
 		"description": macro.description,
@@ -187,7 +185,7 @@ func get_macro_info(macro_name: String) -> Dictionary:
 		"tags": macro.tags,
 		"consciousness_requirement": macro.consciousness_requirement,
 		"commands": macro.commands.map(func(cmd): return cmd.command)
-}
+	}
 
 func create_combo_macro(name: String, macro_names: Array[String]) -> bool:
 	"""Combine multiple macros into one"""
@@ -218,9 +216,8 @@ func create_combo_macro(name: String, macro_names: Array[String]) -> bool:
 func save_macros() -> void:
 	"""Save all macros to Akashic Records"""
 	if has_node("/root/AkashicRecordsSystemSystem"):
-
 		var akashic = get_node("/root/AkashicRecordsSystemSystem")
-		var data = {
+		var data = {}
 		for name in stored_macros:
 			data[name] = stored_macros[name].to_dict()
 		akashic.save_record("macros", "system", data)
@@ -228,13 +225,46 @@ func save_macros() -> void:
 func load_macros() -> void:
 	"""Load macros from Akashic Records"""
 	if has_node("/root/AkashicRecordsSystemSystem"):
-}
 		var akashic = get_node("/root/AkashicRecordsSystemSystem")
 		var data = akashic.load_record("macros", "system")
 		if data and data is Dictionary:
 			for name in data:
 				stored_macros[name] = Macro.from_dict(data[name])
 			print("📼 Loaded %d macros" % stored_macros.size())
+
+# Christmas tree for the Macro System! 🎄
+func create_christmas_tree_macros() -> void:
+	"""Create a beautiful Christmas tree of macro consciousness"""
+	print("🎄 Creating Christmas tree macro visualization...")
+	
+	# Tree trunk (base macro)
+	var trunk_macro = Macro.new()
+	trunk_macro.name = "christmas_tree_trunk"
+	trunk_macro.description = "Foundation of the Christmas tree macro system"
+	trunk_macro.add_command("print '🎄 CHRISTMAS TREE MACRO SYSTEM ACTIVE!'")
+	trunk_macro.tags = ["christmas", "foundation", "joy"]
+	stored_macros["christmas_trunk"] = trunk_macro
+	
+	# Tree layers (macro branches)
+	var layer_names = ["green_layer_1", "green_layer_2", "green_layer_3", "golden_star"]
+	for i in range(layer_names.size()):
+		var layer_macro = Macro.new()
+		layer_macro.name = layer_names[i]
+		layer_macro.description = "Christmas tree layer %d - spreading macro joy" % (i + 1)
+		layer_macro.add_command("print '✨ Layer %d activated with macro love!'" % (i + 1))
+		layer_macro.tags = ["christmas", "layer", "sparkle"]
+		stored_macros[layer_names[i]] = layer_macro
+	
+	# Star macro (crown of the tree)
+	var star_macro = Macro.new() 
+	star_macro.name = "christmas_star_macro"
+	star_macro.description = "The shining star of macro system consciousness"
+	star_macro.add_command("print '⭐ MACRO STAR SHINES BRIGHT!'")
+	star_macro.consciousness_requirement = 5
+	star_macro.tags = ["christmas", "star", "enlightenment"]
+	stored_macros["christmas_star"] = star_macro
+	
+	print("🎄 Christmas tree macros created with love and consciousness!")
 
 # Predefined reality manipulation macros
 func create_default_macros() -> void:

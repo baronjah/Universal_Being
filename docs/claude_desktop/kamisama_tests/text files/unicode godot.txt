@@ -1,0 +1,7 @@
+String char(char: int) 
+
+Returns a single character (as a String) of the given Unicode code point (which is compatible with ASCII code).
+
+a = char(65)      # a is "A"
+a = char(65 + 32) # a is "a"
+a = char(8364)    # a is "€"

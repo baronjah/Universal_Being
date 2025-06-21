@@ -173,6 +173,7 @@ func _init() -> void:
 	pentagon_init()
 
 func pentagon_init() -> void:
+    super.pentagon_init()
 	# Pentagon initialization - override in child classes
 	pass
 
@@ -180,6 +181,7 @@ func _input(event: InputEvent) -> void:
 	pentagon_input(event)
 
 func pentagon_input(event: InputEvent) -> void:
+    super.pentagon_input(event)
 	# Pentagon input handling - override in child classes
 	pass
 
@@ -187,6 +189,7 @@ func sewers() -> void:
 	pentagon_sewers()
 
 func pentagon_sewers() -> void:
+    super.pentagon_sewers()
 	# Pentagon cleanup/output - override in child classes
 	pass
 func update_entity_position(entity_id: String, position: Vector3) -> void:
@@ -206,6 +209,14 @@ func set_height_range(min_h: float, max_h: float) -> void:
 # Mouse interaction
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+func pentagon_process(delta: float) -> void:
+	super.pentagon_process(delta)
+	# Auto-generated process implementation
+
+	# Auto-generated ready implementation
+
 		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 			var pixel_pos = Vector2i(event.position)
 			var world_pos = _pixel_to_world(pixel_pos)

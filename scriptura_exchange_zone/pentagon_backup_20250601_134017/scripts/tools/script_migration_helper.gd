@@ -22,6 +22,7 @@ func _init() -> void:
 	pentagon_init()
 
 func pentagon_init() -> void:
+    super.pentagon_init()
 	# Pentagon initialization - override in child classes
 	pass
 
@@ -29,6 +30,7 @@ func _input(event: InputEvent) -> void:
 	pentagon_input(event)
 
 func pentagon_input(event: InputEvent) -> void:
+    super.pentagon_input(event)
 	# Pentagon input handling - override in child classes
 	pass
 
@@ -36,6 +38,7 @@ func sewers() -> void:
 	pentagon_sewers()
 
 func pentagon_sewers() -> void:
+    super.pentagon_sewers()
 	# Pentagon cleanup/output - override in child classes
 	pass
 func scan_all_scripts() -> Dictionary:
@@ -295,5 +298,13 @@ func _cmd_show_report(_args: Array) -> void:
 
 func _cmd_migrate_all(_args: Array) -> void:
 	var console = get_node("root/ConsoleManager")
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+func pentagon_process(delta: float) -> void:
+	super.pentagon_process(delta)
+	# Auto-generated process implementation
+
+	# Auto-generated ready implementation
+
 	console._print_to_console("[color=orange]🚀 Starting automatic migration...[/color]")
 	migrate_all_scripts()

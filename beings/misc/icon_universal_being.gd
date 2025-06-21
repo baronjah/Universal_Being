@@ -211,9 +211,10 @@ func ai_interface() -> Dictionary:
 		"interactions": click_count,
 		"hovering": is_hovered,
 		"available_icons": icon_textures.keys()
+		}
 	base.text_representation = get_text_representation()
 	return base
-}
+
 
 func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 	match method_name:

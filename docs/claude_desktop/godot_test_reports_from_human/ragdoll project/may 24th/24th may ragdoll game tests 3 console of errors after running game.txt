@@ -1,0 +1,237 @@
+E 0:05:07:896   floodgate_controller.gd:895 @ process_system_1(): Parameter "p_child" is null.
+  <C++ Source>  scene/main/node.cpp:1821 @ add_child()
+  <Stack Trace> floodgate_controller.gd:895 @ process_system_1()
+                floodgate_controller.gd:170 @ process_system()
+                floodgate_controller.gd:160 @ _process()
+
+
+E 0:05:07:872   debug_3d_screen.gd:244 @ _draw_object_list(): Condition "!is_inside_tree()" is true. Returning: Transform3D()
+  <C++ Source>  scene/3d/node_3d.cpp:532 @ get_global_transform()
+  <Stack Trace> debug_3d_screen.gd:244 @ _draw_object_list()
+                debug_3d_screen.gd:142 @ _update_debug_display()
+                debug_3d_screen.gd:130 @ _process()
+
+
+E 0:05:07:725   floodgate_controller.gd:895 @ process_system_1(): Can't add child 'tree_1' to 'root', already has a parent 'root'.
+  <C++ Error>   Condition "p_child->data.parent" is true.
+  <C++ Source>  scene/main/node.cpp:1823 @ add_child()
+  <Stack Trace> floodgate_controller.gd:895 @ process_system_1()
+                floodgate_controller.gd:170 @ process_system()
+                floodgate_controller.gd:160 @ _process()
+
+
+E 0:00:01:548   load_image: Error opening file 'res://icon.svg'.
+  <C++ Error>   Condition "f.is_null()" is true. Returning: err
+  <C++ Source>  core/io/image_loader.cpp:89 @ load_image()
+
+
+
+
+W 0:00:01:149   The parameter "delta" is never used in the function "_process()". If this is intended, prefix it with an underscore: "_delta".
+  <GDScript Error>UNUSED_PARAMETER
+  <GDScript Source>floodgate_controller.gd:155
+
+
+W 0:00:01:149   The local variable "last_delta_to_forget" is declared but never used in the block. If this is intended, prefix it with an underscore: "_last_delta_to_forget".
+  <GDScript Error>UNUSED_VARIABLE
+  <GDScript Source>floodgate_controller.gd:166
+
+
+
+W 0:00:01:149   "await" keyword is unnecessary because the expression isn't a coroutine nor a signal.
+  <GDScript Error>REDUNDANT_AWAIT
+  <GDScript Source>floodgate_controller.gd:259
+
+
+W 0:00:01:149   "await" keyword is unnecessary because the expression isn't a coroutine nor a signal.
+  <GDScript Error>REDUNDANT_AWAIT
+  <GDScript Source>floodgate_controller.gd:261
+
+
+W 0:00:01:149   The local variable "unload_type" is declared but never used in the block. If this is intended, prefix it with an underscore: "_unload_type".
+  <GDScript Error>UNUSED_VARIABLE
+  <GDScript Source>floodgate_controller.gd:1008
+
+
+
+
+W 0:00:01:201   The signal "asset_loaded" is declared but never explicitly used in the class.
+  <GDScript Error>UNUSED_SIGNAL
+  <GDScript Source>asset_library.gd:131
+
+
+
+W 0:00:01:201   The function parameter "type_string" has the same name as a built-in function.
+  <GDScript Error>SHADOWED_GLOBAL_IDENTIFIER
+  <GDScript Source>asset_library.gd:395
+
+
+
+W 0:00:01:319   The parameter "delta" is never used in the function "_process()". If this is intended, prefix it with an underscore: "_delta".
+  <GDScript Error>UNUSED_PARAMETER
+  <GDScript Source>autonomous_developer.gd:95
+
+
+
+
+W 0:00:01:319   The parameter "task" is never used in the function "_create_task_plan()". If this is intended, prefix it with an underscore: "_task".
+  <GDScript Error>UNUSED_PARAMETER
+  <GDScript Source>autonomous_developer.gd:304
+
+
+
+
+W 0:00:01:319   The parameter "task" is never used in the function "_execute_coding_task()". If this is intended, prefix it with an underscore: "_task".
+  <GDScript Error>UNUSED_PARAMETER
+  <GDScript Source>autonomous_developer.gd:312
+
+
+
+
+W 0:00:01:319   The parameter "task" is never used in the function "_run_tests()". If this is intended, prefix it with an underscore: "_task".
+  <GDScript Error>UNUSED_PARAMETER
+  <GDScript Source>autonomous_developer.gd:320
+
+
+
+W 0:00:01:319   The parameter "task" is never used in the function "_update_documentation()". If this is intended, prefix it with an underscore: "_task".
+  <GDScript Error>UNUSED_PARAMETER
+  <GDScript Source>autonomous_developer.gd:327
+
+
+
+
+W 0:00:01:319   The parameter "task" is never used in the function "_commit_changes()". If this is intended, prefix it with an underscore: "_task".
+  <GDScript Error>UNUSED_PARAMETER
+  <GDScript Source>autonomous_developer.gd:350
+
+
+
+
+
+W 0:00:01:319   The parameter "task" is never used in the function "_revert_changes()". If this is intended, prefix it with an underscore: "_task".
+  <GDScript Error>UNUSED_PARAMETER
+  <GDScript Source>autonomous_developer.gd:358
+
+
+
+
+W 0:00:01:319   The parameter "task_id" is never used in the function "approve_task()". If this is intended, prefix it with an underscore: "_task_id".
+  <GDScript Error>UNUSED_PARAMETER
+  <GDScript Source>autonomous_developer.gd:476
+
+
+
+
+W 0:00:01:334   The local function parameter "name" is shadowing an already-declared property in the base class "Node".
+  <GDScript Error>SHADOWED_VARIABLE_BASE_CLASS
+  <GDScript Source>passive_mode_controller.gd:55
+
+
+
+
+W 0:00:01:334   The local function parameter "name" is shadowing an already-declared property in the base class "Node".
+  <GDScript Error>SHADOWED_VARIABLE_BASE_CLASS
+  <GDScript Source>passive_mode_controller.gd:130
+
+
+
+W 0:00:01:342   The parameter "delta" is never used in the function "_process()". If this is intended, prefix it with an underscore: "_delta".
+  <GDScript Error>UNUSED_PARAMETER
+  <GDScript Source>threaded_test_system.gd:38
+
+
+
+
+W 0:00:01:352   The parameter "delta" is never used in the function "_update_state_transition()". If this is intended, prefix it with an underscore: "_delta".
+  <GDScript Error>UNUSED_PARAMETER
+  <GDScript Source>physics_state_manager.gd:138
+
+
+
+
+W 0:00:01:352   The parameter "delta" is never used in the function "_apply_custom_gravity()". If this is intended, prefix it with an underscore: "_delta".
+  <GDScript Error>UNUSED_PARAMETER
+  <GDScript Source>physics_state_manager.gd:247
+
+
+
+
+W 0:00:01:352   The parameter "astral_being" is never used in the function "prepare_object_for_manipulation()". If this is intended, prefix it with an underscore: "_astral_being".
+  <GDScript Error>UNUSED_PARAMETER
+  <GDScript Source>physics_state_manager.gd:260
+
+
+
+
+W 0:00:01:368   The signal "session_metrics_updated" is declared but never explicitly used in the class.
+  <GDScript Error>UNUSED_SIGNAL
+  <GDScript Source>claude_timer_system.gd:37
+
+
+
+
+W 0:00:01:368   The local variable "autonomous_start_time" is declared but never used in the block. If this is intended, prefix it with an underscore: "_autonomous_start_time".
+  <GDScript Error>UNUSED_VARIABLE
+  <GDScript Source>claude_timer_system.gd:135
+
+
+
+
+W 0:00:01:378   The variable "char" has the same name as a built-in function.
+  <GDScript Error>SHADOWED_GLOBAL_IDENTIFIER
+  <GDScript Source>windows_console_fix.gd:111
+
+
+
+W 0:00:01:440   The parameter "label" is never used in the function "_create_axis_indicator()". If this is intended, prefix it with an underscore: "_label".
+  <GDScript Error>UNUSED_PARAMETER
+  <GDScript Source>debug_3d_screen.gd:92
+
+
+
+
+W 0:00:01:440   The parameter "delta" is never used in the function "_process()". If this is intended, prefix it with an underscore: "_delta".
+  <GDScript Error>UNUSED_PARAMETER
+  <GDScript Source>debug_3d_screen.gd:129
+
+
+
+W 0:00:01:440   The local variable "name" is shadowing an already-declared property in the base class "Node".
+  <GDScript Error>SHADOWED_VARIABLE_BASE_CLASS
+  <GDScript Source>debug_3d_screen.gd:185
+
+
+
+
+
+W 0:00:01:440   The parameter "character" is never used in the function "_draw_char()". If this is intended, prefix it with an underscore: "_character".
+  <GDScript Error>UNUSED_PARAMETER
+  <GDScript Source>debug_3d_screen.gd:307
+
+
+
+
+
+W 0:00:01:440   The local function parameter "name" is shadowing an already-declared property in the base class "Node".
+  <GDScript Error>SHADOWED_VARIABLE_BASE_CLASS
+  <GDScript Source>debug_3d_screen.gd:384
+
+
+
+W 0:00:01:445   The parameter "args" is never used in the function "_cmd_help()". If this is intended, prefix it with an underscore: "_args".
+  <GDScript Error>UNUSED_PARAMETER
+  <GDScript Source>console_manager.gd:509
+
+
+
+W 0:00:01:445   The parameter "args" is never used in the function "_cmd_create_tree()". If this is intended, prefix it with an underscore: "_args".
+  <GDScript Error>UNUSED_PARAMETER
+  <GDScript Source>console_manager.gd:630
+
+
+# the args stuff happen a lot, so next time will send the rest, aslo 
+
+W 0:00:01:445   The local variable "ready" is shadowing an already-declared signal in the base class "Node".
+  <GDScript Error>SHADOWED_VARIABLE_BASE_CLASS
+  <GDScript Source>console_manager.gd:1474

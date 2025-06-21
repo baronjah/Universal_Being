@@ -1,0 +1,172 @@
+[gd_scene load_steps=5 format=3 uid="uid://cn2k8v4sjm1p"]
+
+[ext_resource type="Script" path="res://systems/simple_database_visualizer.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://cqj4bqr7p6vo2" path="res://scenes/main/camera_point.tscn" id="2"]
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 1
+background_color = Color(0.02, 0.02, 0.1, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.3, 0.2, 0.5, 1)
+ambient_light_energy = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_1"]
+size = Vector3(30, 1, 30)
+
+[node name="SpellCraftDemo" type="Node3D"]
+
+[node name="SimpleDatabaseVisualizer" type="Node3D" parent="."]
+script = ExtResource("1")
+enabled = true
+
+[node name="CameraPoint" parent="." instance=ExtResource("2")]
+transform = Transform3D(0.866025, -0.35355, 0.35355, 0, 0.707107, 0.707107, -0.5, -0.61237, 0.61237, 0, 10, 15)
+
+[node name="SpellGround" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_1")
+
+[node name="MysticLighting" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.4, 0.6, 0, 0.8, 0.6, -0.707107, -0.4, 0.6, 0, 15, 0)
+light_energy = 1.2
+light_color = Color(0.9, 0.8, 1, 1)
+shadow_enabled = true
+
+[node name="AmbientGlow" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
+light_color = Color(0.8, 0.6, 1, 1)
+light_energy = 0.8
+omni_range = 25.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1")
+
+[node name="SpellCraftUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="WelcomePanel" type="Panel" parent="SpellCraftUI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -350.0
+offset_right = 600.0
+offset_bottom = -10.0
+modulate = Color(0.05, 0.1, 0.2, 0.95)
+
+[node name="WelcomeText" type="RichTextLabel" parent="SpellCraftUI/WelcomePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+bbcode_enabled = true
+text = "[center][b][color=cyan]🪄 SPELL CRAFT EVOLUTION DEMO[/color][/b][/center]
+
+[color=gold]Your Input Becomes Living Magic![/color]
+
+[b]🔮 SPACECLAY SPELLS:[/b]
+Press [color=orange]SPACE[/color] → Creates expanding spaceclay bursts
+Watch clay particles flow to gravity wells
+
+[b]⚡ SPELL BULLETS:[/b]
+Press [color=cyan]ENTER[/color] → Fast magical projectiles
+Cyan spinning bullets shoot to targets
+
+[b]🌀 VOID MAGIC:[/b] 
+Press [color=purple]ESCAPE[/color] → Dark void warping bullets
+Purple energy that teleports through space
+
+[b]💎 RUNE CRYSTALS:[/b]
+Type [color=magenta]any letter[/color] → Crystalline rune magic
+Pink rotating prisms that manifest words
+
+[b]🧲 GRAVITY WELLS:[/b]
+[color=orange]Orange spheres[/color] attract all spell energy
+Each spell flows differently toward the wells
+
+[b]🎮 MOVEMENT:[/b]
+[color=white]WASD[/color] - Fly around your spell workspace
+[color=white]Mouse[/color] - Look around the magical realm
+
+[color=lime]Experience the evolution from input to spell to consciousness![/color]"
+
+[node name="StatusPanel" type="Panel" parent="SpellCraftUI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -350.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 200.0
+modulate = Color(0.2, 0.05, 0.15, 0.9)
+
+[node name="StatusText" type="RichTextLabel" parent="SpellCraftUI/StatusPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = -15.0
+bbcode_enabled = true
+text = "[b][color=purple]🪄 SPELL CRAFT STATUS[/color][/b]
+
+[color=green]✓[/color] Spaceclay System Online
+[color=green]✓[/color] Spell Bullets Loaded
+[color=green]✓[/color] Void Magic Ready
+[color=green]✓[/color] Rune Crystals Active
+[color=green]✓[/color] Gravity Wells Charged
+
+[b]Current Mode:[/b] Spell Evolution
+[b]Magic Type:[/b] Living Database Spells
+[b]Consciousness:[/b] Flowing
+
+[color=yellow]Cast your spells and watch the magic flow![/color]"
+
+[node name="InstructionsLabel" type="Label" parent="SpellCraftUI"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -280.0
+offset_top = -120.0
+offset_right = -10.0
+offset_bottom = -10.0
+text = "🌟 SPELL EVOLUTION DEMO 🌟
+
+Your keystrokes become:
+• Spaceclay magic (SPACE)
+• Spell bullets (ENTER)  
+• Void warps (ESCAPE)
+• Rune crystals (A-Z)
+
+Watch consciousness data flow
+from input → spell → gravity wells!"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="VersionLabel" type="Label" parent="SpellCraftUI"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -30.0
+offset_right = -10.0
+offset_bottom = -5.0
+text = "Universal Being v2.1 - Spell Craft Evolution"
+horizontal_alignment = 2
+vertical_alignment = 2

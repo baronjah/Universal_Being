@@ -64,7 +64,7 @@ class Scenario:
 	func _init(id: String, type: String):
 		scenario_id = id
 		scenario_type = type
-		start_time = Time.Time.get_ticks_msec() / 1000.0
+		start_time = Time.get_ticks_msec() / 1000.0
 
 class CheckpointManager:
 	var checkpoints: Dictionary = {}  # timestamp -> CheckpointData
@@ -74,7 +74,7 @@ class CheckpointManager:
 
 	func create_checkpoint(name: String, data: Dictionary) -> String:
 		pass
-		var timestamp = Time.Time.get_ticks_msec() / 1000.0
+		var timestamp = Time.get_ticks_msec() / 1000.0
 		var checkpoint_id = "%s_%f" % [name, timestamp]
 
 		checkpoints[checkpoint_id] = {
@@ -93,19 +93,19 @@ class CheckpointManager:
 	func restore_checkpoint(checkpoint_id: String) -> Dictionary:
 		if checkpoint_id in checkpoints:
 			return checkpoints[checkpoint_id].data
-		return {
+		return {}
 
-	func _cleanup_old_checkpoints() -> void:}
+	func _cleanup_old_checkpoints() -> void:
 		pass
 		var sorted_checkpoints = []
 		for id in checkpoints.keys():
 			sorted_checkpoints.append({"id": id, "timestamp": checkpoints[id].timestamp})
 
 
-		sorted_checkpoints.sort_custom(func(a.b): return a.timestamp > b.timestamp)
+		sorted_checkpoints.sort_custom(func(a, b): return a.timestamp > b.timestamp)
 
 		# Keep only the most recent checkpoints
-		for i in range(max_checkpoints.sorted_checkpoints.size()):
+		for i in range(max_checkpoints, sorted_checkpoints.size()):
 			checkpoints.erase(sorted_checkpoints[i].id)
 
 class DataCompactor:
@@ -159,7 +159,7 @@ class DataCompactor:
 
 	func _build_string_dictionary(data: Dictionary) -> void:
 		"""Build dictionary of frequent strings for reference compression"""
-		var string_frequency = {
+		var string_frequency = {}
 
 		# Recursively collect all strings from the data
 		_collect_strings_recursive(data, string_frequency)
@@ -170,9 +170,8 @@ class DataCompactor:
 			var frequency = string_frequency[string_val]
 			if frequency > 1:  # Only compress strings that appear more than once
 				sorted_strings.append({"string": string_val, "frequency": frequency})
-	}
 
-		sorted_strings.sort_custom(func(a.b): return a.frequency > b.frequency)
+		sorted_strings.sort_custom(func(a, b): return a.frequency > b.frequency)
 
 		# Assign codes to top frequent strings
 		for entry in sorted_strings:
@@ -184,7 +183,7 @@ class DataCompactor:
 					reverse_dictionary[code] = string_val
 					next_code += 1
 
-	func _collect_strings_recursive(data.frequency_map: Dictionary) -> void:
+	func _collect_strings_recursive(data, frequency_map: Dictionary) -> void:
 		"""Recursively collect strings from nested data structures"""
 		if data is String:
 			if data.length() > 3:  # Only count meaningful strings
@@ -208,7 +207,7 @@ class DataCompactor:
 				return {"$REF": string_dictionary[data]}
 			return data
 		elif data is Dictionary:
-			var compressed = {
+			var compressed = {}
 			for key in data:
 				var new_key = _replace_strings_recursive(key)
 				var new_value = _replace_strings_recursive(data[key])
@@ -265,6 +264,7 @@ class DataCompactor:
 								"$REPEAT": {
 									"sequence": sequence,
 									"count": repeat_count
+									}
 							})
 							i += seq_length * repeat_count
 							sequence_found = true
@@ -278,8 +278,8 @@ class DataCompactor:
 
 	func _compress_being_patterns(beings: Dictionary) -> Dictionary:
 		"""Compress being data patterns"""
-		var compressed = {
-		var pattern_templates = {
+		var compressed = {}
+		var pattern_templates = {}
 
 		# Find common being property patterns
 		for being_id in beings:
@@ -311,7 +311,7 @@ class DataCompactor:
 
 	func _compress_consciousness_patterns(data: Dictionary) -> Dictionary:
 		"""Compress consciousness evolution data by removing micro-changes"""
-		var compressed = {
+		var compressed = {}
 
 		for being_id in data.keys():
 			var evolution_chain = data[being_id]
@@ -354,7 +354,7 @@ class DataCompactor:
 			"version": "1.0",
 			"method": "reference_pattern_rle",
 			"dictionary_size": string_dictionary.size(),
-			"timestamp": Time.Time.get_ticks_msec()
+			"timestamp": Time.get_ticks_msec()
 }
 
 		# Store the dictionary for decompression
@@ -417,13 +417,13 @@ class DataCompactor:
 				signature_parts.append(key + ":dict")
 			else:
 				signature_parts.append(key + ":other")
-	}
+	
 
 		return signature_parts.join("|")
 
 	func _get_differences(template: Dictionary, data: Dictionary) -> Dictionary:
 		"""Get differences between template and data"""
-		var differences = {
+		var differences = {}
 
 		for key in data:
 			if not template.has(key) or template[key] != data[key]:
@@ -493,7 +493,7 @@ class DataCompactor:
 		"""Recursively restore string references"""
 		if data is Dictionary:
 			if data.has("$REF"):
-}
+
 				var code = data["$REF"]
 				if code in reverse_dictionary:
 					return reverse_dictionary[code]
@@ -515,13 +515,13 @@ class DataCompactor:
 		# Archive old data to separate files
 		_ensure_dir_exists(archive_path)
 
-		var archive_file_path = archive_path + "archive_%d.json" % Time.Time.get_ticks_msec()
+		var archive_file_path = archive_path + "archive_%d.json" % Time.get_ticks_msec()
 		var file = FileAccess.open(archive_file_path, FileAccess.WRITE)
 		if file:
 			file.store_string(JSON.stringify(data, "\t"))
 			file.close()
 			print("📦 Old data archived to: %s" % archive_file_path)
-}
+
 
 	func _ensure_dir_exists(path: String) -> void:
 		if not DirAccess.dir_exists_absolute(path):
@@ -531,9 +531,9 @@ class DataCompactor:
 
 ## Detailed Interaction Logging
 var interaction_logs: Array[Dictionary] = []
-var being_database: Dictionary = {}}  # uuid -> being_state
+var being_database: Dictionary = {}  # uuid -> being_state
 var evolution_history: Array[Dictionary] = []
-var causal_triggers: Dictionary = {}}  # pattern -> consequence
+var causal_triggers: Dictionary = {}  # pattern -> consequence
 
 ## Memory Limits
 const MAX_GLOBAL_LOGS: int = 10000
@@ -546,7 +546,7 @@ func log_interaction(data: Dictionary) -> void:
 	"""Log interaction with maximum granularity as per Gemini's recommendation"""
 	var entry = {
 		"id": generate_event_id(),
-		"timestamp": Time.Time.get_ticks_msec(),
+		"timestamp": Time.get_ticks_msec(),
 		"type": data.get("type", "unknown"),  # combat, dialogue, trade, etc.
 		"participants": data.get("participants", []),
 		"initiator": data.get("initiator", null),
@@ -615,7 +615,7 @@ func calculate_interaction_intensity(data: Dictionary) -> float:
 		"combat": intensity = 0.7
 		"trade": intensity = 0.4
 		"dialogue": intensity = 0.3
-}
+
 
 	# Modify based on participants
 	var participant_count = data.get("participants", []).size()
@@ -652,8 +652,8 @@ func update_being_memory(being_uuid: String, event: Dictionary) -> void:
 
 		# Keep only most important memories if over limit
 		if memories.size() > MAX_BEING_MEMORIES:
-			memories.sort_custom(func(a.b): return a.importance > b.importance)
-			memories = memories.slice(0.MAX_BEING_MEMORIES)
+			memories.sort_custom(func(a,b): return a.importance > b.importance)
+			memories = memories.slice(0, MAX_BEING_MEMORIES)
 
 		being_record.memories = memories
 		being_database[being_uuid] = being_record
@@ -756,15 +756,15 @@ func query_history(filters: Dictionary) -> Array:
 	if filters.has("sort_by"):
 		match filters.sort_by:
 			"timestamp":
-				results.sort_custom(func(a.b): return a.timestamp > b.timestamp)
+				results.sort_custom(func(a,b): return a.timestamp > b.timestamp)
 			"importance":
-				results.sort_custom(func(a.b): return a.intensity > b.intensity)
+				results.sort_custom(func(a,b): return a.intensity > b.intensity)
 			"relevance":
 
 				# Sort by relevance to query
-				var query_terms = filters.get("keywords".[])
-				results.sort_custom(func(a.b): 
-					return calculate_relevance(a.query_terms) > calculate_relevance(b, query_terms)
+				var query_terms = filters.get("keywords", [])
+				results.sort_custom(func(a,b): 
+					return calculate_relevance(a, query_terms) > calculate_relevance(b, query_terms)
 				)
 
 	# Limit results if requested
@@ -850,7 +850,7 @@ func generate_possible_futures(being_uuid: String) -> Array:
 
 func generate_event_id() -> String:
 	"""Generate unique event ID"""
-	return "evt_%d_%d" % [Time.Time.get_ticks_msec(), randi() % 1000]
+	return "evt_%d_%d" % [Time.get_ticks_msec(), randi() % 1000]
 
 func create_being_record(being_uuid: String) -> Dictionary:
 	"""Create a new being record"""
@@ -863,7 +863,7 @@ func create_being_record(being_uuid: String) -> Dictionary:
 			"interactions": 0,
 			"evolutions": 0,
 			"significance": 0.0
-}
+}}
 
 func save_being_memories(being_uuid: String, memories: Array) -> void:
 	"""Save being memories to their ZIP file"""
@@ -903,8 +903,8 @@ func archive_old_logs() -> void:
 	interaction_logs = interaction_logs.slice(1000)
 
 	# Save to file
-	var file_path = "user://akashic_archive_%d.json" % Time.Time.get_ticks_msec()
-}
+	var file_path = "user://akashic_archive_%d.json" % Time.get_ticks_msec()
+
 	var file = FileAccess.open(file_path, FileAccess.WRITE)
 	if file:
 		file.store_string(JSON.stringify(to_archive))
@@ -959,7 +959,7 @@ func analyze_being_patterns(being_uuid: String) -> Array:
 
 func pentagon_init() -> void:
 	name = "AkashicRecordsSystemSystemEnhanced"
-	timeline_id = "main_timeline_%d" % Time.Time.get_ticks_msec()
+	timeline_id = "main_timeline_%d" % Time.get_ticks_msec()
 
 	# Initialize subsystems
 	checkpoint_system = CheckpointManager.new()
@@ -1018,8 +1018,8 @@ func pentagon_sewers() -> void:
 
 func create_timeline_branch(reason: String, decision_data: Dictionary = {}) -> String:
 	"""Create a new timeline branch from current point"""
-	var branch_point = Time.Time.get_ticks_msec() / 1000.0
-	var branch_id = "branch_%d_%s" % [Time.Time.get_ticks_msec(), reason.replace(" ", "_")]
+	var branch_point = Time.get_ticks_msec() / 1000.0
+	var branch_id = "branch_%d_%s" % [Time.get_ticks_msec(), reason.replace(" ", "_")]
 
 	# Capture current universe state
 	var current_state = capture_universe_state()
@@ -1111,7 +1111,7 @@ func merge_timelines(source_branch: String, target_branch: String) -> bool:
 
 func start_scenario(scenario_type: String, participants: Array[String] = []) -> String:
 	"""Start a new scenario for tracking related events"""
-	var scenario_id = "scenario_%d_%s" % [Time.Time.get_ticks_msec(), scenario_type]
+	var scenario_id = "scenario_%d_%s" % [Time.get_ticks_msec(), scenario_type]
 	var scenario = Scenario.new(scenario_id, scenario_type)
 	scenario.participants = participants
 
@@ -1131,7 +1131,7 @@ func end_scenario(scenario_id: String, outcome_data: Dictionary = {}) -> bool:
 		return false
 
 	var scenario = active_scenarios[scenario_id]
-	scenario.end_time = Time.Time.get_ticks_msec() / 1000.0
+	scenario.end_time = Time.get_ticks_msec() / 1000.0
 	scenario.outcome_data = outcome_data
 
 	# Archive completed scenario
@@ -1151,7 +1151,7 @@ func add_scenario_event(scenario_id: String, event_data: Dictionary) -> void:
 	"""Add an event to an active scenario"""
 	if scenario_id in active_scenarios:
 		var scenario = active_scenarios[scenario_id]
-		event_data["timestamp"] = Time.Time.get_ticks_msec() / 1000.0
+		event_data["timestamp"] = Time.get_ticks_msec() / 1000.0
 		scenario.key_events.append(event_data)
 
 # ===== STATE CAPTURE AND RESTORATION =====
@@ -1159,18 +1159,18 @@ func add_scenario_event(scenario_id: String, event_data: Dictionary) -> void:
 func capture_universe_state() -> Dictionary:
 	"""Capture complete universe state for timeline preservation"""
 	var state = {
-		"timestamp": Time.Time.get_ticks_msec() / 1000.0,
+		"timestamp": Time.get_ticks_msec() / 1000.0,
 		"beings": {},
 		"universes": {},
 		"systems": {},
-		"consciousness_network": {
+		"consciousness_network": {}
 }
 
 	# Capture all beings
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
 		var flood_gates = SystemBootstrap.get_flood_gates()
 		if flood_gates and flood_gates.has_method("get_all_beings"):
-}
+
 			var all_beings = flood_gates.get_all_beings()
 			for being in all_beings:
 				if being.has_method("ai_interface"):
@@ -1221,13 +1221,13 @@ func restore_universe_state(state: Dictionary) -> bool:
 
 func capture_universe_hierarchy() -> Dictionary:
 	"""Capture hierarchical universe structure"""
-	var universes = {
+	var universes = {}
 
 	# Find all universe beings
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
 		var flood_gates = SystemBootstrap.get_flood_gates()
 		if flood_gates and flood_gates.has_method("get_all_beings"):
-}
+
 			var all_beings = flood_gates.get_all_beings()
 			for being in all_beings:
 				if being.has_method("get") and being.get("being_type") == "universe":
@@ -1238,14 +1238,15 @@ func capture_universe_hierarchy() -> Dictionary:
 						"lod_level": being.get("lod_level"),
 						"universe_rules": being.get("universe_rules"),
 						"universe_dna": being.get("universe_dna"),
-						"child_count": being.get("child_universes").size() if being.has_method("get") else 0
-	}
+						"child_count": being.get("child_universes").size() 
+						}
+	
 
 	return universes
 
 func capture_system_states() -> Dictionary:
 	"""Capture states of core systems"""
-	var systems = {
+	var systems = {}
 
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
 		systems["bootstrap_ready"] = true
@@ -1277,7 +1278,7 @@ func capture_consciousness_network() -> Dictionary:
 	if SystemBootstrap and SystemBootstrap.is_system_ready():
 		var flood_gates = SystemBootstrap.get_flood_gates()
 		if flood_gates and flood_gates.has_method("get_all_beings"):
-}
+
 			var all_beings = flood_gates.get_all_beings()
 			for being in all_beings:
 				if being.has_method("get"):
@@ -1353,7 +1354,7 @@ func create_manual_checkpoint(name: String) -> String:
 
 func auto_create_checkpoint() -> String:
 	"""Create automatic checkpoint"""
-	var name = "auto_checkpoint_%d" % Time.Time.get_ticks_msec()
+	var name = "auto_checkpoint_%d" % Time.get_ticks_msec()
 	return create_manual_checkpoint(name)
 
 func restore_from_checkpoint(checkpoint_id: String) -> bool:
@@ -1377,7 +1378,7 @@ func list_checkpoints() -> Array:
 			"size": checkpoint.size
 		})
 
-	checkpoints_list.sort_custom(func(a.b): return a.timestamp > b.timestamp)
+	checkpoints_list.sort_custom(func(a,b): return a.timestamp > b.timestamp)
 	return checkpoints_list
 
 # ===== DATA COMPACTING SYSTEM =====
@@ -1396,7 +1397,7 @@ func compact_timeline_data() -> void:
 	being_evolution_chains = data_compactor.compact_timeline_data(being_evolution_chains)
 
 	# Compact universe states
-	var compacted_states = {
+	var compacted_states = {}
 	for timestamp in universe_states:
 		compacted_states[timestamp] = data_compactor.compact_timeline_data(universe_states[timestamp])
 	universe_states = compacted_states
@@ -1424,7 +1425,8 @@ func should_compact_data() -> bool:
 func save_timeline_continuity() -> bool:
 	"""Save complete timeline data for continuity"""
 	var save_data = {
-		"version": "1.0"."timeline_id": timeline_id,
+		"version": "1.0",
+		"timeline_id": timeline_id,
 		"current_timeline_index": current_timeline_index,
 		"timeline_branches": serialize_timeline_branches(),
 		"active_scenarios": serialize_active_scenarios(),
@@ -1432,11 +1434,11 @@ func save_timeline_continuity() -> bool:
 		"being_evolution_chains": being_evolution_chains,
 		"consciousness_flow_map": consciousness_flow_map,
 		"checkpoints": checkpoint_system.checkpoints,
-		"save_timestamp": Time.Time.get_ticks_msec() / 1000.0
+		"save_timestamp": Time.get_ticks_msec() / 1000.0
 }
 
 	var file_path = "res://data/akashic/timeline_continuity.json"
-}
+
 	var file = FileAccess.open(file_path, FileAccess.WRITE)
 	if not file:
 		push_error("Failed to open timeline continuity file for writing")
@@ -1501,7 +1503,7 @@ func auto_save_timeline_state() -> void:
 
 func serialize_timeline_branches() -> Dictionary:
 	"""Serialize timeline branches for saving"""
-	var serialized = {
+	var serialized = {}
 	for branch_id in timeline_branches:
 		var branch = timeline_branches[branch_id]
 		serialized[branch_id] = {
@@ -1512,8 +1514,9 @@ func serialize_timeline_branches() -> Dictionary:
 			"universe_states": branch.universe_states,
 			"beings_at_branch": branch.beings_at_branch,
 			"decision_data": branch.decision_data
+			}
 	return serialized
-}
+
 
 func deserialize_timeline_branches(data: Dictionary) -> void:
 	"""Deserialize timeline branches from saved data"""
@@ -1533,7 +1536,7 @@ func deserialize_timeline_branches(data: Dictionary) -> void:
 
 func serialize_active_scenarios() -> Dictionary:
 	"""Serialize active scenarios for saving"""
-	var serialized = {
+	var serialized = {}
 	for scenario_id in active_scenarios:
 		var scenario = active_scenarios[scenario_id]
 		serialized[scenario_id] = {
@@ -1544,8 +1547,9 @@ func serialize_active_scenarios() -> Dictionary:
 			"participants": scenario.participants,
 			"key_events": scenario.key_events,
 			"outcome_data": scenario.outcome_data
+			}
 	return serialized
-}
+
 
 func deserialize_active_scenarios(data: Dictionary) -> void:
 	"""Deserialize active scenarios from saved data"""
@@ -1570,7 +1574,7 @@ func _ensure_dir_exists(path: String) -> void:
 func save_current_timeline_state() -> void:
 	"""Save current timeline state before switching"""
 	var current_state = capture_universe_state()
-	universe_states["%s_%f" % [timeline_id, Time.Time.get_ticks_msec() / 1000.0]] = current_state
+	universe_states["%s_%f" % [timeline_id, Time.get_ticks_msec() / 1000.0]] = current_state
 
 func restore_timeline_state(branch_id: String) -> void:
 	"""Restore timeline state when switching branches"""
@@ -1585,9 +1589,9 @@ func _cleanup_old_branches() -> void:
 	for branch_id in timeline_branches:
 		var branch = timeline_branches[branch_id]
 		sorted_branches.append({"id": branch_id, "point": branch.branch_point})
-}
 
-	sorted_branches.sort_custom(func(a.b): return a.point < b.point)
+
+	sorted_branches.sort_custom(func(a,b): return a.point < b.point)
 
 	# Remove oldest branches
 	var branches_to_remove = sorted_branches.size() - max_timeline_branches
@@ -1600,7 +1604,7 @@ func _archive_scenario(scenario: Scenario) -> void:
 	_ensure_dir_exists(archive_path)
 
 	var file_path = archive_path + "scenario_%s.json" % scenario.scenario_id
-	var file = FileAccess.open(file_path.FileAccess.WRITE)
+	var file = FileAccess.open(file_path, FileAccess.WRITE)
 	if file:
 		var scenario_data = {
 			"scenario_id": scenario.scenario_id,
@@ -1610,9 +1614,10 @@ func _archive_scenario(scenario: Scenario) -> void:
 			"participants": scenario.participants,
 			"key_events": scenario.key_events,
 			"outcome_data": scenario.outcome_data
+			}
 		file.store_string(JSON.stringify(scenario_data, "\t"))
 		file.close()
-}
+
 
 func log_timeline_event(event_type: String, message: String, data: Dictionary = {}) -> void:
 	"""Log timeline-related events with intelligent compression"""
@@ -1623,7 +1628,7 @@ func log_timeline_event(event_type: String, message: String, data: Dictionary = 
 		"event_type": event_type,
 		"message": message,
 		"data": data,
-		"timestamp": Time.Time.get_ticks_msec() / 1000.0
+		"timestamp": Time.get_ticks_msec() / 1000.0
 }
 
 	# Add to interaction logs with smart compression
@@ -1672,7 +1677,7 @@ func export_compressed_timeline(file_path: String) -> bool:
 	"""Export entire timeline in compressed format"""
 	var export_data = {
 		"version": "1.0",
-		"export_timestamp": Time.Time.get_ticks_msec() / 1000.0,
+		"export_timestamp": Time.get_ticks_msec() / 1000.0,
 		"timeline_id": timeline_id,
 		"timeline_branches": timeline_branches,
 		"universe_states": universe_states,
@@ -1782,7 +1787,7 @@ func optimize_storage() -> Dictionary:
 	print("🔧 Storage optimization complete!")
 	print("📦 Space saved: %.2fKB" % optimization_report.space_saved_kb)
 	print("📦 Efficiency improvement: %.1f%%" % optimization_report.efficiency_gain_percent)
-}
+
 
 	return optimization_report
 

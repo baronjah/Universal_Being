@@ -1,0 +1,491 @@
+Welcome to Ragdoll Console!
+Type 'help' for commands, Tab to toggle, Esc to close
+> help
+Available Commands:
+  create/spawn <object> - Create an object at mouse position
+  tree - Spawn a tree
+  rock - Spawn a rock
+  box - Spawn a box
+  ball - Spawn a ball
+  ramp - Spawn a ramp
+  sun - Spawn a sun (light source)
+  astral/astral_being - Spawn an astral being
+  pathway/path - Spawn a pathway
+  bush - Spawn a bush
+  fruit - Spawn a fruit
+  clear - Remove all spawned objects
+  list - List all spawned objects
+  delete <id> - Delete specific object
+  ragdoll <command> - Control ragdoll (reset/position)
+  gravity <value> - Set gravity (default: 9.8)
+  physics - Physics state control
+  say <text> - Make ragdoll say something
+  console <position> - Set console position (center/top/bottom/left/right)
+  scale <value> - Set UI scale (0.5-2.0)
+  scene list - List available scenes
+  load <scene> - Load a scene
+  save [name] - Save current scene
+  walk - Make ragdoll walk/stop
+  spawn_ragdoll - Spawn a new ragdoll character
+
+Enhanced Ragdoll Commands:
+  ragdoll_come - Ragdoll comes to your position
+  ragdoll_pickup - Ragdoll picks up nearest object
+  ragdoll_drop - Ragdoll drops held object
+  ragdoll_organize - Ragdoll organizes nearby objects
+  ragdoll_patrol - Ragdoll starts patrol route
+
+Astral Beings Commands:
+  beings_status - Show astral beings status
+  beings_help - Astral beings help ragdoll
+  beings_organize - Astral beings organize scene
+  beings_harmony - Astral beings create harmony
+
+System Commands:
+  setup_systems - Manually setup ragdoll and astral beings
+  system_status - Check all systems status
+
+Debug Commands:
+  debug [off] - Toggle/disable debug 3D screen
+  select <name|id> - Select object for manipulation
+  move <x> <y> <z> - Move selected object
+  rotate <x> <y> <z> - Rotate selected object (degrees)
+  scale_obj <scale> - Scale selected object
+
+Light Being Commands:
+  awaken <name|id> - Awaken static object to begin movement
+  state <name|id> <state> - Change object physics state
+  States: static, awakening, kinematic, dynamic, ethereal, light_being
+
+Timer & Task Commands:
+  timer - Show timer report
+  timer project <name> - Switch active project
+  timer threshold <seconds> - Set autonomous work trigger
+  task start <name> - Start timing a task
+  task complete - Complete current task
+
+Multi-Todo Commands:
+  todos - Show all project todos
+  todos add <project> <content> - Add todo to project
+  todos complete <project> <id> - Complete todo
+  todos modify <project> <id> <content> - Modify todo
+  todos stepback <project> <id> - Undo last modification
+  balance - Show workload balance recommendations
+
+Passive Mode Commands:
+  passive start - Start autonomous development mode
+  passive stop - Stop passive mode
+  passive status - Show passive mode status
+  add_task <name> [priority] - Add task to queue
+  branch create <name> - Create feature branch
+  branch switch <name> - Switch branch
+  commit <message> - Commit changes
+  mr create <title> - Create merge request
+  mr approve <id> - Approve merge request
+  merge <mr-id> - Merge approved MR
+  workflow - Show workflow status
+  test - Run feature test suite
+  version - Version control commands
+> spawn_ragdoll
+Ragdoll creation queued through floodgate!
+> ragdoll_come
+Ragdoll controller not found
+> ragdoll_pickup
+Ragdoll controller not found
+> ragdoll_drop
+Ragdoll controller not found
+> ragdoll_organize
+Ragdoll controller not found
+> ragdoll_patrol
+Ragdoll controller not found
+> tree
+Tree creation queued through floodgate!
+> rock
+Rock creation queued through floodgate!
+> ball
+Ball creation queued through floodgate!
+> box
+Box creation queued through floodgate!
+> ramp
+Ramp creation queued through floodgate!
+> sun
+Sun creation queued through floodgate!
+> astral
+Astral being creation queued through floodgate!
+> astral_being
+Astral being creation queued through floodgate!
+> pathway
+Pathway creation queued through floodgate!
+> path
+Pathway creation queued through floodgate!
+> bush
+Bush creation queued through floodgate!
+> fruit
+Fruit creation queued through floodgate!
+> fruit
+Fruit creation queued through floodgate!
+> fruit
+Fruit creation queued through floodgate!
+> fruit
+Fruit creation queued through floodgate!
+> fruit
+Fruit creation queued through floodgate!
+> fruit
+Fruit creation queued through floodgate!
+> list
+Spawned Objects:
+  - tree_1 at (-17.81428, 0.0, -15.24873)
+  - rock_1 at (0.258513, 0.0, -14.38247)
+  - ball_1 at (9.731404, 0.240155, -12.87376)
+  - box_1 at (15.29991, 0.741769, -13.08172)
+  - ramp_1 at (23.21683, 0.0, -12.38891)
+  - Sun_1 at (-15.08451, 15.0, -5.329969)
+  - @Node3D@1658 at (0.251544, 0.527509, 4.904335)
+  - @Node3D@1840 at (1.519573, 0.137671, 1.145165)
+  - Pathway_1 at (8.443322, 0.0, -5.329971)
+  - @StaticBody3D@1946 at (13.81516, 0.0, -1.680079)
+  - Bush_1 at (17.09787, 0.0, -1.891806)
+  - Fruit_1 at (-8.810849, -2176.747, -33.68993)
+  - @RigidBody3D@2087 at (-10.88384, 0.090007, -2.196721)
+  - @RigidBody3D@2130 at (15.07403, 0.089999, -12.24205)
+  - @RigidBody3D@2174 at (15.69241, 0.304923, -12.04774)
+  - @RigidBody3D@2218 at (5.884132, 0.094094, -10.41647)
+  - @RigidBody3D@2261 at (1.380459, 0.093315, -6.782256)
+> delete Fruit_1
+Object deletion queued through floodgate: Fruit_1
+> ragdoll
+Usage: ragdoll <reset|position>
+> ragdoll reset
+Ragdoll reset!
+> ragdoll position 0 5 0
+Ragdoll position: (0.0, 5.0, 0.0)
+> clear
+Cleared 16 objects!
+Use 'clear all' to clear terrain too
+Use 'clear restore' to restore default ground
+> world
+Generating heightmap world...
+World generated with terrain, trees, bushes and water!
+Trees and bushes have fruits that birds can eat
+Use 'bird' command to spawn birds that will look for food
+> clear
+Cleared 0 objects!
+Use 'clear all' to clear terrain too
+Use 'clear restore' to restore default ground
+> gravity 1
+Gravity set to: 1.0
+> ball
+Ball creation queued through floodgate!
+> fruit
+Fruit creation queued through floodgate!
+> fruit
+Fruit creation queued through floodgate!
+> spawn_ragdoll
+Ragdoll creation queued through floodgate!
+> physics
+=== PHYSICS STATE ===
+Scene zero point: (0.0, 0.0, 0.0)
+Gravity center: (0.0, 0.0, 0.0)
+Gravity strength: 9.8
+Total objects: 0
+  STATIC: 0
+  UNKNOWN: 0
+  KINEMATIC: 0
+  DYNAMIC: 0
+  ETHEREAL: 0
+  CONNECTED: 0
+  TRANSFORMING: 0
+> say cheese
+Ragdoll says: cheese
+> console left
+Console position set to: left
+> console bottom
+Console position set to: bottom
+> scale 0.8
+UI scale set to: 0.8
+> scale0.99
+Unknown command: scale0.99
+Type 'help' for available commands
+> scale 0.9
+UI scale set to: 0.9
+> scene list
+Available Scenes:
+  - default
+  - forest
+  - physics_test
+  - playground
+Current scene: default
+> load playground
+Loaded scene: playground
+> world
+Generating heightmap world...
+World generated with terrain, trees, bushes and water!
+Trees and bushes have fruits that birds can eat
+Use 'bird' command to spawn birds that will look for food
+> save worldy
+Saved scene as: worldy
+> world
+Generating heightmap world...
+World generated with terrain, trees, bushes and water!
+Trees and bushes have fruits that birds can eat
+Use 'bird' command to spawn birds that will look for food
+> console left
+Console position set to: left
+> consloe right
+Unknown command: consloe
+Type 'help' for available commands
+> console right
+Console position set to: right
+> world
+Generating heightmap world...
+World generated with terrain, trees, bushes and water!
+Trees and bushes have fruits that birds can eat
+Use 'bird' command to spawn birds that will look for food
+> world
+Generating heightmap world...
+World generated with terrain, trees, bushes and water!
+Trees and bushes have fruits that birds can eat
+Use 'bird' command to spawn birds that will look for food
+> world
+Generating heightmap world...
+World generated with terrain, trees, bushes and water!
+Trees and bushes have fruits that birds can eat
+Use 'bird' command to spawn birds that will look for food
+> world
+Generating heightmap world...
+World generated with terrain, trees, bushes and water!
+Trees and bushes have fruits that birds can eat
+Use 'bird' command to spawn birds that will look for food
+> load worldy
+Loaded scene: worldy
+> world
+Generating heightmap world...
+World generated with terrain, trees, bushes and water!
+Trees and bushes have fruits that birds can eat
+Use 'bird' command to spawn birds that will look for food
+> clear
+Cleared 0 objects!
+Use 'clear all' to clear terrain too
+Use 'clear restore' to restore default ground
+> walk
+> ragdoll_come
+Ragdoll controller not found
+> console bottom
+Console position set to: bottom
+> being
+Unknown command: being
+Type 'help' for available commands
+> astral
+Astral being creation queued through floodgate!
+> astral
+Astral being creation queued through floodgate!
+> astral
+Astral being creation queued through floodgate!
+> astral
+Astral being creation queued through floodgate!
+> astral
+Astral being creation queued through floodgate!
+> astral
+Astral being creation queued through floodgate!
+> beings_status
+Astral beings system not found
+> setup_systems
+Manually setting up all systems...
+Systems setup complete!
+Use 'astral_being' command to spawn new talking astral beings
+> astral_being
+Astral being creation queued through floodgate!
+> beings_status
+Astral beings system not found
+> beings_help
+Astral beings system not found
+> beings_organize
+Astral beings system not found
+> beings_harmony
+Astral beings system not found
+> systems_status
+Unknown command: systems_status
+Type 'help' for available commands
+> system_status
+=== SYSTEM STATUS ===
+FloodgateController: ✅ Online
+AssetLibrary: ✅ Online
+WorldBuilder: ✅ Online
+ConsoleManager: ✅ Online
+DialogueSystem: ✅ Online
+SceneLoader: ✅ Online
+UISettingsManager: ✅ Online
+MainGameController: ⏳ Initializing
+> debug
+Debug 3D screen created and enabled
+> debug
+Debug 3D screen disabled
+> select @Node3D@14034
+Selected: @Node3D@14034
+> move 1 5 9
+Object moved to: (1.0, 5.0, 9.0)
+> move 9 9 9 
+Object moved to: (9.0, 9.0, 9.0)
+> move 22 22 22 
+Object moved to: (22.0, 22.0, 22.0)
+> scale_obj 2.0
+Object scaled to: (2.0, 2.0, 2.0)
+> scale 6.0
+UI scale set to: 6.0
+> scale 1.0
+UI scale set to: 1.0
+> console center
+Console position set to: center
+> console bottom
+Console position set to: bottom
+> scale_obj 6.0
+Object scaled to: (6.0, 6.0, 6.0)
+> tree
+Tree creation queued through floodgate!
+> select tree_1
+Selected: tree_1
+> rotate 13 13 13
+Object rotated to: (13.0, 13.0, 13.0) degrees
+> awaken tree_1
+tree_1 is awakening...
+> state tree_1
+Usage: state <object_name|id> <state>
+States: static, awakening, kinematic, dynamic, ethereal, light_being, scene_anchored
+> timer
+=== TIMER REPORT ===
+Session: 1811s
+Current: Talking Ragdoll Game
+User wait: 0s
+Tasks done: 0
+Autonomous: 0s
+
+> timer project akashic records
+Project not found: akashic
+> task start new
+Started task: new
+> timer
+=== TIMER REPORT ===
+Session: 1852s
+Current: Talking Ragdoll Game
+User wait: 0s
+Tasks done: 0
+Autonomous: 0s
+Active task: new (9s)
+
+> task complete
+Task completed in 13.568s
+> todos
+=== ALL PROJECT TODOS ===
+
+[Talking Ragdoll Game]
+🔴 Test debug screen and state transitions
+🟡 Import 3D assets from Downloads folder
+🟡 Verify timer system tracks user wait time
+
+[12 Turns System]
+🟡 Update documentation files across strongholds
+🔴 Synchronize data across Windows/WSL/Claude homes
+🟢 Review and organize Unity assets for future use
+
+[Eden OS Project]
+🟢 Archive threading patterns for future reference
+🟢 Document zone-based testing approach
+
+> balance
+=== WORKLOAD BALANCE ===
+Recommendation: Good balance maintained
+
+Project Status:
+• Talking Ragdoll Game: 3 pending, 0 done today
+• 12 Turns System: 3 pending, 0 done today
+• Eden OS Project: 2 pending, 0 done today
+> todos
+=== ALL PROJECT TODOS ===
+
+[Talking Ragdoll Game]
+🔴 Test debug screen and state transitions
+🟡 Import 3D assets from Downloads folder
+🟡 Verify timer system tracks user wait time
+
+[12 Turns System]
+🟡 Update documentation files across strongholds
+🔴 Synchronize data across Windows/WSL/Claude homes
+🟢 Review and organize Unity assets for future use
+
+[Eden OS Project]
+🟢 Archive threading patterns for future reference
+🟢 Document zone-based testing approach
+
+> todos add Talking Ragdoll Game Create me
+Invalid project: Talking
+> passive start
+Passive mode started - I'll work autonomously for up to 12 hours
+> passive status
+=== PASSIVE MODE STATUS ===
+State: PLANNING
+Current Task: None
+Queue Size: 4
+Tokens: 280000 / 500000
+Hours Worked: 0.0
+Tasks Completed: 56
+
+=== WORKFLOW STATUS ===
+Branch: main
+Feature Branches: 0
+Pending Changes: 0
+Open MRs: 0
+Version: 0.1.0
+
+> add_task create_interfaces high
+Task added: create_interfaces
+> branch create scene_creator
+Branch created: scene_creator
+> branch switch scene_creator
+Switched to branch: scene_creator
+> commit lol
+Committed: 19962846536
+> mr create creation
+Merge request created: MR-1
+> mr approve creation
+Failed to approve: creation
+> workflow
+=== PASSIVE MODE STATUS ===
+State: RESTING
+Current Task: Remove unused code
+Queue Size: 1
+Tokens: 500000 / 500000
+Hours Worked: 0.0
+Tasks Completed: 99
+
+=== WORKFLOW STATUS ===
+Branch: scene_creator
+Feature Branches: 1
+Pending Changes: 0
+Open MRs: 1
+Version: 0.1.0
+
+> test
+=== STARTING THREADED TESTS ====
+Testing will run across multiple frames...
+Use 'test status' to check progress
+> version
+Version system temporarily using threaded testing
+Use 'test' command for feature testing
+> test
+=== STARTING THREADED TESTS ====
+Testing will run across multiple frames...
+Use 'test status' to check progress
+> test status
+=== TEST STATUS ====
+Current zone: cosmos
+Active tests: 3
+Completed: 0/11
+> version
+Version system temporarily using threaded testing
+Use 'test' command for feature testing
+> sun
+Sun creation queued through floodgate!
+> clear
+Cleared 9 objects!
+Use 'clear all' to clear terrain too
+Use 'clear restore' to restore default ground

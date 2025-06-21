@@ -4,6 +4,12 @@
 # Purpose: Ragdoll physics and behavior system
 # Connection: Part of Pentagon Architecture migration
 extends UniversalBeingBase
+
+func pentagon_init() -> void:
+	super.pentagon_init()
+	being_name = "Generated Being"
+	being_type = "auto_generated"
+	consciousness_level = 1
 # JSH_mainframe_database.gd
 # res://scripts/gdscript/scripts/Menu_Keyboard_Console/JSH_mainframe_database.gd
 
@@ -341,6 +347,7 @@ func _process(delta: float) -> void:
 	pentagon_process(delta)
 
 func pentagon_process(delta: float) -> void:
+    super.pentagon_process(delta)
 	# Pentagon logic processing - override in child classes
 	pass
 
@@ -348,6 +355,7 @@ func _input(event: InputEvent) -> void:
 	pentagon_input(event)
 
 func pentagon_input(event: InputEvent) -> void:
+    super.pentagon_input(event)
 	# Pentagon input handling - override in child classes
 	pass
 
@@ -355,6 +363,7 @@ func sewers() -> void:
 	pentagon_sewers()
 
 func pentagon_sewers() -> void:
+    super.pentagon_sewers()
 	# Pentagon cleanup/output - override in child classes
 	pass
 	func update_ram(usage: int) -> void:
@@ -1054,6 +1063,10 @@ func _execute_update_corners() -> void:
 # Executes a single turn
 func _process_turn() -> void:
 	var current_turn = turn_system.current_turn
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+	# Auto-generated ready implementation
+
 	print("JSH_mainframe_database: Processing turn " + str(current_turn))
 	
 	if current_turn >= turn_system.max_turns:

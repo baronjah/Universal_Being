@@ -1,0 +1,292 @@
+/* pipeline-components.css */
+
+/* Window Manager Styles */
+#genesis-windows-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.genesis-window {
+    position: absolute;
+    background-color: var(--genesis-bg-dark, #1e1e1e);
+    border: 1px solid var(--genesis-border-color, #454545);
+    border-radius: 3px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    pointer-events: auto;
+    min-width: 200px;
+    min-height: 100px;
+}
+
+.genesis-window.active {
+    border-color: var(--genesis-accent-color, #0078d7);
+}
+
+.genesis-window-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--genesis-bg-darker, #151515);
+    padding: 8px 12px;
+    cursor: move;
+    user-select: none;
+}
+
+.genesis-window-title {
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.genesis-window-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.genesis-window-controls button {
+    background: none;
+    border: none;
+    color: var(--genesis-text-secondary, #a0a0a0);
+    cursor: pointer;
+    padding: 2px;
+    font-size: 14px;
+    transition: color 0.2s;
+}
+
+.genesis-window-controls button:hover {
+    color: var(--genesis-text-primary, #f0f0f0);
+}
+
+.genesis-window-content {
+    flex: 1;
+    overflow: auto;
+    position: relative;
+}
+
+/* Resize handles */
+.genesis-window-resize-handle {
+    position: absolute;
+    background-color: transparent;
+}
+
+.genesis-window-resize-handle.n {
+    top: -3px;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    cursor: n-resize;
+}
+
+.genesis-window-resize-handle.e {
+    top: 0;
+    right: -3px;
+    width: 6px;
+    height: 100%;
+    cursor: e-resize;
+}
+
+.genesis-window-resize-handle.s {
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    cursor: s-resize;
+}
+
+.genesis-window-resize-handle.w {
+    top: 0;
+    left: -3px;
+    width: 6px;
+    height: 100%;
+    cursor: w-resize;
+}
+
+.genesis-window-resize-handle.ne {
+    top: -3px;
+    right: -3px;
+    width: 6px;
+    height: 6px;
+    cursor: ne-resize;
+}
+
+.genesis-window-resize-handle.se {
+    bottom: -3px;
+    right: -3px;
+    width: 6px;
+    height: 6px;
+    cursor: se-resize;
+}
+
+.genesis-window-resize-handle.sw {
+    bottom: -3px;
+    left: -3px;
+    width: 6px;
+    height: 6px;
+    cursor: sw-resize;
+}
+
+.genesis-window-resize-handle.nw {
+    top: -3px;
+    left: -3px;
+    width: 6px;
+    height: 6px;
+    cursor: nw-resize;
+}
+
+/* Task Manager Styles */
+.genesis-task-list {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.genesis-task-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: var(--genesis-bg-darker, #151515);
+    border-bottom: 1px solid var(--genesis-border-color, #454545);
+}
+
+.genesis-task-list-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.genesis-task-stats {
+    font-size: 14px;
+    color: var(--genesis-text-secondary, #a0a0a0);
+}
+
+.genesis-task-list-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.genesis-task-item {
+    background-color: var(--genesis-bg-lighter, #252525);
+    border: 1px solid var(--genesis-border-color, #454545);
+    border-radius: 3px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.genesis-task-item.status-running {
+    border-left: 3px solid #3498db;
+}
+
+.genesis-task-item.status-completed {
+    border-left: 3px solid #2ecc71;
+}
+
+.genesis-task-item.status-failed {
+    border-left: 3px solid #e74c3c;
+}
+
+.genesis-task-item.status-cancelled {
+    border-left: 3px solid #f39c12;
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background-color: var(--genesis-bg-darker, #151515);
+}
+
+.task-name {
+    font-weight: 500;
+}
+
+.task-status {
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    text-transform: capitalize;
+}
+
+.status-pending .task-status {
+    background-color: #34495e;
+}
+
+.status-running .task-status {
+    background-color: #3498db;
+}
+
+.status-completed .task-status {
+    background-color: #2ecc71;
+}
+
+.status-failed .task-status {
+    background-color: #e74c3c;
+}
+
+.status-cancelled .task-status {
+    background-color: #f39c12;
+}
+
+.task-progress-bar {
+    height: 4px;
+    background-color: var(--genesis-bg-darker, #151515);
+    overflow: hidden;
+}
+
+.task-progress {
+    height: 100%;
+    background-color: var(--genesis-accent-color, #0078d7);
+    transition: width 0.3s;
+}
+
+.task-details {
+    padding: 10px 12px;
+}
+
+.task-description {
+    font-size: 13px;
+    margin-bottom: 8px;
+    color: var(--genesis-text-secondary, #a0a0a0);
+}
+
+.task-controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.task-controls button {
+    padding: 4px 8px;
+    border-radius: 3px;
+    border: 1px solid var(--genesis-border-color, #454545);
+    background-color: var(--genesis-bg-dark, #1e1e1e);
+    color: var(--genesis-text-primary, #f0f0f0);
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.task-controls button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.task-cancel-btn {
+    background-color: #e74c3c !important;
+    border-color: #c0392b !important;
+}
+
+.task-remove-btn {
+    background-color: var(--genesis-bg-darker, #151515) !important;
+}

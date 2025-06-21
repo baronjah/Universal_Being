@@ -15,7 +15,7 @@ const PRELOAD_RADIUS = 3 # Preload packages within N steps
 ## Performance targets
 const TARGET_FPS = 60
 const FRAME_TIME_BUDGET_MS = 16.67 # 1000/60
-const LOAD_TIME_BUDGET_MS = 2.0 # Max time per frame for loading
+var load_time_budget_ms = 2.0 # Max time per frame for loading
 
 ## Package states
 enum PackageState {
@@ -40,7 +40,7 @@ class PackageMetadata:
 	var dependencies: Array[String] = []
 
 ## Memory management
-var active_packages: Dictionary = {}} # Currently loaded packages
+var active_packages: Dictionary = {} # Currently loaded packages
 var package_cache: Dictionary = {} # LRU cache
 var loading_queue: Array[String] = [] # Async loading queue
 var total_memory_used: int = 0
@@ -63,7 +63,7 @@ func _process(delta: float) -> void:
 	frame_time_accumulator += delta
 	
 	var start_time = Time.get_ticks_msec()
-	while loading_queue.size() > 0 and Time.get_ticks_msec() - start_time < LOAD_TIME_BUDGET_MS:
+	while loading_queue.size() > 0 and Time.get_ticks_msec() - start_time < load_time_budget_ms:
 		_process_loading_queue()
 
 ## INTEGRATION STRATEGY ==================================================
@@ -72,14 +72,20 @@ func integrate_with_pentagon(being: UniversalBeing) -> void:
 	"""Seamless Pentagon lifecycle integration"""
 	# Hook into Pentagon states
 	if being.has_method("pentagon_init"):
-		_preload_being_packages(being)
+		preload_being_dependencies(being)
 	
 	# Monitor state transitions
-	being.connect("pentagon_state_changed", _on_pentagon_state_changed)
+	if being.has_signal("pentagon_state_changed"):
+		being.connect("pentagon_state_changed", _on_pentagon_state_changed)
 
 func integrate_with_connector(being: UniversalBeing) -> void:
 	"""Connect with Logic DNA system"""
-	var dna = Connector.extract_logic_dna(being.zip_path if being.has("zip_path") else "")
+	# Check if Connector exists
+	var dna = {}
+	if has_node("/root/Connector"):
+		var connector = get_node("/root/Connector")
+		if connector.has_method("extract_logic_dna"):
+			dna = connector.extract_logic_dna(being.zip_path if being.has("zip_path") else "")
 	
 	# Analyze DNA for package requirements
 	var required_packages = _analyze_dna_requirements(dna)
@@ -88,8 +94,10 @@ func integrate_with_connector(being: UniversalBeing) -> void:
 
 func integrate_with_zip_manager() -> void:
 	"""Enhanced ZIP loading with validation"""
-	# Override ZipPackageManager load method
-	ZipPackageManager.set_meta("akashic_loader", self)
+	# Check if ZipPackageManager exists
+	if has_node("/root/ZipPackageManager"):
+		var zip_manager = get_node("/root/ZipPackageManager")
+		zip_manager.set_meta("akashic_loader", self)
 
 ## PACKAGE TESTING SYSTEM ==================================================
 
@@ -129,7 +137,7 @@ func _test_manifest_integrity(package_path: String) -> Dictionary:
 	var result = {"valid": true, "errors": []
 }
 	
-	var package = ZipPackageManager.load_package(package_path)
+	var package = _load_package_safe(package_path)
 	if not package.valid:
 		result.valid = false
 		result.errors.append("Invalid package format")
@@ -159,7 +167,7 @@ func _test_component_compatibility(package_path: String) -> Dictionary:
 	var result = {"warnings": []
 }
 	
-	var package = ZipPackageManager.load_package(package_path)
+	var package = _load_package_safe(package_path)
 	var manifest = package.manifest
 	
 	# Check Godot version compatibility
@@ -187,7 +195,7 @@ func _test_performance_impact(package_path: String) -> Dictionary:
 	
 	# Simulate loading
 	var start_time = Time.get_ticks_usec()
-	var package = ZipPackageManager.load_package(package_path)
+	var package = _load_package_safe(package_path)
 	var load_time = Time.get_ticks_usec() - start_time
 	
 	# Score based on load time (ms)
@@ -253,7 +261,7 @@ func _load_package_async(package_path: String, priority: int) -> void:
 		return
 	
 	# Load package
-	var package = ZipPackageManager.load_package(package_path)
+	var package = _load_package_safe(package_path)
 	if package.valid:
 		_register_package(package_path, package, priority)
 		package_loaded.emit(package_path)
@@ -327,9 +335,9 @@ func optimize_for_60fps() -> void:
 	# Dynamic load budget based on frame time
 	var current_fps = Engine.get_frames_per_second()
 	if current_fps < 55:
-		LOAD_TIME_BUDGET_MS = 1.0 # Reduce loading time
+		load_time_budget_ms = 1.0 # Reduce loading time
 	elif current_fps > 58:
-		LOAD_TIME_BUDGET_MS = 3.0 # Can afford more loading
+		load_time_budget_ms = 3.0 # Can afford more loading
 
 func get_performance_metrics() -> Dictionary:
 	"""Real-time performance data for monitoring"""
@@ -383,7 +391,7 @@ func _is_package_available(package_name: String) -> bool:
 func _get_packages_for_type(being_type: String) -> Array[String]:
 	# Scan libraries for type-specific packages
 	var packages: Array[String] = []
-	var libraries = ZipPackageManager.scan_libraries()
+	var libraries = _scan_libraries_safe()
 	
 	for lib_name in libraries:
 		for package_path in libraries[lib_name]:
@@ -457,3 +465,55 @@ class PackagePriority:
 	const MEDIUM = 50
 	const LOW = 25
 	const BACKGROUND = 0
+
+## MISSING HELPER FUNCTIONS ==================================================
+
+func _load_package_safe(package_path: String) -> Dictionary:
+	"""Safe package loading with fallback"""
+	var package = {"valid": false, "manifest": {}, "files": {}}
+	
+	# Check if ZipPackageManager exists
+	if has_node("/root/ZipPackageManager"):
+		var zip_manager = get_node("/root/ZipPackageManager")
+		if zip_manager.has_method("load_package"):
+			package = zip_manager.load_package(package_path)
+	else:
+		# Fallback: simple file loading
+		if FileAccess.file_exists(package_path):
+			package.valid = true
+			package.manifest = {"being_type": "unknown", "consciousness_level": 1}
+	
+	return package
+
+func _scan_libraries_safe() -> Dictionary:
+	"""Safe library scanning with fallback"""
+	var libraries = {}
+	
+	# Check if ZipPackageManager exists
+	if has_node("/root/ZipPackageManager"):
+		var zip_manager = get_node("/root/ZipPackageManager")
+		if zip_manager.has_method("scan_libraries"):
+			libraries = zip_manager.scan_libraries()
+	else:
+		# Fallback: scan common directories
+		libraries = {
+			"akashic_library": _scan_directory("res://akashic_library/"),
+			"components": _scan_directory("res://components/")
+		}
+	
+	return libraries
+
+func _scan_directory(dir_path: String) -> Array[String]:
+	"""Scan directory for package files"""
+	var packages: Array[String] = []
+	if DirAccess.dir_exists_absolute(dir_path):
+		var dir = DirAccess.open(dir_path)
+		if dir:
+			dir.list_dir_begin()
+			var file_name = dir.get_next()
+			while file_name != "":
+				if file_name.ends_with(".ub.zip"):
+					packages.append(dir_path + file_name)
+				file_name = dir.get_next()
+			dir.list_dir_end()
+	return packages

@@ -7,7 +7,7 @@
 # ==================================================
 
 extends UniversalBeing
-#class_name InputFocusManagerUniversalBeing # Commented to avoid duplicate
+class_name InputFocusManagerUniversalBeing # Commented to avoid duplicate, hmm now i uncommented it and ther eis no dupliclate
 
 # ===== FOCUS MANAGEMENT =====
 

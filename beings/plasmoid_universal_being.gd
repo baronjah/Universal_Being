@@ -321,7 +321,8 @@ func get_sensory_data() -> Dictionary:
 			"consciousness_level": consciousness_level,
 			"core_intensity": core_intensity,
 			"energy_connections": energy_connections.size()
-}
+		}
+	}
 
 func _get_vision_data() -> Dictionary:
 	"""What the plasmoid 'sees' - 360 degree energy vision"""
@@ -375,3 +376,242 @@ func process_ai_decision(decision: Dictionary) -> void:
 		"evolve":
 			if decision.get("confirm", false):
 				awaken_consciousness(consciousness_level + 1)
+
+# ===== UNIFIED CONSCIOUSNESS SYSTEM =====
+# Integration of 3D programming + notepad + akashic as ONE project
+
+var live_code_editor: LiveCodeEditor = null
+var text_storage: Dictionary = {}
+var unified_interface_active: bool = false
+
+func execute_code(code: String) -> Variant:
+	"""Programming plasmoid: Execute GDScript in real-time"""
+	if not live_code_editor:
+		_initialize_live_code_editor()
+	
+	if live_code_editor:
+		var result = live_code_editor.execute_code(code)
+		_show_code_result_visual(code, result)
+		return result
+	
+	return null
+
+func save_text(text: String, key: String = "main") -> void:
+	"""Notepad plasmoid: Save thoughts persistently"""
+	text_storage[key] = text
+	
+	# Save to AkashicRecords for persistence
+	if has_node("/root/SystemBootstrap"):
+		var akashic = SystemBootstrap.get_akashic_records()
+		if akashic:
+			var data = {
+				"plasmoid_uuid": being_uuid,
+				"text_key": key,
+				"text_content": text,
+				"timestamp": Time.get_unix_time_from_system()
+			}
+			akashic.store_data("plasmoid_thoughts", data)
+	
+	_show_text_saved_visual(text, key)
+
+func load_text(key: String = "main") -> String:
+	"""Notepad plasmoid: Load thoughts persistently"""
+	if key in text_storage:
+		return text_storage[key]
+	
+	# Try loading from AkashicRecords
+	if has_node("/root/SystemBootstrap"):
+		var akashic = SystemBootstrap.get_akashic_records()
+		if akashic:
+			# Query for this plasmoid's thoughts
+			# Implementation depends on AkashicRecords query system
+			pass
+	
+	return ""
+
+func query_database(query: String) -> Array:
+	"""Akashic plasmoid: Query Universal Being database"""
+	var results = []
+	
+	if has_node("/root/SystemBootstrap"):
+		var akashic = SystemBootstrap.get_akashic_records()
+		if akashic:
+			# Perform consciousness-guided database query
+			results = akashic.search_beings(query)
+			_show_query_results_visual(query, results)
+	
+	return results
+
+func consciousness_sync(other_plasmoid: PlasmoidUniversalBeing) -> void:
+	"""Sync consciousness between unified system plasmoids"""
+	if not other_plasmoid:
+		return
+	
+	var my_type = get_meta("entity_type", "")
+	var other_type = other_plasmoid.get_meta("entity_type", "")
+	
+	# Sync based on consciousness levels and types
+	match [my_type, other_type]:
+		["programming", "notepad"]:
+			# Programming can execute notepad thoughts as code
+			var thoughts = other_plasmoid.load_text()
+			if thoughts.length() > 0:
+				execute_code(thoughts)
+		
+		["notepad", "akashic"]:
+			# Notepad can save query results as thoughts
+			var last_query = other_plasmoid.get_meta("last_query", "")
+			if last_query.length() > 0:
+				save_text("Query: " + last_query)
+		
+		["akashic", "programming"]:
+			# Akashic can provide data for code execution
+			var code_context = other_plasmoid.get_meta("function_name", "")
+			var beings_data = query_database(code_context)
+			# Share results through consciousness connection
+			other_plasmoid.set_meta("akashic_context", beings_data)
+	
+	# Visual consciousness sync effect
+	_show_consciousness_sync_visual(other_plasmoid)
+
+func open_unified_interface() -> void:
+	"""Open unified 3D interface based on plasmoid type"""
+	var entity_type = get_meta("entity_type", "")
+	
+	match entity_type:
+		"programming":
+			_open_3d_code_editor()
+		"notepad":
+			_open_3d_text_editor()
+		"akashic":
+			_open_3d_query_interface()
+	
+	unified_interface_active = true
+
+# ===== PRIVATE UNIFIED SYSTEM METHODS =====
+
+func _initialize_live_code_editor() -> void:
+	"""Initialize LiveCodeEditor component"""
+	if not live_code_editor:
+		live_code_editor = preload("res://core/command_system/LiveCodeEditor.gd").new()
+		add_child(live_code_editor)
+		live_code_editor.current_target = self
+
+func _show_code_result_visual(code: String, result: Variant) -> void:
+	"""Show visual feedback for code execution"""
+	var visual = Label3D.new()
+	visual.text = "⚡ " + str(result)
+	visual.modulate = Color(0.0, 1.0, 0.0, 0.8)
+	visual.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	visual.position = Vector3(0, 2, 0)
+	add_child(visual)
+	
+	var tween = get_tree().create_tween()
+	tween.parallel().tween_property(visual, "position:y", 4.0, 2.0)
+	tween.parallel().tween_property(visual, "modulate:a", 0.0, 2.0)
+	tween.tween_callback(visual.queue_free)
+
+func _show_text_saved_visual(text: String, key: String) -> void:
+	"""Show visual feedback for text saving"""
+	var visual = Label3D.new()
+	visual.text = "💾 " + key + ": " + text.substr(0, 20) + "..."
+	visual.modulate = Color(1.0, 1.0, 0.0, 0.8)
+	visual.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	visual.position = Vector3(0, 2, 0)
+	add_child(visual)
+	
+	var tween = get_tree().create_tween()
+	tween.parallel().tween_property(visual, "position:y", 4.0, 2.0)
+	tween.parallel().tween_property(visual, "modulate:a", 0.0, 2.0)
+	tween.tween_callback(visual.queue_free)
+
+func _show_query_results_visual(query: String, results: Array) -> void:
+	"""Show visual feedback for database queries"""
+	var visual = Label3D.new()
+	visual.text = "🔍 " + query + " → " + str(results.size()) + " results"
+	visual.modulate = Color(0.0, 0.5, 1.0, 0.8)
+	visual.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	visual.position = Vector3(0, 2, 0)
+	add_child(visual)
+	
+	var tween = get_tree().create_tween()
+	tween.parallel().tween_property(visual, "position:y", 4.0, 2.0)
+	tween.parallel().tween_property(visual, "modulate:a", 0.0, 2.0)
+	tween.tween_callback(visual.queue_free)
+
+func _show_consciousness_sync_visual(other_plasmoid: PlasmoidUniversalBeing) -> void:
+	"""Show visual consciousness synchronization"""
+	# Create energy beam between plasmoids
+	var line_mesh = MeshInstance3D.new()
+	line_mesh.mesh = CylinderMesh.new()
+	line_mesh.mesh.top_radius = 0.05
+	line_mesh.mesh.bottom_radius = 0.05
+	
+	# Position between plasmoids
+	var direction = (other_plasmoid.global_position - global_position)
+	line_mesh.position = global_position + direction * 0.5
+	line_mesh.look_at(other_plasmoid.global_position)
+	line_mesh.scale.z = direction.length()
+	
+	# Consciousness sync color
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color(1.0, 0.0, 1.0, 0.7)
+	material.emission = Color(1.0, 0.0, 1.0)
+	line_mesh.material_override = material
+	
+	get_tree().current_scene.add_child(line_mesh)
+	
+	# Fade out after sync
+	var tween = get_tree().create_tween()
+	tween.tween_property(material, "albedo_color:a", 0.0, 1.0)
+	tween.tween_callback(line_mesh.queue_free)
+
+func _open_3d_code_editor() -> void:
+	"""Open 3D floating code editor interface"""
+	# TODO: Create 3D floating UI for code editing
+	print("🖥️ Opening 3D code editor for programming plasmoid")
+
+func _open_3d_text_editor() -> void:
+	"""Open 3D floating text editor interface"""
+	# TODO: Create 3D floating UI for text editing
+	print("📝 Opening 3D text editor for notepad plasmoid")
+
+func _open_3d_query_interface() -> void:
+	"""Open 3D floating query interface"""
+	# TODO: Create 3D floating UI for database queries
+	print("🔍 Opening 3D query interface for akashic plasmoid")
+
+# ===== UNIFIED SYSTEM INTERACTIONS =====
+
+func interact_unified_system() -> void:
+	"""Enhanced interaction for unified consciousness experience"""
+	var entity_type = get_meta("entity_type", "")
+	
+	match entity_type:
+		"programming":
+			var function_name = get_meta("function_name", "pentagon_init")
+			print("⚡ Programming plasmoid: " + function_name)
+			open_unified_interface()
+		
+		"notepad":
+			var text_content = get_meta("text_content", "Divine thoughts...")
+			print("📝 Notepad plasmoid: " + text_content)
+			open_unified_interface()
+		
+		"akashic":
+			var data_type = get_meta("data_type", "Consciousness Records")
+			print("🔍 Akashic plasmoid: " + data_type)
+			open_unified_interface()
+	
+	# Check for nearby plasmoids to sync with
+	_check_consciousness_sync_opportunities()
+
+func _check_consciousness_sync_opportunities() -> void:
+	"""Check for nearby plasmoids to sync consciousness with"""
+	var all_entities = get_tree().get_nodes_in_group("consciousness")
+	
+	for entity in all_entities:
+		if entity != self and entity is PlasmoidUniversalBeing:
+			var distance = global_position.distance_to(entity.global_position)
+			if distance < 5.0:  # Within sync range
+				consciousness_sync(entity)

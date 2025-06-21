@@ -28,6 +28,7 @@ func _init() -> void:
 	pentagon_init()
 
 func pentagon_init() -> void:
+    super.pentagon_init()
 	# Pentagon initialization - override in child classes
 	pass
 
@@ -35,6 +36,7 @@ func _process(delta: float) -> void:
 	pentagon_process(delta)
 
 func pentagon_process(delta: float) -> void:
+    super.pentagon_process(delta)
 	# Pentagon logic processing - override in child classes
 	pass
 
@@ -42,6 +44,7 @@ func _input(event: InputEvent) -> void:
 	pentagon_input(event)
 
 func pentagon_input(event: InputEvent) -> void:
+    super.pentagon_input(event)
 	# Pentagon input handling - override in child classes
 	pass
 
@@ -49,6 +52,7 @@ func sewers() -> void:
 	pentagon_sewers()
 
 func pentagon_sewers() -> void:
+    super.pentagon_sewers()
 	# Pentagon cleanup/output - override in child classes
 	pass
 func create_zone_pair(zone_position: Vector3) -> Dictionary:
@@ -284,6 +288,10 @@ func save_zone_configuration(path: String) -> void:
 
 func load_zone_configuration(path: String) -> void:
 	"""Load zone setup from file"""
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+	# Auto-generated ready implementation
+
 	var file = FileAccess.open(path, FileAccess.READ)
 	if file:
 		var json_string = file.get_as_text()

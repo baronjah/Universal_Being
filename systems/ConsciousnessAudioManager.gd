@@ -193,4 +193,4 @@ func get_audio_status() -> Dictionary:
 		"last_telepathic_time": last_telepathic_sound
 }
 
-print("🔊 ConsciousnessAudioManager: Class loaded - Ready to make consciousness audible!")
+#print("🔊 ConsciousnessAudioManager: Class loaded - Ready to make consciousness audible!")

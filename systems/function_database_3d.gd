@@ -581,3 +581,4 @@ func get_database_stats() -> Dictionary:
 		"total_files": all_functions.size(),
 		"categories": function_categories.size(),
 		"search_results": search_results.size()
+		}

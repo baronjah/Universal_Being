@@ -1,0 +1,1197 @@
+Godot Engine v4.4.stable.official.4c311cbee - https://godotengine.org
+Vulkan 1.3.277 - Forward+ - Using Device #0: NVIDIA - Quadro RTX 3000
+
+ ready on each script ? 0 thread_pool.gd
+
+🌱 [INIT] Starting initialization...
+
+ main.gd print tree pretty init 
+ ┖╴
+
+ main.gd print tree pretty should end here
+ thread_stats error first
+ stuck status it is string 
+ stuck status something went wrong, starting verified timer error
+ thread_stats error first
+ timer check omething went wrong, use a timer
+
+✅ [INIT] Initialization complete. Waiting for _ready()...
+
+ ready on each script ? 4
+ ready on each script ? new system_check.gd 
+ new script thread pull thing { "total_threads": 8, "first_entry_time": 1897, "last_entry_time": 0, "threads_history": [], "first_check": <null>, "current_check": <null> }
+
+🚀 [READY] Initializing Digital Earthlings Game v1.0.0...
+
+
+✅ Digital Earthlings ready for initialization.
+
+
+🚀 [READY] Beginning full system setup...
+
+Scanning in debug mode, OS.is_debug_build()
+🖥️ Running on:Windows
+
+🔍 Scanning res:// directory...
+
+📁 .godot
+  📁 editor
+    📄 JSH_digital_earthlings.gd.gd-folding-de0fc42d2873593d833673db7715e0a6.cfg
+    📄 JSH_reality_shaders.gd-folding-5431b62f058dd1509ad8a82694be2452.cfg
+    📄 Multi_threading.gd-folding-5ee5fcda91b37be9cecc1b0940d0f1df.cfg
+    📄 UJAH_Texts.gd-folding-8f3020088b1cbe0702fbdb5ec4caa22e.cfg
+    📄 actions_bank.gd-folding-b61e13e668df63c496afdd75d4fe23a7.cfg
+    📄 ai_module.gd-folding-cd4eee73ac293236ace43706cbb86464.cfg
+    📄 archive_of_past.gd-folding-de247472090eb3944bc100139055bfcc.cfg
+    📄 banks_combiner.gd-folding-83ad4c54188a073537a8045cf1fcea37.cfg
+    📄 button.gd-folding-f938b9363d76f08c0820f46209f3f13a.cfg
+    📄 camera_move.gd-folding-0568ca7de3ff880c502514e8ac8fb87a.cfg
+    📄 camera_mover.gd-folding-c7eb0520d9909e4c522cbb467eaab3a1.cfg
+    📄 containter.gd-folding-0c23f9505341d0d9266c154a192ac749.cfg
+    📄 create_recent.Node
+    📄 cursor_pc.gd-folding-47264787ca49626a42a81df445c4e921.cfg
+    📄 data_point.gd-folding-9cd7554496bea33c1374283588a7bc65.cfg
+    📄 editor_layout.cfg
+    📄 export-94c713e732ca712866a396463a5f8f73-layer_0.scn-folding-b48dc4acbaf4b6a2e0adaa55afcb2afe.cfg
+    📄 favorites
+    📄 favorites.Node
+    📄 filesystem_cache10
+    📄 filesystem_cache8
+    📄 filesystem_update4
+    📄 function_metadata.gd-folding-6045d64fb32e0608dde0c41fc67a77a5.cfg
+    📄 functions_database.gd-folding-4b7e905792cd8f928bf7f4818863d9ef.cfg
+    📄 godot_model.gd-folding-978a517f267c4daee91ce0eb91929174.cfg
+    📄 godot_timers_system.gd-folding-7123ecb628d46b4757a06d961177a965.cfg
+    📄 init_function.gd-folding-2ec4962214c83c7a9ebaa1980025b905.cfg
+    📄 instructions_bank.gd-folding-1f7e3ac080e1a09d54ac10653b254f76.cfg
+    📄 interactions_bank.gd-folding-131740f1c7542f4cedcb4db88a1fac30.cfg
+    📄 jsh_data_splitter.gd-folding-467263b1b5fe3309634db82413ecffbc.cfg
+    📄 jsh_data_splitter.gd-folding-62b5e1cd2747059bb845074b7b52189e.cfg
+    📄 jsh_digital_earthlings.gd-folding-a4a955ad460a9361951ace4f9d207663.cfg
+    📄 jsh_task_manager.gd-folding-0e807f15a600aedd4cabe512683b0016.cfg
+    📄 jsh_task_manager.gd-folding-5c752250645b9f5e0a100ee2922cbcbc.cfg
+    📄 jsh_thread_pool_manager.gd-folding-1efe4beafc111c321a8529707f29656d.cfg
+    📄 layer_0.tscn-editstate-94c713e732ca712866a396463a5f8f73.cfg
+    📄 layer_0.tscn-folding-94c713e732ca712866a396463a5f8f73.cfg
+    📄 line.gd-folding-7dfc5fa073af5cf50adcf072084f3b0e.cfg
+    📄 main.gd-folding-03e539d133f764e63262ddfd0d659548.cfg
+    📄 messages_from_god.gd-folding-f256e8fc8bb3635bb024710ad5456af6.cfg
+    📄 pi_number.gd-folding-2214b6ae618d913b2d502f6a23a963af.cfg
+    📄 pi_number.gd-folding-76116a9aae02c5e3e548480610383874.cfg
+    📄 pi_number_creator.gd-folding-108935cec737a4e74000c99f84f6ccb7.cfg
+    📄 project_architecture.gd-folding-99cccc45cd84bfddbcb2cb73967f4315.cfg
+    📄 project_metadata.cfg
+    📄 recent_dirs
+    📄 record_set_manager.gd-folding-df33086a589f5fd76f98b12072056baa.cfg
+    📄 records_bank.gd-folding-b36d5a70e6b65c922f72b66a690e6171.cfg
+    📄 scene_tree_check.gd-folding-50e55dda115a30f7971c7dacb60ecdfb.cfg
+    📄 scenes_bank.gd-folding-0c943729bef0233fd55c77cd5553f522.cfg
+    📄 script_editor_cache.cfg
+    📄 settings_bank.gd-folding-e8a9fb407d543b8f79163d1aecae6789.cfg
+    📄 system_check.gd-folding-2043b00b0272fdfa3c869e2a4caffba1.cfg
+    📄 system_check.gd-folding-363d50fe9bfbe4235b47a1367f330c23.cfg
+    📄 system_interfaces.gd-folding-090c428dbd62c7f595bb25ad26b389c1.cfg
+    📄 text_label.gd-folding-fc0b8c879add37fc52f047f7b1abd002.cfg
+    📄 thing (2).gd-folding-be2cc91c1b88c7bea7f9491cd4c221be.cfg
+    📄 thingy.gd-folding-b510cc3214f89f95754120f7dffa082a.cfg
+    📄 thread_pool.gd-folding-67558194747c7010679a4fa7b93440eb.cfg
+    📄 thread_pool_manager.gd-folding-5cbf0d3089944d36e9ae6396e39470bc.cfg
+    📄 trackball_camera.gd-folding-74d1a5ed338de9473a5d57d51a4fadd2.cfg
+    📄 tree_blueprints_bank.gd-folding-badad2267c20e9055df8df4bf14ce173.cfg
+  📁 exported
+    📁 133200997
+      📄 export-94c713e732ca712866a396463a5f8f73-layer_0.scn
+      📄 file_cache
+  📁 imported
+    📄 icon.png-d8104086c24314fbd510b502e5d9423c.ctex
+    📄 icon.png-d8104086c24314fbd510b502e5d9423c.md5
+    📄 icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex
+    📄 icon.svg-218a8f2b3041327d8a5756f3a245f83b.md5
+    📄 icon.svg-5236919800efc60e2a9546a484c9d5e3.ctex
+    📄 icon.svg-5236919800efc60e2a9546a484c9d5e3.md5
+    📄 icon_trackball_camera.png-1f67d96a7a375568005a510700dba68a.ctex
+    📄 icon_trackball_camera.png-1f67d96a7a375568005a510700dba68a.md5
+    📄 icon_trackball_camera.svg-87202336c371094f2871b6de2f8005f0.ctex
+    📄 icon_trackball_camera.svg-87202336c371094f2871b6de2f8005f0.md5
+    📄 number_1.jpg-bfa542bda86f19a2183c0001985d9192.md5
+    📄 number_1.jpg-bfa542bda86f19a2183c0001985d9192.s3tc.ctex
+    📄 number_2.jpg-dd52ad67be684932e1144185994c5e3c.ctex
+    📄 number_2.jpg-dd52ad67be684932e1144185994c5e3c.md5
+    📄 number_3.jpg-28a537514c6be52c81da42a706cc976a.ctex
+    📄 number_3.jpg-28a537514c6be52c81da42a706cc976a.md5
+    📄 number_4.jpg-5a7731a5b75d838d8f582b920b2349c1.ctex
+    📄 number_4.jpg-5a7731a5b75d838d8f582b920b2349c1.md5
+    📄 number_5.jpg-3407af19f756d850ec224f67eade6fbd.ctex
+    📄 number_5.jpg-3407af19f756d850ec224f67eade6fbd.md5
+    📄 number_6.jpg-3ca079facc6fec8f62a1130f5a86d97d.ctex
+    📄 number_6.jpg-3ca079facc6fec8f62a1130f5a86d97d.md5
+    📄 thread.png-a8c2a33aab16e470fb95550c56d782fe.ctex
+    📄 thread.png-a8c2a33aab16e470fb95550c56d782fe.md5
+  📁 mono
+    📁 metadata
+  📁 shader_cache
+    📁 BestFitNormalShaderRD
+      📁 08f67ae74881933f8a51a2fa4d78599b3d1dbf022b16e0c042edefd80b71860d
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 12205bf584c2900167fd45bae91a603f21a9d7661e333c881d900ab7cc226c7e
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 8ffb22cb537ee4bfd09822c4623c161b33abec186400688d957654c43b13bad5
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 da50b1ee325fa09e8a9d2278e44bfbc4e716c11aa4475ca5323315d9d3e84d70
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 eca4d0b9c4691407904f68fd2462e48913dc53504b8899ed6626318959eaedd5
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 fd491c25f4eab3ddbb701696f55d9c1b94bd61287e2f4f8380d140f35862bb15
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 BlitShaderRD
+      📁 09b63e5347ccb6779fd79e54b093cfc915ec80510efa1f613c9ada9ff2e0f70d
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 60b72570245d5a464fb0c04ffcef0e642a15a222ee0de28d468f8a470fcde26c
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 63a25a7daea628c981277a894314d0b0bf9a01f0704f8ebc4006a30a46004d92
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 8636e528c6d98a34bb9dd75bd41821637beb59c069eee64b0f6ad157ce9d4b0d
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 c1a508b343e89110130b9aeb6612f366588f35c09d225b1ebd16a7ade2a7e4f4
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 eeb11f4acfc0b22beb1b2db549160fbd43fc55457f372d767533a58cecb4153c
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 BokehDofShaderRD
+      📁 29ac0b7210535af2e3db3706a9afb3c6319e9b5c7de8e3124f317efa276b8eb4
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 39f32133b5111c9c24ab7cd9b202ca96bb3aeb73e0c73ebd7b7a5dae08cb759f
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 7ed0623b942da44af76fd1982c1d48037cc5ca55ae7ee71d56bf0333c042c07c
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 a1b6f6efbec8b44f0f08265c7e7770ea079bbef91c56860a1c79078bd5b70e1e
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 cdc329fb15139dcae19937b183945c48dc854bb644ebb750fcf08352bf58c401
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 d9f37931400590c4153f9aab1ae2805ff4595be387e6860fddc0ad312e4dec5c
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 CanvasOcclusionShaderRD
+      📁 248c1c5f022b89f8bfc0fca12cc5ea235615b89cba4d4c113cc161e05359cea2
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 42f2245b35206bcace1cda9e39e9282519e9967978ba6d5956472809525b1150
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 474a127c1342c166158ee6e498e73bdccb349f06c7e54e2552a4f05f02e66f09
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 666da827787fe5a735c02129136b9a9a96b90cedd5662e7204d25766eba270ce
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 84f39dc9f258f28376799e7aa15f10bc2fbe51c28ea9d467f8ca224be12d1feb
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 bcfa93956e4a2ce1cc8464b2858459b5e62efc9bba8386289860eb74fbf50f9c
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 CanvasSdfShaderRD
+      📁 56dcf2d748dbca170cc6b24185e1a41b1c3c30642066e11b6b7035663994f78d
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 6d98c66999618dcc27ebd94158ff0a951b5ebdc6101dc6ecd9c54d2e63e16247
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 77e45c1369b65f0b1756b806d9083ba7ea67c39eba4c61c8658234e08087ab99
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 7ef25f535f17ce3cb6e9cdbb671b389f9905af968c04a97b2e84039c0f1cf6ef
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 cc85e08620ea8ab32da7d892cfe479389b6738e18b07cd63702ef482671bbad1
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 f65579ae334cdfb6901aee2527afd18ed626d1067a35c91f12fb632b45ce7f21
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 CanvasShaderRD
+      📁 165f6964cfc63fea91c4221f04e7b8a54b5dc39d76b5a57aed5f99b20050b148
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+        📄 45fb1ddc6499e56682916a355ce2839e61f42dfe.vulkan.cache
+        📄 6b3b870743b828dcd054fdf31e0034e036dad94f.vulkan.cache
+        📄 7d18bd726a158f1a35b723c8e73e7de5ebb3d37c.vulkan.cache
+        📄 8a7277c8d3ac029b087c3fa9c55de85560be5119.vulkan.cache
+        📄 c0a681ae42aa3e0b5abba232ccae0b036be455e4.vulkan.cache
+        📄 c58570947be7f76937b1582424c0fd3d81be0352.vulkan.cache
+        📄 ddbe30d4d1be5d69b00075293fd27da8decd4af2.vulkan.cache
+        📄 f3e258e8f7ec2e7e740b62f3bc48ecf5c99fb0db.vulkan.cache
+      📁 5856edf45d5dfb02534573ce0b8c829bf91f8057581ce7c8816f3319fc8aebd8
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+        📄 45fb1ddc6499e56682916a355ce2839e61f42dfe.vulkan.cache
+        📄 8a7277c8d3ac029b087c3fa9c55de85560be5119.vulkan.cache
+        📄 b585f2cdc5a17ed2e467f8af814098acbdc2006f.vulkan.cache
+        📄 c0a681ae42aa3e0b5abba232ccae0b036be455e4.vulkan.cache
+        📄 ddbe30d4d1be5d69b00075293fd27da8decd4af2.vulkan.cache
+        📄 f3e258e8f7ec2e7e740b62f3bc48ecf5c99fb0db.vulkan.cache
+      📁 ad69e6e96e2a2383cf840f43b83a9cd3ab565544b7591f84e16766a23306377c
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+        📄 45fb1ddc6499e56682916a355ce2839e61f42dfe.vulkan.cache
+        📄 8a7277c8d3ac029b087c3fa9c55de85560be5119.vulkan.cache
+        📄 b585f2cdc5a17ed2e467f8af814098acbdc2006f.vulkan.cache
+        📄 c0a681ae42aa3e0b5abba232ccae0b036be455e4.vulkan.cache
+        📄 ddbe30d4d1be5d69b00075293fd27da8decd4af2.vulkan.cache
+        📄 f3e258e8f7ec2e7e740b62f3bc48ecf5c99fb0db.vulkan.cache
+      📁 b2e95576d03e97d92969e687f44aa126da14f6eef2dd3b8d329a3aa04753c204
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+        📄 45fb1ddc6499e56682916a355ce2839e61f42dfe.vulkan.cache
+        📄 8a7277c8d3ac029b087c3fa9c55de85560be5119.vulkan.cache
+        📄 b585f2cdc5a17ed2e467f8af814098acbdc2006f.vulkan.cache
+        📄 c0a681ae42aa3e0b5abba232ccae0b036be455e4.vulkan.cache
+        📄 ddbe30d4d1be5d69b00075293fd27da8decd4af2.vulkan.cache
+        📄 f3e258e8f7ec2e7e740b62f3bc48ecf5c99fb0db.vulkan.cache
+      📁 b33416d126428c39b9bdd7674dbc63becb45fe835130b3d35c8523367fb596ea
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+        📄 45fb1ddc6499e56682916a355ce2839e61f42dfe.vulkan.cache
+        📄 8a7277c8d3ac029b087c3fa9c55de85560be5119.vulkan.cache
+        📄 b585f2cdc5a17ed2e467f8af814098acbdc2006f.vulkan.cache
+        📄 c0a681ae42aa3e0b5abba232ccae0b036be455e4.vulkan.cache
+        📄 ddbe30d4d1be5d69b00075293fd27da8decd4af2.vulkan.cache
+        📄 f3e258e8f7ec2e7e740b62f3bc48ecf5c99fb0db.vulkan.cache
+      📁 f83d8068413a45cea6e2b5f546b7ba81ae9e042a37e56866e10dcc51b81661d7
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+        📄 45fb1ddc6499e56682916a355ce2839e61f42dfe.vulkan.cache
+        📄 8a7277c8d3ac029b087c3fa9c55de85560be5119.vulkan.cache
+        📄 c0a681ae42aa3e0b5abba232ccae0b036be455e4.vulkan.cache
+        📄 c58570947be7f76937b1582424c0fd3d81be0352.vulkan.cache
+        📄 ddbe30d4d1be5d69b00075293fd27da8decd4af2.vulkan.cache
+        📄 f3e258e8f7ec2e7e740b62f3bc48ecf5c99fb0db.vulkan.cache
+        📄 f943e8dba7b29a08a2910c2144f7f8a363ecf834.vulkan.cache
+    📁 ClusterDebugShaderRD
+      📁 0fc3a4145fb0593b7979ef24e96686868f96991310c620653f5a5c10d6a8bd58
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 2546937b6acfcec18164bde1022dd572463c5dc6a8dfb2db860e93b1f8cb6cf1
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 6781193adab69acb0ff208938cfd79de9bb81868ae1b3f415f0ad65a97be676c
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 8b9f45f2d8e490e4b91c40b371889e2bb8d326c317cd6c08b562f095b8e3db8f
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 9e34a113d63a886ee6fc2cc8e9ca9c4d1f25bd0d573de4e4b05c9e7edb296a96
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 e6def0f8f3ff4e8e19dcf241fadff628e7010ae0ac5078c8a97ea30760ea68ff
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 ClusterRenderShaderRD
+      📁 10486f3b6e58b4dd6351c8a22163a0959da681181f3d91f9b35b21c18af7bbad
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 630d993611269b3cf3eb566704ed710999ff2b3a3c75db058ed1a437cb2ea5fa
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 a5a56ac61fdc705eab2f9a20606ed4f4bbf811ff96ad810542f57f25b8062fb3
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 c9c681ebb89963979e3618867f22e9fa99c8a0cf3aedb1d5c6bb50440130da08
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 e138dfa55627ca222eda3daa0739d50014770edfb2a8fbab0fa51e2130af04e8
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 fba28bef58db25372b6d4a1fd8ab8558ca4d932199ea97052407ae63138cf9c2
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 ClusterStoreShaderRD
+      📁 44efe54fdfa0811178ad2a7a0207ebc98532c6ae316489503cdc7c5c843a564e
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 53cfc43d17b6d332e408ac42531a4540bad40d349f39a3cbe74cf9fae1094084
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 69a2f705a92318789c5f0991c0fff161d86db264d40163eaf3c348bbbb130bef
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 a89e0eef0e47d7babb4016769d27ed56b02f0a40b350816e1065926892602ca1
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 ba2c6bb6486d0065d10feda088721b1ff49a7455afea50c160d59a5e730bd632
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 ef51cf4b3f6e578721dfca19477fa7e19866fdc90367b5c75f27114dcb7e8ff4
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 CopyShaderRD
+      📁 384c9fa73dd38d149f145bcb1dd98841b95481dd096a5ff153988745158d4024
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 4a43f34799f84bc5a387aff816d36330149d91299172af9be2d3ab05cc0c4e9d
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 91b1d4ceb9d0659eb340ca51312caf668c576a7d9794708d23aa739b434307a7
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 ba013ccec819557fed345c81ad8d4ade56f581da6144331650bb4846dcfe7a03
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 d7ad6123823160359cdb75425b879d2ba47336331f5e81c26083c72bf0be1914
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 e57c398150bd594c258b3d6189a0495b04121194b99d6931e0b42dfeaf5266a8
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 CopyToFbShaderRD
+      📁 0394ac5bafd76e83b7e4bf00e43ef4ba3b9633cfac1371bb40371e11e9d88b62
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 331fe28b23e084d58a554c6d19e6b44016b3b0b88cf4995d9fc25513b17eb435
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 8668028c5ceed89276611359329de4a0f5d40702546caecc31456f63f6f9ffe8
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 b5ca41951030c99316df9c316b366add08fc7ed544db0e1b03c82558d92575ea
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 d5ac36c130db1e5e714a3544b973efe64b97b68f6b1e8a44dd64abaaa0888d32
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 d71dfa0b7ee1f00185d54ee3a6cf0b63f760936a978b3255f4dc949503a0517c
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 CubeToDpShaderRD
+      📁 285470bf3d79e1ff53476ac978f536ad4442263b57e86af90f16ba1831654184
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 5ae54a0e8484fa2a33d89e98537cb2b7ceaeb6dfbd163ed6e8021ee74150dbd7
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 b8c52b4a02591a1a08fc4202b0a50e990d4eadbeb08d52f6fb5792e9762f6607
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 c7eb2150013188f234926912e6a9fd3e7479429a13407a40fef8f24abd6d9746
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 e3db5adc31b15e80112f4d7497dc8563c39b7d64675a53dcce7f9511c5ca9f80
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 f4bd91498aac1003ee046aeb4af1632865d8cd46b6fafa7ae84767364915cccf
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 CubemapDownsamplerShaderRD
+      📁 0be395ba3a2fb11333ed963208f03999bc285e09ef3ac2e340771b5968c4e36b
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 4fc516242eeb82527f8c72e00ac9972aa671bcf1886e93d0492649429c501d7f
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 6376d8aae8d25aa5fed14d9e78a76a69c5566f021773d2b38defa77a573b20f1
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 bd81c1c46cd619748a80769b66ac4bf7c9ede1f6c031cd92080d4777ae61651c
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 c6b1ef7b490bed3404092a6a71fd99218c43a92003b9633511b1672ff1fcf521
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 e7e05a4424e8835e0e986bb492297d996aff176293c5724219b70659fd13d5b2
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 CubemapFilterShaderRD
+      📁 04aa1d07869a5d0ebceebcbd0ef0595f4080cd8ba255f8c81b95f65e17f21987
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 2f08297ba1b1b883a8c992645518328b3d4b04d816ca068dff7657bdb281e1a9
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 88f44f9a5be925becac3751283cb446652c5c81c50907b38fa15d047d33f200d
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 96fd6d20ed52761601cf4665fa909c5a27f13aeaa25940cf720f4e331158ef8e
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 a755ac269cbcd8f0e32652219ab6a3dbf31a6b7858249b92332c5dc8b7bcd16c
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 d1b866bd82bd6fae2ebb7201890678a540be3a3d2feb86c3050955e1aeeeda44
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 CubemapRoughnessShaderRD
+      📁 1d72ea29a087908b2262137858ecb047ac60acf75d2e625661f01be4ce0d3ce2
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 444604ac2dd3bf42987510ab135cc42091874b1a3656135e9f007c79f4491508
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 498a8c875fe31824d241d4466dd82cbef05ce7a48dcbabf8502aebf723844f35
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 9ae1e05f6f9da3a3e4b0b82de6a24657d7020c57d8409e09b8edcac5fee113e5
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 d1d5ab29c4f91f0adb6e177585a250dafdba921654b7da837ecf76438ed3f595
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 e3702c23931727513905102133655a78eed1908531fc0c18fb651847475b3aa4
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 Fsr2AccumulatePassShaderRD
+      📁 045b9c553940ce1e6107eda0ae48c9afce3d0e2ac1663e32fe0888d7ab6526a7
+      📁 160fedb5d3ef5cf63f06d76d8bf08e8739978139204922b5f9e4d50a873eef55
+      📁 16714447c0194c9dead0b676cb56c7dea2134eebfc8a5b0a8dede16001532f37
+      📁 aa946a27d6418ebbdaa6b2a681a719b2fa5de17fc9c566f47dd6ac3484db5b76
+      📁 c18b5559ecde9c81be80b3deee52cf170f84bb59ec86fecb9c0d80ee7c4b92bc
+      📁 dbb37f8ddea3c9b7e8db4ae1c122eff98e7455db6d056ec2c8af9b3716730bbb
+    📁 Fsr2AutogenReactivePassShaderRD
+      📁 14f4d9cd6dad64a975960910238ce72205fdd48bf074f24d6dcf10e28bbba8d1
+      📁 19176e42a1860028af3c40416d3e8e71d760860c7085834e8814dab49068d822
+      📁 2506409ad93dfb8d2cad6944c9458a06666727f698ee5eaeba46ef4add459113
+      📁 a75408a3af2db56d20e213dfbd4c91ede902ba861921d8f2262b8e1d30240a7c
+      📁 dd661f6230e50b82cb23ca149e6f15401a0151912d074fd0bad085910647aeaa
+      📁 fe5e8a726a1e8d2d6b07996ffa45daf285000a5a89ce8bfe8314586a7e18899f
+    📁 Fsr2ComputeLuminancePyramidPassShaderRD
+      📁 282792f9816f8833afe70dd7db442fed7b8c59c72bd4264670f29c2a08e1bfbd
+      📁 58ec04012bc37b56415856608ed54f53bb425705753d4fbd8ec475cc8993caae
+      📁 91b43885fedcca5ed604c06712cb9ebd6b2e3d2df8e9185e01069bdabda408ab
+      📁 a0fe4fe30c391695ab57a0c4542e72c578a6f9956b248d8e17f0d861f6d67eb5
+      📁 c92c4123c952df52747c6ed9ffc4f90c15d364e035fbac643040f62903bedcc9
+      📁 dbb2339cd02b370a029a022b6abd30195e71368f06969d685a000068d113ec38
+    📁 Fsr2DepthClipPassShaderRD
+      📁 685832d8689abcf0ba659277c592f171fa9fd6d3f2b0b8ea251b84c5d6da480c
+      📁 6c10a12c0d4664f94cb70b55e4d6948f6040cd68a3c063b9b421c0f7e53204cd
+      📁 707cedb489376840e788ff087c039f7d3c3125cec2919cac3afdcf39dd1d2a59
+      📁 a00990f8923f073d12cdb3dc8afe5a76e510a2fbb1ce63bc0c0f7d02899cf07f
+      📁 d20a9907d69069fd690707338d044d94f3022a72b72fdffcb249ee1acca2f4af
+      📁 f3a7731ebdc135b5cd0910085daa9440b9adba2dccae0797e528638f485437ca
+    📁 Fsr2LockPassShaderRD
+      📁 4cd677921238bef2b6f3430e1971eeff23469bc4b2b63fae089c0e5b51c69547
+      📁 5562de0986b602167f7e26a8a4e4bf2c371477729ce2ccfe8583672c58a2c813
+      📁 71a4353b3eed590507399282661b11706f2c2a54e19b298aed7d4a22c6b131c3
+      📁 bbfb89de314e789592087b487da0296f27a9aab606dd2b35de4ece32ab07dd33
+      📁 fd7270679041c16c1c160152344dc333e0d4d01a9ea61f5ab1a97a4f148ae642
+      📁 ffb60c586812985ded2b37b6216bddf7aefdc9f5d85925ada26d03d6d47cb154
+    📁 Fsr2RcasPassShaderRD
+      📁 0968f9ce0df81db1c3a0583734731e9fa54fc166a9f83e4c51f72aee94722006
+      📁 1c81d789b4d2bd0f51f75c03bdd7834fc8ce0050500ea90e2fb5b4973a5c507e
+      📁 4cdf81cefa5cb2b9e09721fb3f519fda8c77ac5532f72d7f3bd1a050c577827f
+      📁 891e22cd1d088ddeb9cdbfbce896d6948a0656462542c4d2b70ee85c69366419
+      📁 8a626094af84937520b9256df2cc7a2b334f5b12c8aa96d47195f768317a1e2c
+      📁 8f66f947c8416604bf6aea45faeb231add701f1c0b155186671b89909d52b653
+    📁 Fsr2ReconstructPreviousDepthPassShaderRD
+      📁 0738a145aebd348e2931d3174a8643d595de122c3f1686437d92b7c41b6618c8
+      📁 1b3cf3b85b05b8231d83e5c582a10c994b9fbb9ac744fe3f332b8dda1550c38c
+      📁 3dcad7698b808fcfc099c7753076e22614cf6a217b4236503cc6665d707c69e7
+      📁 900e471f384febf63669ecb37c4d78dc514bf2173a97333d1a19cc51fc66a1e9
+      📁 b36ad21ea860e8d806b75440628cf9983bb37a7c5753fe35287a28657c9c60c7
+      📁 b56b046186e0886ebe0df89f96476a1b6cdd80243d937b9fa3808f57e20326ae
+    📁 Fsr2TcrAutogenPassShaderRD
+      📁 51c41e3962f077bfbb9a7b6dd127c0d38925ace2350a44c93a1cf5e7bb7d9a13
+      📁 7f816576d0d8a81115ed6a3b52b5473f70bc8d0cfb04c452811c69fd1f748074
+      📁 846e5bbb1aa3971873d711b0bfb4c593b2aad02dcf3aa098e328786e9ba38c23
+      📁 882cd5c7e2be1d3a4d880cef6efcd93f4b55c90683b11a7fd0ae4d10d3bfd80d
+      📁 9f3c3bbed04215977e50735bab4d9dbb4aac1c717098bb57ed7ed2028c105bcd
+      📁 bdb5bbbb247bcd6f4605dfda07347cb12da67dfa09e757675b125f91f5beee23
+    📁 FsrUpscaleShaderRD
+      📁 362fc0b19d06cf68dc6f6f2d99e1f9ccfd8afaef2a65e38a931df5dd9e183d7d
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 3903f5304a0c8d377b6d28b876f4f4be4d6a2d019c8ec6804c61cda6a0e8e3d1
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 67c7b37a79c73c32051d8282572f8bb517aea720bada457083761662b5ce7797
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 81fc9627d69182721c90e5cf056fda8c60dd926ecf9ce0a8f70e82b3fb1b7e83
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 bae8060ea68f9d9ec240d7a766621dd3e52235f6558a9678b2f7b6dc63117bd6
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 ee5bc1cd4d4621d6dbbe371640985ed2ea9ad421e633fdd1c064552f43384138
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 GiShaderRD
+      📁 11f2cce02da14332fc95fbfd4bcf20e8c454dc848c543d0f959757714a021603
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 2b51ba5b3e4e6be7fc223f7517a8a8b80c61234f3fbd4ffa229da05d747f020a
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 5748d22534478c009e298b06926b05c92a300abdd0d60ef4c4f6267c5d2f1024
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 894321fd6aa20d84423a67c1332f6700cd81b0e7cfef8fc691699b6657085afa
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 fc3c13d85c83a25fc86823204f076238df98c7ea96b9101fc08e3931403402b8
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 fcc5bc7693b722f73ea24f0508fc99d82dd2dc51f51b9fde5b968f5d4c4abcc8
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 LuminanceReduceShaderRD
+      📁 2687da76c0ac04fe197e7093fd065958200b5a2e8e378e0f61c445212a1a0ac4
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 3a39696f235e5cda5d792537f6d86ad0f55e5590c7b9b30df2ef6173379bcee6
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 45c3bbe7eea967ac76d84aaace503eff5269156c91f57298f84b8a17b84e4014
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 4e83c11ac44e8ada5bf0cc24c2159b2e6b36dcf607b65c2f602c71ed262d4588
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 973b197f4a322d8c1188755cb6723d0d26b57dc2ef3153e7a045bf4d49cf611c
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 9f3a91257ad0b34b8a10fe82b1bf274a93d9db933364ee9b00f41b05dc0d59ba
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 MotionVectorsShaderRD
+      📁 1d251a38f2c848db912fd492baedbd3ce7c9b6a9293126afa2f3f7d29bb1cc24
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 231122bcd64c4c4f9fe7368348f3b7ed4e7501eba3bd6a692cf6b3484dcc685d
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 48a652baf1e70a49aa48b0baca8034d1249b7bde4761f3c16b39408f607d52c0
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 abf8dc8086a2c796396251dc113f3f4195d74f8f6da4d478dc06d7327cc3944b
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 b97e28f57464bbcbe9a34acfe8ca4f00414b94dee6b451aba9e24191820749af
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 cbf3cbdcba0d0a2026c9fbf248556f1acd11beacc38a2e8c5ce7009ee49a1560
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 ParticlesCopyShaderRD
+      📁 2bba87c2af154e36421c5303527840e84b1f64c328b1c48001972ba199e5cb36
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 69566a7b0235d75ec40f504cd5555856aace22b5273899269166fde57287d26e
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 90cb26c0a9ac89e3e460999e5d545c16a1dba748878ad57ef7042a74f1ea6b22
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 a6947ccefb2ef8980660c6bb1f0cb1d6ae3c2ea0ff24bd5eb5d9475e723fd2b7
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 b53676a26a38511b0004ec0f955ed24c43622c0db6c588eeaa4f7babee913ff2
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 d3163f0e0eb7d231256c4ab2b3ace17a0ccfeb170ff8aa5440699e6814783dd7
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 ParticlesShaderRD
+      📁 3959d7f1ab31e6d455d4b8b46d3fc39fe125a6a32704d3a75350c2e5145e2788
+        📄 f128cab0b22fb7e0d9f023d6cdb81309be392d95.vulkan.cache
+      📁 47fcf57848349fdf54197e5c1f64750a69c8d54787d3509ade4781c9faa31654
+        📄 f128cab0b22fb7e0d9f023d6cdb81309be392d95.vulkan.cache
+      📁 59c6535c3507130df7b501dac97ecf3730b9978b4d50fa5fa4cd331fac07410e
+        📄 f128cab0b22fb7e0d9f023d6cdb81309be392d95.vulkan.cache
+      📁 5d52df901ee444a19f0ccc4541f8ba8dc2d32b5e681e8dc02f2f235448ec100a
+        📄 f128cab0b22fb7e0d9f023d6cdb81309be392d95.vulkan.cache
+      📁 ef96e96eddea1653b9c478cf3cc16e2a2d16d1a5af6e71d65473294be5e219e7
+        📄 f128cab0b22fb7e0d9f023d6cdb81309be392d95.vulkan.cache
+      📁 fc976b60c8a18c39def5a054d27fcbf22d498df4119b3688c6d92926a745e43d
+        📄 f128cab0b22fb7e0d9f023d6cdb81309be392d95.vulkan.cache
+    📁 ResolveShaderRD
+      📁 4c97907291c0ed83c1c9eaa9ddb6d555eb75e67d586dcef0368e8df55eddc35b
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 4eed9a584e94b3db5e08b3dd178112267127e5cb55e97790e3791fff9eb617f7
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 58e629e22f1a58e1eb662df68428805eaa44dee2c8f69d15a7afb03d4baed892
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 5d11c7954975a8171e06fea7bcbb82d3b2c7f0fb89016d28a2dcfb70315643c8
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 b3153e65276b7f2112d23916103c8771dd089aa0792bb7bf04e537fa76e6c1df
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+      📁 ea00b333ba761e645e3a0c302a28b3ffc07c24b2b96a274951d12111fc3d901c
+        📄 087916079fba7c625e62b0c2cca570e0fb87c99a.vulkan.cache
+    📁 SceneForwardClusteredShaderRD
+      📁 00015879f79b26079e93867379e610c25d919ef029d0c9b2c9dc26401e3f8ded
+      📁 12552d69e047cf8e1b12ed19b6ca99855d0f1ac96d62dff62ee215c11a23c41c
+      📁 1bb11d7a68ceae2e4dcb410d31f63d2d6e82d7e7a77fe2b04591cb9fd30184ee
+        📄 0d94c9ab3b0daf77a0be4fec7e76515326122a05.vulkan.cache
+        📄 0f1bcf11b9f7757773a7866f1cd2e297cb2acf5f.vulkan.cache
+        📄 1d94d7653c04fb7febbe6df8d6c0f471ee8df8ed.vulkan.cache
+        📄 2588520598bd9d4874da441a254a13f346de76ca.vulkan.cache
+        📄 2a6cac6232ca942cc65c3f5369aa219c863c7b8b.vulkan.cache
+        📄 2b83ada958e476cf26531ce107fe1c0d75fac7be.vulkan.cache
+        📄 3a1e499a888b30781cad86a80d4a4e2efe7f2caa.vulkan.cache
+        📄 3ee92779f31d8b7471ea1440cef676bd33f29c3b.vulkan.cache
+        📄 450dbe482b9d8a4dcf60162087f824aee7a10919.vulkan.cache
+        📄 484574d6966da5fa625415ab5c4d35d8a9fde9f7.vulkan.cache
+        📄 4fadd51057bc3bbc8d5803cfec0d57a586c56975.vulkan.cache
+        📄 69f37345aac9aa92afb27631a7f0e3c5fae044eb.vulkan.cache
+        📄 6f0bf1c2e48138a76872e3b8bc99e76f0c85ca5d.vulkan.cache
+        📄 779b64fd3b123ed28bd1f47f73c6950d732d51c3.vulkan.cache
+        📄 7fb66440f65dac23b75016fc52fb82ae26e9393f.vulkan.cache
+        📄 8c386f82e6f16f6675b02a6d94c1cb9b0071d556.vulkan.cache
+        📄 8c4a6577a4ef29bb59d10356dbe5e400d812d8bb.vulkan.cache
+        📄 8e95fae70b8a4ed23d573b5ee48f20484db820a4.vulkan.cache
+        📄 8eb7aeac3861680a0202f049c0bfdcf05b99b274.vulkan.cache
+        📄 964e2bf8e1eed26e7e9ed4b223d256b6a0bda12a.vulkan.cache
+        📄 97eb8bcfe44860ea4eebe84a80ff0d552ce28746.vulkan.cache
+        📄 a6d99b637dfee75712ae57f13dc63ae39e299a45.vulkan.cache
+        📄 aa0086cc160e9e167e95546ad5eb0423d596c5b3.vulkan.cache
+        📄 ab60f8b228c0dad11d9d882c2ab4f61eb6ca2f20.vulkan.cache
+        📄 afe1c0449d843047874ee4b0dda3f797decb0436.vulkan.cache
+        📄 b7b2f398c116e26c751517dd8d44535f700f825f.vulkan.cache
+        📄 b837d7a6ac0e0c13a886299192728ac0467bc8e7.vulkan.cache
+        📄 be3b793c3b635002efb49935f74fe2c91c2766ed.vulkan.cache
+        [...]
+  ERROR: [output overflow, print less text!]
+ threads dilema : 26
+✅ File list saved to: D:/Eden/files/file_list.txt
+queue pusher <RefCounted#-9223371989677242921>
+ delta message start 00
+ delta message start 00
+ delta message start 01
+🕒 Quick tick: 2682
+ delta message start 01
+ delta message start 02
+ delta message start 02
+ delta message start 03
+ delta message start 03
+ handle_creation_task : base
+ handle_creation_task : menu
+taskkkkl does not have base its status : 1
+ to be loaded 
+ we have not loaded it before : base
+taskkkkl does not have menu its status : 1
+ to be loaded 
+ we have not loaded it before : menu
+queue pusher <RefCounted#-9223371988804827687>
+queue pusher <RefCounted#-9223371988788050470>
+ creation 00 base
+ single 
+catch current_container_count_check -1 in set base
+catch initalize memories ! 0 : base
+catch we can still create 
+catch new checkers in initia menu new set must be created
+queue pusher <RefCounted#-9223371988620278306>
+ creation 01 base
+ creation 00 menu
+ single 
+catch current_container_count_check -1 in set menu
+catch initalize memories ! 0 : menu
+catch we can still create 
+catch new checkers in initia menu new set must be created
+queue pusher <RefCounted#-9223371988536392224>
+queue pusher <RefCounted#-9223371988519615009>
+ creation 02 base
+ creation 01 menu
+ container test ? 0
+ ready on each script ? 3 container.gd
+ ready on each script ? 2 datapoint.gd 
+queue pusher <RefCounted#-9223371988418951710>
+queue pusher <RefCounted#-9223371988200847891>
+queue pusher <RefCounted#-9223371988184070674>
+queue pusher <RefCounted#-9223371988083407377>
+ so the line script is alive! thing_3
+🕒 Quick tick: 2880
+queue pusher <RefCounted#-9223371987328432635>
+queue pusher <RefCounted#-9223371987311655418>
+queue pusher <RefCounted#-9223371987294878201>
+queue pusher <RefCounted#-9223371987278100984>
+queue pusher <RefCounted#-9223371987261323767>
+queue pusher <RefCounted#-9223371987244546550>
+🕒 Quick tick: 3201
+queue pusher <RefCounted#-9223371986405685720>
+queue pusher <RefCounted#-9223371986388908503>
+queue pusher <RefCounted#-9223371986372131286>
+queue pusher <RefCounted#-9223371986355354069>
+queue pusher <RefCounted#-9223371986338576852>
+queue pusher <RefCounted#-9223371986321799635>
+queue pusher <RefCounted#-9223371986305022418>
+queue pusher <RefCounted#-9223371986288245201>
+queue pusher <RefCounted#-9223371986271467984>
+🕒 Quick tick: 3499
+⏱️ Short tick: 3499
+queue pusher <RefCounted#-9223371985482938807>
+queue pusher <RefCounted#-9223371985466161590>
+queue pusher <RefCounted#-9223371985449384373>
+queue pusher <RefCounted#-9223371985432607156>
+queue pusher <RefCounted#-9223371985415829939>
+queue pusher <RefCounted#-9223371985399052722>
+queue pusher <RefCounted#-9223371985382275505>
+queue pusher <RefCounted#-9223371985365498288>
+queue pusher <RefCounted#-9223371985348721071>
+queue pusher <RefCounted#-9223371985331943854>
+queue pusher <RefCounted#-9223371988435728927>
+ creation 02 menu
+🕒 Quick tick: 3508
+ load cached data start : base_
+ we have an issue, probably [["instruction_0"], ["assign_priority_to_datapoint"]]
+ we have an issue, probably  1
+ we have an issue, probably [["instruction_1"], ["assign_things_to_datapoint"]]
+ we have an issue, probably  1
+ we have an issue, probably [["instruction_2"], ["set_max_things_number"]]
+ we have an issue, probably  1
+ we have an issue, probably [["instruction_3"], ["connect_containter_datapoint"]]
+ we have an issue, probably  1
+ we have an issue, probably [["instruction_5"], ["set_interaction_check_mode"]]
+ we have an issue, probably  1
+ we have an issue, probably [["scene_0"], ["akashic_records"], ["thing_7"], ["records_0"]]
+ we have an issue, probably  2
+ we have an issue, probably [["scene_1"], ["akashic_records"], ["thing_7"], ["records_0"]]
+ we have an issue, probably  2
+ we have an issue, probably [["interaction_0"], ["akashic_records"], ["thing_7"]]
+ we have an issue, probably  3
+ we have an issue, probably [["interaction_1"], ["akashic_records"], ["thing_7"]]
+ we have an issue, probably  3
+queue pusher <RefCounted#-9223371985046731169>
+queue pusher <RefCounted#-9223371985029953952>
+queue pusher <RefCounted#-9223371985013176735>
+queue pusher <RefCounted#-9223371984996399518>
+queue pusher <RefCounted#-9223371985080285603>
+ fifth imnpact list of sets to create we plus one base
+ les check stuff sending data to datapoint
+ les check stuff sending data to datapoint
+ les check stuff sending data to datapoint
+ les check stuff sending data to datapoint
+ les check stuff sending data to datapoint
+ les check stuff sending data to datapoint
+ les check stuff sending data to datapoint
+ les check stuff sending data to datapoint
+ the await two point o stuff 
+ the await two point o stuff  upload interaction
+ les check stuff sending data to datapoint
+ the await two point o stuff 
+ the await two point o stuff  upload interaction
+🕒 Quick tick: 3656
+queue pusher <RefCounted#-9223371983603890533>
+queue pusher <RefCounted#-9223371983587113315>
+queue pusher <RefCounted#-9223371983570336098>
+queue pusher <RefCounted#-9223371983553558881>
+queue pusher <RefCounted#-9223371983520004447>
+queue pusher <RefCounted#-9223371983503227230>
+queue pusher <RefCounted#-9223371983486450013>
+queue pusher <RefCounted#-9223371983452895579>
+queue pusher <RefCounted#-9223371983436118362>
+queue pusher <RefCounted#-9223371983469672796>
+queue pusher <RefCounted#-9223371983419341145>
+queue pusher <RefCounted#-9223371983402563928>
+queue pusher <RefCounted#-9223371983385786711>
+queue pusher <RefCounted#-9223371983369009494>
+queue pusher <RefCounted#-9223371983352232277>
+queue pusher <RefCounted#-9223371983335455060>
+queue pusher <RefCounted#-9223371983318677843>
+queue pusher <RefCounted#-9223371983301900626>
+queue pusher <RefCounted#-9223371983285123409>
+queue pusher <RefCounted#-9223371983268346192>
+queue pusher <RefCounted#-9223371983251568975>
+queue pusher <RefCounted#-9223371983234791758>
+queue pusher <RefCounted#-9223371983218014541>
+queue pusher <RefCounted#-9223371983201237324>
+queue pusher <RefCounted#-9223371983184460107>
+queue pusher <RefCounted#-9223371983167682890>
+queue pusher <RefCounted#-9223371983150905673>
+queue pusher <RefCounted#-9223371983134128456>
+queue pusher <RefCounted#-9223371983117351239>
+queue pusher <RefCounted#-9223371983100574022>
+queue pusher <RefCounted#-9223371983083796805>
+queue pusher <RefCounted#-9223371983067019588>
+queue pusher <RefCounted#-9223371983050242371>
+queue pusher <RefCounted#-9223371983033465154>
+queue pusher <RefCounted#-9223371983016687937>
+queue pusher <RefCounted#-9223371982999910720>
+queue pusher <RefCounted#-9223371982983133503>
+queue pusher <RefCounted#-9223371985063508386>
+ les check repair ["single"]
+ les check stuff, what is it? single
+ type_of_container single 
+ load cached data start : menu_
+ we have an issue, probably [["instruction_6"], ["assign_things_to_datapoint"]]
+ we have an issue, probably  1
+ we have an issue, probably [["instruction_7"], ["set_the_scene"]]
+ we have an issue, probably  1
+ we have an issue, probably [["scene_2"], ["akashic_records"], ["thing_7"], ["records_2"]]
+ we have an issue, probably  2
+ we have an issue, probably [["scene_3"], ["akashic_records"], ["thing_7"], ["records_2"]]
+ we have an issue, probably  2
+ we have an issue, probably [["scene_4"], ["akashic_records"], ["thing_7"], ["records_2"]]
+ we have an issue, probably  2
+ we have an issue, probably [["scene_5"], ["akashic_records"], ["thing_7"], ["records_2"]]
+ we have an issue, probably  2
+ we have an issue, probably [["scene_6"], ["akashic_records"], ["thing_7"], ["records_2"]]
+ we have an issue, probably  2
+ we have an issue, probably [["scene_7"], ["akashic_records"], ["thing_7"], ["records_2"]]
+ we have an issue, probably  2
+ we have an issue, probably [["interaction_2"], ["akashic_records"], ["thing_7"]]
+ we have an issue, probably  3
+ we have an issue, probably [["interaction_3"], ["akashic_records"], ["thing_7"]]
+ we have an issue, probably  3
+ we have an issue, probably [["interaction_4"], ["akashic_records"], ["thing_7"]]
+ we have an issue, probably  3
+ we have an issue, probably [["interaction_5"], ["akashic_records"], ["thing_7"]]
+ we have an issue, probably  3
+ we have an issue, probably [["interaction_6"], ["akashic_records"], ["thing_7"]]
+ we have an issue, probably  3
+ we have an issue, probably [["interaction_7"], ["akashic_records"], ["thing_7"]]
+ we have an issue, probably  3
+ we have an issue, probably [["interaction_8"], ["akashic_records"], ["thing_7"]]
+ we have an issue, probably  3
+ we have an issue, probably [["interaction_9"], ["akashic_records"], ["thing_7"]]
+ we have an issue, probably  3
+ we have an issue, probably [["interaction_10"], ["akashic_records"], ["thing_7"]]
+ we have an issue, probably  3
+ we have an issue, probably [["interaction_11"], ["akashic_records"], ["thing_7"]]
+ we have an issue, probably  3
+ we have an issue, probably [["interaction_12"], ["akashic_records"], ["thing_7"]]
+ we have an issue, probably  3
+ we have an issue, probably [["interaction_148"], ["akashic_records"], ["thing_7"]]
+ we have an issue, probably  3
+ les check stuff sending data to datapoint
+ les check stuff sending data to datapoint
+ les check stuff sending data to datapoint
+ les check stuff sending data to datapoint
+ les check stuff sending data to datapoint
+ upload scene frames testingg 3 thing_7
+ les check stuff sending data to datapoint
+ les check stuff sending data to datapoint
+ so lets make new version, of that unloading nodes now : ["thing_11", "thing_12", "thing_13", "thing_14", "thing_15", "thing_16", "thing_17", "thing_3", "thing_4", "thing_7"]
+ seventh dimensional magic : ["change_visibilty", "/root/main/akashic_records", 1]
+ les check stuff sending data to datapoint
+ les check stuff sending data to datapoint
+ the await two point o stuff 
+ the await two point o stuff  upload interaction
+ les check stuff sending data to datapoint
+ the await two point o stuff 
+ the await two point o stuff  upload interaction
+ les check stuff sending data to datapoint
+ les check stuff sending data to datapoint
+ the await two point o stuff 
+ the await two point o stuff 
+ the await two point o stuff  upload interaction
+ les check stuff sending data to datapoint
+ the await two point o stuff  upload interaction
+ the await two point o stuff 
+ the await two point o stuff  upload interaction
+ les check stuff sending data to datapoint
+ the await two point o stuff 
+ the await two point o stuff  upload interaction
+ les check stuff sending data to datapoint
+ the await two point o stuff 
+ the await two point o stuff  upload interaction
+ les check stuff sending data to datapoint
+ the await two point o stuff 
+ the await two point o stuff  upload interaction
+ les check stuff sending data to datapoint
+ the await two point o stuff 
+ the await two point o stuff  upload interaction
+ les check stuff sending data to datapoint
+ the await two point o stuff 
+ the await two point o stuff  upload interaction
+ les check stuff sending data to datapoint
+ the await two point o stuff 
+ we have an issue, probably [["interaction_149"], ["akashic_records"], ["thing_7"]]
+ the await two point o stuff  upload interaction
+ we have an issue, probably  3
+ cache branch : akashic_recordsthing_2
+ cache branch : akashic_recordsthing_5
+ we got magic to do [["change_visibilty", "/root/main/akashic_records", 1]]
+ here we can change its visibility ["change_visibilty", "/root/main/akashic_records", 1]
+first we must check that datapoint of that container
+ cache branch : akashic_recordsthing_6
+ i guess we could not do it for now
+ cache branch : akashic_recordsthing_1
+ cache branch : akashic_recordsthing_8
+queue pusher <RefCounted#-9223371981909391630>
+ cache branch : akashic_recordsthing_9
+ cache branch we can unload that node thing_2
+ cache branch we can unload that node thing_9
+ cache branch we can unload that node thing_6
+ cache branch we can unload that node thing_1
+ cache branch we can unload that node thing_8
+ cache branch we can unload that node thing_5
+queue pusher <RefCounted#-9223371981875837196>
+queue pusher <RefCounted#-9223371981859059979>
+queue pusher <RefCounted#-9223371981842282762>
+queue pusher <RefCounted#-9223371981825505545>
+queue pusher <RefCounted#-9223371981808728328>
+queue pusher <RefCounted#-9223371981791951111>
+queue pusher <RefCounted#-9223371981775173894>
+queue pusher <RefCounted#-9223371981758396677>
+queue pusher <RefCounted#-9223371981741619460>
+queue pusher <RefCounted#-9223371981724842243>
+queue pusher <RefCounted#-9223371981708065026>
+queue pusher <RefCounted#-9223371981691287809>
+queue pusher <RefCounted#-9223371981674510592>
+queue pusher <RefCounted#-9223371981657733375>
+queue pusher <RefCounted#-9223371981624178941>
+queue pusher <RefCounted#-9223371981607401724>
+queue pusher <RefCounted#-9223371981573847290>
+queue pusher <RefCounted#-9223371981640956158>
+queue pusher <RefCounted#-9223371981557070073>
+queue pusher <RefCounted#-9223371981590624507>
+queue pusher <RefCounted#-9223371981540292856>
+queue pusher <RefCounted#-9223371981506738422>
+queue pusher <RefCounted#-9223371981489961205>
+queue pusher <RefCounted#-9223371981473183988>
+queue pusher <RefCounted#-9223371981456406771>
+queue pusher <RefCounted#-9223371981523515639>
+queue pusher <RefCounted#-9223371981406075120>
+queue pusher <RefCounted#-9223371981439629554>
+queue pusher <RefCounted#-9223371981422852337>
+queue pusher <RefCounted#-9223371981389297903>
+queue pusher <RefCounted#-9223371981372520686>
+queue pusher <RefCounted#-9223371981338966252>
+queue pusher <RefCounted#-9223371981355743469>
+queue pusher <RefCounted#-9223371981322189035>
+queue pusher <RefCounted#-9223371981305411818>
+queue pusher <RefCounted#-9223371981288634601>
+queue pusher <RefCounted#-9223371981271857384>
+queue pusher <RefCounted#-9223371981255080167>
+queue pusher <RefCounted#-9223371981238302950>
+queue pusher <RefCounted#-9223371981221525733>
+queue pusher <RefCounted#-9223371981892614413>
+queue pusher <RefCounted#-9223371981204748516>
+queue pusher <RefCounted#-9223371981120862431>
+queue pusher <RefCounted#-9223371981171194082>
+queue pusher <RefCounted#-9223371981154416865>
+queue pusher <RefCounted#-9223371981137639648>
+queue pusher <RefCounted#-9223371981187971299>
+ testing_ray 0 
+ testing_ray 0 
+COMBO Current combo: ["collision_thing_11:release"]
+ les check stuff sending data to datapoint
+ the await two point o stuff 
+ the await two point o stuff  upload interaction
+ les check stuff sending data to datapoint
+🕒 Quick tick: 5179
+ the await two point o stuff 
+ the await two point o stuff  upload interaction
+⏰ Medium tick: 5179
+queue pusher <RefCounted#-9223371980483328426>
+queue pusher <RefCounted#-9223371980466551231>
+ testing_ray 0 
+COMBO Current combo: ["collision_thing_11:release"]
+ fifth imnpact list of sets to create we plus one menu
+ testing_ray 0 
+COMBO Current combo: ["collision_thing_11:release"]
+queue pusher <RefCounted#-9223371980332333498>
+ les check repair ["2"]
+ les check stuff, what is it? 2
+ type_of_container null 
+queue pusher <RefCounted#-9223371980198115774>
+⏱️ Short tick: 5262
+ testing_ray 0 
+COMBO Current combo: ["collision_thing_11:release"]
+🕒 Quick tick: 5350
+ testing_ray 0 
+COMBO Current combo: ["collision_thing_11:release"]
+ testing_ray 0 
+COMBO Current combo: ["collision_thing_11:release"]
+ testing_ray 0 
+COMBO Current combo: ["collision_thing_11:release"]
+🕒 Quick tick: 5445
+🕒 Quick tick: 5560
+ testing_ray 0 
+COMBO Current combo: ["collision_thing_11:release"]
+ testing_ray 0 
+COMBO Current combo: ["collision_thing_11:release"]
+ testing_ray 0 
+COMBO Current combo: ["collision_thing_11:release"]
+🕒 Quick tick: 5679
+ testing_ray 0 
+COMBO Current combo: ["collision_thing_11:release"]
+⏱️ Short tick: 5760
+🕒 Quick tick: 5793
+ testing_ray 0 
+COMBO Current combo: ["collision_thing_11:release"]
+🕒 Quick tick: 5909
+ testing_ray 0 
+COMBO Current combo: ["collision_thing_11:release"]
+ testing_ray 0 
+COMBO Current combo: ["collision_thing_11:release"]
+ testing_ray 0 
+COMBO Current combo: ["collision_thing_11:release"]
+🕒 Quick tick: 5976
+🕒 Quick tick: 6110
+🕒 Quick tick: 6210
+⏰ Medium tick: 6210
+⏱️ Short tick: 6277
+🕒 Quick tick: 6327
+🕒 Quick tick: 6431
+🕒 Quick tick: 6510
+🕒 Quick tick: 6627
+🕒 Quick tick: 6743
+⏱️ Short tick: 6783
+🕒 Quick tick: 6843
+🕒 Quick tick: 6960
+🕒 Quick tick: 7077
+🕒 Quick tick: 7193
+⏰ Medium tick: 7214
+⏱️ Short tick: 7277
+🕒 Quick tick: 7298
+🕒 Quick tick: 7413
+🕒 Quick tick: 7530
+🕒 Quick tick: 7629
+🕒 Quick tick: 7746
+⏱️ Short tick: 7782
+🕒 Quick tick: 7850
+🕒 Quick tick: 7931
+🕒 Quick tick: 8064
+🕒 Quick tick: 8181
+⏰ Medium tick: 8214
+🕒 Quick tick: 8293
+⏱️ Short tick: 8293
+🕒 Quick tick: 8393
+🕒 Quick tick: 8527
+🕒 Quick tick: 8643
+🕒 Quick tick: 8760
+⏱️ Short tick: 8810
+🕒 Quick tick: 8876
+🕒 Quick tick: 8993
+🕒 Quick tick: 9110
+🕒 Quick tick: 9228
+⏰ Medium tick: 9228
+⏱️ Short tick: 9327
+🕒 Quick tick: 9344
+🕒 Quick tick: 9460
+🕒 Quick tick: 9576
+🕒 Quick tick: 9693
+🕒 Quick tick: 9810
+⏱️ Short tick: 9847
+🕒 Quick tick: 9936
+🕒 Quick tick: 10053
+🕒 Quick tick: 10144
+⏰ Medium tick: 10209
+🕒 Quick tick: 10276
+⏱️ Short tick: 10360
+🕒 Quick tick: 10392
+🕒 Quick tick: 10509
+🕒 Quick tick: 10609
+🕒 Quick tick: 10726
+🕒 Quick tick: 10842
+⏱️ Short tick: 10876
+🕒 Quick tick: 10976
+🕒 Quick tick: 11092
+🕒 Quick tick: 11209
+⏰ Medium tick: 11227
+🕒 Quick tick: 11309
+⏱️ Short tick: 11392
+🕒 Quick tick: 11442
+🕒 Quick tick: 11559
+🕒 Quick tick: 11675
+🕒 Quick tick: 11792
+🕒 Quick tick: 11909
+⏱️ Short tick: 11909
+🕒 Quick tick: 12027
+🕒 Quick tick: 12143
+⏰ Medium tick: 12245
+🕒 Quick tick: 12261
+🕒 Quick tick: 12378
+⏱️ Short tick: 12429
+🕒 Quick tick: 12494
+🕒 Quick tick: 12611
+🕒 Quick tick: 12728
+🕒 Quick tick: 12845
+⏱️ Short tick: 12945
+🕒 Quick tick: 12962
+🕒 Quick tick: 13079
+🕒 Quick tick: 13195
+⏰ Medium tick: 13254
+🕒 Quick tick: 13315
+🕒 Quick tick: 13430
+⏱️ Short tick: 13464
+🕒 Quick tick: 13547
+🕒 Quick tick: 13672
+🕒 Quick tick: 13778
+🕒 Quick tick: 13894
+⏱️ Short tick: 13977
+🕒 Quick tick: 13994
+🕒 Quick tick: 14127
+🕓 Long tick: 14160
+🕒 Quick tick: 14243
+⏰ Medium tick: 14243
+🕒 Quick tick: 14360
+🕒 Quick tick: 14476
+⏱️ Short tick: 14493
+🕒 Quick tick: 14593
+🕒 Quick tick: 14710
+🕒 Quick tick: 14826
+🕒 Quick tick: 14926
+⏱️ Short tick: 15009
+🕒 Quick tick: 15043
+🕒 Quick tick: 15159
+⏰ Medium tick: 15242
+🕒 Quick tick: 15293
+🕒 Quick tick: 15393
+🕒 Quick tick: 15525
+⏱️ Short tick: 15525
+🕒 Quick tick: 15644
+🕒 Quick tick: 15763
+🕒 Quick tick: 15879
+🕒 Quick tick: 15993
+⏱️ Short tick: 16046
+🕒 Quick tick: 16113
+🕒 Quick tick: 16228
+⏰ Medium tick: 16244
+🕒 Quick tick: 16344
+🕒 Quick tick: 16446
+⏱️ Short tick: 16561
+🕒 Quick tick: 16577
+🕒 Quick tick: 16698
+🕒 Quick tick: 16815
+🕒 Quick tick: 16913
+🕒 Quick tick: 17046
+⏱️ Short tick: 17061
+🕒 Quick tick: 17161
+⏰ Medium tick: 17244
+🕒 Quick tick: 17281
+🕒 Quick tick: 17394
+🕒 Quick tick: 17511
+⏱️ Short tick: 17597
+🕒 Quick tick: 17630
+🕒 Quick tick: 17746
+🕒 Quick tick: 17847
+🕒 Quick tick: 17979
+🕒 Quick tick: 18077
+⏱️ Short tick: 18111
+🕒 Quick tick: 18193
+⏰ Medium tick: 18245
+🕒 Quick tick: 18327
+🕒 Quick tick: 18445
+🕒 Quick tick: 18560
+⏱️ Short tick: 18627
+🕒 Quick tick: 18679
+🕒 Quick tick: 18795
+🕒 Quick tick: 18910
+🕒 Quick tick: 19029
+🕒 Quick tick: 19145
+⏱️ Short tick: 19145
+⏰ Medium tick: 19245
+🕒 Quick tick: 19262
+🕒 Quick tick: 19377
+🕒 Quick tick: 19494
+🕒 Quick tick: 19612
+⏱️ Short tick: 19646
+🕒 Quick tick: 19713
+🕒 Quick tick: 19827
+🕒 Quick tick: 19960
+🕒 Quick tick: 20060
+⏱️ Short tick: 20160
+🕒 Quick tick: 20193
+⏰ Medium tick: 20227
+🕒 Quick tick: 20293
+🕒 Quick tick: 20410
+🕒 Quick tick: 20545
+🕒 Quick tick: 20662
+⏱️ Short tick: 20694
+🕒 Quick tick: 20777
+🕒 Quick tick: 20893
+🕒 Quick tick: 21012
+🕒 Quick tick: 21137
+⏱️ Short tick: 21212
+🕒 Quick tick: 21227
+⏰ Medium tick: 21227
+🕒 Quick tick: 21359
+🕒 Quick tick: 21476
+🕒 Quick tick: 21595
+🕒 Quick tick: 21709
+⏱️ Short tick: 21726
+🕒 Quick tick: 21826
+🕒 Quick tick: 21942
+🕒 Quick tick: 22059
+🕒 Quick tick: 22176
+⏱️ Short tick: 22242
+⏰ Medium tick: 22242
+🕒 Quick tick: 22294
+🕒 Quick tick: 22410
+🕒 Quick tick: 22510
+🕒 Quick tick: 22643
+🕒 Quick tick: 22760
+⏱️ Short tick: 22760
+🕒 Quick tick: 22859
+🕒 Quick tick: 22993
+🕒 Quick tick: 23111
+🕒 Quick tick: 23213
+⏰ Medium tick: 23246
+⏱️ Short tick: 23280
+🕒 Quick tick: 23344
+🕒 Quick tick: 23461
+🕒 Quick tick: 23580
+🕒 Quick tick: 23696
+⏱️ Short tick: 23796
+🕒 Quick tick: 23812
+🕒 Quick tick: 23929
+🕒 Quick tick: 24045
+🕒 Quick tick: 24174
+🕓 Long tick: 24174
+⏰ Medium tick: 24239
+🕒 Quick tick: 24260
+⏱️ Short tick: 24310
+🕒 Quick tick: 24393
+🕒 Quick tick: 24510
+🕒 Quick tick: 24627
+🕒 Quick tick: 24744
+⏱️ Short tick: 24828
+🕒 Quick tick: 24862
+🕒 Quick tick: 24977
+🕒 Quick tick: 25095
+🕒 Quick tick: 25210
+⏰ Medium tick: 25243
+🕒 Quick tick: 25327
+⏱️ Short tick: 25343
+🕒 Quick tick: 25445
+🕒 Quick tick: 25560
+🕒 Quick tick: 25681
+🕒 Quick tick: 25777
+⏱️ Short tick: 25860
+🕒 Quick tick: 25910
+🕒 Quick tick: 26029
+🕒 Quick tick: 26129
+⏰ Medium tick: 26246
+🕒 Quick tick: 26246
+🕒 Quick tick: 26379
+⏱️ Short tick: 26379
+🕒 Quick tick: 26476
+🕒 Quick tick: 26609
+🕒 Quick tick: 26727
+🕒 Quick tick: 26843
+⏱️ Short tick: 26893
+🕒 Quick tick: 26959
+🕒 Quick tick: 27076
+🕒 Quick tick: 27176
+⏰ Medium tick: 27243
+🕒 Quick tick: 27309
+⏱️ Short tick: 27410
+🕒 Quick tick: 27426
+🕒 Quick tick: 27543
+🕒 Quick tick: 27659
+🕒 Quick tick: 27776
+🕒 Quick tick: 27893
+⏱️ Short tick: 27926
+🕒 Quick tick: 28009
+🕒 Quick tick: 28126
+🕒 Quick tick: 28244
+⏰ Medium tick: 28244
+🕒 Quick tick: 28360
+⏱️ Short tick: 28429
+🕒 Quick tick: 28477
+🕒 Quick tick: 28594
+🕒 Quick tick: 28696
+🕒 Quick tick: 28827
+🕒 Quick tick: 28944
+⏱️ Short tick: 28961
+🕒 Quick tick: 29061
+🕒 Quick tick: 29178
+⏰ Medium tick: 29249
+🕒 Quick tick: 29300
+🕒 Quick tick: 29411
+⏱️ Short tick: 29478
+🕒 Quick tick: 29528
+🕒 Quick tick: 29644
+🕒 Quick tick: 29763
+🕒 Quick tick: 29862
+🕒 Quick tick: 29996
+⏱️ Short tick: 29996
+🕒 Quick tick: 30112
+🕒 Quick tick: 30229
+⏰ Medium tick: 30230

@@ -1,0 +1,185 @@
+# Multiverse/Universe Management Implementation
+
+## Features from Recipe:
+- Multiverse creation with custom names
+- Universe duplication from multiverse
+- CreationBuild vs CreationPlay distinction
+- Save file management per universe
+- Text box input (19 character limit)
+- Play/Create buttons for each entry
+
+## Implementation Steps:
+
+### Step 1: Multiverse Manager
+```gdscript
+# MultiverseManager.gd
+extends Node
+
+var multiverses: Dictionary = {}
+var current_multiverse: String = ""
+var player_name: String = ""
+
+signal multiverse_created(name: String)
+signal multiverse_loaded(name: String)
+signal universe_created(multiverse: String, universe: String)
+```
+
+### Step 2: Multiverse Creation UI
+```gdscript
+class MultiverseCreationMenu:
+    var name_input: LineEdit
+    var create_button: Button
+    var keyboard_ui: Control
+    
+    func _ready():
+        name_input.max_length = 19
+        name_input.text = "Multiverse"
+        create_button.pressed.connect(_on_create)
+```
+
+### Step 3: File Structure System
+1. Directory organization:
+```
+user://
+├── multiverses/
+│   ├── animetitties/
+│   │   ├── creationbuild_animetitties
+│   │   └── universes/
+│   │       ├── animeasses/
+│   │       │   ├── creationplay_animeasses
+│   │       │   └── savefileofcreation_creationplay_animeasses
+│   │       └── other_universe/
+│   └── other_multiverse/
+```
+
+### Step 4: Universe Management
+```gdscript
+class Universe:
+    var name: String
+    var parent_multiverse: String
+    var creation_mode: bool = true
+    var save_data: Dictionary
+    
+    func duplicate_from_multiverse():
+        # Copy multiverse data
+        # Remove creation tools
+        # Initialize as playable universe
+```
+
+### Step 5: Menu Population
+```gdscript
+func populate_multiverse_menu():
+    # Scan for existing multiverses
+    # Create buttons dynamically
+    # Add Play/Create options
+    
+func populate_universe_menu():
+    # List universes for selected multiverse
+    # Show play buttons
+    # Add create universe option
+```
+
+## Testing Procedures:
+
+### Test 1: Multiverse Creation
+- [ ] Enter name "animetitties"
+- [ ] Click create button
+- [ ] Verify file creation
+- [ ] Check button appears in menu
+- [ ] Test 19 character limit
+
+### Test 2: Universe Creation
+- [ ] Select multiverse
+- [ ] Click "Create Universe"
+- [ ] Enter name "animeasses"
+- [ ] Verify duplication process
+- [ ] Check CreationPlay mode
+
+### Test 3: File Management
+- [ ] Create multiple multiverses
+- [ ] Create multiple universes
+- [ ] Verify file structure
+- [ ] Test file naming conventions
+- [ ] Check save file creation
+
+### Test 4: Menu Navigation
+- [ ] Navigate between multiverses
+- [ ] Access universe submenu
+- [ ] Test Play button
+- [ ] Test Create button
+- [ ] Verify back navigation
+
+## UI Flow Diagrams:
+
+### Multiverse Creation Flow:
+```
+MultiverseMenu
+    └── ButtonCreateMultiverse (click)
+        └── MultiverseCreationMenu
+            ├── TextBox: "Multiverse" (editable)
+            ├── Virtual Keyboard
+            └── Save Button
+                └── Creates: creationbuild_[name]
+                └── Adds button to MultiverseMenu
+```
+
+### Universe Creation Flow:
+```
+MultiverseMenu
+    └── [Multiverse Name] Button (click)
+        ├── Play Button
+        └── Create Universe Button
+            └── UniverseCreationMenu
+                └── Creates: creationplay_[name]
+```
+
+## Data Structures:
+
+### Multiverse Data:
+```gdscript
+{
+    "name": "animetitties",
+    "created_by": "jakubhoksastanislaw",
+    "creation_date": 1234567890,
+    "universes": ["animeasses", "universe2"],
+    "settings": {},
+    "creation_data": {}
+}
+```
+
+### Universe Data:
+```gdscript
+{
+    "name": "animeasses",
+    "parent_multiverse": "animetitties",
+    "is_creation_mode": false,
+    "last_played": 1234567890,
+    "save_data": {},
+    "player_progress": {}
+}
+```
+
+## Virtual Keyboard Implementation:
+```gdscript
+# Layout as specified:
+var keyboard_layout = [
+    ['1','2','3','4','5','6','7','8','9','0'],
+    ['q','w','e','r','t','y','u','i','o','p'],
+    ['a','s','d','f','g','h','j','k','l','_'],
+    ['z','x','c','v','b','n','m','-','!','?'],
+    ['(',')','[',']','{','}','+','|','/','\\']
+]
+```
+
+## Dependencies:
+- File system access
+- UI system
+- Save system
+- Menu navigation system
+
+## Expected Outcomes:
+- Intuitive multiverse/universe creation
+- Clear file organization
+- Easy navigation between creations
+- Reliable save/load functionality
+- Scalable to many multiverses

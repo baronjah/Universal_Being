@@ -1,0 +1,18 @@
+lets start the todays work, its 26th of the may, time is 11:12 as i am writing it, 
+
+our goals for today are:
+#work further on ragdoll project in godot,  
+#what we have working in ragdoll project, 
+#in ragdoll project features that i checked and were working, yesterday i checked every single of them, but we must maintain the balance of working forward, so we always have perfect build and we will see the game
+
+
+#check what other project we have been doing so far,
+
+#i noticed there is a lot of files, of md, informational ones on the project, how many files in one folder is ok? 
+
+#yesterday i asked you to take a look at godot docs, that i have been copy pastying from site, they are here : "C:\Users\Percision 15\Desktop\claude_desktop\godot_classes"
+# asked you to take a look at them, and what classes we can use for the skeleton, body, we first wanted to make that walked from 7 elements
+
+# lets get you up and running Claude, its a great day today
+
+#this message will be in folder "C:\Users\Percision 15\Desktop\claude_desktop\kamisama_messages\may_26th"

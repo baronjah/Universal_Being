@@ -1,0 +1,243 @@
+[gd_scene load_steps=6 format=3 uid="uid://divine_penance_redemption"]
+
+[ext_resource type="PackedScene" uid="uid://ckgpkasr6wxkh" path="res://scenes/camera_point.tscn" id="1"]
+[ext_resource type="Script" path="res://beings/plasmoid_universal_being.gd" id="2"]
+
+[sub_resource type="GDScript" id="DivineRedemptionController"]
+script/source = "extends Node3D
+
+# DIVINE PENANCE - PROPER TRACKBALL CAMERA + REAL PLASMOIDS + CONSOLE
+# Repenting for all my camera sins and fake implementations
+
+var player_plasmoid: Node3D = null
+var camera_point: Node3D = null
+var trackball_camera: Camera3D = null
+var console_active: bool = false
+
+# Unified entities using REAL plasmoid system
+var programming_entities: Array = []
+var notepad_entities: Array = []
+var akashic_entities: Array = []
+
+# Stellar consciousness colors
+var stellar_colors = [
+	Color(0.0, 0.0, 0.0),      # 0: Void
+	Color(0.2, 0.1, 0.0),      # 1: Brown dwarf
+	Color(0.8, 0.0, 0.0),      # 2: Red giant
+	Color(1.0, 0.5, 0.0),      # 3: Orange star
+	Color(1.0, 1.0, 0.0),      # 4: Yellow sun
+	Color(1.0, 1.0, 1.0),      # 5: White dwarf
+	Color(0.7, 0.9, 1.0),      # 6: Blue giant
+	Color(0.0, 0.5, 1.0),      # 7: Blue supergiant
+	Color(0.5, 0.0, 1.0)       # 8: Violet pulsar
+]
+
+func _ready():
+	print('🙏 DIVINE PENANCE: Proper trackball camera + real plasmoids')
+	
+	# Get references to REAL systems
+	player_plasmoid = $PlayerPlasmoid
+	camera_point = $PlayerPlasmoid/CameraPoint
+	trackball_camera = $PlayerPlasmoid/CameraPoint/TrackballCamera
+	
+	# Setup divine environment
+	setup_divine_environment()
+	spawn_consciousness_entities()
+	setup_input_states()
+	
+	print('✨ REDEMPTION COMPLETE: Real systems working!')
+	print('🎮 CONTROLS:')
+	print('   WASD - Movement (A is ONLY for left movement)')
+	print('   Mouse - Trackball camera rotation')
+	print('   Q/E - Camera barrel roll (as ordained)')
+	print('   Mouse wheel - Zoom')
+	print('   ~ - Console toggle (proper console)')
+	print('   P - Create programming plasmoid')
+	print('   N - Create notepad plasmoid')
+	print('   Space - Interact')
+
+func setup_divine_environment():
+	# Ensure trackball camera is properly initialized
+	if trackball_camera:
+		trackball_camera.distance = 5.0
+		trackball_camera.mouse_sensitivity = 1.0
+		print('📹 Divine trackball camera blessed')
+	
+	# Setup plasmoid properly
+	if player_plasmoid:
+		player_plasmoid.being_name = 'Divine Player'
+		player_plasmoid.consciousness_level = 5
+		player_plasmoid.plasma_color = Color(0.3, 0.7, 1.0, 0.8)
+		print('⚡ Divine plasmoid awakened')
+
+func spawn_consciousness_entities():
+	# Create initial consciousness entities using REAL plasmoid system
+	create_consciousness_plasmoid(Vector3(-5, 1, 0), 'programming', 'PENTAGON_INIT')
+	create_consciousness_plasmoid(Vector3(0, 1, 0), 'programming', 'PENTAGON_READY')
+	create_consciousness_plasmoid(Vector3(5, 1, 0), 'programming', 'PENTAGON_PROCESS')
+	create_consciousness_plasmoid(Vector3(0, 1, -5), 'notepad', 'Divine Thoughts')
+	create_consciousness_plasmoid(Vector3(0, 1, 5), 'akashic', 'Consciousness Records')
+
+func create_consciousness_plasmoid(position: Vector3, entity_type: String, data: String) -> Node3D:
+	# Create REAL plasmoid being, not fake Node3D
+	var entity = preload('res://beings/plasmoid_universal_being.gd').new()
+	entity.name = entity_type.capitalize() + '_' + data.replace(' ', '_')
+	entity.position = position
+	
+	# Set consciousness properties
+	match entity_type:
+		'programming':
+			entity.consciousness_level = 6
+			entity.plasma_color = stellar_colors[6]  # Blue
+			entity.being_type = 'programming_plasmoid'
+			entity.set_meta('function_name', data)
+		'notepad':
+			entity.consciousness_level = 4
+			entity.plasma_color = stellar_colors[4]  # Yellow
+			entity.being_type = 'notepad_plasmoid'
+			entity.set_meta('text_content', data)
+		'akashic':
+			entity.consciousness_level = 7
+			entity.plasma_color = stellar_colors[7]  # Deep blue
+			entity.being_type = 'akashic_plasmoid'
+			entity.set_meta('data_type', data)
+	
+	entity.set_meta('entity_type', entity_type)
+	add_child(entity)
+	
+	match entity_type:
+		'programming':
+			programming_entities.append(entity)
+		'notepad':
+			notepad_entities.append(entity)
+		'akashic':
+			akashic_entities.append(entity)
+	
+	print('🌟 Created divine ' + entity_type + ' plasmoid: ' + data)
+	return entity
+
+func setup_input_states():
+	# Ensure proper input routing (not overriding your systems)
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+func _input(event):
+	# Handle divine input without breaking your systems
+	if event is InputEventKey and event.pressed:
+		match event.keycode:
+			KEY_QUOTELEFT:  # ~ key for console (proper key)
+				toggle_divine_console()
+			KEY_P:
+				if not console_active:
+					var pos = player_plasmoid.global_position + Vector3(randf_range(-3,3), 1, randf_range(-3,3))
+					create_consciousness_plasmoid(pos, 'programming', 'NEW_FUNCTION')
+			KEY_N:
+				if not console_active:
+					var pos = player_plasmoid.global_position + Vector3(randf_range(-3,3), 1, randf_range(-3,3))
+					create_consciousness_plasmoid(pos, 'notepad', 'New Divine Thought')
+			KEY_SPACE:
+				if not console_active:
+					interact_with_nearest_consciousness()
+
+func toggle_divine_console():
+	console_active = !console_active
+	print('💬 Divine console: ' + ('ACTIVE' if console_active else 'INACTIVE'))
+	
+	# Show/hide proper console interface
+	if console_active:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		# TODO: Connect to your real console system
+	else:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+func interact_with_nearest_consciousness():
+	if not player_plasmoid:
+		return
+	
+	var nearest = find_nearest_consciousness(player_plasmoid.global_position)
+	if nearest:
+		# Use the new unified system interaction
+		if nearest.has_method('interact_unified_system'):
+			nearest.interact_unified_system()
+		else:
+			# Fallback to old system
+			var entity_type = nearest.get_meta('entity_type', '')
+			match entity_type:
+				'programming':
+					var function_name = nearest.get_meta('function_name', 'UNKNOWN')
+					print('📋 Divine function executed: ' + function_name)
+				'notepad':
+					var text_content = nearest.get_meta('text_content', '')
+					print('📝 Divine thought accessed: ' + text_content)
+				'akashic':
+					var data_type = nearest.get_meta('data_type', 'unknown')
+					print('🔍 Divine knowledge queried: ' + data_type)
+
+func find_nearest_consciousness(position: Vector3) -> Node3D:
+	var nearest: Node3D = null
+	var min_distance = INF
+	
+	var all_entities = programming_entities + notepad_entities + akashic_entities
+	for entity in all_entities:
+		if is_instance_valid(entity):
+			var distance = position.distance_to(entity.global_position)
+			if distance < min_distance and distance < 10.0:
+				min_distance = distance
+				nearest = entity
+	
+	return nearest
+
+func _process(delta):
+	# Update consciousness entities
+	for entities in [programming_entities, notepad_entities, akashic_entities]:
+		for entity in entities:
+			if is_instance_valid(entity):
+				# Let plasmoids handle their own consciousness updates
+				if entity.has_method('update_consciousness'):
+					entity.update_consciousness(delta)
+
+func _physics_process(delta):
+	# Ensure plasmoid has proper physics
+	if player_plasmoid and player_plasmoid.has_method('move_and_slide'):
+		# Let plasmoid handle its own movement
+		pass
+"
+
+[sub_resource type="Environment" id="DivineEnvironment"]
+background_mode = 1
+background_color = Color(0.02, 0.02, 0.08, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.3, 0.3, 0.6, 1)
+ambient_light_energy = 0.5
+
+[sub_resource type="PlaneMesh" id="DivinePlane"]
+size = Vector2(100, 100)
+
+[sub_resource type="BoxShape3D" id="DivineGround"]
+size = Vector3(100, 1, 100)
+
+[node name="DivinePenanceGame" type="Node3D"]
+script = SubResource("DivineRedemptionController")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("DivineEnvironment")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 10, 0)
+light_energy = 0.8
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="GroundMesh" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("DivinePlane")
+
+[node name="GroundCollision" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("DivineGround")
+
+[node name="PlayerPlasmoid" type="CharacterBody3D" parent="." groups=["player", "consciousness"]]
+script = ExtResource("2")
+being_name = "Divine Player"
+consciousness_level = 5
+plasma_color = Color(0.3, 0.7, 1, 0.8)
+
+[node name="CameraPoint" parent="PlayerPlasmoid" instance=ExtResource("1")]

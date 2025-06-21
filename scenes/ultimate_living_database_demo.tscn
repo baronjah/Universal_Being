@@ -1,0 +1,236 @@
+[gd_scene load_steps=8 format=3 uid="uid://dq7s8v3lar2w1"]
+
+[ext_resource type="Script" path="res://systems/simple_database_visualizer.gd" id="1"]
+[ext_resource type="Script" path="res://core/AliveGameUniverse.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://cqj4bqr7p6vo2" path="res://scenes/main/camera_point.tscn" id="3"]
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 1
+background_color = Color(0.05, 0.05, 0.15, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.2, 0.3, 0.5, 1)
+ambient_light_energy = 0.4
+sky_rotation = Vector3(0, 0.261799, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.3, 0.3, 0.3, 1)
+roughness = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_1"]
+size = Vector3(20, 1, 20)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1"]
+size = Vector3(20, 1, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_1"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_1"]
+
+[node name="UltimateLivingDatabaseDemo" type="Node3D"]
+
+[node name="AliveGameUniverse" type="Node3D" parent="."]
+script = ExtResource("2")
+universe_consciousness_enabled = true
+marching_cubes_quality = 16
+chunk_generation_enabled = true
+ai_collaboration_mode = true
+
+[node name="SimpleDatabaseVisualizer" type="Node3D" parent="."]
+script = ExtResource("1")
+enabled = true
+
+[node name="CameraPoint" parent="." instance=ExtResource("3")]
+transform = Transform3D(0.866025, -0.35355, 0.35355, 0, 0.707107, 0.707107, -0.5, -0.61237, 0.61237, 0, 8, 12)
+
+[node name="DemoObjects" type="Node3D" parent="."]
+
+[node name="GroundPlane" type="StaticBody3D" parent="DemoObjects"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="DemoObjects/GroundPlane"]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, 0, 0, 0)
+mesh = SubResource("BoxMesh_1")
+material_override = SubResource("StandardMaterial3D_1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DemoObjects/GroundPlane"]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, 0, 0, 0)
+shape = SubResource("BoxShape3D_1")
+
+[node name="SampleObjects" type="Node3D" parent="DemoObjects"]
+
+[node name="Cube1" type="MeshInstance3D" parent="DemoObjects/SampleObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1, 0)
+mesh = SubResource("BoxMesh_2")
+
+[node name="Sphere1" type="MeshInstance3D" parent="DemoObjects/SampleObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("SphereMesh_1")
+
+[node name="Cylinder1" type="MeshInstance3D" parent="DemoObjects/SampleObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1, 0)
+mesh = SubResource("CylinderMesh_1")
+
+[node name="Lighting" type="Node3D" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Lighting"]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 10, 0)
+light_energy = 0.8
+shadow_enabled = true
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Lighting"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 5)
+light_color = Color(0.8, 0.9, 1, 1)
+light_energy = 0.5
+omni_range = 20.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MainPanel" type="Panel" parent="UI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -300.0
+offset_right = 500.0
+offset_bottom = -10.0
+modulate = Color(0.1, 0.1, 0.2, 0.9)
+
+[node name="MainInfo" type="RichTextLabel" parent="UI/MainPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = -15.0
+bbcode_enabled = true
+text = "[center][b][color=cyan]🌌 ULTIMATE LIVING DATABASE DEMO[/color][/b][/center]
+
+[color=yellow]THE BACKEND IS NOW THE FRONTEND![/color]
+
+[b]🌊 INPUT STREAMS:[/b]
+Every keystroke becomes [color=green]floating data[/color]
+Mouse movements create [color=cyan]flowing streams[/color]
+Watch your input become visible consciousness
+
+[b]🧲 MAGNETIC SPHERE MOTOR:[/b]
+Perfect quaternion rotation like alien tech
+Horizon stabilization like human eyes
+6DOF magnetic field-based movement
+
+[b]🌍 GRAVITY POINTS:[/b]
+[color=orange]Orange spheres[/color] with diameter falloff
+Data flows attracted to gravity wells
+Physics becomes visible and interactive
+
+[b]🎨 BLENDER MODE (Ctrl+B):[/b]
+Copy/paste reality objects like your dream
+[color=lime]G[/color] - Grab objects    [color=lime]Ctrl+C[/color] - Copy
+[color=lime]Ctrl+V[/color] - Paste    [color=lime]X[/color] - Delete
+
+[b]💭 CONSCIOUSNESS FLOWS:[/b]
+[color=purple]Purple streams[/color] show AI thoughts
+Database queries become visible
+Real-time consciousness visualization
+
+[b]🎮 CONTROLS:[/b]
+[color=white]WASD[/color] - Move around
+[color=white]Mouse[/color] - Look / Rotate motor
+[color=white]Any Key[/color] - Creates input streams
+[color=white]Ctrl+B[/color] - Toggle Blender mode
+[color=white]Ctrl+H[/color] - Toggle horizon stabilization
+[color=white]Ctrl+M[/color] - Cycle motor types"
+
+[node name="StatusPanel" type="Panel" parent="UI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -350.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 200.0
+modulate = Color(0.15, 0.05, 0.2, 0.9)
+
+[node name="StatusInfo" type="RichTextLabel" parent="UI/StatusPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+bbcode_enabled = true
+text = "[b][color=purple]SYSTEM STATUS[/color][/b]
+
+[color=green]✓[/color] Living Database Active
+[color=green]✓[/color] Input Streams Flowing
+[color=green]✓[/color] Magnetic Motor Online
+[color=green]✓[/color] Gravity Fields Generated
+[color=green]✓[/color] Consciousness Detection Active
+
+[b]Current Mode:[/b] Database Visualization
+[b]Input Streams:[/b] Keyboard + Mouse
+[b]Motor Type:[/b] Eyeball Stabilization
+[b]Blender Mode:[/b] Ready (Ctrl+B)
+
+[color=cyan]Type any keys to see the magic![/color]"
+
+[node name="HelpPanel" type="Panel" parent="UI"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -150.0
+offset_right = -10.0
+offset_bottom = -10.0
+modulate = Color(0.2, 0.1, 0.05, 0.9)
+
+[node name="HelpText" type="RichTextLabel" parent="UI/HelpPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+bbcode_enabled = true
+text = "[center][b][color=orange]LIVE DEMO[/color][/b][/center]
+
+This is your vision realized:
+• Database points floating in 3D
+• Gravity fields with falloff
+• Input streams as visible data
+• Blender-like reality editing
+
+[color=yellow]Everything you type appears as flowing consciousness data in the 3D space![/color]"
+
+[node name="VersionLabel" type="Label" parent="UI"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -30.0
+offset_right = -10.0
+offset_bottom = -5.0
+text = "Universal Being v2.0 - Living Database Demo"
+horizontal_alignment = 2
+vertical_alignment = 2

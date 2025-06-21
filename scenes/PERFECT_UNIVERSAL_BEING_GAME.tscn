@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://perfect_ub_game"]
+[gd_scene load_steps=13 format=3 uid="uid://perfect_ub_game"]
 
 [ext_resource type="Script" path="res://beings/player/perfect_plasmoid_player.gd" id="1_perfect_player"]
 [ext_resource type="Script" path="res://core/UniversalInputManager.gd" id="2_input_manager"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://beings/gemma/gemma_perfect_consciousness.gd" id="4_gemma_perfect"]
 [ext_resource type="Script" path="res://systems/perfect_console_system.gd" id="5_console_system"]
 [ext_resource type="Script" path="res://systems/universal_being_inspector.gd" id="6_inspector"]
+[ext_resource type="Script" path="res://systems/psycho_pass_sibyl_system.gd" id="7_sibyl_system"]
 
 [sub_resource type="Environment" id="Environment_perfect"]
 background_mode = 1
@@ -73,6 +74,10 @@ script = ExtResource("5_console_system")
 
 [node name="UniversalBeingInspector" type="CanvasLayer" parent="."]
 script = ExtResource("6_inspector")
+
+[node name="SibylSystem" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+script = ExtResource("7_sibyl_system")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_perfect")

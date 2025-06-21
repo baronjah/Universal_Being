@@ -11,9 +11,9 @@ config_version=5
 [GDScript]
 
 global_classes={
-"UniversalBeing": "*res://core/UniversalBeing.gd",
 "ConsoleBaseUniversalBeing": "*res://debug/console_base.gd",
-"GemmaNaturalLanguageUniversalBeing": "*res://debug/gemma_natural_language.gd"
+"GemmaNaturalLanguageUniversalBeing": "*res://debug/gemma_natural_language.gd",
+"UniversalBeing": "*res://core/UniversalBeing.gd"
 }
 
 [application]
@@ -21,7 +21,7 @@ global_classes={
 config/name="Universal_Being"
 config/description="The game where everything is a Universal Being that can become anything"
 config/version="1.0.0"
-run/main_scene="res://scenes/PERFECT_UNIVERSAL_BEING_GAME.tscn"
+run/main_scene="res://scenes/PERFECT_INTERACTIVE_GAME.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -33,6 +33,7 @@ GemmaAI="*res://autoloads/GemmaAI.gd"
 UBPrint="*res://systems/UBPrintCollector.gd"
 FallbackRegistry="*res://core/AutoRegisterFallbacks.gd"
 FloodGatesSystem="*res://core/FloodGates.gd"
+SimpleCommandCreator="*res://systems/simple_command_creator.gd"
 
 [build]
 
@@ -94,6 +95,11 @@ key_q={
 cam_zoom_in={
 "deadzone": 0.2,
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":8,"position":Vector2(130, 18),"global_position":Vector2(142, 78),"factor":1.0,"button_index":4,"canceled":false,"pressed":true,"double_click":false,"script":null)
+]
+}
+sprint={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":true,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194325,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
 cam_zoom_out={
@@ -162,6 +168,11 @@ interact={
 ]
 }
 open_console={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":96,"key_label":0,"unicode":96,"location":0,"echo":false,"script":null)
+]
+}
+toggle_console={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":96,"key_label":0,"unicode":96,"location":0,"echo":false,"script":null)
 ]

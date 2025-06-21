@@ -187,7 +187,7 @@ func _propagate_to_beings(ripple: RippleInstance, delta: float) -> void:
 		if not being or not being.has_method("get"):
 			continue
 			
-		var being_uuid = being.get("being_uuid", "")
+		var being_uuid = being.get("being_uuid")
 		if being_uuid in ripple.affected_beings:
 			continue
 			

@@ -32,7 +32,7 @@ var consciousness_level_frequencies = {
 	3: 333.0,   # Connected - Triple unity
 	4: 555.0,   # Enlightened - Golden ratio derivative
 	5: 888.0    # Transcendent - Infinite consciousness
-
+}
 # Color caches for performance
 var consciousness_color_cache: Dictionary = {}
 var pulse_effect_cache: Dictionary = {}
@@ -45,7 +45,7 @@ func _ready() -> void:
 	precompute_consciousness_colors()
 	
 	print("🌈 Evolved Consciousness Visualizer: Archaeological wisdom activated!")
-}
+
 
 func initialize_frequency_mappings() -> void:
 	"""Initialize consciousness frequency mappings with archaeological wisdom"""
@@ -63,7 +63,7 @@ func precompute_consciousness_colors() -> void:
 		consciousness_color_cache[level] = color
 		
 		print("🎨 Consciousness Level %d: Frequency %.1f = %s" % [level, frequency, color])
-}
+
 
 func calculate_consciousness_color(level: int, frequency: float) -> Color:
 	"""Archaeological wisdom: Convert consciousness frequency to perfect color"""

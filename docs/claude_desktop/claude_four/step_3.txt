@@ -1,0 +1,149 @@
+# Language System Implementation
+
+## Features from Recipe:
+- mainLanguageSystem as base reference
+- Multiple language files (EnglishLanguage, PolishLanguage)
+- textName as key, showingName as display value
+- ChoosenLanguage determines active language
+- Language button cycles through available languages
+- Alphabetical language switching
+
+## Implementation Steps:
+
+### Step 1: Create Language Manager Singleton
+```gdscript
+# LanguageManager.gd
+extends Node
+
+var current_language: String = "EnglishLanguage"
+var available_languages: Array = []
+var language_data: Dictionary = {}
+var main_language_system: Dictionary = {}
+```
+
+### Step 2: Language File Structure
+1. Create language file format (JSON):
+```json
+{
+  "language_name": "EnglishLanguage",
+  "translations": {
+    "Multiverses": "Multiverses",
+    "Universes": "Universes",
+    "Options": "Options",
+    "About": "About",
+    "Exit": "Exit",
+    "Back": "Back"
+  }
+}
+```
+
+### Step 3: Implement Language Loading
+1. Load main language system
+2. Scan for language files
+3. Parse and validate language data
+4. Sort languages alphabetically
+5. Cache translations
+
+### Step 4: Create Translation Methods
+```gdscript
+func get_text(text_name: String) -> String:
+    # Returns showingName for current language
+    
+func set_language(language: String) -> void:
+    # Changes current language
+    
+func cycle_language() -> void:
+    # Switches to next language alphabetically
+    
+func get_available_languages() -> Array:
+    # Returns list of available languages
+```
+
+### Step 5: Implement Language Button
+1. Create LanguageButton class
+2. Display current language name
+3. Cycle languages on click
+4. Emit signal for UI updates
+5. Save language preference
+
+## Testing Procedures:
+
+### Test 1: Language Loading
+- [ ] Load English language file
+- [ ] Load Polish language file
+- [ ] Verify all keys present
+- [ ] Test missing translation handling
+- [ ] Verify alphabetical sorting
+
+### Test 2: Translation Retrieval
+- [ ] Test get_text with valid keys
+- [ ] Test get_text with invalid keys
+- [ ] Verify fallback to English
+- [ ] Test special characters (Polish: ł, ą, ę)
+
+### Test 3: Language Switching
+- [ ] Switch from English to Polish
+- [ ] Verify UI updates
+- [ ] Test language cycling
+- [ ] Verify persistence after restart
+- [ ] Test rapid language switching
+
+### Test 4: Button Integration
+- [ ] All buttons show correct text
+- [ ] Language button shows current language
+- [ ] Live UI updates on language change
+- [ ] No missing translations
+
+## Language File Examples:
+
+### EnglishLanguage.json:
+```json
+{
+  "language_name": "EnglishLanguage",
+  "display_name": "English",
+  "translations": {
+    "Multiverses": "Multiverses",
+    "Universes": "Universes",
+    "Options": "Options",
+    "About": "About",
+    "Exit": "Exit",
+    "Back": "Back",
+    "Graphics": "Graphics",
+    "Sound": "Sound",
+    "Create": "Create",
+    "Play": "Play"
+  }
+}
+```
+
+### PolishLanguage.json:
+```json
+{
+  "language_name": "PolishLanguage",
+  "display_name": "Polski",
+  "translations": {
+    "Multiverses": "Multiversy",
+    "Universes": "Uniwersa",
+    "Options": "Opcje",
+    "About": "O grze",
+    "Exit": "Wyjście",
+    "Back": "Wstecz",
+    "Graphics": "Grafika",
+    "Sound": "Dźwięk",
+    "Create": "Stwórz",
+    "Play": "Graj"
+  }
+}
+```
+
+## Dependencies:
+- File system access
+- JSON parsing
+- Signal system for UI updates
+- Settings storage
+
+## Expected Outcomes:
+- Seamless language switching
+- Complete UI localization
+- Easy addition of new languages
+- Persistent language preferences

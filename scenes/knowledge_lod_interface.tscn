@@ -1,0 +1,186 @@
+[gd_scene load_steps=4 format=3 uid="uid://knowledge_lod_scene"]
+
+[ext_resource type="Script" path="res://systems/notepad_3d_knowledge_lod.gd" id="1_knowledge_lod"]
+
+[sub_resource type="Environment" id="Environment_knowledge"]
+background_mode = 1
+background_color = Color(0.05, 0.05, 0.15, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.3, 0.3, 0.5, 1)
+ambient_light_energy = 0.5
+fog_enabled = true
+fog_light_color = Color(0.2, 0.4, 0.8, 1)
+fog_sun_scatter = 0.3
+
+[sub_resource type="LabelSettings" id="LabelSettings_hud"]
+font_size = 16
+font_color = Color(0.8, 1, 0.8, 1)
+outline_size = 2
+outline_color = Color(0, 0, 0, 0.8)
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font_size = 24
+font_color = Color(1, 1, 0.8, 1)
+outline_size = 3
+outline_color = Color(0, 0, 0, 0.9)
+
+[node name="KnowledgeLODInterface" type="Node3D"]
+script = ExtResource("1_knowledge_lod")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_knowledge")
+
+[node name="NavigationUI" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="Control" parent="NavigationUI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="StatusPanel" type="Panel" parent="NavigationUI/HUD"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -150.0
+offset_right = 400.0
+modulate = Color(0.1, 0.1, 0.1, 0.8)
+
+[node name="StatusInfo" type="VBoxContainer" parent="NavigationUI/HUD/StatusPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+
+[node name="Title" type="Label" parent="NavigationUI/HUD/StatusPanel/StatusInfo"]
+layout_mode = 2
+text = "📚 KNOWLEDGE LOD NAVIGATION"
+label_settings = SubResource("LabelSettings_title")
+
+[node name="CurrentSpace" type="Label" parent="NavigationUI/HUD/StatusPanel/StatusInfo"]
+layout_mode = 2
+text = "Space: claude_desktop"
+label_settings = SubResource("LabelSettings_hud")
+
+[node name="LODLevel" type="Label" parent="NavigationUI/HUD/StatusPanel/StatusInfo"]
+layout_mode = 2
+text = "LOD: MEDIUM"
+label_settings = SubResource("LabelSettings_hud")
+
+[node name="ActiveChunks" type="Label" parent="NavigationUI/HUD/StatusPanel/StatusInfo"]
+layout_mode = 2
+text = "Active Chunks: 0"
+label_settings = SubResource("LabelSettings_hud")
+
+[node name="CacheStatus" type="Label" parent="NavigationUI/HUD/StatusPanel/StatusInfo"]
+layout_mode = 2
+text = "Cache: 0/1000"
+label_settings = SubResource("LabelSettings_hud")
+
+[node name="ControlsPanel" type="Panel" parent="NavigationUI/HUD"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -350.0
+offset_bottom = 200.0
+modulate = Color(0.1, 0.1, 0.1, 0.8)
+
+[node name="ControlsInfo" type="VBoxContainer" parent="NavigationUI/HUD/ControlsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+
+[node name="ControlsTitle" type="Label" parent="NavigationUI/HUD/ControlsPanel/ControlsInfo"]
+layout_mode = 2
+text = "🎮 KNOWLEDGE CONTROLS"
+label_settings = SubResource("LabelSettings_title")
+
+[node name="SpaceControls" type="Label" parent="NavigationUI/HUD/ControlsPanel/ControlsInfo"]
+layout_mode = 2
+text = "1-5: Switch Knowledge Space"
+label_settings = SubResource("LabelSettings_hud")
+
+[node name="LODControls" type="Label" parent="NavigationUI/HUD/ControlsPanel/ControlsInfo"]
+layout_mode = 2
+text = "Tab: Cycle LOD Level"
+label_settings = SubResource("LabelSettings_hud")
+
+[node name="NavigationControls" type="Label" parent="NavigationUI/HUD/ControlsPanel/ControlsInfo"]
+layout_mode = 2
+text = "F: Search | R: Reload"
+label_settings = SubResource("LabelSettings_hud")
+
+[node name="ExitControls" type="Label" parent="NavigationUI/HUD/ControlsPanel/ControlsInfo"]
+layout_mode = 2
+text = "N: Exit Knowledge LOD"
+label_settings = SubResource("LabelSettings_hud")
+
+[node name="KnowledgeSpacesPanel" type="Panel" parent="NavigationUI/HUD"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = -300.0
+modulate = Color(0.1, 0.1, 0.1, 0.8)
+
+[node name="SpacesInfo" type="VBoxContainer" parent="NavigationUI/HUD/KnowledgeSpacesPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+
+[node name="SpacesTitle" type="Label" parent="NavigationUI/HUD/KnowledgeSpacesPanel/SpacesInfo"]
+layout_mode = 2
+text = "🌌 KNOWLEDGE SPACES"
+label_settings = SubResource("LabelSettings_title")
+
+[node name="Space1" type="Label" parent="NavigationUI/HUD/KnowledgeSpacesPanel/SpacesInfo"]
+layout_mode = 2
+text = "1. claude_desktop"
+label_settings = SubResource("LabelSettings_hud")
+
+[node name="Space2" type="Label" parent="NavigationUI/HUD/KnowledgeSpacesPanel/SpacesInfo"]
+layout_mode = 2
+text = "2. claude_home_mds"
+label_settings = SubResource("LabelSettings_hud")
+
+[node name="Space3" type="Label" parent="NavigationUI/HUD/KnowledgeSpacesPanel/SpacesInfo"]
+layout_mode = 2
+text = "3. claude_memory"
+label_settings = SubResource("LabelSettings_hud")
+
+[node name="Space4" type="Label" parent="NavigationUI/HUD/KnowledgeSpacesPanel/SpacesInfo"]
+layout_mode = 2
+text = "4. jsh"
+label_settings = SubResource("LabelSettings_hud")
+
+[node name="Space5" type="Label" parent="NavigationUI/HUD/KnowledgeSpacesPanel/SpacesInfo"]
+layout_mode = 2
+text = "5. root_docs"
+label_settings = SubResource("LabelSettings_hud")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 10, 20)
+fov = 60
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 10, 0)
+light_energy = 0.8

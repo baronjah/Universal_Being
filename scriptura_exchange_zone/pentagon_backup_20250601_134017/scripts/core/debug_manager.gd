@@ -42,6 +42,7 @@ func _init() -> void:
 	pentagon_init()
 
 func pentagon_init() -> void:
+    super.pentagon_init()
 	# Pentagon initialization - override in child classes
 	pass
 
@@ -49,6 +50,7 @@ func _process(delta: float) -> void:
 	pentagon_process(delta)
 
 func pentagon_process(delta: float) -> void:
+    super.pentagon_process(delta)
 	# Pentagon logic processing - override in child classes
 	pass
 
@@ -56,6 +58,7 @@ func _input(event: InputEvent) -> void:
 	pentagon_input(event)
 
 func pentagon_input(event: InputEvent) -> void:
+    super.pentagon_input(event)
 	# Pentagon input handling - override in child classes
 	pass
 
@@ -63,6 +66,7 @@ func sewers() -> void:
 	pentagon_sewers()
 
 func pentagon_sewers() -> void:
+    super.pentagon_sewers()
 	# Pentagon cleanup/output - override in child classes
 	pass
 func is_debug_enabled(category: String) -> bool:
@@ -116,6 +120,10 @@ func get_debug_status() -> String:
 # Console commands
 func _on_console_command(command: String, args: Array):
 	match command:
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+	# Auto-generated ready implementation
+
 		"debug":
 			if args.size() == 0:
 				return get_debug_status()

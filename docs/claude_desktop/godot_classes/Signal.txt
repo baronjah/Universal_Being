@@ -1,0 +1,161 @@
+Signal
+A built-in type representing a signal of an Object.
+
+Description
+Signal is a built-in Variant type that represents a signal of an Object instance. Like all Variant types, it can be stored in variables and passed to functions. Signals allow all connected Callables (and by extension their respective objects) to listen and react to events, without directly referencing one another. This keeps the code flexible and easier to manage. You can check whether an Object has a given signal name using Object.has_signal().
+
+In GDScript, signals can be declared with the signal keyword. In C#, you may use the [Signal] attribute on a delegate.
+
+GDScriptC#
+signal attacked
+
+# Additional arguments may be declared.
+# These arguments must be passed when the signal is emitted.
+signal item_dropped(item_name, amount)
+Note
+
+There are notable differences when using this API with C#. See C# API differences to GDScript for more information.
+
+Tutorials
+Using Signals
+
+GDScript Basics
+
+Constructors
+Signal
+
+Signal()
+
+Signal
+
+Signal(from: Signal)
+
+Signal
+
+Signal(object: Object, signal: StringName)
+
+Methods
+int
+
+connect(callable: Callable, flags: int = 0)
+
+void
+
+disconnect(callable: Callable)
+
+void
+
+emit(...) vararg const
+
+Array
+
+get_connections() const
+
+StringName
+
+get_name() const
+
+Object
+
+get_object() const
+
+int
+
+get_object_id() const
+
+bool
+
+has_connections() const
+
+bool
+
+is_connected(callable: Callable) const
+
+bool
+
+is_null() const
+
+Operators
+bool
+
+operator !=(right: Signal)
+
+bool
+
+operator ==(right: Signal)
+
+Constructor Descriptions
+Signal Signal() 
+
+Constructs an empty Signal with no object nor signal name bound.
+
+Signal Signal(from: Signal)
+
+Constructs a Signal as a copy of the given Signal.
+
+Signal Signal(object: Object, signal: StringName)
+
+Creates a Signal object referencing a signal named signal in the specified object.
+
+Method Descriptions
+int connect(callable: Callable, flags: int = 0) 
+
+Connects this signal to the specified callable. Optional flags can be also added to configure the connection's behavior (see ConnectFlags constants). You can provide additional arguments to the connected callable by using Callable.bind().
+
+A signal can only be connected once to the same Callable. If the signal is already connected, returns @GlobalScope.ERR_INVALID_PARAMETER and pushes an error message, unless the signal is connected with Object.CONNECT_REFERENCE_COUNTED. To prevent this, use is_connected() first to check for existing connections.
+
+for button in $Buttons.get_children():
+	button.pressed.connect(_on_pressed.bind(button))
+
+func _on_pressed(button):
+	print(button.name, " was pressed")
+void disconnect(callable: Callable) 
+
+Disconnects this signal from the specified Callable. If the connection does not exist, generates an error. Use is_connected() to make sure that the connection exists.
+
+void emit(...) vararg const 
+
+Emits this signal. All Callables connected to this signal will be triggered. This method supports a variable number of arguments, so parameters can be passed as a comma separated list.
+
+Array get_connections() const 
+
+Returns an Array of connections for this signal. Each connection is represented as a Dictionary that contains three entries:
+
+signal is a reference to this signal;
+
+callable is a reference to the connected Callable;
+
+flags is a combination of ConnectFlags.
+
+StringName get_name() const 
+
+Returns the name of this signal.
+
+Object get_object() const 
+
+Returns the object emitting this signal.
+
+int get_object_id() const 
+
+Returns the ID of the object emitting this signal (see Object.get_instance_id()).
+
+bool has_connections() const 
+
+Returns true if any Callable is connected to this signal.
+
+bool is_connected(callable: Callable) const 
+
+Returns true if the specified Callable is connected to this signal.
+
+bool is_null() const 
+
+Returns true if this Signal has no object and the signal name is empty. Equivalent to signal == Signal().
+
+Operator Descriptions
+bool operator !=(right: Signal) 
+
+Returns true if the signals do not share the same object and name.
+
+bool operator ==(right: Signal) 
+
+Returns true if both signals share the same object and name.

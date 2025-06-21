@@ -1,0 +1,465 @@
+the console at launch of project : 
+
+Godot Engine v4.5.dev4.mono.official (c) 2007-present Juan Linietsky, Ariel Manzur & Godot Contributors.
+Loading resource: C:/Users/Percision 15/AppData/Local/Godot/editor_doc_cache-4.5.res
+--- Debug adapter server started on port 6006 ---
+--- GDScript language server started on port 6005 ---
+  ERROR: Cannot get class 'GitPlugin'.
+  ERROR: Received a nullptr VCS extension instance during construction.
+Loaded system CA certificates
+  ERROR: res://core/thread_manager.gd:144 - Parse Error: Expected end of statement after expression, found ":" instead.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://core/thread_manager.gd" with error "Parse error".
+  ERROR: Failed to create an autoload, script 'res://core/thread_manager.gd' is not compiling.
+  ERROR: res://core/word_processor_tasks.gd:2 - Parse Error: Class "WordProcessorTasks" hides an autoload singleton.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://core/word_processor_tasks.gd" with error "Parse error".
+  ERROR: Failed to create an autoload, script 'res://core/word_processor_tasks.gd' is not compiling.
+  ERROR: res://turn_system.gd:3 - Parse Error: Class "TurnSystem" hides an autoload singleton.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://turn_system.gd" with error "Parse error".
+  ERROR: Failed to create an autoload, script 'res://turn_system.gd' is not compiling.
+  ERROR: res://dimensional_color_system.gd:1 - Parse Error: Class "DimensionalColorSystem" hides an autoload singleton.
+  ERROR: res://dimensional_color_system.gd:136 - Parse Error: Cannot assign a new value to a constant.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://dimensional_color_system.gd" with error "Parse error".
+  ERROR: Failed to create an autoload, script 'res://dimensional_color_system.gd' is not compiling.
+  ERROR: res://universal_connector.gd:255 - Parse Error: Unexpected "?" in source. If you want a ternary operator, use "truthy_value if true_condition else falsy_value".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://universal_connector.gd" with error "Parse error".
+  ERROR: Failed to create an autoload, script 'res://universal_connector.gd' is not compiling.
+  ERROR: res://word_manifestation_system.gd:98 - Parse Error: Unexpected "?" in source. If you want a ternary operator, use "truthy_value if true_condition else falsy_value".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://word_manifestation_system.gd" with error "Parse error".
+  ERROR: Failed to create an autoload, script 'res://word_manifestation_system.gd' is not compiling.
+  ERROR: res://memory_investment_system.gd:537 - Parse Error: "yield" was removed in Godot 4. Use "await" instead.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://memory_investment_system.gd" with error "Parse error".
+  ERROR: Failed to create an autoload, script 'res://memory_investment_system.gd' is not compiling.
+Loading resource: res://core/thread_manager.gd
+Loading resource: res://core/word_processor_tasks.gd
+Loading resource: res://turn_system.gd
+Loading resource: res://dimensional_color_system.gd
+Loading resource: res://universal_connector.gd
+Loading resource: res://word_manifestation_system.gd
+Loading resource: res://memory_investment_system.gd
+  ERROR: res://turn_5/data/mouse_automation.gd:165 - Parse Error: "yield" was removed in Godot 4. Use "await" instead.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://turn_5/data/mouse_automation.gd" with error "Parse error".
+Loading resource: res://turn_5/data/mouse_automation.gd
+  ERROR: res://godot_turn_system.gd:3 - Parse Error: Class "TurnSystem" hides an autoload singleton.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://godot_turn_system.gd" with error "Parse error".
+Loading resource: res://godot_turn_system.gd
+  ERROR: res://main_controller.gd:431 - Parse Error: Used tab character for indentation instead of space as used before in the file.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://main_controller.gd" with error "Parse error".
+  ERROR: res://visualization/turn_layer_environment.gd:47 - Parse Error: Could not parse global class "ThreadManager" from "res://core/thread_manager.gd".
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://visualization/turn_layer_environment.gd" with error "Parse error".
+Loading resource: res://main.tscn
+Loading resource: res://main_controller.gd
+Loading resource: res://visualization/turn_layer_environment.gd
+Generated 'res://15/wish_knowledge_system.gd' preview in 712 usec
+Generated 'res://shell_scripts/README.md' preview in 560 usec
+Loading resource: res://.godot/editor/editor_script_doc_cache.res
+Generated 'res://turn_1/description.txt' preview in 412 usec
+Generated 'res://turn_1/manifest.json' preview in 433 usec
+Generated 'res://turn_2/description.txt' preview in 404 usec
+Generated 'res://turn_2/manifest.json' preview in 412 usec
+Generated 'res://turn_3/data/complexity_data.txt' preview in 434 usec
+Generated 'res://turn_3/description.txt' preview in 475 usec
+Generated 'res://turn_3/manifest.json' preview in 463 usec
+Generated 'res://turn_4/data/adventure/command_integration.md' preview in 433 usec
+Generated 'res://turn_4/data/adventure/progress.md' preview in 490 usec
+Generated 'res://turn_4/data/adventure/README.md' preview in 319 usec
+Generated 'res://turn_4/data/memory/core_selection.md' preview in 296 usec
+Generated 'res://turn_4/data/memory/lucky_number_system.md' preview in 298 usec
+Generated 'res://turn_4/data/memory/symbols.json' preview in 352 usec
+Generated 'res://turn_4/data/account_acceleration_response.json' preview in 389 usec
+Generated 'res://turn_4/data/api_merger_response.json' preview in 300 usec
+Generated 'res://turn_4/data/api_translation_response.json' preview in 304 usec
+Generated 'res://turn_4/data/forced_knowledge_accelerator.md' preview in 303 usec
+Generated 'res://turn_4/data/LUMINOUS_OS.md' preview in 350 usec
+Generated 'res://turn_4/data/project_continuation_response.json' preview in 458 usec
+Generated 'res://turn_4/data/SUMMARY.md' preview in 451 usec
+Generated 'res://turn_4/data/word_manifestation.txt' preview in 301 usec
+Generated 'res://turn_4/description.txt' preview in 307 usec
+Generated 'res://turn_4/manifest.json' preview in 285 usec
+Generated 'res://turn_4/README.md' preview in 293 usec
+Generated 'res://turn_4/TERMINAL_COMMANDS.md' preview in 300 usec
+Generated 'res://turn_5/data/awareness_map.txt' preview in 366 usec
+Generated 'res://turn_5/data/dimensional_distribution_plan.txt' preview in 293 usec
+Generated 'res://turn_5/data/integration_complete.txt' preview in 312 usec
+Generated 'res://turn_5/data/master_integration.log' preview in 296 usec
+Generated 'res://turn_5/data/memory_evolution_plan.txt' preview in 364 usec
+Generated 'res://turn_5/data/metadata_schema.txt' preview in 307 usec
+Generated 'res://turn_5/data/meta_awareness_active.txt' preview in 295 usec
+Generated 'res://turn_5/data/self_reference_activation.txt' preview in 377 usec
+Generated 'res://turn_5/data/self_reference_system.txt' preview in 325 usec
+Generated 'res://turn_5/data/turn5_finalization.log' preview in 408 usec
+Generated 'res://turn_5/data/upgrade_log.txt' preview in 445 usec
+Generated 'res://turn_5/data/wish_interface.txt' preview in 526 usec
+Generated 'res://turn_5/data/wish_manifestation_system.txt' preview in 484 usec
+Generated 'res://turn_5/summary/turn5_summary.txt' preview in 424 usec
+Generated 'res://turn_5/description.txt' preview in 391 usec
+Generated 'res://turn_5/manifest.json' preview in 402 usec
+Generated 'res://turn_6/description.txt' preview in 361 usec
+Generated 'res://turn_6/manifest.json' preview in 348 usec
+Generated 'res://turn_7/description.txt' preview in 354 usec
+Generated 'res://turn_7/manifest.json' preview in 320 usec
+Generated 'res://turn_8/description.txt' preview in 287 usec
+Generated 'res://turn_8/manifest.json' preview in 297 usec
+Generated 'res://turn_8/README.md' preview in 371 usec
+Generated 'res://turn_9/description.txt' preview in 392 usec
+Generated 'res://turn_9/manifest.json' preview in 339 usec
+Generated 'res://turn_10/description.txt' preview in 334 usec
+Generated 'res://turn_10/manifest.json' preview in 283 usec
+Generated 'res://turn_11/description.txt' preview in 273 usec
+Generated 'res://turn_11/manifest.json' preview in 290 usec
+Generated 'res://turn_12/description.txt' preview in 285 usec
+Generated 'res://turn_12/manifest.json' preview in 287 usec
+Generated 'res://account_visualization.tscn' preview in 89 usec
+Generated 'res://akashic_notepad_scene.tscn' preview in 88 usec
+Generated 'res://CLAUDE_AKASHIC_BRIDGE_README.md' preview in 354 usec
+Generated 'res://CLAUDE_EXPLORATION_JOURNEY.md' preview in 433 usec
+Generated 'res://claude_thursdays_integration.md' preview in 505 usec
+Generated 'res://CONNECTION_TO_CURRENT_WORK.md' preview in 398 usec
+Generated 'res://current_turn.txt' preview in 340 usec
+Generated 'res://data_splitter_integration_scene.tscn' preview in 93 usec
+Generated 'res://display1_turn.txt' preview in 315 usec
+Generated 'res://display2_turn.txt' preview in 309 usec
+Generated 'res://DIVINE_WORD_RULES.md' preview in 316 usec
+Generated 'res://fast_turn_automation.log' preview in 436 usec
+Generated 'res://FLUID_SIMULATION_README.md' preview in 348 usec
+Generated 'res://GAME_CONNECTION_POINT.md' preview in 330 usec
+Generated 'res://game_developer_guide.md' preview in 311 usec
+Generated 'res://GODOT4_MIGRATION_README.md' preview in 533 usec
+Generated 'res://godot4_migration_system.tscn' preview in 90 usec
+Generated 'res://godot4_migration_test_runner.tscn' preview in 71 usec
+Generated 'res://IMPLEMENTATION_PLAN.md' preview in 330 usec
+Generated 'res://INTEGRATION_STATUS_2025_05_24.md' preview in 302 usec
+Generated 'res://main.tscn' preview in 59 usec
+Generated 'res://MEMORY_INVESTMENT_README.md' preview in 316 usec
+Generated 'res://memory_investment_scene.tscn' preview in 56 usec
+Generated 'res://multi_window.log' preview in 305 usec
+Generated 'res://notepad3d_manifesto.md' preview in 313 usec
+Generated 'res://NOTEPAD3D_README.md' preview in 306 usec
+Generated 'res://PHASE_SCHEDULE.md' preview in 363 usec
+Generated 'res://QUICKSTART.md' preview in 306 usec
+Generated 'res://README.md' preview in 307 usec
+Generated 'res://README_CONCURRENT.md' preview in 310 usec
+Generated 'res://README_NUMBER_GAME.md' preview in 272 usec
+Generated 'res://SCREEN_CAPTURE_OCR_README.md' preview in 322 usec
+Generated 'res://shape_memory_viewer.tscn' preview in 59 usec
+Generated 'res://SMART_ACCOUNT_SYSTEM.md' preview in 309 usec
+Generated 'res://smart_account_system.tscn' preview in 62 usec
+Generated 'res://spacebar_manifesto.md' preview in 445 usec
+Generated 'res://SYSTEM_DIAGRAM.txt' preview in 323 usec
+Generated 'res://TERMINAL_BRIDGE_README.md' preview in 368 usec
+Generated 'res://terminal_coordination.md' preview in 416 usec
+Generated 'res://terminal_coordinator.md' preview in 361 usec
+Generated 'res://time_tracking_ui.tscn' preview in 62 usec
+Generated 'res://TODO.md' preview in 338 usec
+Generated 'res://town_of_salem_roles.txt' preview in 297 usec
+Generated 'res://TURN_1_EXTRACTION.md' preview in 293 usec
+Generated 'res://TURN_12_REGENESIS_MANIFEST.json' preview in 306 usec
+Generated 'res://turn_system_summary.md' preview in 376 usec
+Generated 'res://unified_migration_system.tscn' preview in 63 usec
+Generated 'res://UNIVERSAL_AKASHIC_CONNECTOR.md' preview in 323 usec
+Generated 'res://visual_settings.json' preview in 371 usec
+Generated 'res://word_crimes_ledger.txt' preview in 293 usec
+Generated 'res://word_database.txt' preview in 285 usec
+Generated 'res://word_processing_demo.tscn' preview in 87 usec
+Generated 'res://WORD_PROCESSING_README.md' preview in 430 usec
+
+
+the debuger at play the scene i had named main, and was instructed before o do so
+
+
+file 
+
+res://core/thread_manager.gd
+
+Parser Error: Expected end of statement after expression, found ":" instead.
+
+
+
+Line 144:Expected end of statement after expression, found ":" instead.
+Line 146:Expected statement, found "Indent" instead.
+Line 147:Expected statement, found "Indent" instead.
+Line 148:Expected statement, found "else" instead.
+Line 149:Expected statement, found "Indent" instead.
+Line 150:Expected end of file.
+
+
+
+res://core/word_processor_tasks.gd
+
+
+
+Line 2:Class "WordProcessorTasks" hides an autoload singleton.
+
+
+
+
+res://turn_system.gd
+
+Parser Error: Class "TurnSystem" hides an autoload singleton.
+
+
+
+Line 3:Class "TurnSystem" hides an autoload singleton.
+
+
+
+
+[Ignore]Line 51 (UNUSED_SIGNAL):The signal "turn_started" is declared but never explicitly used in the class.
+[Ignore]Line 109 (INTEGER_DIVISION):Integer division. Decimal part will be discarded.
+[Ignore]Line 158 (INTEGER_DIVISION):Integer division. Decimal part will be discarded
+
+
+
+res://dimensional_color_system.gd
+
+
+
+Line 1:Class "DimensionalColorSystem" hides an autoload singleton.
+Line 136:Cannot assign a new value to a constant.
+
+
+
+
+[Ignore]Line 660 (SHADOWED_GLOBAL_IDENTIFIER):The variable "char" has the same name as a built-in function.
+[Ignore]Line 667 (INTEGER_DIVISION):Integer division. Decimal part will be discarded.
+[Ignore]Line 679 (INTEGER_DIVISION):Integer division. Decimal part will be discarded.
+[Ignore]Line 681 (INTEGER_DIVISION):Integer division. Decimal part will be discarded.
+
+
+res://universal_connector.gd
+
+Parser Error: Unexpected "?" in source. If you want a ternary operator, use "truthy_value if true_condition else falsy_value".
+
+Line 255:Unexpected "?" in source. If you want a ternary operator, use "truthy_value if true_condition else falsy_value".
+Line 255:Expected end of statement after variable declaration, found "Identifier" instead.
+Line 272:Unexpected "?" in source. If you want a ternary operator, use "truthy_value if true_condition else falsy_value".
+Line 272:Expected closing ")" after grouping expression.
+Line 272:Expected end of statement after expression, found "Identifier" instead.
+
+
+
+
+res://word_manifestation_system.gd
+
+
+Parser Error: Unexpected "?" in source. If you want a ternary operator, use "truthy_value if true_condition else falsy_value".
+
+
+Line 98:Unexpected "?" in source. If you want a ternary operator, use "truthy_value if true_condition else falsy_value".
+Line 98:Expected end of statement after variable declaration, found "Literal" instead.
+
+
+res://memory_investment_system.gd
+
+Parser Error: "yield" was removed in Godot 4. Use "await" instead.
+
+Line 537:"yield" was removed in Godot 4. Use "await" instead.
+Line 537:Expected statement, found "(" instead.
+
+
+do not use yield from godot 3, and await from godot 4, it could break multi threading we wanna use in every project
+
+
+
+res://main_controller.gd
+
+
+Parser Error: Expected new line after "\".
+
+
+
+
+Line 434:Expected new line after "\".
+
+
+res://visualization/turn_layer_environment.gd
+
+
+
+Line 47:Could not parse global class "ThreadManager" from "res://core/thread_manager.gd".
+
+
+res://core/thread_manager.gd:
+Line 144:Expected end of statement after expression, found ":" instead.Line 146:Expected statement, found "Indent" instead.Line 147:Expected statement, found "Indent" instead.Line 148:Expected statement, found "else" instead.Line 149:Expected statement, found "Indent" instead.Line 150:Expected end of file.
+
+res://core/word_processor_tasks.gd:
+Line 2:Class "WordProcessorTasks" hides an autoload singleton.
+
+
+
+
+[Ignore]Line 62 (UNUSED_SIGNAL):The signal "dimension_shifted" is declared but never explicitly used in the class.
+[Ignore]Line 390 (INTEGER_DIVISION):Integer division. Decimal part will be discarded.
+[Ignore]Line 591 (UNUSED_PARAMETER):The parameter "viewport" is never used in the function "_on_marker_clicked()". If this is intended, prefix it with an underscore: "_viewport".
+[Ignore]Line 591 (UNUSED_PARAMETER):The parameter "position" is never used in the function "_on_marker_clicked()". If this is intended, prefix it with an underscore: "_position".
+[Ignore]Line 591 (SHADOWED_VARIABLE_BASE_CLASS):The local function parameter "position" is shadowing an already-declared property in the base class "Node3D".
+[Ignore]Line 591 (UNUSED_PARAMETER):The parameter "normal" is never used in the function "_on_marker_clicked()". If this is intended, prefix it with an underscore: "_normal".
+[Ignore]Line 591 (UNUSED_PARAMETER):The parameter "shape_idx" is never used in the function "_on_marker_clicked()". If this is intended, prefix it with an underscore: "_shape_idx".
+[Ignore]Line 602 (UNUSED_PARAMETER):The parameter "layer_idx" is never used in the function "_on_marker_hover_start()". If this is intended, prefix it with an underscore: "_layer_idx".
+[Ignore]Line 602 (UNUSED_PARAMETER):The parameter "marker_idx" is never used in the function "_on_marker_hover_start()". If this is intended, prefix it with an underscore: "_marker_idx".
+[Ignore]Line 612 (UNUSED_PARAMETER):The parameter "layer_idx" is never used in the function "_on_marker_hover_end()". If this is intended, prefix it with an underscore: "_layer_idx".
+[Ignore]Line 612 (UNUSED_PARAMETER):The parameter "marker_idx" is never used in the function "_on_marker_hover_end()". If this is intended, prefix it with an underscore: "_marker_idx".
+
+
+
+the console after clicking through skips in debugger to load the scene as we can 
+
+
+GDScript: Reloading: res://dimensional_color_system.gd
+GDScript: Reloading: res://main_controller.gd
+GDScript: Reloading: res://memory_investment_system.gd
+GDScript: Reloading: res://core/thread_manager.gd
+GDScript: Reloading: res://visualization/turn_layer_environment.gd
+GDScript: Reloading: res://turn_system.gd
+GDScript: Reloading: res://universal_connector.gd
+GDScript: Reloading: res://word_manifestation_system.gd
+GDScript: Reloading: res://core/word_processor_tasks.gd
+Running: C:/Users/Percision 15/twelve_folders/godot_four_and_five_so_on/Godot_v4.5-dev4_mono_win64.exe
+ %s --path
+ %s C:/Users/Percision%2015/12_turns_system
+ %s --remote-debug
+ %s tcp://127.0.0.1:6007
+ %s --editor-pid
+ %s 8720
+ %s --position
+ %s 0,-30
+ %s res://main.tscn
+Generated 'res://core/word_processor_tasks.gd' preview in 8744 usec
+Generated 'res://visualization/turn_layer_environment.gd' preview in 10807 usec
+Generated 'res://dimensional_color_system.gd' preview in 9467 usec
+Generated 'res://main_controller.gd' preview in 9155 usec
+Generated 'res://memory_investment_system.gd' preview in 31660 usec
+Generated 'res://turn_system.gd' preview in 17589 usec
+Generated 'res://universal_connector.gd' preview in 30697 usec
+Generated 'res://word_manifestation_system.gd' preview in 17563 usec
+Godot Engine v4.5.dev4.mono.official.209a446e3 - https://godotengine.org
+TextServer: Added interface "Dummy"
+TextServer: Added interface "ICU / HarfBuzz / Graphite (Built-in)"
+Devices:
+  #0: NVIDIA Quadro RTX 3000 - Supported, Discrete
+Optional extension VK_EXT_fragment_density_map not found
+Optional extension VK_EXT_astc_decode_mode not found
+Optional extension VK_EXT_texture_compression_astc_hdr not found
+Optional extension VK_KHR_external_memory_fd not found
+Optional extension VK_EXT_device_fault not found
+Optional extension VK_EXT_debug_marker not found
+- Vulkan Fragment Shading Rate supported:
+  Pipeline fragment shading rate
+  Primitive fragment shading rate
+  Attachment fragment shading rate, min texel size: (16, 16), max texel size: (16, 16), max fragment size: (4, 4)
+- Vulkan Fragment Density Map not supported
+- Vulkan multiview supported:
+  max view count: 32
+  max instances: 134217727
+- Vulkan subgroup:
+  size: 32
+  min size: 32
+  max size: 32
+  stages: STAGE_VERTEX, STAGE_TESSELLATION_CONTROL, STAGE_TESSELLATION_EVALUATION, STAGE_GEOMETRY, STAGE_FRAGMENT, STAGE_COMPUTE, STAGE_RAYGEN_KHR, STAGE_ANY_HIT_KHR, STAGE_CLOSEST_HIT_KHR, STAGE_MISS_KHR, STAGE_INTERSECTION_KHR, STAGE_CALLABLE_KHR, STAGE_TASK_NV, STAGE_MESH_NV
+  supported ops: FEATURE_BASIC, FEATURE_VOTE, FEATURE_ARITHMETIC, FEATURE_BALLOT, FEATURE_SHUFFLE, FEATURE_SHUFFLE_RELATIVE, FEATURE_CLUSTERED, FEATURE_QUAD, FEATURE_PARTITIONED_NV
+  quad operations in all stages
+Vulkan 1.3.277 - Forward+ - Using Device #0: NVIDIA - Quadro RTX 3000
+Startup PSO cache (3.3 MiB)
+Using "winink" pen tablet driver...
+Creating VMA small objects pool for memory type index 1
+Shader 'CanvasSdfShaderRD' (group 0) SHA256: cf65bd7d3a8303b709934b853c9ae844297506594872fd8f7e9e7f87d2443041
+Shader 'SkeletonShaderRD' (group 0) SHA256: 1c04c10076a776f6ab5d044650605a12a01cc7b4dee23439860dbfcbc4622fd4
+Shader 'SortShaderRD' (group 0) SHA256: 537ecc9b7b9273c4dbd44102509fc8bd2d2d45c04f4663db4350282c7e94239e
+Shader 'ParticlesShaderRD' (group 0) SHA256: e5104e4338bc89f9af4dd2443583a2b5584b1a475632719490bbae9cfb84e2fa
+Shader 'ParticlesCopyShaderRD' (group 0) SHA256: 76c0ad4b415a3c6cc4f2a2d35bded4b7bb35dba5caf95200f34f11b5ed1c89b3
+Shader 'CanvasShaderRD' (group 0) SHA256: f3cdd916565b599879ce4b8d4b94e39e9115788c51d3c0a688b4270f526b0cea
+Shader 'CanvasOcclusionShaderRD' (group 0) SHA256: c016babe8b54e10e0bb57c1184ad5f9694ff473cb9d469d6e5058b30a1fa5b5a
+Shader 'ClusterRenderShaderRD' (group 0) SHA256: a1eba667341601ae9facc9d70bc02e679751a7afd1a745af37daf3d687f1519c
+Shader 'ClusterStoreShaderRD' (group 0) SHA256: 65f2b7db4f9c3adb850a6058c2edd1a3ccd7b14fc5ba7f79510dbecd9d7df18f
+Shader 'ClusterDebugShaderRD' (group 0) SHA256: 890fa99156b6718b4ca7caa68e5ece08599143d2b3f8f49322394a30d04299bd
+Shader 'SceneForwardClusteredShaderRD' (group 0) SHA256: b3ca7186a6620e822e94d8d336b68a6e417632ebfab7ca2f6719b9e82c395775
+Shader 'SceneForwardClusteredShaderRD' (group 1) SHA256: ed270828d8083a93242f92036dee4245741be13129060d03898266cc5f6e9d94
+Shader 'SceneForwardClusteredShaderRD' (group 2) SHA256: ef5d7cfbff993521821445322a0272551529ff17b4148d9e8b718ccc4cae94a0
+Shader 'SceneForwardClusteredShaderRD' (group 3) SHA256: 111ad554dea580c8cbfad3556e5af74ba4a443021bf75962e06f9ac7cd91d142
+Shader 'BestFitNormalShaderRD' (group 0) SHA256: 57dc231884c23cdd67bd1e34156792611569779f67d91371405ce8712c4dbb15
+Shader 'IntegrateDfgShaderRD' (group 0) SHA256: 4d158af79dfbc32ec11c7de35da01c8c614b3686258ea4f921ec70d4b5a16746
+Shader 'ResolveShaderRD' (group 0) SHA256: 10eadfa3dbb1007c3b06abae8822d1d8ab607d97b46e3c0393248eda1656fee2
+Shader 'TaaResolveShaderRD' (group 0) SHA256: efe7ea8281e4171077d9ec22d75f1eea377391c8dcf0d8d150cdccf436f5e7a9
+Shader 'Fsr2DepthClipPassShaderRD' (group 0) SHA256: cedda6918b240ed625de084086da1d6b069c32a90fc87c22568b1528d5136442
+Shader 'Fsr2ReconstructPreviousDepthPassShaderRD' (group 0) SHA256: 11199896613d6088e260247c6ed046c4f68d6deb38432685b88556d3499e9a49
+Shader 'Fsr2LockPassShaderRD' (group 0) SHA256: 05439015887e8685cc8c725703155901c83a41b12e4a6bfa76efcbd786e8fca6
+Shader 'Fsr2AccumulatePassShaderRD' (group 0) SHA256: 68b4e08e6edef5e240c58de7f4adf6a707884f7cfd73bdbcefe8c97fbd76c109
+Shader 'Fsr2RcasPassShaderRD' (group 0) SHA256: 7c91511a27cf4be070a24e25daaddd36815a9e25ba9ce245668dcaa0e6586163
+Shader 'Fsr2ComputeLuminancePyramidPassShaderRD' (group 0) SHA256: ce7c5b8cb697c5f937d0d007f7f6e1b22eb3a1944b828236c15681d3529e56b4
+Shader 'Fsr2AutogenReactivePassShaderRD' (group 0) SHA256: ab43cf713c5915f1903eab5690dd61ef5dbae77f2151b3d2e5b443714dc0de96
+Shader 'Fsr2TcrAutogenPassShaderRD' (group 0) SHA256: cf316f4b2c7fe0178a0eeeced22add44390f7be7299fe2407becce58ad522931
+Shader 'SsEffectsDownsampleShaderRD' (group 0) SHA256: 0f9be3d90f26fda5d72ccdb701ab449d3fd12b4dd122607f29472adb6c8b4899
+Shader 'SsilShaderRD' (group 0) SHA256: 99907f9b307d359f13bf1a30579fa1915a3ce80bd6cf4a24a54623fc4e517ced
+Shader 'SsilImportanceMapShaderRD' (group 0) SHA256: 22e7b75f4674cbd41d66eaca41a5b94588aa7897e966a124895e0439fc956be1
+Shader 'SsilBlurShaderRD' (group 0) SHA256: a97e4e8cefbc67973f3e7661b162453afab46b2dcebb03501fa397b4b6ff59c6
+Shader 'SsilInterleaveShaderRD' (group 0) SHA256: 2e39a887475a6604269832e1a2775c0c36361bb91ce93b8b8600723ee8870abd
+Shader 'SsaoShaderRD' (group 0) SHA256: 57dc6893ffa726f71f1af635f173c5880cb300324538a9db8426947cc6202b97
+Shader 'SsaoImportanceMapShaderRD' (group 0) SHA256: 448aea8a7b7b5c519ba8d4a558426ef8146765389b27d93f4c58f322eafbbd84
+Shader 'SsaoBlurShaderRD' (group 0) SHA256: b2b13813f612ddba75fd2b9b0392ad866cffd675594c5fdb4cfe1a00dc4ba39d
+Shader 'SsaoInterleaveShaderRD' (group 0) SHA256: c494a97a4cd03dbbbf19df54628d914c7688ec7eca7af1d43abfc142a5fbb005
+Shader 'ScreenSpaceReflectionScaleShaderRD' (group 0) SHA256: b55bb25520d9dcd4622f17ea1166535db8a59168212b2ae574d9c2a581d73d06
+Shader 'ScreenSpaceReflectionShaderRD' (group 0) SHA256: 728a19e1d20c241e9f4d8e67b31c155020d148fd4a261e1d5d48ab00213545bd
+Shader 'ScreenSpaceReflectionFilterShaderRD' (group 0) SHA256: 8fb4909617d40ce32a2bec86857d2365a50d62cb125e57049e376d2535091538
+Shader 'SubsurfaceScatteringShaderRD' (group 0) SHA256: c62466b2d0d7790d6e2ac6948d3152498c46af62726d4b048e078d2887ea18fd
+Shader 'SkyShaderRD' (group 0) SHA256: bf91fa374c748863de47631faa62a06d0059e704db5f31e0958013a039ac9455
+Shader 'VoxelGiShaderRD' (group 0) SHA256: 405af0c1093c8b370fff05b607bc5b65c8f1d10edf4764a50ab3688a78c7e034
+Shader 'VoxelGiDebugShaderRD' (group 0) SHA256: a829b5555942e6db3c8501b313d62f61ff89811091d09702cc7ba4f013fbc4c4
+Shader 'SdfgiPreprocessShaderRD' (group 0) SHA256: 4ea00508ddaec8c6eedb3b2d8721de0e66201d4faea193270f07e0b094d01e12
+Shader 'SdfgiDirectLightShaderRD' (group 0) SHA256: 11d69863c5b244b98c624600c1e5ab99cd8d638d38b1ffaf1b258148c5316f8a
+Shader 'SdfgiIntegrateShaderRD' (group 0) SHA256: e96553c6bdfc8238190ecf5f428496003136fa13fca31800eb082b5caf43dfcd
+Shader 'GiShaderRD' (group 0) SHA256: f3488f702f5a3a96989248c0a8f99bd07060626dfae05bd5d63ad863b293bc56
+Shader 'SdfgiDebugShaderRD' (group 0) SHA256: 34515d1e638e616e3e213dc4932b2bb2d94a70e1cce0e25fe42b8d2dc89e74f1
+Shader 'SdfgiDebugProbesShaderRD' (group 0) SHA256: 6896968aced0e4c01caf1699932e2ad210b18019b181514227406f41b58e84e1
+Shader 'VolumetricFogShaderRD' (group 0) SHA256: 514860f4739b586e2d94f2b5fdb803f1bad82c864af857332785f0f1c7354e6a
+Shader 'VolumetricFogProcessShaderRD' (group 0) SHA256: 2ac553603a43b3b5ff5a3ad3d247681075963cbf8b83873e3e46451f884c781a
+Shader 'BokehDofShaderRD' (group 0) SHA256: 79fd86e3bd3230713ec57dd87896d4d1818e655a1646f2b92a8ce6428ccfdf52
+Shader 'CopyShaderRD' (group 0) SHA256: c5c3e39325e6ab3cc6aebef9b445d9b722fb253f70a305228797b76f062767fb
+Shader 'CopyToFbShaderRD' (group 0) SHA256: a11d2a6a8f70e55e6e5fc7d0a8817b60feb62f3a6545eb52c967089b31fe6f69
+Shader 'CubeToDpShaderRD' (group 0) SHA256: 407d5cb474aea126f8ebd64e3f31df64b6dc9114f8ac48a03eaf23d3aec9adae
+Shader 'CubemapDownsamplerShaderRD' (group 0) SHA256: c50a62e8b2aa8d02c1d97763fae03ac62043cc74ad3deb591dc772e8cd1edb7e
+Shader 'CubemapFilterShaderRD' (group 0) SHA256: fc368c123e1fc0109b01ccad9fde627d49b36694f2e5001dd0315929f70602ad
+Shader 'CubemapRoughnessShaderRD' (group 0) SHA256: 88f95f789b8f57512f68d6af8ac17d751bbb00bb7d312e0755abc6b736daa4c8
+Shader 'SpecularMergeShaderRD' (group 0) SHA256: f2a60f56735cef5fa9457b6812494115d940d4114018144c59300e5f8abfa57d
+Shader 'ShadowFrustumShaderRD' (group 0) SHA256: 1e1c6a5ba53620fdc62413064c524d303510f8dd7549c599e81769605cb7f520
+Shader 'MotionVectorsShaderRD' (group 0) SHA256: ec915456f55655bfa5cd1b4f32f9c25e6e8ff4e56276068e6f4eed5fde82884a
+Shader 'LuminanceReduceShaderRD' (group 0) SHA256: 81846a59e9d2d02158cb1a4dcd6818e5d3eedd64e0b56d1beb0f7b4ebba5ad1f
+Shader 'TonemapShaderRD' (group 0) SHA256: ce8c6834aa492ee352c1db48acd9a90c8301ccf7ee7973f6a61cc359bf8e4da5
+Shader 'VrsShaderRD' (group 0) SHA256: fde9a378eaafa9077966c9c8a864281bab5567cc382a65cf473948eca1b21895
+Shader 'FsrUpscaleShaderRD' (group 0) SHA256: 5b0c32fad0511c5944f77daf3648729e92eb8d379371a6d6fad2b3b93452ce6f
+Shader 'BlitShaderRD' (group 0) SHA256: 2c2abab5f784f4325d788f26fe7aa09048219c2c27aadc1274b97d163fb2f69b
+WASAPI: Activated output_device using IAudioClient3 interface
+WASAPI: wFormatTag = 65534
+WASAPI: nChannels = 2
+WASAPI: nSamplesPerSec = 48000
+WASAPI: nAvgBytesPerSec = 384000
+WASAPI: nBlockAlign = 8
+WASAPI: wBitsPerSample = 32
+WASAPI: cbSize = 22
+WASAPI: mix_rate = 48000
+WASAPI: fundamental_period_frames = 480
+WASAPI: min_period_frames = 480
+WASAPI: max_period_frames = 480
+WASAPI: selected a period frame size of 480
+WASAPI: detected 2 channels
+WASAPI: audio buffer frames: 480 calculated latency: 10ms
+
+TextServer: Primary interface set to: "ICU / HarfBuzz / Graphite (Built-in)".
+.NET: Initializing module...
+Found hostfxr: C:/Program Files/dotnet/host/fxr/9.0.4/hostfxr.dll
+.NET: hostfxr initialized
+.NET: GodotPlugins initialized
+  ERROR: .NET: Failed to load project assembly
+Loading resource: res://theme_sacred.tres
+Failed loading resource: res://theme_sacred.tres
+CORE API HASH: 2633083724
+EDITOR API HASH: 4209654421
+Loading resource: res://core/thread_manager.gd
+Loading resource: res://core/word_processor_tasks.gd
+Loading resource: res://turn_system.gd
+Loading resource: res://dimensional_color_system.gd
+Loading resource: res://universal_connector.gd
+Loading resource: res://word_manifestation_system.gd
+Loading resource: res://memory_investment_system.gd
+Loaded system CA certificates
+Loading resource: res://main.tscn
+Loading resource: res://main_controller.gd
+Loading resource: res://visualization/turn_layer_environment.gd

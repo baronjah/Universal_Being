@@ -58,6 +58,7 @@ func _init() -> void:
 	pentagon_init()
 
 func pentagon_init() -> void:
+    super.pentagon_init()
 	# Pentagon initialization - override in child classes
 	pass
 
@@ -65,6 +66,7 @@ func _process(delta: float) -> void:
 	pentagon_process(delta)
 
 func pentagon_process(delta: float) -> void:
+    super.pentagon_process(delta)
 	# Pentagon logic processing - override in child classes
 	pass
 
@@ -72,6 +74,7 @@ func _input(event: InputEvent) -> void:
 	pentagon_input(event)
 
 func pentagon_input(event: InputEvent) -> void:
+    super.pentagon_input(event)
 	# Pentagon input handling - override in child classes
 	pass
 
@@ -79,6 +82,7 @@ func sewers() -> void:
 	pentagon_sewers()
 
 func pentagon_sewers() -> void:
+    super.pentagon_sewers()
 	# Pentagon cleanup/output - override in child classes
 	pass
 func create_being(type: String = "basic", position: Vector3 = Vector3.ZERO, properties: Dictionary = {}) -> Node3D:
@@ -537,6 +541,10 @@ func _cmd_connect_containers(args: Array) -> String:
 
 func _find_container_by_name(container_name: String) -> UniversalBeingSceneContainer:
 	"""Find a container by name"""
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+	# Auto-generated ready implementation
+
 	var containers = being_types.get("container", [])
 	for container_being in containers:
 		if container_being.name.contains(container_name):

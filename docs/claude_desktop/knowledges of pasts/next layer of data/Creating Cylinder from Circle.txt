@@ -1,0 +1,157 @@
+in CreateBuild with open CreationTool player wrotes in textbox create a put a circle at the base Circle and make it 8 of height
+
+[y9][][][][1][1][1][][][]
+[y8][][1][1][][][][1][1][]
+[y7][][1][][][][][][1][]
+[y6][1][][][][][][][][1]
+[y5][1][][][][][][][][1]
+[y4][1][][][][][][][][1]
+[y3][][1][][][][][][1][]
+[y2][][1][1][][][][1][1][]
+[y1][][][][1][1][1][][][]
+[xy][x1][x2][x3][x4][x5][x6][x7][x8][x9]
+
+
+So this is in front of a player
+
+just as i talked about using pen tool like from photoshop, so a circle is 1, it is put at the bottom, then at heigh of 8 is another circle it is 3 and space between them is filled it is 2 and it is perfect cylinder made from two circles
+
+[y9][][][][][][][][][]
+[y8][3][3][3][3][3][3][3][3][3]
+[y7][2][2][2][2][2][2][2][2][2]
+[y6][2][2][2][2][2][2][2][2][2]
+[y5][2][2][2][2][2][2][2][2][2]
+[y4][2][2][2][2][2][2][2][2][2]
+[y3][2][2][2][2][2][2][2][2][2]
+[y2][2][2][2][2][2][2][2][2][2]
+[y1][1][1][1][1][1][1][1][1][1]
+[xy][x1][x2][x3][x4][x5][x6][x7][x8][x9]
+
+and the size of x [] and y [] is the same
+
+Lets now think in 3d perspective, lets say we have that screen that human look at, and now we have an 3d pixel based system on atoms, physics and quantum physics and quarks and stuff like that, lets say we have an square which is solid inside with atoms everywhere
+
+this is xyz, so 9 of x, 9 of y, 9 of z
+
+and the size of x [] and y [] and z [] is the same
+
+Layer 1 which human eyes see always because it is the first one
+
+
+[y9z1][][][][][][][][][]
+[y8z1][][][][3][3][3][][][]
+[y7z1][][][][2][2][2][][][]
+[y6z1][][][][2][2][2][][][]
+[y5z1][][][][2][2][2][][][]
+[y4z1][][][][2][2][2][][][]
+[y3z1][][][][2][2][2][][][]
+[y2z1][][][][2][2][2][][][]
+[y1z1][][][][1][1][1][][][]
+[xyz][x1z1][x2z1][x3z1][x4z1][x5z1][x6z1][x7z1][x8z1][x9z1]
+
+Layer 2 which human eye can see if the Layer 1 does not have anything over anything inside it
+
+[y9z2][][][][][][][][][]
+[y8z2][][3][3][2][2][2][3][3][]
+[y7z2][][2][2][][][][2][2][]
+[y6z2][][2][2][][][][2][2][]
+[y5z2][][2][2][][][][2][2][]
+[y4z2][][2][2][][][][2][2][]
+[y3z2][][2][2][][][][2][2][]
+[y2z2][][2][2][][][][2][2][]
+[y1z2][][1][1][2][2][2][1][1][]
+[xyz][x1z2][x2z2][x3z2][x4z2][x5z2][x6z2][x7z2][x8z2][x9z2]
+
+Layer 3 which human eye can see if the Layer 2 does not have anything over anything inside it
+
+[y9z3][][][][][][][][][]
+[y8z3][][3][2][2][2][2][2][3][]
+[y7z3][][2][][][][][][2][]
+[y6z3][][2][][][][][][2][]
+[y5z3][][2][][][][][][2][]
+[y4z3][][2][][][][][][2][]
+[y3z3][][2][][][][][][2][]
+[y2z3][][2][][][][][][2][]
+[y1z3][][1][2][2][2][2][2][1][]
+[xyz][x1z3][x2z3][x3z3][x4z3][x5z3][x6z3][x7z3][x8z3][x9z3]
+
+Layer 4 which human eye can see if the Layer 3 does not have anything over anything inside it
+
+[y9z4][][][][][][][][][]
+[y8z4][3][2][2][2][2][2][2][2][3]
+[y7z4][2][][][][][][][][2]
+[y6z4][2][][][][][][][][2]
+[y5z4][2][][][][][][][][2]
+[y4z4][2][][][][][][][][2]
+[y3z4][2][][][][][][][][2]
+[y2z4][2][][][][][][][][2]
+[y1z4][1][2][2][2][2][2][2][2][1]
+[xyz][x1z4][x2z4][x3z4][x4z4][x5z4][x6z4][x7z4][x8z4][x9z4]
+
+Layer 5 which human eye can see if the Layer 4 does not have anything over anything inside it
+
+[y9z5][][][][][][][][][]
+[y8z5][3][2][2][2][2][2][2][2][3]
+[y7z5][2][][][][][][][][2]
+[y6z5][2][][][][][][][][2]
+[y5z5][2][][][][][][][][2]
+[y4z5][2][][][][][][][][2]
+[y3z5][2][][][][][][][][2]
+[y2z5][2][][][][][][][][2]
+[y1z5][1][2][2][2][2][2][2][2][1]
+[xyz][x1z5][x2z5][x3z5][x4z5][x5z5][x6z5][x7z5][x8z5][x9z5]
+
+Layer 6 which human eye can see if the Layer 5 does not have anything over anything inside it
+
+[y9z6][][][][][][][][][]
+[y8z6][3][2][2][2][2][2][2][2][3]
+[y7z6][2][][][][][][][][2]
+[y6z6][2][][][][][][][][2]
+[y5z6][2][][][][][][][][2]
+[y4z6][2][][][][][][][][2]
+[y3z6][2][][][][][][][][2]
+[y2z6][2][][][][][][][][2]
+[y1z6][1][2][2][2][2][2][2][2][1]
+[xyz][x1z6][x2z6][x3z6][x4z6][x5z6][x6z6][x7z6][x8z6][x9z6]
+
+Layer 7 which human eye does can see if the Layer 6 does not have anything over anything inside it
+
+[y9z7][][][][][][][][][]
+[y8z7][][3][2][2][2][2][2][3][]
+[y7z7][][2][][][][][][2][]
+[y6z7][][2][][][][][][2][]
+[y5z7][][2][][][][][][2][]
+[y4z7][][2][][][][][][2][]
+[y3z7][][2][][][][][][2][]
+[y2z7][][2][][][][][][2][]
+[y1z7][][1][2][2][2][2][2][1][]
+[xyz][x1z7][x2z7][x3z7][x4z7][x5z7][x6z7][x7z7][x8z7][x9z7]
+
+Layer 8 which human eye can see if the Layer 7 does not have anything over anything inside it
+
+[y9z8][][][][][][][][][]
+[y8z8][][3][3][2][2][2][3][3][]
+[y7z8][][2][2][][][][2][2][]
+[y6z8][][2][2][][][][2][2][]
+[y5z8][][2][2][][][][2][2][]
+[y4z8][][2][2][][][][2][2][]
+[y3z8][][2][2][][][][2][2][]
+[y2z8][][2][2][][][][2][2][]
+[y1z8][][1][1][2][2][2][1][1][]
+[xyz][x1z8][x2z8][x3z8][x4z8][x5z8][x6z8][x7z8][x8z8][x9z8]
+
+Layer 9 which human eye can see if the Layer 8 does not have anything over anything inside it
+
+[y9z9][][][][][][][][][]
+[y8z9][][][][3][3][3][][][]
+[y7z9][][][][2][2][2][][][]
+[y6z9][][][][2][2][2][][][]
+[y5z9][][][][2][2][2][][][]
+[y4z9][][][][2][2][2][][][]
+[y3z9][][][][2][2][2][][][]
+[y2z9][][][][2][2][2][][][]
+[y1z9][][][][1][1][1][][][]
+[xyz][x1z9][x2z9][x3z9][x4z9][x5z9][x6z9][x7z9][x8z9][x9z9]
+
+
+Also i wanna have a way to dig into these created objects or asset or whatever for an example lets say we have a sphere 

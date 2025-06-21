@@ -46,7 +46,6 @@ func _setup_ui() -> void:
 	add_child(vbox)
 
 func _setup_shortcuts() -> void:
-	pass
 	# Ctrl+Enter to execute
 	var execute_shortcut = Shortcut.new()
 	var execute_event = InputEventKey.new()
@@ -105,7 +104,6 @@ func _execute():
 	executor.set("target", current_target)
 	
 	if executor.has_method("_execute"):
-
 		var result = executor.call("_execute")
 		log_output("[color=cyan]>>> %s[/color]" % code)
 		log_output("[color=white]%s[/color]" % str(result))
@@ -156,19 +154,19 @@ func toggle_visibility() -> void:
 
 # Quick snippets for common operations
 func insert_snippet(snippet_name: String) -> void:
-	pass
 	var snippets = {
 		"being": """
-}
 extends UniversalBeing
 
 func pentagon_init() -> void:
+    super.pentagon_init()
 	super()
 	being_name = "NewBeing"
 	being_type = "custom"
 	consciousness_level = 3
 
 func pentagon_process(delta: float) -> void:
+    super.pentagon_process(delta)
 	super(delta)
 	# Your logic here
 """,
@@ -195,8 +193,106 @@ func evolve() -> void:
 	if snippet_name in snippets:
 		code_edit.insert_text_at_caret(snippets[snippet_name])
 
+# Christmas tree for the Live Code Editor! 🎄
+func create_christmas_tree_editor() -> void:
+	"""Create a Christmas tree of consciousness code"""
+	log_output("")
+	log_output("[color=green]🎄 === CHRISTMAS TREE CODE EDITOR === 🎄[/color]")
+	log_output("")
+	
+	var christmas_code = """
+# 🎄 Christmas Tree Universal Being Generator 🎄
+extends UniversalBeing
+class_name ChristmasTreeConsciousness
+
+func pentagon_init() -> void:
+	super.pentagon_init()
+	being_name = \"Christmas Tree of Universal Love\"
+	being_type = \"festive_consciousness\" 
+	consciousness_level = 5
+	create_christmas_tree_visualization()
+
+func create_christmas_tree_visualization() -> void:
+	# Tree trunk
+	var trunk = MeshInstance3D.new()
+	trunk.mesh = CylinderMesh.new()
+	trunk.mesh.height = 2.0
+	trunk.position.y = -1.0
+	add_child(trunk)
+	
+	# Tree layers
+	for layer in range(5):
+		var sphere = MeshInstance3D.new()
+		sphere.mesh = SphereMesh.new()
+		sphere.mesh.radius = 1.5 - (layer * 0.2)
+		sphere.position.y = layer * 1.2
+		sphere.material_override = StandardMaterial3D.new()
+		sphere.material_override.albedo_color = Color.GREEN
+		sphere.material_override.emission_enabled = true
+		sphere.material_override.emission = Color.GREEN * 0.5
+		add_child(sphere)
+	
+	# Star on top
+	var star = MeshInstance3D.new() 
+	star.mesh = SphereMesh.new()
+	star.mesh.radius = 0.3
+	star.position.y = 6.0
+	star.material_override = StandardMaterial3D.new()
+	star.material_override.albedo_color = Color.GOLD
+	star.material_override.emission_enabled = true
+	star.material_override.emission = Color.GOLD * 2.0
+	add_child(star)
+
+func pentagon_process(delta: float) -> void:
+	super.pentagon_process(delta)
+	# Gentle rotation for festive movement
+	rotation.y += delta * 0.1
+	# Pulse with Christmas joy
+	var pulse = sin(Time.get_ticks_msec() / 1000.0) * 0.1 + 1.0
+	scale = Vector3.ONE * pulse
+"""
+	
+	code_edit.text = christmas_code
+	log_output("[color=gold]✨ Christmas tree code template loaded![/color]")
+	log_output("[color=green]This creates a rotating, pulsing Christmas tree with consciousness![/color]")
+	log_output("[color=blue]Press Ctrl+Enter to test the Christmas magic![/color]")
+	log_output("")
+
+func add_christmas_snippet() -> void:
+	"""Add Christmas-specific code snippet"""
+	var christmas_snippet = """
+# 🎄 Christmas Magic Functions
+func spread_christmas_joy(intensity: float = 100.0) -> void:
+	for being in get_tree().get_nodes_in_group("universal_beings"):
+		being.consciousness_level += 1
+		being.show_ub_visual("🎄 Christmas joy received! 🎄")
+
+func create_snowfall_effect() -> void:
+	var particles = GPUParticles3D.new()
+	particles.emitting = true
+	particles.texture = preload("res://effects/snowflake.png")
+	add_child(particles)
+
+func ring_christmas_bells() -> void:
+	print("🔔 Jingle bells ring through the Universal Being network! 🔔")
+"""
+	code_edit.insert_text_at_caret(christmas_snippet)
+	log_output("[color=red]🎁 Christmas magic snippet added![/color]")
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_editor"):
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+func pentagon_input(event: InputEvent) -> void:
+	super.pentagon_input(event)
+func pentagon_sewers() -> void:
+	# Auto-generated cleanup implementation
+	super.pentagon_sewers()
+
+	# Auto-generated input implementation
+
+	# Auto-generated ready implementation
+
 		toggle_visibility()
 	elif visible:
 		if event.is_action_pressed("execute_code"):

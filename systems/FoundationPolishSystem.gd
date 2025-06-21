@@ -6,10 +6,17 @@
 # CHANGES: Created foundation polishing system
 # TODO: Implement error handling validation
 # STABILITY: 8/10 - New system, needs testing
+# res://systems/FoundationPolishSystem.gd
 # ==================================================
 
 extends UniversalBeing
 class_name FoundationPolishSystem
+
+func pentagon_init() -> void:
+	super.pentagon_init()
+	being_name = "Generated Being"
+	being_type = "auto_generated"
+	consciousness_level = 1
 
 # Foundation health tracking
 var foundation_health: Dictionary = {}
@@ -29,14 +36,14 @@ var polish_tasks: Array = [
 	{"name": "Resolve circular dependencies", "priority": "high", "progress": 0},
 	{"name": "Add comprehensive error handling", "priority": "medium", "progress": 0},
 	{"name": "Optimize Akashic Records queries", "priority": "medium", "progress": 0},
-	{"name": "Pentagon Architecture validation", "priority": "high", "progress": 0
+	{"name": "Pentagon Architecture validation", "priority": "high", "progress": 0}
 ]
 
 # Strategic features (20% focus)
 var strategic_features: Array = [
 	{"name": "Visual Pentagon debugger", "priority": "medium", "progress": 0},
 	{"name": "Being health monitor", "priority": "low", "progress": 0},
-	{"name": "Consciousness visualization", "priority": "medium", "progress": 0
+	{"name": "Consciousness visualization", "priority": "medium", "progress": 0}
 ]
 
 signal foundation_issue_detected(issue: Dictionary)
@@ -126,7 +133,7 @@ func check_pentagon_integrity(being: Node) -> Dictionary:
 		if not being.has_method(method):
 			status.complete = false
 			status.issues.append("Missing method: %s" % method)
-}
+
 	
 	# Check if it extends UniversalBeing
 	if not being is UniversalBeing:
@@ -143,7 +150,7 @@ func analyze_akashic_records() -> void:
 		if akashic and akashic.has_method("get_performance_metrics"):
 			akashic_performance = akashic.get_performance_metrics()
 		else:
-			akashic_performance.memory_usage = OS.get_static_memory_usage_by_type()
+			akashic_performance.memory_usage = OS.get_static_memory_usage()
 	
 	print("📚 Akashic Records analysis complete")
 
@@ -196,14 +203,14 @@ func analyze_compilation_status() -> void:
 	# This would be enhanced to actually scan for compilation errors
 	compilation_errors = [
 		{"file": "player_universal_being.gd", "error": "velocity redefined", "fixed": true},
-		{"file": "core/GameStateSocketManager.gd", "error": "wrong node reference", "fixed": true
+		{"file": "core/GameStateSocketManager.gd", "error": "wrong node reference", "fixed": true}
 	]
 	
 	runtime_warnings = []
 	performance_issues = []
 	
 	print("⚠️ Compilation analysis: %d errors found" % compilation_errors.size())
-}
+
 
 func generate_foundation_report() -> void:
 	"""Generate comprehensive foundation health report"""
@@ -315,7 +322,7 @@ func print_foundation_report() -> void:
 	print("💡 Recommendations:")
 	for rec in foundation_health.recommendations:
 		print("  [%s] %s: %s" % [rec.priority.to_upper(), rec.area, rec.action])
-}
+
 	
 	print("=".repeat(60))
 
@@ -498,6 +505,22 @@ func get_polish_progress() -> Dictionary:
 
 func force_foundation_analysis() -> void:
 	"""Force immediate foundation analysis"""
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+func pentagon_process(delta: float) -> void:
+	super.pentagon_process(delta)
+func pentagon_input(event: InputEvent) -> void:
+	super.pentagon_input(event)
+func pentagon_sewers() -> void:
+	# Auto-generated cleanup implementation
+	super.pentagon_sewers()
+
+	# Auto-generated input implementation
+
+	# Auto-generated process implementation
+
+	# Auto-generated ready implementation
+
 	start_foundation_analysis()
 
-print("🏛️ Foundation Polish System: Preserving 2-year foundation, enhancing stability!")
+#print("🏛️ Foundation Polish System: Preserving 2-year foundation, enhancing stability!")

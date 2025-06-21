@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://csdol1rr4hmvy"]
 
-[ext_resource type="Script" uid="uid://c2i1mb52j1ved" path="res://scripts/SimpleMovablePlasmoid.gd" id="1"]
+[ext_resource type="Script" uid="uid://uhjp3oha1rb7" path="res://scripts/EnhancedPlasmoidTest.gd" id="1"]
 
 [sub_resource type="StandardMaterial3D" id="BrightMaterial"]
 transparency = 1
@@ -69,8 +69,18 @@ offset_bottom = 100.0
 grow_horizontal = 0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 16
-text = "🌟 WORKING BRIGHT TEST
-WASD = Move the CYAN glowing sphere
-SPACE = Up, SHIFT = Down
-Watch it move around!
-Keys 1,2,3 = Debug info"
+text = "🌟 ENHANCED UNIVERSAL BEING TEST
+
+🎮 PERFECT 6DOF MOVEMENT:
+WASD = Move horizontally  
+Q/E = Up/Down (vertical)
+SHIFT = Speed boost (2x faster)
+
+🖱️ CONSCIOUSNESS EVOLUTION:
+Left Click = Evolve consciousness
+Right Click = Energy burst
+
+⌨️ DEBUG COMMANDS:
+1-6 = Status info  |  T = AI thoughts
+
+🌟 Current: Level 7 Consciousness!"

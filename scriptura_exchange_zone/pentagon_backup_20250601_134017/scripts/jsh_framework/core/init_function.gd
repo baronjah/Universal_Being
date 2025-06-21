@@ -6,6 +6,12 @@
 
 # init_functions.gd
 extends UniversalBeingBase
+
+func pentagon_init() -> void:
+	super.pentagon_init()
+	being_name = "Generated Being"
+	being_type = "auto_generated"
+	consciousness_level = 1
 var core_states
 var initialization_states
 var test_results
@@ -56,6 +62,7 @@ func _input(event: InputEvent) -> void:
 	pentagon_input(event)
 
 func pentagon_input(event: InputEvent) -> void:
+    super.pentagon_input(event)
 	# Pentagon input handling - override in child classes
 	pass
 
@@ -63,5 +70,14 @@ func sewers() -> void:
 	pentagon_sewers()
 
 func pentagon_sewers() -> void:
+    super.pentagon_sewers()
 	# Pentagon cleanup/output - override in child classes
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+func pentagon_process(delta: float) -> void:
+	super.pentagon_process(delta)
+	# Auto-generated process implementation
+
+	# Auto-generated ready implementation
+
 	pass

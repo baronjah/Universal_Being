@@ -18,7 +18,7 @@ var data_display: Label3D = null
 var whisper_bubbles: Array = []
 
 # Pentagon lifecycle
-func pentagon_init():
+func pentagon_init() -> void:
 	super.pentagon_init()
 	being_type = "data_inspector"
 	being_name = "Data Inspector Universal Being"
@@ -26,59 +26,191 @@ func pentagon_init():
 	print("👁️ Data Inspector: Awakening the spirit whisper of data...")
 
 
-func pentagon_ready():
+func pentagon_ready() -> void:
 	super.pentagon_ready()
 	create_inspection_interface()
 	print("✨ Data Inspector: Ready to whisper the secrets of data!")
 
 
-func pentagon_process(delta: float):
+func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
 	update_inspection_display(delta)
 
-func pentagon_input(event: InputEvent):
+func pentagon_input(event: InputEvent) -> void:
 	super.pentagon_input(event)
 	if event is InputEventKey and event.pressed:
 		if event.keycode == KEY_I:
 			inspect_nearby_data()
 
-func pentagon_sewers():
+func pentagon_sewers() -> void:
 	save_inspection_history()
 	super.pentagon_sewers()
 
-func create_inspection_interface():
-	"""Create the data inspection interface"""
-	print("🔍 Creating data inspection interface...")
+func create_inspection_interface() -> void:
+	"""Create the data inspection interface - Christmas tree of consciousness"""
+	print("🎄 Creating classy Christmas tree data inspection interface...")
 	
-	# Central inspection sphere
-	inspection_sphere = MeshInstance3D.new()
-	inspection_sphere.name = "InspectionSphere"
-	var sphere = SphereMesh.new()
-	sphere.radius = 2.0
-	inspection_sphere.mesh = sphere
+	# Create the Christmas tree structure
+	create_christmas_tree_structure()
 	
-	var material = StandardMaterial3D.new()
-	material.albedo_color = Color(0.5, 0.8, 1.0, 0.7)
-	material.emission_enabled = true
-	material.emission = Color.CYAN * 2.0
-	material.emission_energy = 1.5
-	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	inspection_sphere.material_override = material
-	add_child(inspection_sphere)
-	
-	# Data display
+	# Data display crown
 	data_display = Label3D.new()
 	data_display.name = "DataDisplay"
-	data_display.text = "👁️ DATA INSPECTOR\nReady to examine..."
+	data_display.text = "🎄 DATA INSPECTOR\nReady to examine..."
 	data_display.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	data_display.position = Vector3(0, 4, 0)
-	data_display.modulate = Color.CYAN
-	data_display.pixel_size = 0.015
+	data_display.position = Vector3(0, 8, 0)
+	data_display.modulate = Color.GOLD
+	data_display.pixel_size = 0.02
 	add_child(data_display)
+
+func create_christmas_tree_structure() -> void:
+	"""Create beautiful Christmas tree from spheres and cylinders"""
+	
+	# Tree trunk (cylinder)
+	var trunk = MeshInstance3D.new()
+	trunk.name = "TreeTrunk"
+	var cylinder = CylinderMesh.new()
+	cylinder.height = 2.0
+	cylinder.top_radius = 0.3
+	cylinder.bottom_radius = 0.4
+	trunk.mesh = cylinder
+	trunk.position = Vector3(0, -1, 0)
+	
+	var trunk_material = StandardMaterial3D.new()
+	trunk_material.albedo_color = Color(0.4, 0.2, 0.1)
+	trunk_material.emission_enabled = true
+	trunk_material.emission = Color(0.3, 0.15, 0.05) * 0.5
+	trunk_material.emission_energy = 0.3
+	trunk.material_override = trunk_material
+	add_child(trunk)
+	
+	# Tree layers (spheres in Christmas tree formation)
+	var layer_colors = [
+		Color.GREEN,
+		Color(0.0, 0.8, 0.0),
+		Color(0.0, 0.6, 0.2),
+		Color(0.2, 0.7, 0.1),
+		Color(0.1, 0.9, 0.0)
+	]
+	
+	var layer_positions = [
+		Vector3(0, 0.5, 0),    # Bottom layer
+		Vector3(0, 2.0, 0),    # Second layer  
+		Vector3(0, 3.3, 0),    # Third layer
+		Vector3(0, 4.4, 0),    # Fourth layer
+		Vector3(0, 5.3, 0)     # Top layer
+	]
+	
+	var layer_sizes = [2.5, 2.0, 1.5, 1.0, 0.7]
+	
+	for i in range(5):
+		create_tree_layer(i, layer_positions[i], layer_sizes[i], layer_colors[i])
+	
+	# Star on top (inspection sphere)
+	inspection_sphere = MeshInstance3D.new()
+	inspection_sphere.name = "ChristmasStarSphere"
+	var star_sphere = SphereMesh.new()
+	star_sphere.radius = 0.5
+	inspection_sphere.mesh = star_sphere
+	inspection_sphere.position = Vector3(0, 6.5, 0)
+	
+	var star_material = StandardMaterial3D.new()
+	star_material.albedo_color = Color.GOLD
+	star_material.emission_enabled = true
+	star_material.emission = Color.GOLD * 3.0
+	star_material.emission_energy = 2.0
+	star_material.metallic = 0.8
+	star_material.roughness = 0.1
+	inspection_sphere.material_override = star_material
+	add_child(inspection_sphere)
+	
+	# Ornaments (data analysis spheres)
+	create_data_ornaments()
+
+func create_tree_layer(layer_index: int, position: Vector3, size: float, base_color: Color) -> void:
+	"""Create a tree layer with multiple spheres"""
+	var layer_container = Node3D.new()
+	layer_container.name = "TreeLayer_" + str(layer_index)
+	layer_container.position = position
+	add_child(layer_container)
+	
+	# Main layer sphere
+	var main_sphere = MeshInstance3D.new()
+	main_sphere.name = "MainSphere"
+	var sphere_mesh = SphereMesh.new()
+	sphere_mesh.radius = size
+	main_sphere.mesh = sphere_mesh
+	
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color(base_color.r, base_color.g, base_color.b, 0.7)
+	material.emission_enabled = true
+	material.emission = base_color * 1.5
+	material.emission_energy = 0.8
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	main_sphere.material_override = material
+	layer_container.add_child(main_sphere)
+	
+	# Smaller detail spheres around the layer
+	var detail_count = 3 + layer_index
+	for i in range(detail_count):
+		var angle = (PI * 2.0 * i) / detail_count
+		var detail_pos = Vector3(cos(angle) * size * 0.8, randf_range(-0.3, 0.3), sin(angle) * size * 0.8)
+		
+		var detail_sphere = MeshInstance3D.new()
+		detail_sphere.name = "DetailSphere_" + str(i)
+		var detail_mesh = SphereMesh.new()
+		detail_mesh.radius = size * 0.2
+		detail_sphere.mesh = detail_mesh
+		detail_sphere.position = detail_pos
+		
+		var detail_material = StandardMaterial3D.new()
+		var detail_color = base_color.lightened(0.3)
+		detail_material.albedo_color = detail_color
+		detail_material.emission_enabled = true
+		detail_material.emission = detail_color * 2.0
+		detail_material.emission_energy = 1.0
+		detail_sphere.material_override = detail_material
+		layer_container.add_child(detail_sphere)
+
+func create_data_ornaments() -> void:
+	"""Create beautiful data analysis ornaments"""
+	var ornament_positions = [
+		Vector3(1.5, 1.0, 1.0),
+		Vector3(-1.2, 1.8, -0.8),
+		Vector3(0.8, 2.8, 1.5),
+		Vector3(-1.0, 3.5, 0.5),
+		Vector3(0.6, 4.2, -1.0)
+	]
+	
+	var ornament_colors = [
+		Color.RED,
+		Color.BLUE,
+		Color.MAGENTA,
+		Color.CYAN,
+		Color.YELLOW
+	]
+	
+	for i in range(ornament_positions.size()):
+		var ornament = MeshInstance3D.new()
+		ornament.name = "DataOrnament_" + str(i)
+		var ornament_sphere = SphereMesh.new()
+		ornament_sphere.radius = 0.3
+		ornament.mesh = ornament_sphere
+		ornament.position = ornament_positions[i]
+		
+		var ornament_material = StandardMaterial3D.new()
+		ornament_material.albedo_color = ornament_colors[i]
+		ornament_material.emission_enabled = true
+		ornament_material.emission = ornament_colors[i] * 2.5
+		ornament_material.emission_energy = 1.5
+		ornament_material.metallic = 0.9
+		ornament_material.roughness = 0.1
+		ornament.material_override = ornament_material
+		add_child(ornament)
 
 func inspect_data(data: Variant) -> Dictionary:
 	"""The main inspection function - examines any data and whispers its secrets"""
-	var inspection = {
+	var inspection = {}
 	
 	# Basic type information using Godot's typeof()
 	var type_id = typeof(data)
@@ -233,7 +365,25 @@ func _get_type_name(type_id: int) -> String:
 		TYPE_PACKED_VECTOR3_ARRAY: return "PackedVector3Array"
 		TYPE_PACKED_COLOR_ARRAY: return "PackedColorArray"
 		_: return "Unknown"
-}
+
+# Custom binary conversion function
+func _to_binary_string(num: int) -> String:
+	"""Convert integer to binary string representation"""
+	if num == 0:
+		return "0b0"
+	
+	var binary = ""
+	var abs_num = abs(num)
+	
+	while abs_num > 0:
+		binary = str(abs_num % 2) + binary
+		abs_num = abs_num / 2
+	
+	# Add prefix and handle negative numbers
+	if num < 0:
+		return "-0b" + binary
+	else:
+		return "0b" + binary
 
 # Specialized inspection functions for each type
 func _inspect_nil(data) -> Dictionary:
@@ -258,7 +408,7 @@ func _inspect_int(data: int) -> Dictionary:
 		"is_negative": data < 0,
 		"is_zero": data == 0,
 		"is_power_of_two": data > 0 and (data & (data - 1)) == 0,
-		"binary": bin(data),
+		"binary": _to_binary_string(data),
 		"hex": "0x" + ("%X" % data),
 		"absolute_value": abs(data),
 		"mathematical_properties": _analyze_number_properties(data)
@@ -436,18 +586,17 @@ func _color_to_hsv(color: Color) -> Dictionary:
 		if h < 0:
 			h += 360
 	
-	return {"hue": h, "saturation": s, "value": v
-}
+	return {"hue": h, "saturation": s, "value": v}
 
 func _analyze_array_types(arr: Array) -> Dictionary:
-	var type_counts = {
+	var type_counts = {}
 	for item in arr:
 		var type_name = _get_type_name(typeof(item))
 		type_counts[type_name] = type_counts.get(type_name, 0) + 1
 	return type_counts
 
 func _has_duplicates(arr: Array) -> bool:
-	var seen = {
+	var seen = {}
 	for item in arr:
 		var key = var_to_str(item)
 		if seen.has(key):
@@ -514,7 +663,7 @@ func create_spirit_whisper(inspection: Dictionary) -> String:
 	
 	return whisper
 
-func speak_whisper(whisper: String):
+func speak_whisper(whisper: String) -> void:
 	"""Display spirit whisper in 3D space"""
 	whisper_messages.append(whisper)
 	
@@ -529,7 +678,7 @@ func speak_whisper(whisper: String):
 	
 	whisper_spoken.emit(whisper)
 	print("👁️ SPIRIT WHISPER: " + whisper)
-}
+
 
 func create_whisper_bubble(message: String) -> Node3D:
 	"""Create floating whisper bubble"""
@@ -569,7 +718,7 @@ func create_whisper_bubble(message: String) -> Node3D:
 	
 	return bubble
 
-func inspect_nearby_data():
+func inspect_nearby_data() -> void:
 	"""Inspect data from nearby objects"""
 	print("🔍 Scanning nearby cosmic data...")
 	
@@ -580,17 +729,37 @@ func inspect_nearby_data():
 	inspect_data(Color.CYAN)
 	inspect_data([1, "two", Vector3.UP])
 	inspect_data({"meaning": 42, "color": Color.MAGENTA})
-}
 
-func update_inspection_display(delta: float):
-	"""Update visual inspection effects"""
+
+func update_inspection_display(delta: float) -> void:
+	"""Update magical Christmas tree visual effects"""
+	var time = Time.get_ticks_msec() * 0.002
+	
+	# Animate the golden star on top
 	if inspection_sphere:
-		var time = Time.get_ticks_msec() * 0.002
-		inspection_sphere.rotation.y += delta
-		var pulse = 1.0 + sin(time) * 0.2
-		inspection_sphere.scale = Vector3.ONE * pulse
+		inspection_sphere.rotation.y += delta * 2.0
+		inspection_sphere.rotation.x += delta * 0.5
+		var star_pulse = 1.0 + sin(time * 3.0) * 0.3
+		inspection_sphere.scale = Vector3.ONE * star_pulse
+	
+	# Animate tree layers
+	for i in range(5):
+		var layer_node = get_node_or_null("TreeLayer_" + str(i))
+		if layer_node:
+			layer_node.rotation.y += delta * (0.3 + i * 0.1)
+			var layer_pulse = 1.0 + sin(time * 2.0 + i) * 0.1
+			layer_node.scale = Vector3.ONE * layer_pulse
+	
+	# Animate ornaments
+	for i in range(5):
+		var ornament = get_node_or_null("DataOrnament_" + str(i))
+		if ornament:
+			var ornament_time = time + i * 0.5
+			ornament.rotation.y += delta * 3.0
+			var ornament_pulse = 1.0 + sin(ornament_time * 4.0) * 0.2
+			ornament.scale = Vector3.ONE * ornament_pulse
 
-func save_inspection_history():
+func save_inspection_history() -> void:
 	"""Save inspection history"""
 	print("💾 Saving %d inspection records..." % inspection_results.size())
 
@@ -603,11 +772,146 @@ func get_inspection_history() -> Array:
 	"""Get history of all inspections"""
 	return inspection_results
 
-func clear_inspection_history():
+func clear_inspection_history() -> void:
 	"""Clear inspection history"""
 	inspection_results.clear()
 	data_history.clear()
 	whisper_messages.clear()
+
+# 🎄 PORTABLE CHRISTMAS TREE FUNCTION - ADD TO ANY SCRIPT! 🎄
+# This function can be safely copied to any GDScript without breaking anything
+func create_portable_christmas_tree(parent_node: Node3D = null, tree_position: Vector3 = Vector3.ZERO, tree_scale: float = 1.0) -> Node3D:
+	"""
+	🎄 UNIVERSAL CHRISTMAS TREE GENERATOR 🎄
+	
+	Creates a beautiful, self-contained Christmas tree that can be added to ANY script!
+	- Safe to use in any Universal Being or regular Node3D script
+	- No dependencies, no conflicts, pure holiday magic
+	- Returns the tree node so you can position/scale/remove it
+	
+	Usage examples:
+	  var my_tree = create_portable_christmas_tree()  # Add to self
+	  var my_tree = create_portable_christmas_tree(some_node, Vector3(10, 0, 5), 2.0)  # Custom
+	  my_tree.queue_free()  # Remove when done
+	"""
+	
+	# Determine parent (self if none provided)
+	var tree_parent = parent_node if parent_node else self
+	if not tree_parent is Node3D:
+		push_error("🎄 Christmas tree needs a Node3D parent!")
+		return null
+	
+	# Create tree container
+	var tree_container = Node3D.new()
+	tree_container.name = "PortableChristmasTree_" + str(randi())
+	tree_container.position = tree_position
+	tree_container.scale = Vector3.ONE * tree_scale
+	tree_parent.add_child(tree_container)
+	
+	# 🟤 Tree trunk
+	var trunk = MeshInstance3D.new()
+	trunk.name = "Trunk"
+	var trunk_mesh = CylinderMesh.new()
+	trunk_mesh.height = 1.0
+	trunk_mesh.top_radius = 0.15
+	trunk_mesh.bottom_radius = 0.2
+	trunk.mesh = trunk_mesh
+	trunk.position = Vector3(0, 0, 0)
+	
+	var trunk_mat = StandardMaterial3D.new()
+	trunk_mat.albedo_color = Color(0.4, 0.2, 0.1)
+	trunk_mat.roughness = 0.8
+	trunk.material_override = trunk_mat
+	tree_container.add_child(trunk)
+	
+	# 🌲 Tree layers (spheres)
+	var layer_data = [
+		{"pos": Vector3(0, 0.8, 0), "size": 1.2, "color": Color(0.1, 0.6, 0.1)},
+		{"pos": Vector3(0, 1.5, 0), "size": 0.9, "color": Color(0.2, 0.7, 0.2)},
+		{"pos": Vector3(0, 2.1, 0), "size": 0.7, "color": Color(0.0, 0.8, 0.0)},
+		{"pos": Vector3(0, 2.6, 0), "size": 0.5, "color": Color(0.3, 0.9, 0.3)}
+	]
+	
+	for i in range(layer_data.size()):
+		var layer = layer_data[i]
+		var sphere = MeshInstance3D.new()
+		sphere.name = "Layer_" + str(i)
+		var sphere_mesh = SphereMesh.new()
+		sphere_mesh.radius = layer.size
+		sphere.mesh = sphere_mesh
+		sphere.position = layer.pos
+		
+		var sphere_mat = StandardMaterial3D.new()
+		sphere_mat.albedo_color = layer.color
+		sphere_mat.emission_enabled = true
+		sphere_mat.emission = layer.color * 0.3
+		sphere_mat.emission_energy = 0.5
+		sphere.material_override = sphere_mat
+		tree_container.add_child(sphere)
+	
+	# ⭐ Star on top
+	var star = MeshInstance3D.new()
+	star.name = "Star"
+	var star_mesh = SphereMesh.new()
+	star_mesh.radius = 0.2
+	star.mesh = star_mesh
+	star.position = Vector3(0, 3.2, 0)
+	
+	var star_mat = StandardMaterial3D.new()
+	star_mat.albedo_color = Color.GOLD
+	star_mat.emission_enabled = true
+	star_mat.emission = Color.GOLD * 2.0
+	star_mat.emission_energy = 1.5
+	star_mat.metallic = 0.9
+	star.material_override = star_mat
+	tree_container.add_child(star)
+	
+	# 🔴 Ornaments
+	var ornament_positions = [
+		Vector3(0.8, 1.0, 0.3), Vector3(-0.6, 1.3, -0.4),
+		Vector3(0.4, 1.8, 0.6), Vector3(-0.5, 2.3, 0.2)
+	]
+	var ornament_colors = [Color.RED, Color.BLUE, Color.MAGENTA, Color.CYAN]
+	
+	for i in range(ornament_positions.size()):
+		var ornament = MeshInstance3D.new()
+		ornament.name = "Ornament_" + str(i)
+		var ornament_mesh = SphereMesh.new()
+		ornament_mesh.radius = 0.1
+		ornament.mesh = ornament_mesh
+		ornament.position = ornament_positions[i]
+		
+		var ornament_mat = StandardMaterial3D.new()
+		ornament_mat.albedo_color = ornament_colors[i]
+		ornament_mat.emission_enabled = true
+		ornament_mat.emission = ornament_colors[i] * 1.5
+		ornament_mat.emission_energy = 1.0
+		ornament_mat.metallic = 0.8
+		ornament.material_override = ornament_mat
+		tree_container.add_child(ornament)
+	
+	# 🎄 Add simple animation if tree supports it
+	if tree_container.has_method("create_tween"):
+		var tween = tree_container.create_tween()
+		tween.set_loops()
+		tween.tween_property(star, "rotation:y", PI * 2.0, 3.0)
+	
+	print("🎄 Christmas tree created at " + str(tree_position) + " - Merry Coding! 🎄")
+	return tree_container
+
+# Quick test function - call this to spawn a tree!
+func spawn_test_christmas_tree() -> void:
+	"""Spawn a test Christmas tree - safe to call from anywhere!"""
+	var test_tree = create_portable_christmas_tree(null, Vector3(randf_range(-5, 5), 0, randf_range(-5, 5)), 1.0)
+	
+	# Auto-remove after 30 seconds to keep things clean
+	if test_tree:
+		var cleanup_timer = Timer.new()
+		cleanup_timer.wait_time = 30.0
+		cleanup_timer.one_shot = true
+		cleanup_timer.timeout.connect(func(): test_tree.queue_free(); cleanup_timer.queue_free())
+		add_child(cleanup_timer)
+		cleanup_timer.start()
 
 # Additional inspection functions for remaining types
 func _inspect_vector2(data: Vector2) -> Dictionary:
@@ -664,4 +968,4 @@ func _inspect_packed_string_array(data): return {"spirit_message": "String array
 func _inspect_packed_vector2_array(data): return {"spirit_message": "Vector2 array"}
 func _inspect_packed_vector3_array(data): return {"spirit_message": "Vector3 array"}
 func _inspect_packed_color_array(data): return {"spirit_message": "Color array"}
-func _inspect_unknown(data): return {"spirit_message": "Unknown data type detected"
+func _inspect_unknown(data): return {"spirit_message": "Unknown data type detected"}

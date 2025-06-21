@@ -1,0 +1,45 @@
+Hello! Yes, Godot does have a way to access variables using strings, similar to how call() works for functions. This is done through the get() and set() methods.
+For accessing and modifying variables (properties) by name:
+gdscriptCopy# To get a variable by string name
+var value = get("variable_name")
+
+# To set a variable by string name
+set("variable_name", new_value)
+For global variables specifically, you have a few options:
+
+Using autoloads/singletons:
+
+gdscriptCopy# In your autoloaded GlobalSettings.gd script
+extends Node
+
+var save_path = "user://saves/"
+var use_multithreading = true
+var difficulty = "normal"
+
+# Then from anywhere in your game
+Engine.get_singleton("GlobalSettings").get("save_path")
+# or
+Engine.get_singleton("GlobalSettings").set("use_multithreading", false)
+
+Using the ProjectSettings:
+
+gdscriptCopy# To get a project setting
+var value = ProjectSettings.get_setting("my_settings/save_path")
+
+# To set a project setting
+ProjectSettings.set_setting("my_settings/use_multithreading", false)
+
+Using a custom resource for configuration:
+
+gdscriptCopy# GameSettings.gd (extends Resource)
+extends Resource
+class_name GameSettings
+
+export var save_path = "user://saves/"
+export var use_multithreading = true
+
+# Then load/save it and access with get()
+var settings = load("res://resources/game_settings.tres")
+var path = settings.get("save_path")
+settings.set("use_multithreading", false)
+These approaches give you flexible ways to manage global variables that can be accessed and modified by string names.

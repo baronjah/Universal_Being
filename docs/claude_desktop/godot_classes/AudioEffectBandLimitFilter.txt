@@ -1,0 +1,11 @@
+AudioEffectBandLimitFilter
+Inherits: AudioEffectFilter < AudioEffect < Resource < RefCounted < Object
+
+Adds a band limit filter to the audio bus.
+
+Description
+Limits the frequencies in a range around the AudioEffectFilter.cutoff_hz and allows frequencies outside of this range to pass.
+
+Tutorials
+Audio buses
+

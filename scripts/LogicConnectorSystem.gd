@@ -9,6 +9,12 @@
 extends Node
 class_name LogicConnectorSystem
 
+func pentagon_init() -> void:
+	super.pentagon_init()
+	being_name = "Generated Being"
+	being_type = "auto_generated"
+	consciousness_level = 1
+
 # ===== SYSTEM-WIDE LOGIC CONNECTOR MANAGEMENT =====
 
 # Global instances and state
@@ -278,6 +284,22 @@ func get_being_connections(being: Node) -> Array[Dictionary]:
 
 func cleanup_system() -> void:
 	"""Clean up the entire logic connector system"""
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+func pentagon_process(delta: float) -> void:
+	super.pentagon_process(delta)
+func pentagon_input(event: InputEvent) -> void:
+	super.pentagon_input(event)
+func pentagon_sewers() -> void:
+	# Auto-generated cleanup implementation
+	super.pentagon_sewers()
+
+	# Auto-generated input implementation
+
+	# Auto-generated process implementation
+
+	# Auto-generated ready implementation
+
 	print("🔌 Cleaning up Logic Connector System...")
 	
 	# Clear all visualizations

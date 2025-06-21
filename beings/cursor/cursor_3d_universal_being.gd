@@ -36,6 +36,7 @@ var cursor_colors = {
 	CursorMode.PLASMOID_ENERGY: Color.MAGENTA,
 	CursorMode.TEXT_SELECTION: Color.YELLOW,
 	CursorMode.COSMIC_NAVIGATION: Color.WHITE
+}
 
 # Cursor configuration
 var cursor_size: float = 0.5
@@ -45,32 +46,30 @@ var energy_intensity: float = 1.0
 var max_targeting_distance: float = 100.0
 
 # Pentagon lifecycle
-func pentagon_init():
+func pentagon_init() -> void:
 	super.pentagon_init()
 	being_type = "cursor_3d"
 	being_name = "3D Cursor Universal Being"
 	consciousness_level = 2
 	print("🎯 3D Cursor: Initializing plasmoid crosshair system...")
-}
 
-func pentagon_ready():
+func pentagon_ready() -> void:
 	super.pentagon_ready()
 	create_3d_cursor_system()
 	set_cursor_mode(CursorMode.NORMAL)
 	print("✨ 3D Cursor: Plasmoid energy cursor ready!")
-}
 
-func pentagon_process(delta: float):
+func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
 	update_cursor_animation(delta)
 	update_targeting_system(delta)
 	update_plasmoid_energy(delta)
 
-func pentagon_input(event: InputEvent):
+func pentagon_input(event: InputEvent) -> void:
 	super.pentagon_input(event)
 	handle_cursor_input(event)
 
-func pentagon_sewers():
+func pentagon_sewers() -> void:
 	hide_cursor()
 	super.pentagon_sewers()
 
@@ -473,7 +472,7 @@ func _estimate_world_scale() -> float:
 	
 	if scene_root:
 		var bounds = _get_scene_bounds(scene_root)
-		max_distance = bounds.size().length() * 0.1
+		max_distance = bounds.size.length() * 0.1
 	
 	return clamp(max_distance, 10.0, 500.0)
 
@@ -527,3 +526,4 @@ func get_cursor_info() -> Dictionary:
 		"visible": is_visible,
 		"energy_intensity": energy_intensity,
 		"adaptive_distance": _calculate_adaptive_distance(_estimate_world_scale(), 1.0)
+	}

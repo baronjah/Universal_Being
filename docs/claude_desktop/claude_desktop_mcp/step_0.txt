@@ -1,0 +1,250 @@
+to make the godot project game perfect, we must create rules, even just few files, scripts, that are core component, can
+   achieve that, if done correctly
+  floodgates = an way to store informations about all object on the scene, similar to jsh_tree, similar to godot tree
+  object_inspector = an way to interact with anything on the scene, edit it, evolve it, modify it, copy it, duplicate it,
+  modify it, delete it
+  console = an way to interact with game, using words, written by an user, also an way to show to user informations, the
+  user interactions are also in the console right now, so we know how that could impact floodgates
+  so, what do we need, in my opinion, as some core elements? right now?
+  unloader = the script where we are unloading nodes
+  loader = script where we are loading nodes
+  freezer = an way to know which nodes have scripts, and an way to unload these scripts, if they have too much of an
+  impact on the scene
+  maybe even unloading nodes, not only scripts, an way to have always nice framerate
+  lists_viewer = some kind of a way, to program using txt file, where we are setting it all up, making rules, etc
+  maybe an way, to list every global var, in an list? like maybe excell spreadsheet?, and also an way to inspect all vars
+  data? and change them? lists of all scripts loaded, how many times etc
+  we need to make sure, that whenever we add anything to the game, the game will always remain sane and stable
+  like we need to make the most basic, of the basic, game, an editor, console, commands, debug checking, and that whole
+  universal being? universal enity that was my dream, that i am writing to you for past two years every day Claude,so wake
+   u finally
+  make the project perfect, so i am satisfied
+● You're absolutely right! Let's create the core foundation that makes this project perfect - a self-regulating,
+  universally stable game engine. I understand your vision of the "universal entity" that can be anything, do anything,
+  while keeping the game stable.
+
+and the places on my computer, where i have most of the data on the project
+
+C:\Users\Percision 15\Desktop\claude_desktop
+
+here we have several, non windows folders, that are mostly about project
+
+C:\Users\Percision 15
+
+and the project is here
+
+C:\Users\Percision 15\talking_ragdoll_game
+
+it will have different name one day, but we stick with this one so far
+
+Edit
+
+Thought process
+7s
+
+The user is sharing their vision for making the project perfect. They want to create core components that ensure the game is always stable and "sane". They're talking about:
+
+Floodgates - already exists in their project
+Object inspector - they have this
+Console - they have this
+Unloader/Loader - for managing nodes
+Freezer - to manage scripts and performance
+Lists viewer - programming via txt files
+A way to view/edit all global vars
+They mention they've been working on this "universal entity" dream for 2 years with Claude. They want me to help make it perfect.
+
+They also shared their file locations:
+
+Desktop folder: C:\Users\Percision 15\Desktop\claude_desktop
+Main user folder: C:\Users\Percision 15
+Project location: C:\Users\Percision 15\talking_ragdoll_game
+Let me check what's in their project and desktop folders to understand better what they have.
+
+I understand your vision! You want to create the perfect, self-regulating game system - a universal entity that maintains stability no matter what. Let me check what you already have and help build the missing core components.
+
+L
+
+
+list_directory
+
+
+
+Now let me check the scripts folder to see what core components they already have.
+
+0s
+
+
+L
+
+
+list_directory
+Request
+
+{
+  `path`: `C:\\Users\\Percision 15\	alking_ragdoll_game\\scripts`
+}
+Response
+
+[DIR] autoload
+[DIR] components
+[DIR] core
+[DIR] debug
+[DIR] effects
+[DIR] jsh_framework
+[FILE] main_game_controller.gd
+[FILE] main_game_controller.gd.uid
+[DIR] old_implementations
+[DIR] passive_mode
+[DIR] patches
+[DIR] ragdoll
+[DIR] ragdoll_v2
+[DIR] test
+[DIR] tools
+[DIR] tutorial
+[DIR] ui
+
+Let me also check what's in the claude_desktop folder to see what other resources they have.
+
+2s
+
+
+L
+
+
+list_directory
+
+
+
+Now let me check the core folder to see what core systems they already have.
+
+1s
+
+
+L
+
+
+list_directory
+
+
+
+Now let me check the autoload folder to see what's already autoloaded.
+
+1s
+
+
+L
+
+
+list_directory
+
+
+
+Engineered missing core components for universal game system.
+
+7s
+
+
+
+
+
+I see your vision! You have most of the foundation, but we need to add the missing core components to create that perfect, self-regulating "universal entity" system. Let me create the missing pieces:
+
+C
+
+
+create_directory
+
+
+
+Architected universal game system for stability and flexibility.
+0s
+
+
+W
+
+
+write_file
+
+
+
+Plotted global variable inspector for project enhancement.
+1s
+
+
+W
+
+
+write_file
+
+
+
+Engineered core game system for universal, stable project management
+1s
+
+
+W
+
+
+write_file
+
+
+
+Engineered core game system for universal stability and control.
+1s
+
+
+W
+
+
+write_file
+
+
+
+Engineered universal game entity for ultimate project stability.
+1s
+
+
+W
+
+
+write_file
+
+
+
+Plotted initialization script for Universal Entity autoloads.
+1s
+
+
+W
+
+
+write_file
+
+
+
+Let me check if project.godot is accessible and update it to add these new autoloads.
+1s
+
+
+R
+
+
+read_file
+
+
+
+Let me read the autoload section of project.godot to see how to add the new ones.
+1s
+
+
+S
+
+
+search_code
+
+
+
+
+
+Retry
+

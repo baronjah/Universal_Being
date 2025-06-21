@@ -1,0 +1,99 @@
+[gd_scene load_steps=10 format=3 uid="uid://working_movement_scene"]
+
+[ext_resource type="Script" path="res://scripts/SimpleMovablePlayer.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/PerfectTrackballCamera3D.gd" id="2"]
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 1
+background_color = Color(0.2, 0.3, 0.5, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.9, 0.9, 1, 1)
+ambient_light_energy = 0.8
+glow_enabled = true
+glow_intensity = 0.3
+
+[sub_resource type="CapsuleMesh" id="PlayerMesh"]
+top_radius = 0.5
+bottom_radius = 0.5
+height = 2.0
+
+[sub_resource type="CapsuleShape3D" id="PlayerShape"]
+radius = 0.5
+height = 2.0
+
+[sub_resource type="PlaneMesh" id="GroundMesh"]
+size = Vector2(50, 50)
+
+[sub_resource type="BoxShape3D" id="GroundShape"]
+size = Vector3(50, 0.2, 50)
+
+[sub_resource type="BoxMesh" id="BoxMesh"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D"]
+size = Vector3(2, 2, 2)
+
+[node name="WorkingMovementScene" type="Node3D"]
+
+[node name="Player" type="CharacterBody3D" parent="." groups=["player"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+script = ExtResource("1")
+
+[node name="PlayerMesh" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("PlayerMesh")
+
+[node name="PlayerCollision" type="CollisionShape3D" parent="Player"]
+shape = SubResource("PlayerShape")
+
+[node name="PerfectTrackballCamera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 0.866, 0.5, 0, -0.5, 0.866, 0, 3, 5)
+script = ExtResource("2")
+qe_roll_enabled = true
+qe_roll_speed = 2.0
+mouse_wheel_zoom = true
+wheel_zoom_strength = 2.0
+zoom_minimum = 2.0
+zoom_maximum = 20.0
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Instructions" type="Label" parent="UI"]
+offset_right = 400.0
+offset_bottom = 100.0
+text = "🎮 WASD: Move  |  Mouse: Look  |  Q/E: Roll  |  Wheel: Zoom  |  Space: Jump"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.7, -0.5, 0.5, 0, 0.7, 0.7, -0.7, -0.5, 0.5, 0, 10, 0)
+light_energy = 2.0
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="GroundMesh" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("GroundMesh")
+
+[node name="GroundCollision" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("GroundShape")
+
+[node name="TestBoxes" type="Node3D" parent="."]
+
+[node name="TestBox1" type="StaticBody3D" parent="TestBoxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 5)
+
+[node name="TestBox1Mesh" type="MeshInstance3D" parent="TestBoxes/TestBox1"]
+mesh = SubResource("BoxMesh")
+
+[node name="TestBox1Collision" type="CollisionShape3D" parent="TestBoxes/TestBox1"]
+shape = SubResource("BoxShape3D")
+
+[node name="TestBox2" type="StaticBody3D" parent="TestBoxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1, -5)
+
+[node name="TestBox2Mesh" type="MeshInstance3D" parent="TestBoxes/TestBox2"]
+mesh = SubResource("BoxMesh")
+
+[node name="TestBox2Collision" type="CollisionShape3D" parent="TestBoxes/TestBox2"]
+shape = SubResource("BoxShape3D")

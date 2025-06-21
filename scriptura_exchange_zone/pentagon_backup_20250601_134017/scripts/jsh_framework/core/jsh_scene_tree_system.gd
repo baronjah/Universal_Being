@@ -8,6 +8,12 @@
 #
 extends UniversalBeingBase
 class_name JSHSceneTreeSystem_jshscene
+
+func pentagon_init() -> void:
+	super.pentagon_init()
+	being_name = "Generated Being"
+	being_type = "auto_generated"
+	consciousness_level = 1
 #
 # res://scripts/gdscript/scripts/Menu_Keyboard_Console/jsh_scene_tree_system.gd
 # JSH_Core/JSH_scene_tree_system
@@ -189,6 +195,7 @@ func _process(delta: float) -> void:
 }
 
 func pentagon_process(delta: float) -> void:
+    super.pentagon_process(delta)
 	# Pentagon logic processing - override in child classes
 	pass
 }
@@ -198,6 +205,7 @@ func _input(event: InputEvent) -> void:
 }
 
 func pentagon_input(event: InputEvent) -> void:
+    super.pentagon_input(event)
 	# Pentagon input handling - override in child classes
 	pass
 }
@@ -207,6 +215,7 @@ func sewers() -> void:
 }
 
 func pentagon_sewers() -> void:
+    super.pentagon_sewers()
 	# Pentagon cleanup/output - override in child classes
 	pass
 func start_up_scene_tree():
@@ -1174,6 +1183,10 @@ func _count_jsh_nodes(tree_dict: Dictionary) -> int:
 
 func _cleanup_node_path_cache() -> void:
 	# Remove entries for nodes that are no longer valid or in tree
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+	# Auto-generated ready implementation
+
 	var nodes_to_remove = []
 	for node in _node_path_cache:
 		if not is_instance_valid(node) or (is_instance_valid(node) and not node.is_inside_tree()):

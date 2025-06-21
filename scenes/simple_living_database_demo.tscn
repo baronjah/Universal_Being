@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://bx3k8v4sam1p"]
+
+[ext_resource type="Script" path="res://systems/simple_database_visualizer.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://cqj4bqr7p6vo2" path="res://scenes/main/camera_point.tscn" id="2"]
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 1
+background_color = Color(0.05, 0.05, 0.15, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.2, 0.3, 0.5, 1)
+ambient_light_energy = 0.4
+
+[sub_resource type="BoxMesh" id="BoxMesh_1"]
+size = Vector3(20, 1, 20)
+
+[node name="SimpleLivingDatabaseDemo" type="Node3D"]
+
+[node name="SimpleDatabaseVisualizer" type="Node3D" parent="."]
+script = ExtResource("1")
+enabled = true
+
+[node name="CameraPoint" parent="." instance=ExtResource("2")]
+transform = Transform3D(0.866025, -0.35355, 0.35355, 0, 0.707107, 0.707107, -0.5, -0.61237, 0.61237, 0, 8, 12)
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 10, 0)
+light_energy = 0.8
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="InfoLabel" type="Label" parent="UI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -100.0
+offset_right = 400.0
+offset_bottom = -10.0
+text = "🌌 LIVING DATABASE DEMO
+
+✨ Type any keys to see floating data streams
+🧲 Ctrl+B for Blender mode (copy/paste reality)
+🌍 Watch gravity points attract data flows
+💭 See consciousness streams in purple
+
+WASD - Move, Mouse - Look around"

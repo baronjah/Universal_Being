@@ -250,13 +250,13 @@ func get_revolution_status() -> Dictionary:
 		"revolution_active": revolution_active,
 		"ripple_system_ready": ripple_system != null,
 		"gemma_ready": gemma_companion != null,
-		"phase_names": {}
+		"phase_names": {
 			0: "Initializing",
 			1: "Creating Ripple System", 
 			2: "Manifesting Gemma",
 			3: "Connecting Systems",
 			4: "Revolution Active"
-}
+}}
 
 func force_activate_revolution() -> void:
 	"""Force activate revolution if something went wrong"""

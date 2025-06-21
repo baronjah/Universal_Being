@@ -1,0 +1,416 @@
+# DataManager.gd - Universal Database Controller for Ethereal Engine
+extends Node
+class_name DataManager
+
+signal data_updated(table: String, record_id: String)
+signal data_corrupted(table: String, error: String)
+signal transaction_completed(transaction_id: String)
+
+# Core database structure
+var cosmic_database = {
+	"multiverses": {},
+	"universes": {},
+	"galaxies": {},
+	"stars": {},
+	"planets": {},
+	"word_entities": {},
+	"containers": {},
+	"datapoints": {},
+	"connections": {}
+}
+
+# Threading safety mutexes
+var database_mutex = Mutex.new()
+var transaction_mutex = Mutex.new()
+var backup_mutex = Mutex.new()
+
+# Transaction system
+var active_transactions = {}
+var transaction_counter = 0
+
+# Your coordinate system support
+var frame_database = {}
+var coordinate_system = {
+	"current_frame": Vector3.ZERO,
+	"frame_size": Vector3(10, 10, 10),
+	"frame_connections": {}
+}
+
+func _ready():
+	print("🗃️ DataManager initialized - Universal Database active")
+	initialize_cosmic_structure()
+	setup_frame_system()
+
+func initialize_cosmic_structure():
+	# Initialize your dimensional hierarchy
+	create_record("multiverses", "multiverse_root", {
+		"name": "Ethereal Multiverse",
+		"position": Vector3.ZERO,
+		"scale": Vector3(10000, 10000, 10000),
+		"children": [],
+		"active": true
+	})
+
+func setup_frame_system():
+	# Initialize your coordinate frame system
+	frame_database = {
+		"a0": {"position": Vector3(0, 0, 0), "connections": ["b0", "a1"]},
+		"b0": {"position": Vector3(10, 0, 0), "connections": ["a0", "b1"]},
+		"a1": {"position": Vector3(0, 10, 0), "connections": ["a0", "b1"]},
+		"b1": {"position": Vector3(10, 10, 0), "connections": ["b0", "a1"]}
+	}
+
+# === SAFE DATABASE OPERATIONS ===
+
+func create_record(table: String, record_id: String, data: Dictionary) -> bool:
+	return safe_database_operation("create", {
+		"table": table,
+		"record_id": record_id,
+		"data": data
+	})
+
+func update_record(table: String, record_id: String, data: Dictionary) -> bool:
+	return safe_database_operation("update", {
+		"table": table,
+		"record_id": record_id,
+		"data": data
+	})
+
+func delete_record(table: String, record_id: String) -> bool:
+	return safe_database_operation("delete", {
+		"table": table,
+		"record_id": record_id
+	})
+
+func get_record(table: String, record_id: String) -> Dictionary:
+	database_mutex.lock()
+	var result = {}
+	
+	if table in cosmic_database and record_id in cosmic_database[table]:
+		result = cosmic_database[table][record_id].duplicate(true)
+	
+	database_mutex.unlock()
+	return result
+
+func safe_database_operation(operation_type: String, params: Dictionary) -> bool:
+	var transaction_id = start_transaction()
+	var success = false
+	
+	database_mutex.lock()
+	
+	match operation_type:
+		"create":
+			success = execute_create_operation(params)
+		"update":
+			success = execute_update_operation(params)
+		"delete":
+			success = execute_delete_operation(params)
+	
+	database_mutex.unlock()
+	
+	if success:
+		commit_transaction(transaction_id)
+		emit_signal("data_updated", params.get("table", ""), params.get("record_id", ""))
+	else:
+		rollback_transaction(transaction_id)
+	
+	return success
+
+func execute_create_operation(params: Dictionary) -> bool:
+	var table = params.get("table", "")
+	var record_id = params.get("record_id", "")
+	var data = params.get("data", {})
+	
+	if not table in cosmic_database:
+		cosmic_database[table] = {}
+	
+	if record_id in cosmic_database[table]:
+		push_error("Record already exists: " + table + "." + record_id)
+		return false
+	
+	# Add metadata
+	data["created_at"] = Time.get_datetime_string_from_system()
+	data["updated_at"] = Time.get_datetime_string_from_system()
+	data["version"] = 1
+	
+	cosmic_database[table][record_id] = data
+	return true
+
+func execute_update_operation(params: Dictionary) -> bool:
+	var table = params.get("table", "")
+	var record_id = params.get("record_id", "")
+	var data = params.get("data", {})
+	
+	if not table in cosmic_database or not record_id in cosmic_database[table]:
+		push_error("Record not found: " + table + "." + record_id)
+		return false
+	
+	# Preserve metadata and update
+	var existing_data = cosmic_database[table][record_id]
+	data["created_at"] = existing_data.get("created_at", "")
+	data["updated_at"] = Time.get_datetime_string_from_system()
+	data["version"] = existing_data.get("version", 1) + 1
+	
+	cosmic_database[table][record_id] = data
+	return true
+
+func execute_delete_operation(params: Dictionary) -> bool:
+	var table = params.get("table", "")
+	var record_id = params.get("record_id", "")
+	
+	if not table in cosmic_database or not record_id in cosmic_database[table]:
+		push_error("Record not found: " + table + "." + record_id)
+		return false
+	
+	cosmic_database[table].erase(record_id)
+	return true
+
+# === TRANSACTION SYSTEM ===
+
+func start_transaction() -> String:
+	transaction_mutex.lock()
+	transaction_counter += 1
+	var transaction_id = "tx_" + str(transaction_counter)
+	active_transactions[transaction_id] = {
+		"started_at": Time.get_ticks_msec(),
+		"operations": [],
+		"backup": cosmic_database.duplicate(true)
+	}
+	transaction_mutex.unlock()
+	return transaction_id
+
+func commit_transaction(transaction_id: String):
+	transaction_mutex.lock()
+	if transaction_id in active_transactions:
+		active_transactions.erase(transaction_id)
+		emit_signal("transaction_completed", transaction_id)
+	transaction_mutex.unlock()
+
+func rollback_transaction(transaction_id: String):
+	transaction_mutex.lock()
+	if transaction_id in active_transactions:
+		var backup = active_transactions[transaction_id]["backup"]
+		database_mutex.lock()
+		cosmic_database = backup
+		database_mutex.unlock()
+		active_transactions.erase(transaction_id)
+		push_warning("Transaction rolled back: " + transaction_id)
+	transaction_mutex.unlock()
+
+# === COORDINATE SYSTEM FUNCTIONS ===
+
+func decode_frame_position(compact_id: String) -> Vector3:
+	# Convert your [a0][b1] system to 3D coordinates
+	if compact_id in frame_database:
+		return frame_database[compact_id]["position"]
+	
+	# Fallback: decode from string
+	var chars = compact_id.to_utf8_buffer()
+	if chars.size() >= 2:
+		var x = (chars[0] - 97) * 10  # 'a'=0, 'b'=1, etc.
+		var y = (chars[1] - 48) * 10  # '0'=0, '1'=1, etc.
+		var z = 0
+		if chars.size() > 2:
+			z = (chars[2] - 48) * 10
+		return Vector3(x, y, z)
+	
+	return Vector3.ZERO
+
+func encode_position_to_frame(position: Vector3) -> String:
+	# Convert 3D position back to your coordinate system
+	var x_char = char(97 + int(position.x / 10))  # 'a', 'b', 'c'...
+	var y_char = char(48 + int(position.y / 10))  # '0', '1', '2'...
+	var z_char = char(48 + int(position.z / 10))  # '0', '1', '2'...
+	return x_char + y_char + z_char
+
+func create_frame_connection(frame_a: String, frame_b: String):
+	if frame_a in frame_database and frame_b in frame_database:
+		if not "connections" in frame_database[frame_a]:
+			frame_database[frame_a]["connections"] = []
+		if not "connections" in frame_database[frame_b]:
+			frame_database[frame_b]["connections"] = []
+		
+		frame_database[frame_a]["connections"].append(frame_b)
+		frame_database[frame_b]["connections"].append(frame_a)
+
+# === WORD ENTITY MANAGEMENT ===
+
+func create_word_entity(word_text: String, position: Vector3, layer: int) -> String:
+	var word_id = "word_" + str(Time.get_ticks_msec()) + "_" + word_text.to_lower()
+	
+	var word_data = {
+		"text": word_text,
+		"position": position,
+		"layer": layer,
+		"frame_id": encode_position_to_frame(position),
+		"connections": [],
+		"evolution_type": "base",
+		"glow_intensity": 1.0,
+		"scale": 1.0,
+		"color": Color.WHITE
+	}
+	
+	if create_record("word_entities", word_id, word_data):
+		return word_id
+	return ""
+
+func connect_word_entities(word_a_id: String, word_b_id: String):
+	var word_a = get_record("word_entities", word_a_id)
+	var word_b = get_record("word_entities", word_b_id)
+	
+	if word_a.size() > 0 and word_b.size() > 0:
+		word_a["connections"].append(word_b_id)
+		word_b["connections"].append(word_a_id)
+		
+		update_record("word_entities", word_a_id, word_a)
+		update_record("word_entities", word_b_id, word_b)
+		
+		# Create connection record
+		var connection_id = "conn_" + word_a_id + "_" + word_b_id
+		create_record("connections", connection_id, {
+			"from": word_a_id,
+			"to": word_b_id,
+			"strength": 1.0,
+			"type": "semantic"
+		})
+
+# === CONTAINER MANAGEMENT ===
+
+func create_container(container_name: String, container_type: String, position: Vector3) -> String:
+	var container_id = "container_" + str(Time.get_ticks_msec()) + "_" + container_name
+	
+	var container_data = {
+		"name": container_name,
+		"type": container_type,
+		"position": position,
+		"children": [],
+		"parent": "",
+		"state": "active",
+		"frame_id": encode_position_to_frame(position)
+	}
+	
+	if create_record("containers", container_id, container_data):
+		return container_id
+	return ""
+
+# === QUERY FUNCTIONS ===
+
+func query_records(table: String, filter_func: Callable) -> Array:
+	database_mutex.lock()
+	var results = []
+	
+	if table in cosmic_database:
+		for record_id in cosmic_database[table]:
+			var record = cosmic_database[table][record_id]
+			if filter_func.call(record):
+				results.append({"id": record_id, "data": record.duplicate(true)})
+	
+	database_mutex.unlock()
+	return results
+
+func get_word_entities_in_layer(layer: int) -> Array:
+	return query_records("word_entities", func(record): return record.get("layer", -1) == layer)
+
+func get_connected_words(word_id: String) -> Array:
+	var word_data = get_record("word_entities", word_id)
+	var connected_words = []
+	
+	for connection_id in word_data.get("connections", []):
+		var connected_word = get_record("word_entities", connection_id)
+		if connected_word.size() > 0:
+			connected_words.append({"id": connection_id, "data": connected_word})
+	
+	return connected_words
+
+# === PERFORMANCE & CLEANUP ===
+
+func cleanup_old_records():
+	# Remove records older than 1 hour if not marked as persistent
+	var current_time = Time.get_ticks_msec()
+	var cleanup_threshold = 3600000  # 1 hour in milliseconds
+	
+	database_mutex.lock()
+	
+	for table_name in cosmic_database:
+		var table = cosmic_database[table_name]
+		var records_to_remove = []
+		
+		for record_id in table:
+			var record = table[record_id]
+			var created_time = record.get("created_at", "")
+			
+			# Skip persistent records
+			if record.get("persistent", false):
+				continue
+			
+			# Check age (simplified - would need proper time parsing)
+			if record.get("last_accessed", 0) + cleanup_threshold < current_time:
+				records_to_remove.append(record_id)
+		
+		for record_id in records_to_remove:
+			table.erase(record_id)
+	
+	database_mutex.unlock()
+
+func get_database_stats() -> Dictionary:
+	database_mutex.lock()
+	var stats = {
+		"total_tables": cosmic_database.size(),
+		"total_records": 0,
+		"memory_usage": 0,
+		"active_transactions": active_transactions.size()
+	}
+	
+	for table_name in cosmic_database:
+		stats.total_records += cosmic_database[table_name].size()
+	
+	database_mutex.unlock()
+	return stats
+
+func backup_database() -> bool:
+	backup_mutex.lock()
+	var backup_path = "user://ethereal_backup_" + str(Time.get_ticks_msec()) + ".json"
+	var file = FileAccess.open(backup_path, FileAccess.WRITE)
+	
+	if file:
+		database_mutex.lock()
+		var backup_data = {
+			"cosmic_database": cosmic_database,
+			"frame_database": frame_database,
+			"timestamp": Time.get_datetime_string_from_system()
+		}
+		file.store_string(JSON.stringify(backup_data))
+		database_mutex.unlock()
+		file.close()
+		backup_mutex.unlock()
+		print("✅ Database backed up to: ", backup_path)
+		return true
+	
+	backup_mutex.unlock()
+	return false
+
+# === ERROR HANDLING ===
+
+func validate_structure(data: Dictionary) -> bool:
+	# Layer 1: Structure validation
+	return data.has("created_at") or data.size() > 0
+
+func validate_content(data: Dictionary) -> bool:
+	# Layer 2: Content validation
+	for key in data:
+		if data[key] == null:
+			return false
+	return true
+
+func validate_context(data: Dictionary) -> bool:
+	# Layer 3: Context validation
+	return true  # Implement specific context rules
+
+func _exit_tree():
+	print("🗃️ DataManager shutting down - Creating final backup...")
+	backup_database()
+	
+	# Clean up mutexes
+	database_mutex = null
+	transaction_mutex = null
+	backup_mutex = null

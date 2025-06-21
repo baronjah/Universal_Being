@@ -80,7 +80,7 @@ func pentagon_ready() -> void:
 	_initialize_interface_position()
 	_setup_interface_sockets()
 	print("🖼️ Interface Universal Being ready: %s" % interface_title)
-}
+
 
 func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
@@ -327,7 +327,7 @@ func connect_logic(from_interface: UniversalBeingInterface, from_socket: String,
 	"""Connect logic between interfaces"""
 	if has_method("connect_socket"):
 
-		var success = connect_socket(from_interface, from_socket, to_socket)
+		var success = connect_socket(from_socket, from_interface, to_socket)
 		if success:
 			interface_logic_connected.emit(from_socket, to_socket)
 			print("🔌 Logic connected: %s.%s -> %s.%s" % [from_interface.interface_title, from_socket, interface_title, to_socket])

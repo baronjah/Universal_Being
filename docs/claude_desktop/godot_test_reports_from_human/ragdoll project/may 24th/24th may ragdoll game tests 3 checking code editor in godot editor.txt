@@ -1,0 +1,174 @@
+#lets check all scripts in godot engine editor, and see what it says about them 
+
+#
+res://scripts/autoload/claude_timer_system.gd
+
+
+[Ignore]Line 37 (UNUSED_SIGNAL):The signal "session_metrics_updated" is declared but never explicitly used in the class.
+[Ignore]Line 135 (UNUSED_VARIABLE):The local variable "autonomous_start_time" is declared but never used in the block. If this is intended, prefix it with an underscore: "_autonomous_start_time".
+
+
+#
+
+res://scripts/autoload/console_manager.gd
+
+[Ignore]Line 509 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_help()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 630 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_create_tree()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 637 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_create_rock()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 644 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_create_box()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 651 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_create_ball()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 658 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_create_ramp()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 665 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_clear_objects()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 672 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_list_objects()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 779 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_ragdoll_walk()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 798 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_spawn_ragdoll()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 805 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_create_sun()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 812 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_create_astral_being()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 819 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_create_pathway()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 826 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_create_bush()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 833 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_create_fruit()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 1030 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_timing_info()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 1390 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_balance_workload()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 1408 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_floodgate_status()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 1438 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_health_check()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 1445 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_test_floodgate()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 1453 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_system_status()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 1474 (SHADOWED_VARIABLE_BASE_CLASS):The local variable "ready" is shadowing an already-declared signal in the base class "Node".
+
+
+#
+
+res://scripts/autoload/windows_console_fix.gd
+
+
+
+[Ignore]Line 111 (SHADOWED_GLOBAL_IDENTIFIER):The variable "char" has the same name as a built-in function.
+
+
+
+
+#
+
+res://scripts/core/asset_library.gd
+
+
+
+[Ignore]Line 131 (UNUSED_SIGNAL):The signal "asset_loaded" is declared but never explicitly used in the class.
+[Ignore]Line 395 (SHADOWED_GLOBAL_IDENTIFIER):The function parameter "type_string" has the same name as a built-in function.
+
+
+#
+
+res://scripts/core/complete_ragdoll.gd
+
+
+Line 10:"extends" can only be used once.
+
+
+here i think you wanted to link an script, we do that in different way, we do that by not
+
+
+ Inherit talking functionality
+extends "res://scripts/core/talking_ragdoll.gd"
+
+
+but by :
+
+var script_path = "res://scripts/core/talking_ragdoll.gd"
+
+then we can either get node with @onready 
+or make a node different way, have it, and attach that script to it, otherwise we can also make autoloads in godot builded in, or just plain nodes in scene, to attach scripts to them, they dont need any visual aspects to them, we can make Node, Node3d, etc anything we wanna
+
+
+#
+
+res://scripts/core/debug_3d_screen.gd
+
+
+
+[Ignore]Line 92 (UNUSED_PARAMETER):The parameter "label" is never used in the function "_create_axis_indicator()". If this is intended, prefix it with an underscore: "_label".
+[Ignore]Line 129 (UNUSED_PARAMETER):The parameter "delta" is never used in the function "_process()". If this is intended, prefix it with an underscore: "_delta".
+[Ignore]Line 185 (SHADOWED_VARIABLE_BASE_CLASS):The local variable "name" is shadowing an already-declared property in the base class "Node".
+[Ignore]Line 307 (UNUSED_PARAMETER):The parameter "character" is never used in the function "_draw_char()". If this is intended, prefix it with an underscore: "_character".
+[Ignore]Line 384 (SHADOWED_VARIABLE_BASE_CLASS):The local function parameter "name" is shadowing an already-declared property in the base class "Node".
+
+
+#
+
+res://scripts/core/floodgate_controller.gd
+
+[Ignore]Line 155 (UNUSED_PARAMETER):The parameter "delta" is never used in the function "_process()". If this is intended, prefix it with an underscore: "_delta".
+[Ignore]Line 166 (UNUSED_VARIABLE):The local variable "last_delta_to_forget" is declared but never used in the block. If this is intended, prefix it with an underscore: "_last_delta_to_forget".
+[Ignore]Line 259 (REDUNDANT_AWAIT):"await" keyword is unnecessary because the expression isn't a coroutine nor a signal.
+[Ignore]Line 261 (REDUNDANT_AWAIT):"await" keyword is unnecessary because the expression isn't a coroutine nor a signal.
+[Ignore]Line 263 (REDUNDANT_AWAIT):"await" keyword is unnecessary because the expression isn't a coroutine nor a signal.
+[Ignore]Line 265 (REDUNDANT_AWAIT):"await" keyword is unnecessary because the expression isn't a coroutine nor a signal.
+[Ignore]Line 267 (REDUNDANT_AWAIT):"await" keyword is unnecessary because the expression isn't a coroutine nor a signal.
+[Ignore]Line 269 (REDUNDANT_AWAIT):"await" keyword is unnecessary because the expression isn't a coroutine nor a signal.
+[Ignore]Line 271 (REDUNDANT_AWAIT):"await" keyword is unnecessary because the expression isn't a coroutine nor a signal.
+[Ignore]Line 273 (REDUNDANT_AWAIT):"await" keyword is unnecessary because the expression isn't a coroutine nor a signal.
+[Ignore]Line 275 (REDUNDANT_AWAIT):"await" keyword is unnecessary because the expression isn't a coroutine nor a signal.
+[Ignore]Line 277 (REDUNDANT_AWAIT):"await" keyword is unnecessary because the expression isn't a coroutine nor a signal.
+[Ignore]Line 279 (REDUNDANT_AWAIT):"await" keyword is unnecessary because the expression isn't a coroutine nor a signal.
+[Ignore]Line 281 (REDUNDANT_AWAIT):"await" keyword is unnecessary because the expression isn't a coroutine nor a signal.
+[Ignore]Line 283 (REDUNDANT_AWAIT):"await" keyword is unnecessary because the expression isn't a coroutine nor a signal.
+[Ignore]Line 1008 (UNUSED_VARIABLE):The local variable "unload_type" is declared but never used in the block. If this is intended, prefix it with an underscore: "_unload_type".
+
+
+
+#
+
+res://scripts/core/physics_state_manager.gd
+
+
+
+[Ignore]Line 138 (UNUSED_PARAMETER):The parameter "delta" is never used in the function "_update_state_transition()". If this is intended, prefix it with an underscore: "_delta".
+[Ignore]Line 247 (UNUSED_PARAMETER):The parameter "delta" is never used in the function "_apply_custom_gravity()". If this is intended, prefix it with an underscore: "_delta".
+[Ignore]Line 260 (UNUSED_PARAMETER):The parameter "astral_being" is never used in the function "prepare_object_for_manipulation()". If this is intended, prefix it with an underscore: "_astral_being".
+
+
+
+#
+
+res://scripts/passive_mode/autonomous_developer.gd
+
+
+[Ignore]Line 95 (UNUSED_PARAMETER):The parameter "delta" is never used in the function "_process()". If this is intended, prefix it with an underscore: "_delta".
+[Ignore]Line 304 (UNUSED_PARAMETER):The parameter "task" is never used in the function "_create_task_plan()". If this is intended, prefix it with an underscore: "_task".
+[Ignore]Line 312 (UNUSED_PARAMETER):The parameter "task" is never used in the function "_execute_coding_task()". If this is intended, prefix it with an underscore: "_task".
+[Ignore]Line 320 (UNUSED_PARAMETER):The parameter "task" is never used in the function "_run_tests()". If this is intended, prefix it with an underscore: "_task".
+[Ignore]Line 327 (UNUSED_PARAMETER):The parameter "task" is never used in the function "_update_documentation()". If this is intended, prefix it with an underscore: "_task".
+[Ignore]Line 350 (UNUSED_PARAMETER):The parameter "task" is never used in the function "_commit_changes()". If this is intended, prefix it with an underscore: "_task".
+[Ignore]Line 358 (UNUSED_PARAMETER):The parameter "task" is never used in the function "_revert_changes()". If this is intended, prefix it with an underscore: "_task".
+[Ignore]Line 476 (UNUSED_PARAMETER):The parameter "task_id" is never used in the function "approve_task()". If this is intended, prefix it with an underscore: "_task_id".
+
+
+#
+
+res://scripts/passive_mode/passive_mode_controller.gd
+
+
+
+[Ignore]Line 55 (SHADOWED_VARIABLE_BASE_CLASS):The local function parameter "name" is shadowing an already-declared property in the base class "Node".
+[Ignore]Line 130 (SHADOWED_VARIABLE_BASE_CLASS):The local function parameter "name" is shadowing an already-declared property in the base class "Node".
+
+
+#
+
+
+res://scripts/passive_mode/threaded_test_system.gd
+
+
+
+[Ignore]Line 38 (UNUSED_PARAMETER):The parameter "delta" is never used in the function "_process()". If this is intended, prefix it with an underscore: "_delta".
+
+
+#
+
+
+also the scene
+
+res://scenes/floodgate_test_scene.tscn
+
+does not load i see information "error while loading file "and its name
+i can only click here ok and x

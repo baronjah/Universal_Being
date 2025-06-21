@@ -112,6 +112,7 @@ func _init() -> void:
 	pentagon_init()
 
 func pentagon_init() -> void:
+    super.pentagon_init()
 	# Pentagon initialization - override in child classes
 	pass
 
@@ -119,6 +120,7 @@ func _input(event: InputEvent) -> void:
 	pentagon_input(event)
 
 func pentagon_input(event: InputEvent) -> void:
+    super.pentagon_input(event)
 	# Pentagon input handling - override in child classes
 	pass
 
@@ -126,6 +128,7 @@ func sewers() -> void:
 	pentagon_sewers()
 
 func pentagon_sewers() -> void:
+    super.pentagon_sewers()
 	# Pentagon cleanup/output - override in child classes
 	pass
 func show_examples() -> void:
@@ -155,6 +158,14 @@ func show_examples() -> void:
 # Function to test a single file
 func test_single_file(file_path: String) -> void:
 	print("\n=== TESTING SINGLE FILE: %s ===" % file_path)
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+func pentagon_process(delta: float) -> void:
+	super.pentagon_process(delta)
+	# Auto-generated process implementation
+
+	# Auto-generated ready implementation
+
 	
 	var BatchFixer = load("res://scripts/test/batch_parameter_fixer.gd")
 	var result = BatchFixer.fix_file(file_path, true)

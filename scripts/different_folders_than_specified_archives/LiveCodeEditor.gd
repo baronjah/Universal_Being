@@ -161,12 +161,14 @@ func insert_snippet(snippet_name: String) -> void:
 extends UniversalBeing
 
 func pentagon_init() -> void:
+    super.pentagon_init()
 	super()
 	being_name = "NewBeing"
 	being_type = "custom"
 	consciousness_level = 3
 
 func pentagon_process(delta: float) -> void:
+    super.pentagon_process(delta)
 	super(delta)
 	# Your logic here
 """,
@@ -196,6 +198,18 @@ func evolve() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_editor"):
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+func pentagon_input(event: InputEvent) -> void:
+	super.pentagon_input(event)
+func pentagon_sewers() -> void:
+	# Auto-generated cleanup implementation
+	super.pentagon_sewers()
+
+	# Auto-generated input implementation
+
+	# Auto-generated ready implementation
+
 		toggle_visibility()
 	elif visible:
 		if event.is_action_pressed("execute_code"):

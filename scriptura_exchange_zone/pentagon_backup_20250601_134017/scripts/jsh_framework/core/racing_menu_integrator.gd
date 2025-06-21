@@ -38,6 +38,7 @@ func _init() -> void:
 	pentagon_init()
 
 func pentagon_init() -> void:
+    super.pentagon_init()
 	# Pentagon initialization - override in child classes
 	pass
 
@@ -45,6 +46,7 @@ func _process(delta: float) -> void:
 	pentagon_process(delta)
 
 func pentagon_process(delta: float) -> void:
+    super.pentagon_process(delta)
 	# Pentagon logic processing - override in child classes
 	pass
 
@@ -52,6 +54,7 @@ func _input(event: InputEvent) -> void:
 	pentagon_input(event)
 
 func pentagon_input(event: InputEvent) -> void:
+    super.pentagon_input(event)
 	# Pentagon input handling - override in child classes
 	pass
 
@@ -59,6 +62,7 @@ func sewers() -> void:
 	pentagon_sewers()
 
 func pentagon_sewers() -> void:
+    super.pentagon_sewers()
 	# Pentagon cleanup/output - override in child classes
 	pass
 func register_racing_actions():
@@ -84,6 +88,10 @@ func register_racing_actions():
 
 func add_racing_to_menu():
 	# Check if your main menu system has a create_menu_item method
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+	# Auto-generated ready implementation
+
 	if main_controller and main_controller.has_method("create_menu_button"):
 		print("Adding racing game to main menu...")
 		

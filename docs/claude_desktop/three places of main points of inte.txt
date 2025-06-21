@@ -1,0 +1,4 @@
+three places of main points of interests: 
+1 = "\\wsl.localhost\Ubuntu\home\kamisama"
+2 = "C:\Users\Percision 15"
+3 = "C:\Users\Percision 15\Desktop\claude_desktop"

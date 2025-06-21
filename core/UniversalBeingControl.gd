@@ -13,21 +13,26 @@ class_name UniversalBeingControl
 var _universal_being_core = preload("res://core/UniversalBeing.gd")
 
 # Universal Being properties
-var being_uuid: String = ""
-var being_name: String = "Control Universal Being"
-var being_type: String = "ui_control"
-var consciousness_level: int = 0
-var visual_layer: int = 0
+#var being_uuid: String = ""
+#var being_name: String = "Control Universal Being"
+#var being_type: String = "ui_control"
+#var consciousness_level: int = 0
+#var visual_layer: int = 0
+#
+## Component system
+#var component_data: Dictionary = {}
+#var socket_manager = null
+#
+## Pentagon Architecture support
+#var pentagon_initialized: bool = false
 
-# Component system
-var component_data: Dictionary = {}
-var socket_manager = null
+# Control-specific properties (missing from UniversalBeing)
+var modulate: Color = Color.WHITE
+var size: Vector2 = Vector2.ZERO
+# Note: global_position inherited from Node3D via UniversalBeing
 
-# Pentagon Architecture support
-var pentagon_initialized: bool = false
-
-# Signals (match UniversalBeing)
-signal layer_changed(new_layer: int)
+## Signals (match UniversalBeing)
+#signal layer_changed(new_layer: int)
 signal consciousness_changed(new_level: int)
 signal being_evolved(from_form: String, to_form: String)
 

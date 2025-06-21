@@ -87,7 +87,8 @@ func initialize_unified_system() -> void:
 			"performance": 0.0,
 			"memory_usage": 0.0,
 			"adaptability": 10.0
-}
+		}
+	}
 
 func setup_hybrid_system() -> void:
 	"""Setup the hybrid system that uses both approaches intelligently"""
@@ -330,7 +331,6 @@ func print_system_status() -> void:
 	print("  Luminus Active: %s" % status.luminus_active)
 	print("  Detailed Active: %s" % status.detailed_active)
 	print("  Avg Frame Time: %.3f ms" % (calculate_average_frame_time() * 1000))
-}
 
 # ===== INTEGRATION HELPERS =====
 
@@ -342,7 +342,12 @@ func create_chunk_at_position(world_pos: Vector3, approach: String = "") -> Node
 		"luminus":
 			if luminus_manager:
 				var coords = luminus_manager._world_to_chunk_coords(world_pos)
-				return luminus_manager._load_chunk(coords)
+				if luminus_manager.has_method("_load_chunk"):
+					var chunk = luminus_manager._load_chunk(coords)
+					return chunk if chunk else null
+				else:
+					print("🌌 Luminus manager missing _load_chunk method")
+					return null
 		"detailed":
 			if detailed_manager:
 				var coords = detailed_manager.world_pos_to_chunk_coord(world_pos)

@@ -190,6 +190,7 @@ func sewers() -> void:
 	pentagon_sewers()
 
 func pentagon_sewers() -> void:
+    super.pentagon_sewers()
 	# Pentagon cleanup/output - override in child classes
 	pass
 	func evolve(turn : int, command):
@@ -1069,9 +1070,27 @@ func save_container_states_old():
 
 # Core System Architecture
 #class_name SpatialEvolutionSystem_jshtaskm
+
+func pentagon_init() -> void:
+	super.pentagon_init()
+	being_name = "Generated Being"
+	being_type = "auto_generated"
+	consciousness_level = 1
 #extends UniversalBeingBase
 # we had one already
 #func _ready():
 	#initialize_world_seed(OS.Time.get_unix_time_from_system())
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+func pentagon_process(delta: float) -> void:
+	super.pentagon_process(delta)
+func pentagon_input(event: InputEvent) -> void:
+	super.pentagon_input(event)
+	# Auto-generated input implementation
+
+	# Auto-generated process implementation
+
+	# Auto-generated ready implementation
+
 	#initialize_task_system()
 	

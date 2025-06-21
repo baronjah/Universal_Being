@@ -39,7 +39,7 @@ signal element_unsocketed(socket_id: String)
 
 func pentagon_init() -> void:
 	# Call parent init
-	super()
+	super.pentagon_init()
 	
 	# Set console-specific properties
 	being_type = "console"
@@ -54,7 +54,7 @@ func pentagon_init() -> void:
 
 func pentagon_ready() -> void:
 	# Call parent ready
-	super()
+	super.pentagon_ready()
 	
 	# Load console blueprint from Akashic Records
 	load_console_blueprint()
@@ -67,7 +67,7 @@ func pentagon_ready() -> void:
 
 func pentagon_process(delta: float) -> void:
 	# Call parent process
-	super(delta)
+	super.pentagon_process(delta)
 	
 	# Process console updates
 	if console_active:
@@ -76,7 +76,7 @@ func pentagon_process(delta: float) -> void:
 
 func pentagon_input(event: InputEvent) -> void:
 	# Call parent input
-	super(event)
+	super.pentagon_input(event)
 	
 	# Handle console-specific input
 	if console_active:
@@ -90,7 +90,7 @@ func pentagon_sewers() -> void:
 	cleanup_socketed_beings()
 	
 	# Call parent cleanup
-	super()
+	super.pentagon_sewers()
 
 # ===== SOCKET SYSTEM =====
 
@@ -793,9 +793,9 @@ func save_console_state() -> void:
 				"socket_definitions": socket_definitions,
 				"socketed_beings": get_socketed_beings_data(),
 				"console_active": console_active
+			}
 			akashic.save_console_state(state_data)
 			print("🖥️ Console: State saved to Akashic Records")
-}
 
 func cleanup_socketed_beings() -> void:
 	"""Cleanup all socketed beings"""
@@ -940,15 +940,14 @@ func setup_console_styling_with_color(bg_color: Color) -> void:
 
 func get_socketed_beings_data() -> Dictionary:
 	"""Get data for socketed beings for saving"""
-	var data = {
+	var data = {}
 	for socket_id in socketed_beings:
 		var being = socketed_beings[socket_id]
 		if being and being.has_method("get_save_data"):
 			data[socket_id] = being.get_save_data()
 		else:
-			data[socket_id] = {"name": being.name, "type": "unknown"
+			data[socket_id] = {"name": being.name, "type": "unknown"}
 	return data
-}
 
 func _on_command_submitted(text: String) -> void:
 	"""Handle command submission from input field"""
@@ -962,7 +961,6 @@ func _on_command_submitted(text: String) -> void:
 func display_output(text: String) -> void:
 	"""Display text in rich text output area with channel routing"""
 	print("🖥️ Terminal Output: " + text)
-}
 	
 	# Route message to appropriate channel
 	var channel = determine_message_channel(text)

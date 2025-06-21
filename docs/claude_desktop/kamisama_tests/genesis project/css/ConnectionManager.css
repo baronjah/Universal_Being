@@ -1,0 +1,36 @@
+/* Add this to your main.css or create a ConnectionManager.css */
+
+body.connection-creation-mode {
+    cursor: crosshair;
+}
+
+.connection-source {
+    outline: 2px solid var(--genesis-accent-green, #6a9955) !important;
+    box-shadow: 0 0 10px var(--genesis-accent-green, #6a9955) !important;
+    z-index: 10 !important;
+}
+
+.connection-help-message {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--genesis-bg-darker);
+    color: var(--genesis-text-primary);
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: 1px solid var(--genesis-border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    z-index: 1100;
+    pointer-events: none;
+}
+
+.connection-line {
+    position: absolute;
+    pointer-events: none;
+    height: 2px;
+    background-color: var(--genesis-accent-color);
+    transform-origin: 0 0;
+    z-index: 5;
+    opacity: 0.7;
+}

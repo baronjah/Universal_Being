@@ -1,0 +1,30 @@
+2. File Organization Structure
+For a clean implementation, organize your project files like this:
+Copy/genesis-system/
+│
+├── index.html                   # Main entry point
+├── css/
+│   ├── main.css                 # Core styles
+│   ├── grid-viewer.css          # CSV Grid styles
+│   ├── galaxy-view.css          # Galaxy visualization styles
+│   └── evolution-tracker.css    # Evolution timeline styles
+│
+├── js/
+│   ├── Genesis.js               # Core bootstrap file
+│   ├── CSVGridViewer.js         # CSV visualization component
+│   ├── GalaxyVisualization.js   # Galaxy view component
+│   ├── DataParser.js            # Data format converter
+│   ├── MetadataRepository.js    # Metadata storage
+│   ├── DataAnalyzer.js          # Pattern detection engine
+│   ├── SchemaEvolution.js       # Evolution engine
+│   ├── EvolutionVisualizer.js   # Evolution timeline
+│   └── SelfEvolutionSystem.js   # System coordinator
+│
+├── data/
+│   ├── sample1.csv              # Sample data files
+│   ├── sample2.csv
+│   └── connections.csv
+│
+└── lib/                         # Third-party libraries
+    ├── d3.min.js                # For advanced visualizations
+    └── papaparse.min.js         # For CSV parsing

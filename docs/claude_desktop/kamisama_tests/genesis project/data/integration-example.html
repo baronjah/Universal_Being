@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genesis System - Self-Evolving Framework</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #1e1e1e;
+            --bg-darker: #151515;
+            --bg-light: #252525;
+            --text-primary: #f0f0f0;
+            --text-secondary: #a0a0a0;
+            --accent-blue: #0078d7;
+            --accent-green: #6a9955;
+            --accent-red: #f14c4c;
+            --accent-yellow: #dcdcaa;
+            --accent-purple: #c586c0;
+            --border-color: #454545;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            background-color: var(--bg-darker);
+            border-bottom: 1px solid var(--border-color);
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent-blue);
+        }
+        
+        nav {
+            display: flex;
+            gap: 15px;
+        }
+        
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        nav a:hover {
+            color: var(--text-primary);
+        }
+        
+        nav a.active {
+            color: var(--accent-blue);
+        }
+        
+        main {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+        
+        aside {
+            width: 250px;
+            background-color: var(--bg-darker);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sidebar-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sidebar-header {
+            padding: 10px;
+            font-weight: bold;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-content {
+            flex: 1;
+            overflow: auto;
+            padding: 10px;
+        }
+        
+        .file-tree {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .file-tree-item {
+            margin-bottom: 2px;
+        }
+        
+        .file-tree-folder {
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            user-select: none;
+        }
+        
+        .file-tree-folder:hover {
+            background-color: var(--bg-light);
+        }
+        
+        .file-tree-folder i {
+            margin-right: 5px;
+            width: 16px;
+            text-align: center;
+        }
+        
+        .file-tree-folder .fa-chevron-right {
+            font-size: 10px;
+            margin-right: 5px;
+            transition: transform 0.2s;
+        }
+        
+        .file-tree-folder.expanded .fa-chevron-right {
+            transform: rotate(90deg);
+        }
+        
+        .file-tree-files {
+            margin-left: 20px;
+            display: none;
+        }
+        
+        .file-tree-folder.expanded + .file-tree-files {
+            display: block;
+        }
+        
+        .file-tree-file {
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .file-tree-file:hover {
+            background-color: var(--bg-light);
+        }
+        
+        .file-tree-file.active {
+            background-color: rgba(0, 120, 215, 0.2);
+        }
+        
+        .file-tree-file i {
+            margin-right: 5px;
+            width: 16px;
+            text-align: center;
+        }
+        
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .tabs {
+            display: flex;
+            background-color: var(--bg-darker);
+            border-bottom: 1px solid var(--border-color);
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+        
+        .tab {
+            padding: 8px 15px;
+            border-right: 1px solid var(--border-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+        }
+        
+        .tab:hover {
+            background-color: var(--bg-light);
+        }
+        
+        .tab.active {
+            background-color: var(--bg-light);
+            border-bottom: 2px solid var(--accent-blue);
+        }
+        
+        .tab i {
+            margin-right: 8px;
+        }
+        
+        .tab .close {
+            margin-left: 8px;
+            opacity: 0.5;
+        }
+        
+        .tab:hover .close {
+            opacity: 1;
+        }
+        
+        .panels {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .panel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            overflow: auto;
+        }
+        
+        .panel.active {
+            display: flex;
+        }
+        
+        footer {
+            border-top: 1px solid var(--border-color);
+            background-color: var(--bg-darker);
+            padding: 5px 10px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .split-view {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .split-pane {
+            flex: 1;
+            overflow: auto;
+        }
+        
+        .splitter {
+            width: 5px;
+            background-color: var(--border-color);
+            cursor: col-resize;
+        }
+        
+        .section-header {
+            padding: 10px;
+            background-color: var(--bg-darker);
+            border-bottom: 1px solid var(--border-color);
+            font-weight: bold;
+        }
+        
+        .welcome {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 100%;
+        }
+        
+        .welcome h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        .welcome p {
+            margin-bottom: 30px;
+            max-width: 600px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        .welcome-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            border: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent-blue);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0069c0;
+        }
+        
+        .btn-secondary {
+            background-color: var(--bg-light);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #303030;
+        }
+        
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        .card {
+            background-color: var(--bg-darker);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            overflow: hidden;
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card-header {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-icon {
+            font-size: 20px;
+            width: 24px;
+            text-align: center;
+        }
+        
+        .card-content {
+            padding: 15px;
+            flex: 1;
+        }
+        
+        .card-footer {
+            padding: 10px 15px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .visualization-area {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-project-diagram"></i>
+            <span>Genesis System</span>
+        </div>
+        <nav>
+            <a href="#" class="active" id="nav-explorer">
+                <i class="fas fa-home"></i> Explorer
+            </a>
+            <a href="#" id="nav-grid">
+                <i class="fas fa-table"></i> CSV Grid
+            </a>
+            <a href="#" id="nav-galaxy">
+                <i class="fas fa-star"></i> Galaxy
+            </a>
+            <a href="#" id="nav-map">
+                <i class="fas fa-project-diagram"></i> Map
+            </a>
+            <a href="#" id="nav-settings">
+                <i class="fas fa-cog"></i> Settings
+            </a>
+        </nav>
+    </header>
+    
+    <main>
+        <aside>
+            <div class="sidebar-section">
+                <div class="sidebar-header">
+                    <span>Files</span>
+                    <i class="fas fa-sync-alt" id="refresh-files"></i>
+                </div>
+                <div class="sidebar-content">
+                    <ul class="file-tree">
+                        <li class="file-tree-item">
+                            <div class="file-tree-folder expanded">
+                                <i class="fas fa-chevron-right"></i>
+                                <i class="fas fa-folder-open"></i>
+                                <span>CSV Files</span>
+                            </div>
+                            <ul class="file-tree-files">
+                                <li class="file-tree-file active" data-file="sample1.csv">
+                                    <i class="fas fa-table"></i>
+                                    <span>sample1.csv</span>
+                                </li>
+                                <li class="file-tree-file" data-file="sample2.csv">
+                                    <i class="fas fa-table"></i>
+                                    <span>sample2.csv</span>
+                                </li>
+                                <li class="file-tree-file" data-file="connections.csv">
+                                    <i class="fas fa-link"></i>
+                                    <span>connections.csv</span>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="file-tree-item">
+                            <div class="file-tree-folder">
+                                <i class="fas fa-chevron-right"></i>
+                                <i class="fas fa-folder"></i>
+                                <span>JavaScript</span>
+                            </div>
+                            <ul class="file-tree-files">
+                                <li class="file-tree-file" data-file="Genesis.js">
+                                    <i class="fas fa-file-code"></i>
+                                    <span>Genesis.js</span>
+                                </li>
+                                <li class="file-tree-file" data-file="CSVGridViewer.js">
+                                    <i class="fas fa-file-code"></i>
+                                    <span>CSVGridViewer.js</span>
+                                </li>
+                                <li class="file-tree-file" data-file="GalaxyVisualization.js">
+                                    <i class="fas fa-file-code"></i>
+                                    <span>GalaxyVisualization.js</span>
+                                </li>
+                                <li class="file-tree-file" data-file="DataParser.js">
+                                    <i class="fas fa-file-code"></i>
+                                    <span>DataParser.js</span>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="file-tree-item">
+                            <div class="file-tree-folder">
+                                <i class="fas fa-chevron-right"></i>
+                                <i class="fas fa-folder"></i>
+                                <span>HTML</span>
+                            </div>
+                            <ul class="file-tree-files">
+                                <li class="file-tree-file" data-file="index.html">
+                                    <i class="fas fa-file-code"></i>
+                                    <span>index.html</span>
+                                </li>
+                                <li class="file-tree-file" data-file="csv-grid-demo.html">
+                                    <i class="fas fa-file-code"></i>
+                                    <span>csv-grid-demo.html</span>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+        
+        <div class="content">
+            <div class="tabs">
+                <div class="tab active" data-panel="welcome-panel">
+                    <i class="fas fa-home"></i>
+                    <span>Welcome</span>
+                </div>
+                <div class="tab" data-panel="sample1-panel">
+                    <i class="fas fa-table"></i>
+                    <span>sample1.csv</span>
+                    <span class="close">×</span>
+                </div>
+            </div>
+            
+            <div class="panels">
+                <div class="panel active" id="welcome-panel">
+                    <div class="welcome">
+                        <h1>Welcome to Genesis System</h1>
+                        <p>
+                            Genesis is a self-evolving framework for visualizing, manipulating, and connecting data across multiple files and formats.
+                            It provides powerful tools for working with CSV data, visualizing relationships, and establishing connections between different data sources.
+                        </p>
+                        
+                        <div class="welcome-buttons">
+                            <button class="btn btn-primary" id="open-csv-btn">
+                                <i class="fas fa-table"></i> Open CSV Grid
+                            </button>
+                            <button class="btn btn-primary" id="open-galaxy-btn">
+                                <i class="fas fa-star"></i> Open Galaxy View
+                            </button>
+                            <button class="btn btn-secondary" id="create-new-btn">
+                                <i class="fas fa-plus"></i> Create New File
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="panel" id="sample1-panel">
+                    <div id="csv-grid-container" class="visualization-area"></div>
+                </div>
+                
+                <div class="panel" id="galaxy-panel">
+                    <div id="galaxy-container" class="visualization-area"></div>
+                </div>
+                
+                <div class="panel" id="map-panel">
+                    <div id="map-container" class="visualization-area"></div>
+                </div>
+                
+                <div class="panel" id="csv-connections-panel">
+                    <div class="split-view">
+                        <div class="split-pane" id="csv-source-container"></div>
+                        <div class="splitter"></div>
+                        <div class="split-pane" id="csv-target-container"></div>
+                    </div>
+                </div>
+                
+                <div class="panel" id="settings-panel">
+                    <div class="section-header">Settings</div>
+                    <div class="card-container">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon"><i class="fas fa-palette"></i></div>
+                                <span>Appearance</span>
+                            </div>
+                            <div class="card-content">
+                                <div style="margin-bottom: 10px;">
+                                    <label for="theme-select">Theme:</label>
+                                    <select id="theme-select" style="width: 100%; padding: 5px; background: var(--bg-light); color: var(--text-primary); border: 1px solid var(--border-color);">
+                                        <option value="dark">Dark</option>
+                                        <option value="light">Light</option>
+                                        <option value="contrast">High Contrast</option>
+                                    </select>
+                                </div>
+                                <div style="margin-bottom: 10px;">
+                                    <label for="font-size">Font Size:</label>
+                                    <input type="range" id="font-size" min="10" max="20" value="14" style="width: 100%;">
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <span>Appearance and themes</span>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon"><i class="fas fa-table"></i></div>
+                                <span>CSV Settings</span>
+                            </div>
+                            <div class="card-content">
+                                <div style="margin-bottom: 10px;">
+                                    <label for="csv-delimiter">Delimiter:</label>
+                                    <select id="csv-delimiter" style="width: 100%; padding: 5px; background: var(--bg-light); color: var(--text-primary); border: 1px solid var(--border-color);">
+                                        <option value=",">Comma (,)</option>
+                                        <option value=";">Semicolon (;)</option>
+                                        <option value="\t">Tab</option>
+                                        <option value="|">Pipe (|)</option>
+                                    </select>
+                                </div>
+                                <div style="margin-bottom: 10px;">
+                                    <input type="checkbox" id="csv-header" checked>
+                                    <label for="csv-header">Use first row as header</label>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <span>CSV parsing options</span>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon"><i class="fas fa-star"></i></div>
+                                <span>Galaxy Settings</span>
+                            </div>
+                            <div class="card-content">
+                                <div style="margin-bottom: 10px;">
+                                    <label for="galaxy-background">Background Color:</label>
+                                    <input type="color" id="galaxy-background" value="#0c0c1e" style="width: 100%;">
+                                </div>
+                                <div style="margin-bottom: 10px;">
+                                    <label for="star-size">Star Size:</label>
+                                    <input type="range" id="star-size" min="1" max="50" value="30" style="width: 100%;">
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <span>Galaxy visualization options</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div>Genesis System v0.1 | Self-Evolving Framework</div>
+        <div id="status-message">Ready</div>
+    </footer>
+    
+    <!-- Load External Scripts -->
+    <script src="Genesis.js"></script>
+    <script src="CSVGridViewer.js"></script>
+    <script src="GalaxyVisualization.js"></script>
+    <script src="DataParser.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sample data for demonstration
+            const sampleData1 = {
+                headers: ['id', 'name', 'type', 'date', 'value'],
+                rows: [
+                    { id: '1', name: 'Item 1', type: 'Type A', date: '2025-01-01', value: '100' },
+                    { id: '2', name: 'Item 2', type: 'Type B', date: '2025-01-02', value: '200' },
+                    { id: '3', name: 'Item 3', type: 'Type A', date: '2025-01-03', value: '300' },
+                    { id: '4', name: 'Item 4', type: 'Type C', date: '2025-01-04', value: '400' },
+                    { id: '5', name: 'Item 5', type: 'Type B', date: '2025-01-05', value: '500' }
+                ]
+            };
+            
+            const sampleData2 = {
+                headers: ['id', 'reference', 'category', 'status', 'amount'],
+                rows: [
+                    { id: '101', reference: '1', category: 'Category X', status: 'Active', amount: '150' },
+                    { id: '102', reference: '2', category: 'Category Y', status: 'Pending', amount: '250' },
+                    { id: '103', reference: '3', category: 'Category X', status: 'Active', amount: '350' },
+                    { id: '104', reference: '4', category: 'Category Z', status: 'Inactive', amount: '450' },
+                    { id: '105', reference: '5', category: 'Category Y', status: 'Active', amount: '550' }
+                ]
+            };
+            
+            // Initialize components when needed (lazy loading)
+            let csvGridViewer = null;
+            let galaxyVisualization = null;
+            let dataParser = null;
+            let activePanel = 'welcome-panel';
+            
+            // Event: Tab click
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Deactivate all tabs
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Get panel ID
+                    const panelId = this.dataset.panel;
+                    
+                    // Switch to the selected panel
+                    switchPanel(panelId);
+                });
+                
+                // Tab close button
+                const closeBtn = tab.querySelector('.close');
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        
+                        // Get parent tab and panel
+                        const tab = this.closest('.tab');
+                        const panelId = tab.dataset.panel;
+                        
+                        // Remove the tab
+                        tab.remove();
+                        
+                        // Switch to welcome panel if this was the active tab
+                        if (tab.classList.contains('active')) {
+                            const welcomeTab = document.querySelector('.tab[data-panel="welcome-panel"]');
+                            welcomeTab.classList.add('active');
+                            switchPanel('welcome-panel');
+                        }
+                    });
+                }
+            });
+            
+            // Event: File tree folder toggle
+            document.querySelectorAll('.file-tree-folder').forEach(folder => {
+                folder.addEventListener('click', function() {
+                    this.classList.toggle('expanded');
+                });
+            });
+            
+            // Event: File tree file click
+            document.querySelectorAll('.file-tree-file').forEach(file => {
+                file.addEventListener('click', function() {
+                    // Deactivate all files
+                    document.querySelectorAll('.file-tree-file').forEach(f => f.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Get file name
+                    const fileName = this.dataset.file;
+                    
+                    // Open the file
+                    openFile(fileName);
+                });
+            });
+            
+            // Event: Navigation clicks
+            document.getElementById('nav-explorer').addEventListener('click', function(e) {
+                e.preventDefault();
+                setActiveNav(this);
+                switchPanel('welcome-panel');
+            });
+            
+            document.getElementById('nav-grid').addEventListener('click', function(e) {
+                e.preventDefault();
+                setActiveNav(this);
+                openCSVGrid();
+            });
+            
+            document.getElementById('nav-galaxy').addEventListener('click', function(e) {
+                e.preventDefault();
+                setActiveNav(this);
+                openGalaxyView();
+            });
+            
+            document.getElementById('nav-map').addEventListener('click', function(e) {
+                e.preventDefault();
+                setActiveNav(this);
+                openMapView();
+            });
+            
+            document.getElementById('nav-settings').addEventListener('click', function(e) {
+                e.preventDefault();
+                setActiveNav(this);
+                switchPanel('settings-panel');
+            });
+            
+            // Welcome page buttons
+            document.getElementById('open-csv-btn').addEventListener('click', function() {
+                openCSVGrid();
+            });
+            
+            document.getElementById('open-galaxy-btn').addEventListener('click', function() {
+                openGalaxyView();
+            });
+            
+            document.getElementById('create-new-btn').addEventListener('click', function() {
+                // TODO: Implement new file creation
+                alert('Create new file functionality would be implemented here');
+            });
+            
+            // Helper: Set active navigation item
+            function setActiveNav(element) {
+                document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+                element.classList.add('active');
+            }
+            
+            // Helper: Switch active panel
+            function switchPanel(panelId) {
+                // Deactivate all panels
+                document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+                
+                // Activate selected panel
+                const panel = document.getElementById(panelId);
+                if (panel) {
+                    panel.classList.add('active');
+                    activePanel = panelId;
+                    
+                    // Initialize components when certain panels are shown
+                    if (panelId === 'sample1-panel' && !csvGridViewer) {
+                        initCSVGridViewer();
+                    } else if (panelId === 'galaxy-panel' && !galaxyVisualization) {
+                        initGalaxyVisualization();
+                    }
+                }
+            }
+            
+            // Helper: Open a file by name
+            function openFile(fileName) {
+                // Check file type
+                const extension = fileName.split('.').pop().toLowerCase();
+                
+                // Add or activate tab for this file
+                let tab = document.querySelector(`.tab[data-file="${fileName}"]`);
+                
+                if (!tab) {
+                    // Create new tab
+                    tab = createTab(fileName, extension);
+                }
+                
+                // Activate the tab
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Determine panel type based on extension
+                let panelId;
+                
+                switch (extension) {
+                    case 'csv':
+                        panelId = 'sample1-panel';
+                        break;
+                    case 'js':
+                        panelId = 'code-panel';  // Not implemented in this example
+                        break;
+                    default:
+                        panelId = 'welcome-panel';
+                        break;
+                }
+                
+                // Switch to the appropriate panel
+                switchPanel(panelId);
+                
+                // Update status message
+                document.getElementById('status-message').textContent = `File: ${fileName}`;
+            }
+            
+            // Helper: Create a new tab
+            function createTab(fileName, extension) {
+                // Create tab element
+                const tab = document.createElement('div');
+                tab.className = 'tab';
+                tab.dataset.panel = 'sample1-panel';  // We're using the same panel for all files in this example
+                tab.dataset.file = fileName;
+                
+                // Determine icon based on extension
+                let icon;
+                switch (extension) {
+                    case 'csv':
+                        icon = 'fas fa-table';
+                        break;
+                    case 'js':
+                        icon = 'fas fa-file-code';
+                        break;
+                    case 'html':
+                        icon = 'fas fa-code';
+                        break;
+                    default:
+                        icon = 'fas fa-file';
+                        break;
+                }
+                
+                // Set tab content
+                tab.innerHTML = `
+                    <i class="${icon}"></i>
+                    <span>${fileName}</span>
+                    <span class="close">×</span>
+                `;
+                
+                // Add click handler
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const panelId = this.dataset.panel;
+                    switchPanel(panelId);
+                });
+                
+                // Add close button handler
+                const closeBtn = tab.querySelector('.close');
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        
+                        // Remove the tab
+                        tab.remove();
+                        
+                        // Switch to welcome panel
+                        const welcomeTab = document.querySelector('.tab[data-panel="welcome-panel"]');
+                        welcomeTab.classList.add('active');
+                        switchPanel('welcome-panel');
+                    });
+                }
+                
+                // Add to tabs container
+                document.querySelector('.tabs').appendChild(tab);
+                
+                return tab;
+            }
+            
+            // Helper: Initialize CSV Grid Viewer
+            function initCSVGridViewer() {
+                const container = document.getElementById('csv-grid-container');
+                
+                csvGridViewer = new CSVGridViewer({
+                    container: container,
+                    data: sampleData1,
+                    editable: true,
+                    resizable: true,
+                    showLineNumbers: true,
+                    onSelectCell: function(row, col, header, value) {
+                        document.getElementById('status-message').textContent = `Cell: Row ${row + 1}, Col ${col + 1} (${header}: ${value || ''})`;
+                    }
+                });
+            }
+            
+            // Helper: Initialize Galaxy Visualization
+            function initGalaxyVisualization() {
+                const container = document.getElementById('galaxy-container');
+                
+                // Create tab if it doesn't exist
+                let tab = document.querySelector(`.tab[data-panel="galaxy-panel"]`);
+                if (!tab) {
+                    tab = document.createElement('div');
+                    tab.className = 'tab';
+                    tab.dataset.panel = 'galaxy-panel';
+                    tab.innerHTML = `
+                        <i class="fas fa-star"></i>
+                        <span>Galaxy View</span>
+                        <span class="close">×</span>
+                    `;
+                    
+                    // Add click handler
+                    tab.addEventListener('click', function() {
+                        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                        this.classList.add('active');
+                        switchPanel('galaxy-panel');
+                    });
+                    
+                    // Add close button handler
+                    const closeBtn = tab.querySelector('.close');
+                    if (closeBtn) {
+                        closeBtn.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            tab.remove();
+                            
+                            const welcomeTab = document.querySelector('.tab[data-panel="welcome-panel"]');
+                            welcomeTab.classList.add('active');
+                            switchPanel('welcome-panel');
+                        });
+                    }
+                    
+                    // Add to tabs container
+                    document.querySelector('.tabs').appendChild(tab);
+                }
+                
+                // Activate the tab
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Get container dimensions
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+                
+                // Sample galaxy data
+                const galaxyData = {
+                    nodes: [
+                        { id: 'core', name: 'Genesis Core', type: 'core', importance: 1, fixed: true, x: width / 2, y: height / 2 },
+                        { id: 'csv', name: 'CSV Files', type: 'file', importance: 0.8 },
+                        { id: 'js', name: 'JavaScript', type: 'file', importance: 0.7 },
+                        { id: 'html', name: 'HTML', type: 'file', importance: 0.6 },
+                        { id: 'sample1', name: 'sample1.csv', type: 'csv', importance: 0.4 },
+                        { id: 'sample2', name: 'sample2.csv', type: 'csv', importance: 0.4 },
+                        { id: 'connections', name: 'connections.csv', type: 'csv', importance: 0.4 },
+                        { id: 'genesis', name: 'Genesis.js', type: 'js', importance: 0.5 },
+                        { id: 'csvViewer', name: 'CSVGridViewer.js', type: 'js', importance: 0.5 },
+                        { id: 'galaxyViz', name: 'GalaxyVisualization.js', type: 'js', importance: 0.5 },
+                        { id: 'dataParser', name: 'DataParser.js', type: 'js', importance: 0.5 },
+                        { id: 'index', name: 'index.html', type: 'html', importance: 0.3 }
+                    ],
+                    connections: [
+                        { source: 'core', target: 'csv', type: 'default' },
+                        { source: 'core', target: 'js', type: 'default' },
+                        { source: 'core', target: 'html', type: 'default' },
+                        { source: 'csv', target: 'sample1', type: 'default' },
+                        { source: 'csv', target: 'sample2', type: 'default' },
+                        { source: 'csv', target: 'connections', type: 'default' },
+                        { source: 'js', target: 'genesis', type: 'default' },
+                        { source: 'js', target: 'csvViewer', type: 'default' },
+                        { source: 'js', target: 'galaxyViz', type: 'default' },
+                        { source: 'js', target: 'dataParser', type: 'default' },
+                        { source: 'html', target: 'index', type: 'default' },
+                        { source: 'sample1', target: 'sample2', type: 'dependency' }
+                    ]
+                };
+                
+                // Initialize Galaxy Visualization
+                galaxyVisualization = new GalaxyVisualization({
+                    container: container,
+                    width: width,
+                    height: height,
+                    data: galaxyData,
+                    onSelectNode: function(node) {
+                        document.getElementById('status-message').textContent = `Selected: ${node.name}`;
+                    }
+                });
+            }
+            
+            // Helper: Open CSV Grid View
+            function openCSVGrid() {
+                // Initialize if needed
+                if (!csvGridViewer) {
+                    initCSVGridViewer();
+                }
+                
+                // Switch to CSV grid panel
+                switchPanel('sample1-panel');
+                
+                // Activate the right tab
+                document.querySelectorAll('.tab').forEach(tab => {
+                    if (tab.dataset.panel === 'sample1-panel') {
+                        tab.classList.add('active');
+                    } else {
+                        tab.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Helper: Open Galaxy View
+            function openGalaxyView() {
+                // Make sure the galaxy panel exists
+                let panel = document.getElementById('galaxy-panel');
+                if (!panel) {
+                    panel = document.createElement('div');
+                    panel.id = 'galaxy-panel';
+                    panel.className = 'panel';
+                    
+                    const container = document.createElement('div');
+                    container.id = 'galaxy-container';
+                    container.className = 'visualization-area';
+                    
+                    panel.appendChild(container);
+                    document.querySelector('.panels').appendChild(panel);
+                }
+                
+                // Initialize if needed
+                if (!galaxyVisualization) {
+                    initGalaxyVisualization();
+                }
+                
+                // Switch to galaxy panel
+                switchPanel('galaxy-panel');
+            }
+            
+            // Helper: Open Map View
+            function openMapView() {
+                // Create and show map panel (simplified)
+                alert('Map view would be implemented here');
+            }
+            
+            // Initialize Data Parser (used by other components)
+            dataParser = new DataParser();
+            
+            // Initialize Genesis system if available
+            if (typeof Genesis !== 'undefined') {
+                const genesis = new Genesis();
+                genesis.initialize({
+                    rootPath: './'
+                });
+                
+                // Store reference for other components to use
+                window.genesis = genesis;
+            }
+            
+            // Update status message on page load
+            document.getElementById('status-message').textContent = 'System ready';
+        });
+    </script>
+</body>
+</html>

@@ -86,6 +86,12 @@
 ## for key presses xD
 ###
 extends UniversalBeingBase
+
+func pentagon_init() -> void:
+	super.pentagon_init()
+	being_name = "Generated Being"
+	being_type = "auto_generated"
+	consciousness_level = 1
 signal system_verified(system_name, status)
 signal verification_phase_complete(phase_number)
 
@@ -177,6 +183,7 @@ func _process(delta: float) -> void:
 	pentagon_process(delta)
 
 func pentagon_process(delta: float) -> void:
+    super.pentagon_process(delta)
 	# Pentagon logic processing - override in child classes
 	pass
 
@@ -184,6 +191,7 @@ func _input(event: InputEvent) -> void:
 	pentagon_input(event)
 
 func pentagon_input(event: InputEvent) -> void:
+    super.pentagon_input(event)
 	# Pentagon input handling - override in child classes
 	pass
 
@@ -191,6 +199,7 @@ func sewers() -> void:
 	pentagon_sewers()
 
 func pentagon_sewers() -> void:
+    super.pentagon_sewers()
 	# Pentagon cleanup/output - override in child classes
 	pass
 func check_all_things():
@@ -545,6 +554,10 @@ func get_file_by_word(word: String) -> String:
 
 func generate_word_report() -> String:
 	var report = "Word System Status Report\n"
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+	# Auto-generated ready implementation
+
 	report += "========================\n"
 	report += "Total Words: %d\n" % word_database.size()
 	report += "Used Words: %d\n" % used_words.size()

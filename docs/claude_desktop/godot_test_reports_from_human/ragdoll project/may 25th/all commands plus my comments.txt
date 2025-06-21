@@ -1,0 +1,101 @@
+# the game console, i have added my comments after the # 3 hashtag symbol :# take a look at them :)
+
+Welcome to Ragdoll Console!
+Type 'help' for commands, Tab to toggle, Esc to close
+> help
+Available Commands:
+  create/spawn <object> - Create an object at mouse position # kinda juts prefix
+  tree - Spawn a tree # works
+  rock - Spawn a rock # works
+  box - Spawn a box # works
+  ball - Spawn a ball # works
+  ramp - Spawn a ramp # now it is falling to the ground, we must change model from flat plane into two triangles, with three rectangles? 
+  sun - Spawn a sun (light source) # works, too high to see, also somehow cast shadow on the map, i think the light spot is inside the sphere, but it shines the light, i think we must figure out to make an sun just some shader effect to the direction of it like in some games, just 2d effect, from direction to viewport
+  astral/astral_being - Spawn an astral being # works, they fly around
+  pathway/path - Spawn a pathway # works both
+  bush - Spawn a bush # works
+  fruit - Spawn a fruit # works
+  clear - Remove all spawned objects # didnt clear ragdoll,neighter command world, i think there are needs to check floodgates connections between what "world" is, and what "create tree" is, we also might need to change the whole world thing somehow, but first we must normalize it
+  list - List all spawned objects # works
+  delete <id> - Delete specific object # works
+  ragdoll <command> - Control ragdoll (reset/position) # didnt work, we had so far 3 different ragdolls,and yesterday we talked about fourth one, we must find all connections to ragdoll in scripts, and make new one, connected to it all
+  gravity <value> - Set gravity (default: 9.8) # i think it is working? changing it to 1, made the ragdoll, kinda not be underground, now i see his legs
+  physics - Physics state control # needs update, shows gravity at 9.8 and i just changed it to 1, rest is clear, needs update and connections o what we have already
+  say <text> - Make ragdoll say something # ragdoll too far away to see text, but something is there
+  console <position> - Set console position (center/top/bottom/left/right) # i changed it once from center to bottom, lets try again, yes it somehow stored that information and stayed this way, it is working
+  scale <value> - Set UI scale (0.5-2.0) # works
+  scene list - List available scenes # shows four scenes, default, forest, physics_test, playhround
+  load <scene> - Load a scene # hmm after loading world it seems to error, but in the end it kinda worked, we are now missing the bottom flat plane, but the whole island dissapeared, after using again command "world" the island appears, and so remains the previous scene parts
+  save [name] - Save current scene # seem to work
+  walk - Make ragdoll walk/stop # dont know, we need new ragdol
+  spawn_ragdoll - Spawn a new ragdoll character # works but he glitches under the flat plane, and the legs are visible over ocean bottom on world scene
+
+Enhanced Ragdoll Commands:
+  ragdoll_come - Ragdoll comes to your position # needs new ragdoll the one that has 7 parts body
+  ragdoll_pickup - Ragdoll picks up nearest object # needs new ragdoll the one that has 7 parts body
+  ragdoll_drop - Ragdoll drops held object # needs new ragdoll the one that has 7 parts body
+  ragdoll_organize - Ragdoll organizes nearby objects # needs new ragdoll the one that has 7 parts body
+  ragdoll_patrol - Ragdoll starts patrol route # needs new ragdoll the one that has 7 parts body
+
+Astral Beings Commands:
+  beings_status - Show astral beings status # Astral beings system not found, hmm, setup systems? nope
+  beings_help - Astral beings help ragdoll # Astral beings system not found
+  beings_organize - Astral beings organize scene # Astral beings system not found
+  beings_harmony - Astral beings create harmony # Astral beings system not found
+
+System Commands:
+  setup_systems - Manually setup ragdoll and astral beings # hmm debuger seem to work, but as i talked previously the command world somehow does not go through flood gates, we might need to find each and every bit where we add something or we can either just make sure to add the signals from godot tree to our new tree, so each time there is an signal in tree from godot engine, we can update our tree, and status of nodes, clean it too after times of inactiviy etc
+  system_status - Check all systems status # seems to work, the last one is only not online yet MainGameController: ⏳ Initializing
+
+
+Debug Commands:
+  debug [off] - Toggle/disable debug 3D screen # seem to work but is on 0.0.0, later we will also need the editor of the scene tree, to use mouse to see every node, and have interface to move them around, the same shall be and connected to the whole "Object Inspector" we have from clicking left mouse at some and seeing their metadata, groups, children, scripts, but here i need some button, like edit, and then some window popping up for me to edit all details of any thing, maybe even change script that is attached to it? nodes? etc 
+  select <name|id> - Select object for manipulation # selected an astral being
+  move <x> <y> <z> - Move selected object # made it move around few times and seen it later going back to its route later
+  rotate <x> <y> <z> - Rotate selected object (degrees) # works
+  scale_obj <scale> - Scale selected object # works
+
+
+Light Being Commands:
+  awaken <name|id> - Awaken static object to begin movement # dont see it moving around, but seen command in chat, maybe it needs an reason to move, a tree can become one day trydent?
+  state <name|id> <state> - Change object physics state # seem to work
+  States: static, awakening, kinematic, dynamic, ethereal, light_being
+
+Timer & Task Commands:
+  timer - Show timer report
+  timer project <name> - Switch active project # need project list for that
+  timer threshold <seconds> - Set autonomous work trigger
+  task start <name> - Start timing a task
+  task complete - Complete current task
+
+Multi-Todo Commands:
+  todos - Show all project todos
+  todos add <project> <content> - Add todo to project
+  todos complete <project> <id> - Complete todo
+  todos modify <project> <id> <content> - Modify todo
+  todos stepback <project> <id> - Undo last modification
+  balance - Show workload balance recommendations
+
+Passive Mode Commands:
+  passive start - Start autonomous development mode
+  passive stop - Stop passive mode
+  passive status - Show passive mode status
+  add_task <name> [priority] - Add task to queue
+  branch create <name> - Create feature branch
+  branch switch <name> - Switch branch
+  commit <message> - Commit changes
+  mr create <title> - Create merge request
+  mr approve <id> - Approve merge request
+  merge <mr-id> - Merge approved MR
+  workflow - Show workflow status
+  test - Run feature test suite
+  version - Version control commands
+> spawn_ragdoll
+Ragdoll creation queued through floodgate!
+> ragdoll_come
+Ragdoll controller not found
+> ragdoll_pickup
+Ragdoll controller not found
+> ragdoll_drop
+Ragdoll controller not found
+> ragdoll_organize

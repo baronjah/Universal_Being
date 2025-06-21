@@ -1,0 +1,4 @@
+AudioStreamPlaybackOggVorbis
+Inherits: AudioStreamPlaybackResampled < AudioStreamPlayback < RefCounted < Object
+
+There is currently no description for this class. Please help us by contributing one!

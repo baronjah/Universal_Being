@@ -1,0 +1,159 @@
+[gd_scene load_steps=6 format=3 uid="uid://bx7lav4r2m8p"]
+
+[ext_resource type="Script" path="res://systems/simple_database_visualizer.gd" id="1"]
+[ext_resource type="Script" path="res://core/AliveGameUniverse.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://cqj4bqr7p6vo2" path="res://scenes/main/camera_point.tscn" id="3"]
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 1
+background_color = Color(0.05, 0.05, 0.15, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.2, 0.3, 0.5, 1)
+ambient_light_energy = 0.4
+
+[sub_resource type="BoxMesh" id="BoxMesh_1"]
+size = Vector3(20, 1, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.3, 0.3, 0.3, 1)
+roughness = 0.8
+
+[node name="UltimateLivingDatabaseDemo" type="Node3D"]
+
+[node name="AliveGameUniverse" type="Node3D" parent="."]
+script = ExtResource("2")
+universe_consciousness_enabled = true
+marching_cubes_quality = 16
+chunk_generation_enabled = true
+ai_collaboration_mode = true
+
+[node name="SimpleDatabaseVisualizer" type="Node3D" parent="."]
+script = ExtResource("1")
+enabled = true
+
+[node name="CameraPoint" parent="." instance=ExtResource("3")]
+transform = Transform3D(0.866025, -0.35355, 0.35355, 0, 0.707107, 0.707107, -0.5, -0.61237, 0.61237, 0, 8, 12)
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_1")
+material_override = SubResource("StandardMaterial3D_1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 10, 0)
+light_energy = 0.8
+shadow_enabled = true
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 5)
+light_color = Color(0.8, 0.9, 1, 1)
+light_energy = 0.5
+omni_range = 20.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MainInfoPanel" type="Panel" parent="UI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -250.0
+offset_right = 500.0
+offset_bottom = -10.0
+modulate = Color(0.1, 0.1, 0.2, 0.9)
+
+[node name="MainInfoLabel" type="RichTextLabel" parent="UI/MainInfoPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = -15.0
+bbcode_enabled = true
+text = "[center][b][color=cyan]ULTIMATE LIVING DATABASE DEMO[/color][/b][/center]
+
+[color=yellow]THE BACKEND IS NOW THE FRONTEND![/color]
+
+[b]INPUT STREAMS:[/b]
+Every keystroke becomes [color=green]floating data[/color]
+Watch your input become visible consciousness
+
+[b]GRAVITY POINTS:[/b]
+[color=orange]Orange spheres[/color] with diameter falloff
+Data flows attracted to gravity wells
+
+[b]CONSCIOUSNESS FLOWS:[/b]
+[color=purple]Purple streams[/color] show consciousness data
+Real-time consciousness visualization
+
+[b]CONTROLS:[/b]
+[color=white]WASD[/color] - Move around
+[color=white]Mouse[/color] - Look around
+[color=white]Any Key[/color] - Creates input streams
+
+[color=lime]Your vision realized - database as frontend![/color]"
+
+[node name="StatusPanel" type="Panel" parent="UI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 150.0
+modulate = Color(0.15, 0.05, 0.2, 0.9)
+
+[node name="StatusLabel" type="RichTextLabel" parent="UI/StatusPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+bbcode_enabled = true
+text = "[b][color=purple]SYSTEM STATUS[/color][/b]
+
+[color=green]✓[/color] Living Database Active
+[color=green]✓[/color] Input Streams Flowing
+[color=green]✓[/color] Gravity Fields Generated
+[color=green]✓[/color] Consciousness Detection Active
+
+[b]Current Mode:[/b] Database Visualization
+[b]Universe:[/b] Alive and Conscious
+
+[color=cyan]Type any keys to see the magic![/color]"
+
+[node name="HelpLabel" type="Label" parent="UI"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -100.0
+offset_right = -10.0
+offset_bottom = -10.0
+text = "LIVING DATABASE DEMO
+
+• Database points floating in 3D
+• Gravity fields with falloff  
+• Input streams as visible data
+• Consciousness visualization
+
+Everything you type appears as
+flowing data in 3D space!"
+horizontal_alignment = 2
+vertical_alignment = 2

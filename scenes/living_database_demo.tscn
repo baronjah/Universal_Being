@@ -1,0 +1,100 @@
+[gd_scene load_steps=5 format=3 uid="uid://b2xvk7y8r3m8"]
+
+[ext_resource type="Script" path="res://systems/living_database_visualizer.gd" id="1"]
+[ext_resource type="Script" path="res://core/AliveGameUniverse.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://cqj4bqr7p6vo2" path="res://scenes/main/camera_point.tscn" id="3"]
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 1
+background_color = Color(0.1, 0.1, 0.2, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.3, 0.3, 0.5, 1)
+ambient_light_energy = 0.3
+
+[node name="LivingDatabaseDemo" type="Node3D"]
+
+[node name="AliveGameUniverse" type="Node3D" parent="."]
+script = ExtResource("2")
+marching_cubes_quality = 16
+ai_collaboration_mode = true
+
+[node name="LivingDatabaseVisualizer" type="Node3D" parent="."]
+script = ExtResource("1")
+database_visualization_enabled = true
+gravity_points_visible = true
+input_streams_visible = true
+consciousness_flows_visible = true
+reality_editing_enabled = true
+
+[node name="CameraPoint" parent="." instance=ExtResource("3")]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 5, 10)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 5, 0)
+light_energy = 0.8
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="InfoPanel" type="Panel" parent="UI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -200.0
+offset_right = 400.0
+offset_bottom = -10.0
+modulate = Color(1, 1, 1, 0.8)
+
+[node name="InfoText" type="RichTextLabel" parent="UI/InfoPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+bbcode_enabled = true
+text = "[b]🌌 LIVING DATABASE DEMO[/b]
+
+[color=cyan]Controls:[/color]
+• [b]Ctrl+B[/b] - Toggle Blender Mode
+• [b]WASD[/b] - Move around
+• [b]Mouse[/b] - Look around
+• [b]Any Key[/b] - Creates floating input data
+
+[color=purple]Visualization:[/color]
+• [color=purple]Purple[/color] - Consciousness data flows
+• [color=orange]Orange[/color] - Gravity points with falloff
+• [color=green]Green[/color] - Input stream data
+• [color=cyan]Cyan[/color] - Database queries
+
+[color=yellow]Blender Mode:[/color]
+• [b]G[/b] - Grab/Move objects
+• [b]Ctrl+C[/b] - Copy selection
+• [b]Ctrl+V[/b] - Paste at cursor
+• [b]X[/b] - Delete selection
+
+[color=lime]Status:[/color] Backend is now Frontend!"
+
+[node name="Instructions" type="Label" parent="UI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 100.0
+text = "🌍 LIVING DATABASE ACTIVE
+Type any keys to see data streams!
+Ctrl+B for reality editing mode"
+horizontal_alignment = 2

@@ -61,7 +61,7 @@ func log_message(script_name: String, function_name: String, message: String, me
 			"function_name": function_name,
 			"message_id": message_id,
 			"type": log_type
-}
+	}
 
 # ===== CONVENIENCE LOGGING METHODS =====
 
@@ -136,8 +136,8 @@ func _format_collected_output(scripts_data: Dictionary, time_span: float) -> Str
 	# Sort scripts by importance (consciousness > ai > human > systems > others)
 	var script_priority = {
 		"consciousness": 0, "ai": 1, "human": 2, "systems": 3
-}
-	
+	}
+
 	var sorted_scripts = scripts_data.keys()
 	sorted_scripts.sort_custom(func(a, b): 
 		var priority_a = _get_script_priority(a, script_priority)
@@ -220,7 +220,8 @@ func get_collection_stats() -> Dictionary:
 		"total_collected": total_prints_collected,
 		"currently_collected": collected_prints.size(),
 		"collection_interval": collection_interval,
-		"last_flush_time": last_flush_time}
+		"last_flush_time": last_flush_time
+	}
 
 func force_flush() -> void:
 	"""Force immediate flush of collected prints"""

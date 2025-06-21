@@ -105,6 +105,19 @@ func create_3d_console_interface():
 	# Initially minimized
 	set_console_state("minimized")
 
+func register_console_commands():
+	"""Register console commands with the system"""
+	print("🖥️ 3D Console: Registering spatial commands...")
+	# Register with SystemBootstrap if available
+	if SystemBootstrap and SystemBootstrap.has_method("register_console"):
+		SystemBootstrap.register_console(self)
+	
+	# Register with Gemma AI if available
+	if GemmaAI and GemmaAI.has_method("register_command_interface"):
+		GemmaAI.register_command_interface(self)
+	
+	print("✅ 3D Console: Commands registered with consciousness systems")
+
 func create_output_display():
 	"""Create scrolling output display for console results"""
 	for i in range(max_output_lines):
@@ -124,7 +137,7 @@ func handle_key_input(event: InputEvent):
 		return
 	
 	match event.keycode:
-		KEY_BACKQUOTE:  # ` key toggles console
+		KEY_QUOTELEFT:  # ` key toggles console
 			toggle_console_state()
 		KEY_ENTER:
 			execute_current_command()

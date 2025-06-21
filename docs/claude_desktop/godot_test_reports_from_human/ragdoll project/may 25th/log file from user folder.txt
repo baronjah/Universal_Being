@@ -1,0 +1,1650 @@
+Godot Engine v4.5.dev4.mono.official.209a446e3 - https://godotengine.org
+Vulkan 1.3.277 - Forward+ - Using Device #0: NVIDIA - Quadro RTX 3000
+
+[FloodgateController] Initializing central control system...
+[2025-05-25T11:41:04] [SYSTEM] === FLOODGATE CONTROLLER INITIALIZED ===
+[2025-05-25T11:41:04] [SYSTEM] Time: 2025-05-25T11:41:04
+[2025-05-25T11:41:04] [SYSTEM] Floodgate Controller ready for operations
+[AssetLibrary] Initializing asset management system...
+[AssetLibrary] Asset Library ready with 13 assets cataloged
+JSH Scene Tree System initialized
+ new script thread pull thing { "total_threads": 8, "first_entry_time": 1963, "last_entry_time": 0, "threads_history": [], "first_check": <null>, "current_check": <null> }
+🎮 [MainGameController] Initializing main game...
+🚀 [GameLauncher] Starting system diagnostics...
+
+=== SYSTEM STARTUP DIAGNOSTICS ===
+
+📋 Checking Autoload Systems:
+  ✅ FloodgateController: READY
+  ✅ AssetLibrary: READY
+  ✅ UISettingsManager: READY
+  ✅ ConsoleManager: READY
+  ✅ WorldBuilder: READY
+  ✅ DialogueSystem: READY
+  ✅ SceneLoader: READY
+
+🌊 Checking Floodgate Systems:
+  ✅ FloodgateController: Online
+
+🎬 Checking Scene Structure:
+  ✅ Main Scene: MainGame
+  ✅ Camera3D: Found at (0.0, 10.0, 20.0)
+  ✅ Ground: Found
+
+📦 Checking Critical Assets:
+  ✅ standardized_objects.gd: Found
+  ✅ floodgate_controller.gd: Found
+  ✅ asset_library.gd: Found
+  ✅ StandardizedObjects: Working
+
+📊 STARTUP STATUS REPORT:
+==================================================
+🎯 Systems Status: 10/11 operational
+✅ No critical errors detected
+🚀 All systems ready! Game launch successful!
+==================================================
+🎮 Game Ready! Press Tab to open console.
+📄 Diagnostic report saved to user://startup_diagnostic.json
+🎮 [MainGameController] Game launcher started
+[CONSOLE] Windows admin mode detected - using ASCII fallbacks
+Started waiting for user response...
+📝 Added todo to Talking Ragdoll Game: Test debug screen and state transitions
+📝 Added todo to Talking Ragdoll Game: Import 3D assets from Downloads folder
+📝 Added todo to Talking Ragdoll Game: Verify timer system tracks user wait time
+📝 Added todo to 12 Turns System: Update documentation files across strongholds
+📝 Added todo to 12 Turns System: Synchronize data across Windows/WSL/Claude homes
+📝 Added todo to 12 Turns System: Review and organize Unity assets for future use
+📝 Added todo to Eden OS Project: Archive threading patterns for future reference
+📝 Added todo to Eden OS Project: Document zone-based testing approach
+Starting test zone: planet with 2 tests
+  📊 Queue Status: { "actions": 0, "nodes": 0, "movements": 0, "functions": 0 }
+  ✅ AssetLibrary: Online
+  📚 Asset Catalog: { "objects": 5, "ragdolls": 2, "materials": 3, "textures": 1, "audio": 2 }
+Testing: object_spawning
+Testing: dialogue_system
+
+[2025-05-25T11:41:07] [SYSTEM] Memory cleanup completed
+
+[2025-05-25T11:41:42] [SYSTEM] Memory cleanup completed
+
+🎮 Console toggle requested - Visible: false
+User responded after 40.6500319999994 seconds
+Started waiting for user response...
+[2025-05-25T11:41:47] [SYSTEM] Memory cleanup completed
+
+[2025-05-25T11:42:08] [SYSTEM] Memory cleanup completed
+User responded after 23.1166666666666 seconds
+Started waiting for user response...
+[2025-05-25T11:42:13] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:42:18] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+User responded after 10.3500000000001 seconds
+Started waiting for user response...
+[2025-05-25T11:42:23] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:42:28] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:42:33] [SYSTEM] Memory cleanup completed
+User responded after 16.1333333333337 seconds
+Started waiting for user response...
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:42:38] [SYSTEM] Memory cleanup completed
+User responded after 4.09999999999999 seconds
+Started waiting for user response...
+[2025-05-25T11:42:43] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+User responded after 4.91666666666665 seconds
+Started waiting for user response...
+[2025-05-25T11:42:48] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:42:53] [SYSTEM] Memory cleanup completed
+User responded after 10.3666666666668 seconds
+Started waiting for user response...
+[2025-05-25T11:43:40] [MAGIC2] Queued second dimensional magic: node creation
+Started waiting for user response...
+[2025-05-25T11:43:40] [TRACK] Tracking new object: tree_1 (Total: 1/144)
+[2025-05-25T11:43:40] [SYSTEM1] Added root node: tree_1
+User responded after 43.9257216666656 seconds
+[2025-05-25T11:44:26] [MAGIC2] Queued second dimensional magic: node creation
+Started waiting for user response...
+[2025-05-25T11:44:26] [TRACK] Tracking new object: rock_1 (Total: 2/144)
+[2025-05-25T11:44:26] [SYSTEM1] Added root node: rock_1
+User responded after 2.68333333333333 seconds
+[2025-05-25T11:44:29] [MAGIC2] Queued second dimensional magic: node creation
+Started waiting for user response...
+[2025-05-25T11:44:29] [TRACK] Tracking new object: ball_1 (Total: 3/144)
+[2025-05-25T11:44:29] [SYSTEM1] Added root node: ball_1
+Ragdoll says: You know, I used to have bones... I miss bones.
+User responded after 2.6 seconds
+[2025-05-25T11:44:32] [MAGIC2] Queued second dimensional magic: node creation
+Started waiting for user response...
+[2025-05-25T11:44:32] [TRACK] Tracking new object: box_1 (Total: 4/144)
+[2025-05-25T11:44:32] [SYSTEM1] Added root node: box_1
+[2025-05-25T11:44:33] [SYSTEM] Memory cleanup completed
+User responded after 2.66666666666666 seconds
+[2025-05-25T11:44:34] [MAGIC2] Queued second dimensional magic: node creation
+Started waiting for user response...
+[2025-05-25T11:44:34] [TRACK] Tracking new object: ramp_1 (Total: 5/144)
+[2025-05-25T11:44:34] [SYSTEM1] Added root node: ramp_1
+Ragdoll says: You know, I used to have bones... I miss bones.
+User responded after 3.31666666666666 seconds
+Started waiting for user response...
+[2025-05-25T11:44:38] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+User responded after 4.83333333333332 seconds
+[2025-05-25T11:44:43] [MAGIC2] Queued second dimensional magic: node creation
+Started waiting for user response...
+[2025-05-25T11:44:43] [TRACK] Tracking new astral being: @Node3D@1658
+[2025-05-25T11:44:43] [SYSTEM1] Added root node: astral_being_1
+[2025-05-25T11:44:43] [SYSTEM] Memory cleanup completed
+User responded after 4.44919399999999 seconds
+[2025-05-25T11:44:47] [MAGIC2] Queued second dimensional magic: node creation
+Started waiting for user response...
+[2025-05-25T11:44:47] [TRACK] Tracking new astral being: @Node3D@1840
+[2025-05-25T11:44:47] [SYSTEM1] Added root node: astral_being_2
+[2025-05-25T11:44:48] [SYSTEM] Memory cleanup completed
+Ragdoll says: Walking is harder than it looks, you know?
+User responded after 5.64999999999999 seconds
+Started waiting for user response...
+[2025-05-25T11:44:53] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+User responded after 2.91666666666666 seconds
+Started waiting for user response...
+[2025-05-25T11:44:58] [SYSTEM] Memory cleanup completed
+User responded after 6.26666666666665 seconds
+Started waiting for user response...
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:45:03] [SYSTEM] Memory cleanup completed
+User responded after 3.29999999999999 seconds
+Started waiting for user response...
+[2025-05-25T11:45:08] [SYSTEM] Memory cleanup completed
+Ragdoll says: Walking is harder than it looks, you know?
+User responded after 3.76666666666666 seconds
+Started waiting for user response...
+[2025-05-25T11:45:13] [SYSTEM] Memory cleanup completed
+User responded after 4.71666666666666 seconds
+Started waiting for user response...
+Ragdoll says: These legs are new! Still getting used to them.
+User responded after 3.23333333333333 seconds
+Started waiting for user response...
+[2025-05-25T11:45:18] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+User responded after 4.84999999999999 seconds
+Started waiting for user response...
+[2025-05-25T11:45:23] [SYSTEM] Memory cleanup completed
+User responded after 3.93333333333332 seconds
+Started waiting for user response...
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:45:28] [SYSTEM] Memory cleanup completed
+[2025-05-25T11:45:33] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+User responded after 11.3000000000001 seconds
+Started waiting for user response...
+[2025-05-25T11:46:13] [SYSTEM] Memory cleanup completed
+Ragdoll says: Walking is harder than it looks, you know?
+Ragdoll says: These legs are new! Still getting used to them.
+User responded after 23.6949153333337 seconds
+[2025-05-25T11:46:36] [MAGIC5] Queued fifth dimensional magic: just_node
+[WorldBuilder] Queued object deletion through floodgate: Fruit_1
+Started waiting for user response...
+[2025-05-25T11:46:36] [SYSTEM4] Unloaded node: /root/Fruit_1
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:46:38] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:46:43] [SYSTEM] Memory cleanup completed
+User responded after 8.27466866666663 seconds
+Started waiting for user response...
+[2025-05-25T11:46:48] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+User responded after 6.24974999999997 seconds
+Started waiting for user response...
+[2025-05-25T11:46:53] [SYSTEM] Memory cleanup completed
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T11:46:58] [SYSTEM] Memory cleanup completed
+User responded after 8.39966399999997 seconds
+Started waiting for user response...
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:47:03] [SYSTEM] Memory cleanup completed
+[2025-05-25T11:47:08] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:47:13] [SYSTEM] Memory cleanup completed
+[2025-05-25T11:47:18] [SYSTEM] Memory cleanup completed
+Ragdoll says: Walking is harder than it looks, you know?
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:47:23] [SYSTEM] Memory cleanup completed
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T11:47:28] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:47:33] [SYSTEM] Memory cleanup completed
+[2025-05-25T11:47:38] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:47:43] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:47:48] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:47:53] [SYSTEM] Memory cleanup completed
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T11:47:58] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:48:03] [SYSTEM] Memory cleanup completed
+[2025-05-25T11:48:08] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:48:13] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:48:18] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:48:23] [SYSTEM] Memory cleanup completed
+[2025-05-25T11:48:28] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:48:33] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:48:38] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:48:43] [SYSTEM] Memory cleanup completed
+[2025-05-25T11:48:48] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:48:53] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:48:58] [SYSTEM] Memory cleanup completed
+User responded after 120.378518000005 seconds
+[2025-05-25T11:48:59] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:48:59] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:48:59] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:48:59] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:48:59] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:48:59] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:48:59] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:48:59] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:48:59] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:48:59] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:48:59] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:48:59] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:48:59] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:48:59] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:48:59] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:48:59] [MAGIC5] Queued fifth dimensional magic: just_node
+[WorldBuilder] Queued 16 objects for deletion through floodgate
+Started waiting for user response...
+[2025-05-25T11:48:59] [SYSTEM4] Unloaded node: /root/tree_1
+[2025-05-25T11:48:59] [SYSTEM4] Unloaded node: /root/rock_1
+[2025-05-25T11:48:59] [SYSTEM4] Unloaded node: /root/ball_1
+[2025-05-25T11:48:59] [SYSTEM4] Unloaded node: /root/box_1
+[2025-05-25T11:48:59] [SYSTEM4] Unloaded node: /root/ramp_1
+[2025-05-25T11:48:59] [SYSTEM4] Unloaded node: /root/Sun_1
+[2025-05-25T11:48:59] [SYSTEM4] Unloaded node: /root/@Node3D@1658
+[2025-05-25T11:48:59] [SYSTEM4] Unloaded node: /root/@Node3D@1840
+[2025-05-25T11:48:59] [SYSTEM4] Unloaded node: /root/Pathway_1
+[2025-05-25T11:48:59] [SYSTEM4] Unloaded node: /root/@StaticBody3D@1946
+[2025-05-25T11:48:59] [SYSTEM4] Unloaded node: /root/Bush_1
+[2025-05-25T11:48:59] [SYSTEM4] Unloaded node: /root/@RigidBody3D@2087
+[2025-05-25T11:48:59] [SYSTEM4] Unloaded node: /root/@RigidBody3D@2130
+[2025-05-25T11:48:59] [SYSTEM4] Unloaded node: /root/@RigidBody3D@2174
+[2025-05-25T11:48:59] [SYSTEM4] Unloaded node: /root/@RigidBody3D@2218
+[2025-05-25T11:48:59] [SYSTEM4] Unloaded node: /root/@RigidBody3D@2261
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T11:49:03] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:49:08] [SYSTEM] Memory cleanup completed
+[2025-05-25T11:49:13] [SYSTEM] Memory cleanup completed
+User responded after 13.6661200000002 seconds
+[SceneManager] Generating procedural world...
+[SceneManager] Clearing current scene...
+[WorldGen] Starting world generation...
+[WorldGen] World generation complete!
+Started waiting for user response...
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+User responded after 1.724589 seconds
+[WorldBuilder] Queued 0 objects for deletion through floodgate
+Started waiting for user response...
+[2025-05-25T11:49:18] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:49:23] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:49:28] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:49:33] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:49:38] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T11:49:43] [SYSTEM] Memory cleanup completed
+[2025-05-25T11:49:48] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:49:53] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:49:58] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:50:03] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:50:08] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:50:13] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:50:18] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:50:23] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:50:28] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T11:50:33] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:50:38] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:50:43] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:50:48] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:50:53] [SYSTEM] Memory cleanup completed
+User responded after 98.6903366666667 seconds
+Started waiting for user response...
+User responded after 3.99983999999999 seconds
+[2025-05-25T11:50:58] [MAGIC2] Queued second dimensional magic: node creation
+Started waiting for user response...
+[2025-05-25T11:50:58] [TRACK] Tracking new object: ball_1 (Total: 1/144)
+[2025-05-25T11:50:58] [SYSTEM1] Added root node: ball_1
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:50:58] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+User responded after 4.09983599999998 seconds
+Started waiting for user response...
+[2025-05-25T11:51:03] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+User responded after 5.58310999999997 seconds
+Started waiting for user response...
+[2025-05-25T11:51:08] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:51:13] [SYSTEM] Memory cleanup completed
+User responded after 6.39974399999996 seconds
+Started waiting for user response...
+[2025-05-25T11:51:18] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:51:23] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:51:28] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:51:33] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:51:38] [SYSTEM] Memory cleanup completed
+Ragdoll says: Walking is harder than it looks, you know?
+User responded after 28.065601333334 seconds
+Started waiting for user response...
+[2025-05-25T11:51:43] [SYSTEM] Memory cleanup completed
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T11:51:48] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:51:53] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:51:58] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:52:03] [SYSTEM] Memory cleanup completed
+[2025-05-25T11:52:08] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:52:13] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:52:18] [SYSTEM] Memory cleanup completed
+User responded after 38.9652173333324 seconds
+Started waiting for user response...
+[2025-05-25T11:52:23] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:52:28] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:52:33] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:52:38] [SYSTEM] Memory cleanup completed
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T11:52:43] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:52:48] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:52:53] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:52:58] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+User responded after 42.3150166666656 seconds
+Started waiting for user response...
+[2025-05-25T11:53:03] [SYSTEM] Memory cleanup completed
+User responded after 3.29999999999999 seconds
+Started waiting for user response...
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T11:53:08] [SYSTEM] Memory cleanup completed
+[2025-05-25T11:53:13] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:53:18] [SYSTEM] Memory cleanup completed
+User responded after 14.0584800000003 seconds
+Started waiting for user response...
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:53:23] [SYSTEM] Memory cleanup completed
+User responded after 3.71651799999999 seconds
+Started waiting for user response...
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:53:28] [SYSTEM] Memory cleanup completed
+User responded after 4.73314399999998 seconds
+Started waiting for user response...
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T11:53:33] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+User responded after 8.30809599999998 seconds
+Started waiting for user response...
+[2025-05-25T11:53:38] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:53:43] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:53:48] [SYSTEM] Memory cleanup completed
+[2025-05-25T11:53:53] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:53:58] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+User responded after 26.1604413333332 seconds
+[SceneManager] Loading static scene: playground
+[SceneManager] Clearing current scene...
+[2025-05-25T11:54:03] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:54:03] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:54:03] [MAGIC5] Queued fifth dimensional magic: just_node
+[WorldBuilder] Queued 3 objects for deletion through floodgate
+[2025-05-25T11:54:03] [MAGIC2] Queued second dimensional magic: node creation
+[2025-05-25T11:54:03] [MAGIC2] Queued second dimensional magic: node creation
+[2025-05-25T11:54:03] [MAGIC2] Queued second dimensional magic: node creation
+[2025-05-25T11:54:03] [MAGIC2] Queued second dimensional magic: node creation
+[2025-05-25T11:54:03] [MAGIC2] Queued second dimensional magic: node creation
+[2025-05-25T11:54:03] [MAGIC2] Queued second dimensional magic: node creation
+[2025-05-25T11:54:03] [MAGIC2] Queued second dimensional magic: node creation
+[2025-05-25T11:54:03] [MAGIC2] Queued second dimensional magic: node creation
+[2025-05-25T11:54:03] [MAGIC2] Queued second dimensional magic: node creation
+[2025-05-25T11:54:03] [MAGIC2] Queued second dimensional magic: node creation
+[2025-05-25T11:54:03] [MAGIC2] Queued second dimensional magic: node creation
+[2025-05-25T11:54:03] [MAGIC2] Queued second dimensional magic: node creation
+[2025-05-25T11:54:03] [MAGIC2] Queued second dimensional magic: node creation
+[2025-05-25T11:54:03] [MAGIC2] Queued second dimensional magic: node creation
+[2025-05-25T11:54:03] [MAGIC2] Queued second dimensional magic: node creation
+Ragdoll already exists in scene, skipping creation
+Started waiting for user response...
+[2025-05-25T11:55:02] [TRACK] Tracking new object: box_1 (Total: 2/144)
+[2025-05-25T11:55:02] [SYSTEM1] Added root node: box_1
+[2025-05-25T11:55:02] [TRACK] Tracking new object: ramp_1 (Total: 3/144)
+[2025-05-25T11:55:02] [SYSTEM1] Added root node: ramp_1
+[2025-05-25T11:55:02] [TRACK] Tracking new object: ramp_2 (Total: 4/144)
+[2025-05-25T11:55:02] [SYSTEM1] Added root node: ramp_2
+[2025-05-25T11:55:02] [TRACK] Tracking new object: ramp_3 (Total: 5/144)
+[2025-05-25T11:55:02] [SYSTEM1] Added root node: ramp_3
+[2025-05-25T11:55:02] [TRACK] Tracking new object: ramp_4 (Total: 6/144)
+[2025-05-25T11:55:02] [SYSTEM1] Added root node: ramp_4
+[2025-05-25T11:55:02] [SYSTEM4] Unloaded node: /root/ball_1
+[2025-05-25T11:55:02] [SYSTEM4] Unloaded node: /root/Fruit_1
+[2025-05-25T11:55:02] [SYSTEM4] Unloaded node: /root/@RigidBody3D@4555
+[2025-05-25T11:55:02] [SYSTEM] Memory cleanup completed
+[2025-05-25T11:55:02] [TRACK] Tracking new object: tree_1 (Total: 6/144)
+[2025-05-25T11:55:02] [SYSTEM1] Added root node: tree_1
+[2025-05-25T11:55:02] [TRACK] Tracking new object: tree_2 (Total: 7/144)
+[2025-05-25T11:55:02] [SYSTEM1] Added root node: tree_2
+[2025-05-25T11:55:02] [TRACK] Tracking new object: tree_3 (Total: 8/144)
+[2025-05-25T11:55:02] [SYSTEM1] Added root node: tree_3
+[2025-05-25T11:55:02] [TRACK] Tracking new object: tree_4 (Total: 9/144)
+[2025-05-25T11:55:02] [SYSTEM1] Added root node: tree_4
+[2025-05-25T11:55:02] [TRACK] Tracking new object: ball_1 (Total: 10/144)
+[2025-05-25T11:55:02] [SYSTEM1] Added root node: ball_1
+[2025-05-25T11:55:02] [TRACK] Tracking new object: ball_2 (Total: 11/144)
+[2025-05-25T11:55:02] [SYSTEM1] Added root node: ball_2
+[2025-05-25T11:55:02] [TRACK] Tracking new object: ball_3 (Total: 12/144)
+[2025-05-25T11:55:02] [SYSTEM1] Added root node: ball_3
+[2025-05-25T11:55:02] [TRACK] Tracking new object: ball_4 (Total: 13/144)
+[2025-05-25T11:55:02] [SYSTEM1] Added root node: ball_4
+[2025-05-25T11:55:02] [TRACK] Tracking new object: rock_1 (Total: 14/144)
+[2025-05-25T11:55:02] [SYSTEM1] Added root node: rock_1
+[2025-05-25T11:55:02] [TRACK] Tracking new object: rock_2 (Total: 15/144)
+[2025-05-25T11:55:02] [SYSTEM1] Added root node: rock_2
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:55:07] [SYSTEM] Memory cleanup completed
+🎮 Console toggle requested - Visible: true
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:55:12] [SYSTEM] Memory cleanup completed
+[2025-05-25T11:55:17] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:55:22] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:55:27] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:55:32] [SYSTEM] Memory cleanup completed
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T11:55:37] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:55:42] [SYSTEM] Memory cleanup completed
+[2025-05-25T11:55:47] [SYSTEM] Memory cleanup completed
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T11:55:52] [SYSTEM] Memory cleanup completed
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T11:55:57] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:56:02] [SYSTEM] Memory cleanup completed
+[2025-05-25T11:56:07] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:56:12] [SYSTEM] Memory cleanup completed
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T11:56:17] [SYSTEM] Memory cleanup completed
+[2025-05-25T11:56:22] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:56:27] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:56:32] [SYSTEM] Memory cleanup completed
+[2025-05-25T11:56:37] [SYSTEM] Memory cleanup completed
+Ragdoll says: Walking is harder than it looks, you know?
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T11:56:42] [SYSTEM] Memory cleanup completed
+[2025-05-25T11:56:47] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:56:52] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:56:57] [SYSTEM] Memory cleanup completed
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T11:57:02] [SYSTEM] Memory cleanup completed
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T11:57:07] [SYSTEM] Memory cleanup completed
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T11:57:12] [SYSTEM] Memory cleanup completed
+[2025-05-25T11:57:17] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:57:22] [SYSTEM] Memory cleanup completed
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T11:57:27] [SYSTEM] Memory cleanup completed
+🎮 Console toggle requested - Visible: false
+User responded after 149.989654666671 seconds
+[SceneManager] Generating procedural world...
+[SceneManager] Clearing current scene...
+[WorldGen] Starting world generation...
+[WorldGen] World generation complete!
+Started waiting for user response...
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T11:57:32] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:57:37] [SYSTEM] Memory cleanup completed
+User responded after 5.72611733333332 seconds
+Started waiting for user response...
+🎮 Console toggle requested - Visible: true
+[2025-05-25T11:57:42] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:57:47] [SYSTEM] Memory cleanup completed
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T11:57:52] [SYSTEM] Memory cleanup completed
+[2025-05-25T11:57:57] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:58:02] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:58:07] [SYSTEM] Memory cleanup completed
+[2025-05-25T11:58:12] [SYSTEM] Memory cleanup completed
+Ragdoll says: These legs are new! Still getting used to them.
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:58:17] [SYSTEM] Memory cleanup completed
+[2025-05-25T11:58:22] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+🎮 Console toggle requested - Visible: false
+[2025-05-25T11:58:27] [SYSTEM] Memory cleanup completed
+User responded after 50.4988090000014 seconds
+[SceneManager] Generating procedural world...
+[SceneManager] Clearing current scene...
+[WorldGen] Starting world generation...
+[WorldGen] World generation complete!
+Started waiting for user response...
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+[2025-05-25T11:58:32] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+User responded after 8.11313099999994 seconds
+Started waiting for user response...
+[2025-05-25T11:58:37] [SYSTEM] Memory cleanup completed
+User responded after 3.31666666666666 seconds
+Started waiting for user response...
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T11:58:42] [SYSTEM] Memory cleanup completed
+User responded after 4.03333333333332 seconds
+Started waiting for user response...
+User responded after 2.79999999999999 seconds
+[SceneManager] Generating procedural world...
+[SceneManager] Clearing current scene...
+[WorldGen] Starting world generation...
+[WorldGen] World generation complete!
+Started waiting for user response...
+[2025-05-25T11:58:47] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+User responded after 2.83333333333333 seconds
+[SceneManager] Generating procedural world...
+[SceneManager] Clearing current scene...
+[WorldGen] Starting world generation...
+[WorldGen] World generation complete!
+Started waiting for user response...
+[2025-05-25T11:58:52] [SYSTEM] Memory cleanup completed
+User responded after 3.21666666666666 seconds
+[SceneManager] Generating procedural world...
+[SceneManager] Clearing current scene...
+[WorldGen] Starting world generation...
+[WorldGen] World generation complete!
+Started waiting for user response...
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+User responded after 2.81666666666666 seconds
+[SceneManager] Generating procedural world...
+[SceneManager] Clearing current scene...
+[WorldGen] Starting world generation...
+[WorldGen] World generation complete!
+Started waiting for user response...
+[2025-05-25T11:58:57] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:59:02] [SYSTEM] Memory cleanup completed
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T11:59:07] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:59:12] [SYSTEM] Memory cleanup completed
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T11:59:17] [SYSTEM] Memory cleanup completed
+Ragdoll says: Walking is harder than it looks, you know?
+[2025-05-25T11:59:22] [SYSTEM] Memory cleanup completed
+User responded after 30.5839713333329 seconds
+[SceneManager] Loading static scene: worldy
+[SceneManager] Clearing current scene...
+[2025-05-25T11:59:26] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:59:26] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:59:26] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:59:26] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:59:26] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:59:26] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:59:26] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:59:26] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:59:26] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:59:26] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:59:26] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:59:26] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:59:26] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:59:26] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T11:59:26] [MAGIC5] Queued fifth dimensional magic: just_node
+[WorldBuilder] Queued 15 objects for deletion through floodgate
+Started waiting for user response...
+Ragdoll says: These legs are new! Still getting used to them.
+[2025-05-25T11:59:28] [SYSTEM4] Unloaded node: /root/box_1
+[2025-05-25T11:59:28] [SYSTEM4] Unloaded node: /root/ramp_1
+[2025-05-25T11:59:28] [SYSTEM4] Unloaded node: /root/ramp_2
+[2025-05-25T11:59:28] [SYSTEM] Memory cleanup completed
+[2025-05-25T11:59:29] [SYSTEM4] Unloaded node: /root/ramp_3
+[2025-05-25T11:59:29] [SYSTEM4] Unloaded node: /root/ramp_4
+[2025-05-25T11:59:29] [SYSTEM4] Unloaded node: /root/tree_1
+[2025-05-25T11:59:29] [SYSTEM4] Unloaded node: /root/tree_2
+[2025-05-25T11:59:29] [SYSTEM4] Unloaded node: /root/tree_3
+[2025-05-25T11:59:29] [SYSTEM4] Unloaded node: /root/tree_4
+[2025-05-25T11:59:29] [SYSTEM4] Unloaded node: /root/ball_1
+[2025-05-25T11:59:29] [SYSTEM4] Unloaded node: /root/ball_2
+[2025-05-25T11:59:29] [SYSTEM4] Unloaded node: /root/ball_3
+[2025-05-25T11:59:29] [SYSTEM4] Unloaded node: /root/ball_4
+[2025-05-25T11:59:29] [SYSTEM4] Unloaded node: /root/rock_1
+[2025-05-25T11:59:29] [SYSTEM4] Unloaded node: /root/rock_2
+User responded after 3.97411399999999 seconds
+[SceneManager] Generating procedural world...
+[SceneManager] Clearing current scene...
+[WorldGen] Starting world generation...
+[WorldGen] World generation complete!
+Started waiting for user response...
+[2025-05-25T11:59:33] [SYSTEM] Memory cleanup completed
+Ragdoll says: Oh hey there! Nice day for being a ragdoll, isn't it?
+User responded after 2.65858133333329 seconds
+[WorldBuilder] Queued 0 objects for deletion through floodgate
+Started waiting for user response...
+🎮 Console toggle requested - Visible: true
+[2025-05-25T11:59:38] [SYSTEM] Memory cleanup completed
+Ragdoll says: You know, I used to have bones... I miss bones.
+[2025-05-25T11:59:44] [SYSTEM] Memory cleanup completed
+🎮 Console toggle requested - Visible: false
+User responded after 12.2605760000002 seconds
+Started waiting for user response...
+Ragdoll says: I think I'm getting the hang of this walking thing!
+[2025-05-25T11:59:49] [SYSTEM] Memory cleanup completed
+🎮 Console toggle requested - Visible: true
+🎮 Console toggle requested - Visible: false
+[2025-05-25T11:59:54] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+[2025-05-25T11:59:59] [SYSTEM] Memory cleanup completed
+Ragdoll says: I think I'm getting the hang of this walking thing!
+User responded after 12.9333333333336 seconds
+Started waiting for user response...
+🎮 Console toggle requested - Visible: true
+Ragdoll says: Who needs balance when you have determination?
+🎮 Console toggle requested - Visible: false
+[2025-05-25T12:00:04] [SYSTEM] Memory cleanup completed
+User responded after 5.81666666666665 seconds
+Started waiting for user response...
+Ragdoll says: Who needs balance when you have determination?
+[2025-05-25T12:00:09] [SYSTEM] Memory cleanup completed
+Ragdoll says: Left foot, right foot, left foot, right foot...
+[2025-05-25T12:00:14] [SYSTEM] Memory cleanup completed
+Ragdoll says: I think I'm getting the hang of this walking thing!
+[2025-05-25T12:00:19] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+[2025-05-25T12:00:24] [SYSTEM] Memory cleanup completed
+Ragdoll says: Look at me go! I'm practically running!
+[2025-05-25T12:00:29] [SYSTEM] Memory cleanup completed
+[2025-05-25T12:00:34] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+Ragdoll says: Look at me go! I'm practically running!
+[2025-05-25T12:00:39] [SYSTEM] Memory cleanup completed
+[2025-05-25T12:00:44] [SYSTEM] Memory cleanup completed
+Ragdoll says: I think I'm getting the hang of this walking thing!
+[2025-05-25T12:00:49] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+[2025-05-25T12:00:54] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+[2025-05-25T12:00:59] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+[2025-05-25T12:01:04] [SYSTEM] Memory cleanup completed
+User responded after 57.6987593333313 seconds
+Started waiting for user response...
+Ragdoll says: Look at me go! I'm practically running!
+User responded after 1.81666666666667 seconds
+[2025-05-25T12:01:06] [MAGIC2] Queued second dimensional magic: node creation
+Started waiting for user response...
+[2025-05-25T12:01:06] [TRACK] Tracking new astral being: @Node3D@13826
+[2025-05-25T12:01:06] [SYSTEM1] Added root node: astral_being_1
+User responded after 2.56666666666666 seconds
+[2025-05-25T12:01:08] [MAGIC2] Queued second dimensional magic: node creation
+Started waiting for user response...
+[2025-05-25T12:01:08] [TRACK] Tracking new astral being: @Node3D@13922
+[2025-05-25T12:01:08] [SYSTEM1] Added root node: astral_being_2
+[2025-05-25T12:01:09] [SYSTEM] Memory cleanup completed
+User responded after 1.73333333333333 seconds
+[2025-05-25T12:01:10] [MAGIC2] Queued second dimensional magic: node creation
+Started waiting for user response...
+[2025-05-25T12:01:10] [TRACK] Tracking new astral being: @Node3D@13978
+[2025-05-25T12:01:10] [SYSTEM1] Added root node: astral_being_3
+User responded after 1.26666666666667 seconds
+[2025-05-25T12:01:11] [MAGIC2] Queued second dimensional magic: node creation
+Started waiting for user response...
+[2025-05-25T12:01:11] [TRACK] Tracking new astral being: @Node3D@14034
+[2025-05-25T12:01:11] [SYSTEM1] Added root node: astral_being_4
+User responded after 1.33333333333333 seconds
+[2025-05-25T12:01:13] [MAGIC2] Queued second dimensional magic: node creation
+Started waiting for user response...
+[2025-05-25T12:01:13] [TRACK] Tracking new astral being: @Node3D@14090
+[2025-05-25T12:01:13] [SYSTEM1] Added root node: astral_being_5
+Ragdoll says: Look at me go! I'm practically running!
+[2025-05-25T12:01:14] [SYSTEM] Memory cleanup completed
+User responded after 1.83333333333333 seconds
+[2025-05-25T12:01:14] [MAGIC2] Queued second dimensional magic: node creation
+Started waiting for user response...
+[2025-05-25T12:01:14] [TRACK] Tracking new astral being: @Node3D@14161
+[2025-05-25T12:01:14] [SYSTEM1] Added root node: astral_being_6
+Ragdoll says: Left foot, right foot, left foot, right foot...
+[2025-05-25T12:01:19] [SYSTEM] Memory cleanup completed
+Ragdoll says: I think I'm getting the hang of this walking thing!
+[2025-05-25T12:01:24] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+User responded after 13.3666666666669 seconds
+Started waiting for user response...
+[2025-05-25T12:01:29] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+[2025-05-25T12:01:34] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+Ragdoll says: Look at me go! I'm practically running!
+[2025-05-25T12:01:39] [SYSTEM] Memory cleanup completed
+[2025-05-25T12:01:44] [SYSTEM] Memory cleanup completed
+Ragdoll says: I think I'm getting the hang of this walking thing!
+User responded after 17.8333333333336 seconds
+🤖 [MainGameController] Setting up ragdoll system...
+[RagdollController] Initializing ragdoll controller...
+[RagdollController] No ragdoll found in scene
+[RagdollController] Behavior changed: 0 -> 0
+[RagdollController] Ready - Ragdoll can now help build the garden!
+🤖 [MainGameController] RagdollController created and added to scene
+🖱️ [MainGameController] Setting up mouse interaction system...
+[MouseInteraction] Initializing mouse interaction system...
+[MouseInteraction] Found camera: Camera3D
+[MouseInteraction] Debug panel added to viewport GUI layer
+[MouseInteraction] Eden systems temporarily disabled - fixing compilation errors...
+[MouseInteraction] Ready - Click any object to inspect it!
+🖱️ [MainGameController] MouseInteractionSystem created and added to scene
+Started waiting for user response...
+Ragdoll says: Look at me go! I'm practically running!
+[2025-05-25T12:01:49] [SYSTEM] Memory cleanup completed
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode OFF
+Ragdoll says: Who needs balance when you have determination?
+User responded after 6.62144833333332 seconds
+[2025-05-25T12:01:52] [MAGIC2] Queued second dimensional magic: node creation
+Started waiting for user response...
+[2025-05-25T12:01:52] [TRACK] Tracking new astral being: @Node3D@14889
+[2025-05-25T12:01:52] [SYSTEM1] Added root node: astral_being_7
+[2025-05-25T12:01:54] [SYSTEM] Memory cleanup completed
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode OFF
+User responded after 4.49999999999999 seconds
+Started waiting for user response...
+[2025-05-25T12:01:59] [SYSTEM] Memory cleanup completed
+Ragdoll says: Left foot, right foot, left foot, right foot...
+Ragdoll says: Left foot, right foot, left foot, right foot...
+[2025-05-25T12:02:04] [SYSTEM] Memory cleanup completed
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode OFF
+User responded after 10.5000000000001 seconds
+Started waiting for user response...
+[2025-05-25T12:02:09] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode OFF
+User responded after 4.09999999999999 seconds
+Started waiting for user response...
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode OFF
+[2025-05-25T12:02:14] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+User responded after 6.19999999999998 seconds
+Started waiting for user response...
+[2025-05-25T12:02:19] [SYSTEM] Memory cleanup completed
+[2025-05-25T12:02:24] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+[2025-05-25T12:02:29] [SYSTEM] Memory cleanup completed
+Ragdoll says: I think I'm getting the hang of this walking thing!
+[2025-05-25T12:02:34] [SYSTEM] Memory cleanup completed
+Ragdoll says: Left foot, right foot, left foot, right foot...
+[2025-05-25T12:02:39] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+[2025-05-25T12:02:44] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+[2025-05-25T12:02:49] [SYSTEM] Memory cleanup completed
+🎮 Console toggle requested - Visible: true
+[MouseInteraction] Selected: SceneRoot
+[MouseInteraction] Combo: ["TerrainMesh_col:press", "TerrainMesh_col:release"]
+[MouseInteraction] COMBO: Click completed on TerrainMesh_col
+[MouseInteraction] Selected: MainGame
+[MouseInteraction] Combo: ["Ground:press", "Ground:release"]
+[MouseInteraction] COMBO: Click completed on Ground
+Ragdoll says: I think I'm getting the hang of this walking thing!
+[MouseInteraction] Selected: MainGame
+[2025-05-25T12:02:54] [SYSTEM] Memory cleanup completed
+[MouseInteraction] Combo: ["Ground:press", "Ground:release"]
+[MouseInteraction] COMBO: Click completed on Ground
+[MouseInteraction] Selected: MainGame
+[MouseInteraction] Combo: ["Ground:press", "Ground:release", "Ground:press"]
+[MouseInteraction] Combo: ["Ground:press", "Ground:release", "Ground:press", "Ground:release"]
+[MouseInteraction] COMBO: Click completed on Ground
+[MouseInteraction] Selected: @Node3D@14889
+[MouseInteraction] Combo: ["Ground:press", "Ground:release", "Ground:press", "Ground:release", "DetectionArea:press"]
+[MouseInteraction] Combo: ["Ground:press", "Ground:release", "Ground:press", "Ground:release", "DetectionArea:press", "DetectionArea:release"]
+[MouseInteraction] COMBO: Click completed on DetectionArea
+[MouseInteraction] Selected: @Node3D@13922
+[MouseInteraction] Combo: ["DetectionArea:press", "DetectionArea:release"]
+[MouseInteraction] COMBO: Click completed on DetectionArea
+Ragdoll says: Look at me go! I'm practically running!
+[2025-05-25T12:02:59] [SYSTEM] Memory cleanup completed
+[MouseInteraction] Selected: SceneRoot
+[MouseInteraction] Combo: ["TerrainMesh_col:press", "TerrainMesh_col:release"]
+[MouseInteraction] COMBO: Click completed on TerrainMesh_col
+[MouseInteraction] Selected: SceneRoot
+[MouseInteraction] Combo: ["TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press"]
+[MouseInteraction] Combo: ["TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release"]
+[MouseInteraction] COMBO: Click completed on TerrainMesh_col
+[MouseInteraction] Selected: SceneRoot
+[MouseInteraction] Combo: ["TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press"]
+[MouseInteraction] Combo: ["TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release"]
+[MouseInteraction] COMBO: Click completed on TerrainMesh_col
+[MouseInteraction] COMBO: Double click on TerrainMesh_col
+[MouseInteraction] Selected: MainGame
+[MouseInteraction] Combo: ["TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "Ground:press"]
+[MouseInteraction] Combo: ["TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "Ground:press", "Ground:release"]
+[MouseInteraction] COMBO: Click completed on Ground
+[MouseInteraction] Selected: MainGame
+[MouseInteraction] Combo: ["TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "Ground:press", "Ground:release", "Ground:press"]
+[MouseInteraction] Combo: ["TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "Ground:press", "Ground:release", "Ground:press", "Ground:release"]
+[MouseInteraction] COMBO: Click completed on Ground
+[MouseInteraction] COMBO: Double click on Ground
+[MouseInteraction] Selected: SceneRoot
+[MouseInteraction] Combo: ["TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "Ground:press", "Ground:release", "Ground:press", "Ground:release", "@Area3D@13206:press"]
+[MouseInteraction] Combo: ["TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "Ground:press", "Ground:release", "Ground:press", "Ground:release", "@Area3D@13206:press", "@Area3D@13206:release"]
+[MouseInteraction] COMBO: Click completed on @Area3D@13206
+[MouseInteraction] Selected: MainGame
+[MouseInteraction] Combo: ["TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "Ground:press", "Ground:release", "Ground:press", "Ground:release", "@Area3D@13206:press", "@Area3D@13206:release", "Ground:press"]
+[MouseInteraction] Combo: ["TerrainMesh_col:press", "TerrainMesh_col:release", "Ground:press", "Ground:release", "Ground:press", "Ground:release", "@Area3D@13206:press", "@Area3D@13206:release", "Ground:press", "Ground:release"]
+[MouseInteraction] COMBO: Click completed on Ground
+[MouseInteraction] Selected: SceneRoot
+[MouseInteraction] Combo: ["TerrainMesh_col:release", "Ground:press", "Ground:release", "Ground:press", "Ground:release", "@Area3D@13206:press", "@Area3D@13206:release", "Ground:press", "Ground:release", "TerrainMesh_col:press"]
+[MouseInteraction] Combo: ["Ground:press", "Ground:release", "Ground:press", "Ground:release", "@Area3D@13206:press", "@Area3D@13206:release", "Ground:press", "Ground:release", "TerrainMesh_col:press", "TerrainMesh_col:release"]
+[MouseInteraction] COMBO: Click completed on TerrainMesh_col
+[MouseInteraction] Selected: SceneRoot
+[MouseInteraction] Combo: ["Ground:release", "Ground:press", "Ground:release", "@Area3D@13206:press", "@Area3D@13206:release", "Ground:press", "Ground:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press"]
+[MouseInteraction] Combo: ["Ground:press", "Ground:release", "@Area3D@13206:press", "@Area3D@13206:release", "Ground:press", "Ground:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release"]
+[MouseInteraction] COMBO: Click completed on TerrainMesh_col
+[MouseInteraction] COMBO: Double click on TerrainMesh_col
+[MouseInteraction] Selected: SceneRoot
+[MouseInteraction] Combo: ["Ground:release", "@Area3D@13206:press", "@Area3D@13206:release", "Ground:press", "Ground:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "Fruit:press"]
+[MouseInteraction] Combo: ["@Area3D@13206:press", "@Area3D@13206:release", "Ground:press", "Ground:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "Fruit:press", "DetectionArea:release"]
+[MouseInteraction] Selected: @Node3D@13922
+[MouseInteraction] Combo: ["@Area3D@13206:release", "Ground:press", "Ground:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "Fruit:press", "DetectionArea:release", "DetectionArea:press"]
+[MouseInteraction] Combo: ["Ground:press", "Ground:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "Fruit:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release"]
+[MouseInteraction] COMBO: Click completed on DetectionArea
+[MouseInteraction] COMBO: Double click on DetectionArea
+[MouseInteraction] Selected: @Node3D@13922
+[MouseInteraction] Combo: ["Ground:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "Fruit:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "DetectionArea:press"]
+[MouseInteraction] Combo: ["TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "Fruit:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release"]
+[MouseInteraction] COMBO: Click completed on DetectionArea
+[MouseInteraction] COMBO: Double click on DetectionArea
+[MouseInteraction] Selected: @Node3D@13922
+[MouseInteraction] Combo: ["TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "Fruit:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "DetectionArea:press"]
+[MouseInteraction] Combo: ["TerrainMesh_col:press", "TerrainMesh_col:release", "Fruit:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release"]
+[MouseInteraction] COMBO: Click completed on DetectionArea
+[MouseInteraction] COMBO: Double click on DetectionArea
+[MouseInteraction] Selected: @Node3D@13922
+[MouseInteraction] Combo: ["TerrainMesh_col:release", "Fruit:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "DetectionArea:press"]
+[2025-05-25T12:03:04] [SYSTEM] Memory cleanup completed
+[MouseInteraction] Combo: ["Fruit:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release"]
+[MouseInteraction] COMBO: Click completed on DetectionArea
+[MouseInteraction] COMBO: Double click on DetectionArea
+[MouseInteraction] Selected: SceneRoot
+[MouseInteraction] Combo: ["DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "TerrainMesh_col:press"]
+[MouseInteraction] Combo: ["DetectionArea:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "TerrainMesh_col:press", "TerrainMesh_col:release"]
+[MouseInteraction] COMBO: Click completed on TerrainMesh_col
+[MouseInteraction] Selected: SceneRoot
+[MouseInteraction] Combo: ["DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press"]
+[MouseInteraction] Combo: ["DetectionArea:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release"]
+[MouseInteraction] COMBO: Click completed on TerrainMesh_col
+[MouseInteraction] Selected: SceneRoot
+[MouseInteraction] Combo: ["DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press"]
+[MouseInteraction] Combo: ["DetectionArea:press", "DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release"]
+[MouseInteraction] COMBO: Click completed on TerrainMesh_col
+[MouseInteraction] COMBO: Double click on TerrainMesh_col
+[MouseInteraction] Selected: SceneRoot
+[MouseInteraction] Combo: ["DetectionArea:release", "DetectionArea:press", "DetectionArea:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press"]
+Ragdoll says: Who needs balance when you have determination?
+[MouseInteraction] Combo: ["DetectionArea:press", "DetectionArea:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release"]
+[MouseInteraction] COMBO: Click completed on TerrainMesh_col
+[MouseInteraction] COMBO: Double click on TerrainMesh_col
+[MouseInteraction] Selected: SceneRoot
+[MouseInteraction] Combo: ["DetectionArea:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press"]
+[MouseInteraction] Combo: ["TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "TerrainMesh_col:release", "TerrainMesh_col:press", "DetectionArea:release"]
+[MouseInteraction] Selected: @Node3D@14034
+[MouseInteraction] Combo: ["DetectionArea:press", "DetectionArea:release"]
+[MouseInteraction] COMBO: Click completed on DetectionArea
+[2025-05-25T12:03:09] [SYSTEM] Memory cleanup completed
+Ragdoll says: Look at me go! I'm practically running![2025-05-25T12:04:59] [SYSTEM] Memory cleanup completed
+[MouseInteraction] Selected: MainGame
+[MouseInteraction] Combo: ["Ground:press", "Ground:release"]
+[MouseInteraction] COMBO: Click completed on Ground
+🎮 Console toggle requested - Visible: false
+[2025-05-25T12:05:04] [SYSTEM] Memory cleanup completed
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode OFF
+User responded after 167.864724333306 seconds
+Started waiting for user response...
+Ragdoll says: Left foot, right foot, left foot, right foot...
+[2025-05-25T12:05:09] [SYSTEM] Memory cleanup completed
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode OFF
+User responded after 6.43333333333332 seconds
+Started waiting for user response...
+User responded after 28.433333333333 seconds
+WARNING: Godot 3.x SpatialMaterial remapped parameter not found: unshaded
+   at: _set (scene/resources/material.cpp:3689)
+   GDScript backtrace (most recent call first):
+       [0] _create_3d_screen (res://scripts/core/debug_3d_screen.gd:66)
+       [1] _safe_initialize (res://scripts/core/debug_3d_screen.gd:47)
+       [2] _ready (res://scripts/core/debug_3d_screen.gd:43)
+       [3] _cmd_debug_screen (res://scripts/autoload/console_manager.gd:1209)
+       [4] _on_command_submitted (res://scripts/autoload/console_manager.gd:526)
+3D Debug Screen created at position: (0.0, 3.0, -15.0)
+Started waiting for user response...
+User responded after 3.86514333333333 seconds
+Started waiting for user response...
+[2025-05-25T12:05:44] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+Ragdoll says: Left foot, right foot, left foot, right foot...
+Ragdoll says: Look at me go! I'm practically running!
+[2025-05-25T12:07:20] [SYSTEM] Memory cleanup completed
+🎮 Console toggle requested - Visible: true
+[MouseInteraction] Selected: @Node3D@14034
+[MouseInteraction] Combo: ["DetectionArea:press", "DetectionArea:release"]
+[MouseInteraction] COMBO: Click completed on DetectionArea
+Ragdoll says: Left foot, right foot, left foot, right foot...
+🎮 Console toggle requested - Visible: false
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[2025-05-25T12:07:25] [SYSTEM] Memory cleanup completed
+[MouseInteraction] Gesture mode OFF
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode OFF
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode OFF
+Ragdoll says: Who needs balance when you have determination?
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode OFF
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode OFF
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[2025-05-25T12:07:30] [SYSTEM] Memory cleanup completed
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode OFF
+Ragdoll says: Look at me go! I'm practically running!
+User responded after 109.818486333332 seconds
+Selected object: @Node3D@14034 at (-3.702101, -1.89783, 3.226488)
+Started waiting for user response...
+[2025-05-25T12:07:35] [SYSTEM] Memory cleanup completed
+[2025-05-25T12:07:40] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+User responded after 8.16621466666665 seconds
+Moved @Node3D@14034 to (1.0, 5.0, 9.0)
+Started waiting for user response...
+[2025-05-25T12:07:45] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+Ragdoll says: Left foot, right foot, left foot, right foot...
+[2025-05-25T12:07:50] [SYSTEM] Memory cleanup completed
+User responded after 12.4993700000002 seconds
+Moved @Node3D@14034 to (9.0, 9.0, 9.0)
+Started waiting for user response...
+Ragdoll says: Who needs balance when you have determination?
+[2025-05-25T12:07:55] [SYSTEM] Memory cleanup completed
+[2025-05-25T12:08:00] [SYSTEM] Memory cleanup completed
+Ragdoll says: I think I'm getting the hang of this walking thing!
+User responded after 7.54999999999998 seconds
+Moved @Node3D@14034 to (22.0, 22.0, 22.0)
+Started waiting for user response...
+[2025-05-25T12:08:05] [SYSTEM] Memory cleanup completed
+Ragdoll says: Left foot, right foot, left foot, right foot...
+[2025-05-25T12:08:10] [SYSTEM] Memory cleanup completed
+Ragdoll says: Left foot, right foot, left foot, right foot...
+[2025-05-25T12:08:15] [SYSTEM] Memory cleanup completed
+Ragdoll says: Left foot, right foot, left foot, right foot...
+[2025-05-25T12:08:20] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+[2025-05-25T12:08:25] [SYSTEM] Memory cleanup completed
+Ragdoll says: Look at me go! I'm practically running!
+[2025-05-25T12:08:30] [SYSTEM] Memory cleanup completed
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode OFF
+Ragdoll says: I think I'm getting the hang of this walking thing!
+[2025-05-25T12:08:35] [SYSTEM] Memory cleanup completed
+User responded after 36.4231186666661 seconds
+Scaled @Node3D@14034 to (2.0, 2.0, 2.0)
+Started waiting for user response...
+Ragdoll says: Left foot, right foot, left foot, right foot...
+[2025-05-25T12:08:40] [SYSTEM] Memory cleanup completed
+User responded after 5.01646599999998 seconds
+Started waiting for user response...
+[2025-05-25T12:08:45] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+User responded after 5.39978399999997 seconds
+Started waiting for user response...
+[2025-05-25T12:08:50] [SYSTEM] Memory cleanup completed
+Ragdoll says: Look at me go! I'm practically running!
+User responded after 4.16649999999998 seconds
+Started waiting for user response...
+[2025-05-25T12:08:55] [SYSTEM] Memory cleanup completed
+User responded after 2.733224 seconds
+Started waiting for user response...
+Ragdoll says: Who needs balance when you have determination?
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[2025-05-25T12:09:00] [SYSTEM] Memory cleanup completed
+[MouseInteraction] Gesture mode OFF
+Ragdoll says: I think I'm getting the hang of this walking thing!
+User responded after 7.68302599999998 seconds
+Scaled @Node3D@14034 to (6.0, 6.0, 6.0)
+Started waiting for user response...
+[2025-05-25T12:09:05] [SYSTEM] Memory cleanup completed
+Ragdoll says: Left foot, right foot, left foot, right foot...
+[2025-05-25T12:09:10] [SYSTEM] Memory cleanup completed
+[2025-05-25T12:09:15] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+Ragdoll says: Who needs balance when you have determination?
+[2025-05-25T12:09:20] [SYSTEM] Memory cleanup completed
+Ragdoll says: Left foot, right foot, left foot, right foot...
+[2025-05-25T12:09:25] [SYSTEM] Memory cleanup completed
+User responded after 23.7996486666666 seconds
+[2025-05-25T12:09:27] [MAGIC2] Queued second dimensional magic: node creation
+Started waiting for user response...
+[2025-05-25T12:09:27] [TRACK] Tracking new object: tree_1 (Total: 1/144)
+[2025-05-25T12:09:27] [SYSTEM1] Added root node: tree_1
+Ragdoll says: I think I'm getting the hang of this walking thing!
+🎮 Console toggle requested - Visible: true
+[MouseInteraction] Selected: tree_1
+[MouseInteraction] Combo: ["tree_1:press", "tree_1:release"]
+[MouseInteraction] COMBO: Click completed on tree_1
+[2025-05-25T12:09:30] [SYSTEM] Memory cleanup completed
+🎮 Console toggle requested - Visible: false
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode OFF
+User responded after 7.29033566666664 seconds
+Selected object: tree_1 at (15.31745, 0.0, -10.83127)
+Started waiting for user response...
+[2025-05-25T12:09:35] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+[2025-05-25T12:09:40] [SYSTEM] Memory cleanup completed
+Ragdoll says: Look at me go! I'm practically running!
+User responded after 6.6827483333333 seconds
+Rotated tree_1 to (0.226893, 0.226893, 0.226893)
+Started waiting for user response...
+Ragdoll says: I think I'm getting the hang of this walking thing!
+[2025-05-25T12:09:45] [SYSTEM] Memory cleanup completed
+[2025-05-25T12:09:50] [SYSTEM] Memory cleanup completed
+Ragdoll says: I think I'm getting the hang of this walking thing!
+[2025-05-25T12:09:55] [SYSTEM] Memory cleanup completed
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode OFF
+User responded after 15.5418420000004 seconds
+Queued state change for tree_1: STATIC → UNKNOWN
+Started waiting for user response...
+Ragdoll says: I think I'm getting the hang of this walking thing!
+Completed state transition for tree_1 to UNKNOWN
+[2025-05-25T12:10:00] [SYSTEM] Memory cleanup completed
+Ragdoll says: I think I'm getting the hang of this walking thing!
+[2025-05-25T12:10:05] [SYSTEM] Memory cleanup completed
+Ragdoll says: Look at me go! I'm practically running!
+[2025-05-25T12:10:10] [SYSTEM] Memory cleanup completed
+Ragdoll says: Look at me go! I'm practically running!
+[2025-05-25T12:10:15] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+[2025-05-25T12:10:20] [SYSTEM] Memory cleanup completed
+Ragdoll says: I think I'm getting the hang of this walking thing!
+Ragdoll says: Look at me go! I'm practically running!
+[2025-05-25T12:10:25] [SYSTEM] Memory cleanup completed
+[2025-05-25T12:10:30] [SYSTEM] Memory cleanup completed
+Ragdoll says: Left foot, right foot, left foot, right foot...
+[2025-05-25T12:10:35] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+[2025-05-25T12:10:40] [SYSTEM] Memory cleanup completed
+Ragdoll says: Left foot, right foot, left foot, right foot...
+[2025-05-25T12:10:45] [SYSTEM] Memory cleanup completed
+Ragdoll says: I think I'm getting the hang of this walking thing!
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode OFF
+User responded after 50.8724493333341 seconds
+Started waiting for user response...
+[2025-05-25T12:10:50] [SYSTEM] Memory cleanup completed
+Ragdoll says: Left foot, right foot, left foot, right foot...
+[2025-05-25T12:10:55] [SYSTEM] Memory cleanup completed
+[2025-05-25T12:11:00] [SYSTEM] Memory cleanup completed
+Ragdoll says: Look at me go! I'm practically running!
+[2025-05-25T12:11:05] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+[2025-05-25T12:11:10] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+User responded after 27.2073646666672 seconds
+Started waiting for user response...
+[2025-05-25T12:11:15] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+[2025-05-25T12:11:20] [SYSTEM] Memory cleanup completed
+[2025-05-25T12:11:25] [SYSTEM] Memory cleanup completed
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+Ragdoll says: Left foot, right foot, left foot, right foot...
+[MouseInteraction] Gesture mode OFF
+User responded after 12.9500000000002 seconds
+Started waiting for user response...
+[2025-05-25T12:11:30] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+[2025-05-25T12:11:35] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+[2025-05-25T12:11:40] [SYSTEM] Memory cleanup completed
+Ragdoll says: Look at me go! I'm practically running!
+[2025-05-25T12:11:45] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+User responded after 19.4500000000002 seconds
+⏱️ Task started: new (Project: talking_ragdoll)
+Started waiting for user response...
+[2025-05-25T12:11:50] [SYSTEM] Memory cleanup completed
+Ragdoll says: I think I'm getting the hang of this walking thing!
+[2025-05-25T12:11:55] [SYSTEM] Memory cleanup completed
+User responded after 9.13333333333337 seconds
+Started waiting for user response...
+Ragdoll says: I think I'm getting the hang of this walking thing!
+[2025-05-25T12:12:00] [SYSTEM] Memory cleanup completed
+User responded after 4.43333333333332 seconds
+✅ Task completed: new (13.568s)
+Started waiting for user response...
+Ragdoll says: I think I'm getting the hang of this walking thing!
+[2025-05-25T12:12:05] [SYSTEM] Memory cleanup completed
+User responded after 7.09784066666665 seconds
+Started waiting for user response...
+Ragdoll says: Who needs balance when you have determination?
+[2025-05-25T12:12:10] [SYSTEM] Memory cleanup completed
+[2025-05-25T12:12:15] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+Ragdoll says: Who needs balance when you have determination?
+User responded after 12.0991056666668 seconds
+Started waiting for user response...
+[2025-05-25T12:12:20] [SYSTEM] Memory cleanup completed
+[2025-05-25T12:12:25] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+[2025-05-25T12:12:30] [SYSTEM] Memory cleanup completed
+Ragdoll says: I think I'm getting the hang of this walking thing!
+[2025-05-25T12:12:35] [SYSTEM] Memory cleanup completed
+Ragdoll says: Look at me go! I'm practically running!
+User responded after 19.8249980000002 seconds
+Started waiting for user response...
+Ragdoll says: Look at me go! I'm practically running!
+[2025-05-25T12:12:40] [SYSTEM] Memory cleanup completed
+[2025-05-25T12:12:45] [SYSTEM] Memory cleanup completed
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+Ragdoll says: Who needs balance when you have determination?
+[MouseInteraction] Gesture mode OFF
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode OFF
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+[MouseInteraction] Gesture mode OFF
+[2025-05-25T12:12:50] [SYSTEM] Memory cleanup completed
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+Ragdoll says: Who needs balance when you have determination?
+[MouseInteraction] Gesture mode OFF
+User responded after 15.2485993333336 seconds
+Started waiting for user response...
+[2025-05-25T12:12:55] [SYSTEM] Memory cleanup completed
+Ragdoll says: Who needs balance when you have determination?
+[2025-05-25T12:13:00] [SYSTEM] Memory cleanup completed
+Ragdoll says: I think I'm getting the hang of this walking thing!
+[2025-05-25T12:13:05] [SYSTEM] Memory cleanup completed
+Ragdoll says: Look at me go! I'm practically running!
+[2025-05-25T12:13:10] [SYSTEM] Memory cleanup completed
+Ragdoll says: Look at me go! I'm practically running!
+User responded after 18.3247940000002 seconds
+PASSIVE MODE: Started autonomous development
+PASSIVE MODE: Passive mode started
+Started waiting for user response...
+PASSIVE MODE: Planning task: Optimize performance hotspots
+Task completed: Optimize performance hotspots - Success
+PASSIVE MODE: Planning task: Add unit tests
+Task completed: Add unit tests - Success
+PASSIVE MODE: Planning task: Add missing comments
+Task completed: Add missing comments - Success
+PASSIVE MODE: Planning task: Remove unused code
+Task completed: Remove unused code - Success
+PASSIVE MODE: Planning task: Optimize performance hotspots
+Task completed: Optimize performance hotspots - Success
+PASSIVE MODE: Planning task: Add unit tests
+Task completed: Add unit tests - Success
+PASSIVE MODE: Planning task: Add missing comments
+Task completed: Add missing comments - Success
+PASSIVE MODE: Planning task: Remove unused code
+Task completed: Remove unused code - Success
+PASSIVE MODE: Planning task: Optimize performance hotspots
+Task completed: Optimize performance hotspots - Success
+PASSIVE MODE: Planning task: Add unit tests
+Task completed: Add unit tests - Success
+PASSIVE MODE: Planning task: Add missing comments
+Task completed: Add missing comments - Success
+PASSIVE MODE: Planning task: Remove unused code
+Task completed: Remove unused code - Success
+PASSIVE MODE: Planning task: Optimize performance hotspots
+Task completed: Optimize performance hotspots - Success
+PASSIVE MODE: Planning task: Add unit tests
+Task completed: Add unit tests - Success
+PASSIVE MODE: Planning task: Add missing comments
+[2025-05-25T12:13:15] [SYSTEM] Memory cleanup completed
+Task completed: Add missing comments - Success
+PASSIVE MODE: Planning task: Remove unused code
+Task completed: Remove unused code - Success
+PASSIVE MODE: Planning task: Optimize performance hotspots
+Task completed: Optimize performance hotspots - Success
+PASSIVE MODE: Planning task: Add unit tests
+Task completed: Add unit tests - Success
+PASSIVE MODE: Planning task: Add missing comments
+Task completed: Add missing comments - Success
+PASSIVE MODE: Planning task: Remove unused code
+Task completed: Remove unused code - Success
+PASSIVE MODE: Planning task: Optimize performance hotspots
+Task completed: Optimize performance hotspots - Success
+PASSIVE MODE: Planning task: Add unit tests
+Task completed: Add unit tests - Success
+PASSIVE MODE: Planning task: Add missing comments
+Task completed: Add missing comments - Success
+PASSIVE MODE: Planning task: Remove unused code
+Task completed: Remove unused code - Success
+PASSIVE MODE: Planning task: Optimize performance hotspots
+Task completed: Optimize performance hotspots - Success
+PASSIVE MODE: Planning task: Add unit tests
+Task completed: Add unit tests - Success
+PASSIVE MODE: Planning task: Add missing comments
+Task completed: Add missing comments - Success
+PASSIVE MODE: Planning task: Remove unused code
+Task completed: Remove unused code - Success
+PASSIVE MODE: Planning task: Optimize performance hotspots
+Task completed: Optimize performance hotspots - Success
+PASSIVE MODE: Planning task: Add unit tests
+Ragdoll says: Left foot, right foot, left foot, right foot...
+Task completed: Add unit tests - Success
+PASSIVE MODE: Planning task: Add missing comments
+Task completed: Add missing comments - Success
+PASSIVE MODE: Planning task: Remove unused code
+Task completed: Remove unused code - Success
+PASSIVE MODE: Planning task: Optimize performance hotspots
+Task completed: Optimize performance hotspots - Success
+PASSIVE MODE: Planning task: Add unit tests
+Task completed: Add unit tests - Success
+PASSIVE MODE: Planning task: Add missing comments
+Task completed: Add missing comments - Success
+PASSIVE MODE: Planning task: Remove unused code
+Task completed: Remove unused code - Success
+PASSIVE MODE: Planning task: Optimize performance hotspots
+Task completed: Optimize performance hotspots - Success
+PASSIVE MODE: Planning task: Add unit tests
+Task completed: Add unit tests - Success
+PASSIVE MODE: Planning task: Add missing comments
+Task completed: Add missing comments - Success
+PASSIVE MODE: Planning task: Remove unused code
+Task completed: Remove unused code - Success
+PASSIVE MODE: Planning task: Optimize performance hotspots
+Task completed: Optimize performance hotspots - Success
+PASSIVE MODE: Planning task: Add unit tests
+Task completed: Add unit tests - Success
+PASSIVE MODE: Planning task: Add missing comments
+Task completed: Add missing comments - Success
+PASSIVE MODE: Planning task: Remove unused code
+Task completed: Remove unused code - Success
+PASSIVE MODE: Planning task: Optimize performance hotspots
+Task completed: Optimize performance hotspots - Success
+PASSIVE MODE: Planning task: Add unit tests
+Task completed: Add unit tests - Success
+PASSIVE MODE: Planning task: Add missing comments
+Task completed: Add missing comments - Success
+PASSIVE MODE: Planning task: Remove unused code
+Task completed: Remove unused code - Success
+PASSIVE MODE: Planning task: Optimize performance hotspots
+Task completed: Optimize performance hotspots - Success
+PASSIVE MODE: Planning task: Add unit tests
+Task completed: Add unit tests - Success
+PASSIVE MODE: Planning task: Add missing comments
+Task completed: Add missing comments - Success
+PASSIVE MODE: Planning task: Remove unused code
+Task completed: Remove unused code - Success
+PASSIVE MODE: Planning task: Optimize performance hotspots
+Task completed: Optimize performance hotspots - Success
+PASSIVE MODE: Planning task: Add unit tests
+Task completed: Add unit tests - Success
+PASSIVE MODE: Planning task: Add missing comments
+Task completed: Add missing comments - Success
+PASSIVE MODE: Planning task: Remove unused code
+Task completed: Remove unused code - Success
+User responded after 6.66981866666665 seconds
+Started waiting for user response...
+PASSIVE MODE: Planning task: Optimize performance hotspots
+[2025-05-25T12:13:20] [SYSTEM] Memory cleanup completed
+Task completed: Optimize performance hotspots - Success
+PASSIVE MODE: Planning task: Add unit tests
+Task completed: Add unit tests - Success
+PASSIVE MODE: Planning task: Add missing comments
+Task completed: Add missing comments - Success
+PASSIVE MODE: Planning task: Remove unused code
+Task completed: Remove unused code - Success
+PASSIVE MODE: Planning task: Optimize performance hotspots
+Task completed: Optimize performance hotspots - Success
+PASSIVE MODE: Planning task: Add unit tests
+Task completed: Add unit tests - Success
+PASSIVE MODE: Planning task: Add missing comments
+Task completed: Add missing comments - Success
+PASSIVE MODE: Planning task: Remove unused code
+Task completed: Remove unused code - Success
+PASSIVE MODE: Planning task: Optimize performance hotspots
+Task completed: Optimize performance hotspots - Success
+PASSIVE MODE: Planning task: Add unit tests
+Task completed: Add unit tests - Success
+PASSIVE MODE: Planning task: Add missing comments
+Task completed: Add missing comments - Success
+PASSIVE MODE: Planning task: Remove unused code
+Task completed: Remove unused code - Success
+PASSIVE MODE: Planning task: Optimize performance hotspots
+Task completed: Optimize performance hotspots - Success
+PASSIVE MODE: Planning task: Add unit tests
+Task completed: Add unit tests - Success
+PASSIVE MODE: Planning task: Add missing comments
+Task completed: Add missing comments - Success
+Ragdoll says: Left foot, right foot, left foot, right foot...
+PASSIVE MODE: Planning task: Remove unused code
+Task completed: Remove unused code - Success
+PASSIVE MODE: Planning task: Optimize performance hotspots
+Task completed: Optimize performance hotspots - Success
+PASSIVE MODE: Planning task: Add unit tests
+Task completed: Add unit tests - Success
+PASSIVE MODE: Planning task: Add missing comments
+Task completed: Add missing comments - Success
+PASSIVE MODE: Planning task: Remove unused code
+Task completed: Remove unused code - Success
+PASSIVE MODE: Planning task: Optimize performance hotspots
+Task completed: Optimize performance hotspots - Success
+PASSIVE MODE: Planning task: Add unit tests
+Task completed: Add unit tests - Success
+PASSIVE MODE: Planning task: Add missing comments
+Task completed: Add missing comments - Success
+PASSIVE MODE: Planning task: Remove unused code
+Task completed: Remove unused code - Success
+PASSIVE MODE: Planning task: Optimize performance hotspots
+Task completed: Optimize performance hotspots - Success
+PASSIVE MODE: Planning task: Add unit tests
+Task completed: Add unit tests - Success
+PASSIVE MODE: Planning task: Add missing comments
+Task completed: Add missing comments - Success
+PASSIVE MODE: Planning task: Remove unused code
+Task completed: Remove unused code - Success
+PASSIVE MODE: Planning task: Optimize performance hotspots
+Task completed: Optimize performance hotspots - Success
+PASSIVE MODE: Planning task: Add unit tests
+Task completed: Add unit tests - Success
+PASSIVE MODE: Planning task: Add missing comments
+Task completed: Add missing comments - Success
+PASSIVE MODE: Planning task: Remove unused code
+Task completed: Remove unused code - Success
+PASSIVE MODE: Planning task: Optimize performance hotspots
+Task completed: Optimize performance hotspots - Success
+PASSIVE MODE: Planning task: Add unit tests
+Task completed: Add unit tests - Success
+PASSIVE MODE: Planning task: Add missing comments
+Task completed: Add missing comments - Success
+PASSIVE MODE: Planning task: Remove unused code
+Task completed: Remove unused code - Success
+PASSIVE MODE: Planning task: Optimize performance hotspots
+Task completed: Optimize performance hotspots - Success
+PASSIVE MODE: Planning task: Add unit tests
+Task completed: Add unit tests - Success
+PASSIVE MODE: Planning task: Add missing comments
+Task completed: Add missing comments - Success
+PASSIVE MODE: Planning task: Remove unused code
+Task completed: Remove unused code - Success
+PASSIVE MODE: Planning task: Optimize performance hotspots
+Task completed: Optimize performance hotspots - Success
+PASSIVE MODE: Planning task: Add unit tests
+Task completed: Add unit tests - Success
+PASSIVE MODE: Planning task: Add missing comments
+Task completed: Add missing comments - Success
+PASSIVE MODE: Planning task: Remove unused code
+PASSIVE MODE: Daily token limit reached
+[2025-05-25T12:13:25] [SYSTEM] Memory cleanup completed
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reachedPASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+User responded after 30.6499999999995 seconds
+New merge request: MR-1 - Review required
+Started waiting for user response...
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+User responded after 7.08154466666665 seconds
+Started waiting for user response...
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+User responded after 20.5000000000001 seconds
+Started waiting for user response...
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+User responded after 9.96580800000008 seconds
+Starting test zone: cosmos with 3 tests
+Started waiting for user response...
+PASSIVE MODE: Daily token limit reached
+Testing: console_system
+Testing: physics_system
+PASSIVE MODE: Daily token limit reached
+Testing: version_control
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+User responded after 7.63333333333331 seconds
+Starting test zone: cosmos with 3 tests
+Started waiting for user response...
+PASSIVE MODE: Daily token limit reached
+Testing: console_system
+Testing: physics_system
+PASSIVE MODE: Daily token limit reached
+Testing: version_control
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+[MouseInteraction] Gesture mode OFF
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+[MouseInteraction] Gesture mode ON - Draw shapes to cast spells!
+PASSIVE MODE: Daily token limit reached
+
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+[MouseInteraction] Gesture mode OFF
+PASSIVE MODE: Daily token limit reached
+
+PASSIVE MODE: Daily token limit reached
+User responded after 6.51738199999999 seconds
+Started waiting for user response...
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+User responded after 7.07404499999997 seconds
+Started waiting for user response...
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+
+User responded after 3.19166133333333 seconds
+[2025-05-25T12:16:07] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T12:16:07] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T12:16:07] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T12:16:07] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T12:16:07] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T12:16:07] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T12:16:07] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T12:16:07] [MAGIC5] Queued fifth dimensional magic: just_node
+[2025-05-25T12:16:07] [MAGIC5] Queued fifth dimensional magic: just_node
+[WorldBuilder] Queued 9 objects for deletion through floodgate
+Started waiting for user response...
+[2025-05-25T12:16:07] [SYSTEM4] Unloaded node: /root/@Node3D@13826
+[2025-05-25T12:16:07] [SYSTEM4] Unloaded node: /root/@Node3D@13922
+[2025-05-25T12:16:07] [SYSTEM4] Unloaded node: /root/@Node3D@13978
+PASSIVE MODE: Daily token limit reached
+[2025-05-25T12:16:07] [SYSTEM4] Unloaded node: /root/@Node3D@14034
+[2025-05-25T12:16:07] [SYSTEM4] Unloaded node: /root/@Node3D@14090
+[2025-05-25T12:16:07] [SYSTEM4] Unloaded node: /root/@Node3D@14161
+PASSIVE MODE: Daily token limit reached
+[2025-05-25T12:16:07] [SYSTEM4] Unloaded node: /root/@Node3D@14889
+[2025-05-25T12:16:07] [SYSTEM4] Unloaded node: /root/tree_1
+[2025-05-25T12:16:07] [SYSTEM4] Unloaded node: /root/Sun_1
+PASSIVE MODE: Daily token limit reached
+
+
+[2025-05-25T12:16:21] [SYSTEM] Memory cleanup completed
+PASSIVE MODE: Daily token limit reached
+PASSIVE MODE: Daily token limit reached
+Ragdoll says: I think I'm getting the hang of this walking thing!
+PASSIVE MODE: Daily token limit reached
+Ragdoll says: I think I'm getting the hang of this walking thing!
+PASSIVE MODE: Daily token limit reached
+[2025-05-25T12:16:26] [SYSTEM] Memory cleanup completed
+PASSIVE MODE: Daily token limit reached
+ERROR: Parent node is busy adding/removing children, `remove_child()` can't be called at this time. Consider using `remove_child.call_deferred(child)` instead.
+   at: remove_child (scene/main/node.cpp:1856)
+   GDScript backtrace (most recent call first):
+       [0] _exit_tree (res://scripts/core/mouse_interaction_system.gd:90)

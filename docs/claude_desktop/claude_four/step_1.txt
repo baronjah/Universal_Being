@@ -1,0 +1,80 @@
+# Menu System & Navigation Implementation
+
+## Features from Recipe:
+- First screen with 3D world background showing last played save
+- Main Menu with buttons to MultiverseMenu, UniverseMenu, OptionsMenu, AboutPage
+- Exit button functionality
+- Back button system
+- W/S keyboard navigation and mouse support
+- Button selection with Enter key
+
+## Implementation Steps:
+
+### Step 1: Create Base Menu Scene
+1. Create `BaseMenu.tscn` with:
+   - Background viewport for 3D world
+   - Container for buttons
+   - Navigation controller script
+2. Set up scene inheritance system
+
+### Step 2: Implement MainMenu
+1. Create `MainMenu.tscn` inheriting from BaseMenu
+2. Add buttons:
+   - ButtonMultiverseMenu
+   - ButtonUniverseMenu
+   - ButtonOptionsMenu
+   - ButtonAboutPage
+   - exitButton
+   - languageButton
+3. Implement button click handlers
+
+### Step 3: Create Navigation System
+1. Implement keyboard navigation (W/S keys)
+2. Add mouse hover detection
+3. Create selection highlighting system
+4. Implement Enter key activation
+
+### Step 4: Create Scene Manager
+1. Create SceneManager singleton
+2. Implement scene transition methods
+3. Add scene history for back button
+4. Handle cleanup between scenes
+
+### Step 5: Implement 3D Background
+1. Create 3D viewport node
+2. Load last saved universe/multiverse
+3. Fallback to default image if first launch
+4. Implement background animation
+
+## Testing Procedures:
+
+### Test 1: Navigation Flow
+- [ ] Start application
+- [ ] Verify 3D background loads
+- [ ] Test all menu transitions
+- [ ] Verify back button returns to previous menu
+- [ ] Test exit button closes application
+
+### Test 2: Input Methods
+- [ ] Test W/S keyboard navigation
+- [ ] Verify selection wraps from last to first button
+- [ ] Test mouse hover selection
+- [ ] Verify Enter key activates selected button
+- [ ] Test mixed input (keyboard then mouse)
+
+### Test 3: Scene Management
+- [ ] Navigate through multiple menus
+- [ ] Use back button multiple times
+- [ ] Verify no memory leaks on scene changes
+- [ ] Test rapid scene switching
+
+## Dependencies:
+- Godot scene system
+- Input mapping configuration
+- 3D rendering system (for background)
+
+## Expected Outcomes:
+- Smooth menu navigation
+- Responsive input handling
+- Proper scene management
+- Visually appealing menu with 3D background

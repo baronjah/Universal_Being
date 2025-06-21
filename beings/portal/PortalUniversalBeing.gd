@@ -9,6 +9,12 @@
 extends UniversalBeing
 class_name PortalUniversalBeing
 
+func pentagon_init() -> void:
+	super.pentagon_init()
+	being_name = "Generated Being"
+	being_type = "auto_generated"
+	consciousness_level = 1
+
 # Godot lifecycle functions removed - base UniversalBeing handles bridging to Pentagon Architecture
 
 # ===== PORTAL PROPERTIES =====
@@ -140,6 +146,22 @@ func create_transport_effect(pos: Vector3) -> void:
 
 func get_portal_info() -> Dictionary:
 	"""Get information about this portal"""
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+func pentagon_process(delta: float) -> void:
+	super.pentagon_process(delta)
+func pentagon_input(event: InputEvent) -> void:
+	super.pentagon_input(event)
+func pentagon_sewers() -> void:
+	# Auto-generated cleanup implementation
+	super.pentagon_sewers()
+
+	# Auto-generated input implementation
+
+	# Auto-generated process implementation
+
+	# Auto-generated ready implementation
+
 	return {
 		"name": portal_name,
 		"active": is_active,

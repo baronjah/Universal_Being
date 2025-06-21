@@ -9,6 +9,12 @@
 extends UniversalBeing
 class_name UniversalBeingSocketManager
 
+func pentagon_init() -> void:
+	super.pentagon_init()
+	being_name = "Generated Being"
+	being_type = "auto_generated"
+	consciousness_level = 1
+
 # ===== SOCKET REGISTRY =====
 var sockets: Dictionary = {}  # socket_id -> UniversalBeingSocket
 var socket_groups: Dictionary = {}  # SocketType -> Array[UniversalBeingSocket]
@@ -172,9 +178,9 @@ func get_socket_configuration() -> Dictionary:
 		"socket_types": {},
 		"occupied_sockets": 0,
 		"locked_sockets": 0,
-		"sockets": {
-}
-	
+		"sockets": {}
+	}
+
 	# Count by type
 	for socket_type in UniversalBeingSocket.SocketType.values():
 		var type_name = UniversalBeingSocket.SocketType.keys()[socket_type]
@@ -229,7 +235,6 @@ func hot_swap_component(socket_id: String, new_component: Resource) -> bool:
 		return false
 	
 	print("🔄 Hot-swapping component in socket: %s" % socket_id)
-}
 	
 	# Store old component data
 	var old_data = socket.get_component_data()
@@ -269,9 +274,9 @@ func get_inspector_data() -> Dictionary:
 	var inspector_data = {
 		"being_name": owner_being.being_name if owner_being else "Unknown",
 		"being_type": owner_being.being_type if owner_being else "Unknown",
-		"socket_groups": {
-}
-	
+		"socket_groups": {}
+	}
+
 	# Group sockets by type for inspector display
 	for socket_type in UniversalBeingSocket.SocketType.values():
 		var type_name = UniversalBeingSocket.SocketType.keys()[socket_type]
@@ -299,8 +304,8 @@ func serialize() -> Dictionary:
 	var data = {
 		"sockets": {},
 		"configuration": get_socket_configuration()
-}
-	
+	}
+
 	for socket_id in sockets:
 		data.sockets[socket_id] = sockets[socket_id].serialize()
 	
@@ -346,13 +351,11 @@ func debug_socket_status() -> String:
 	var info = ["=== Socket Manager Debug ==="]
 	info.append("Owner: %s" % (owner_being.being_name if owner_being else "None"))
 	info.append("Total Sockets: %d" % sockets.size())
-}
 	
 	for socket_type in UniversalBeingSocket.SocketType.values():
 		var type_name = UniversalBeingSocket.SocketType.keys()[socket_type]
 		var type_sockets = socket_groups[socket_type]
 		info.append("%s Sockets: %d" % [type_name, type_sockets.size()])
-
 		
 		for socket in type_sockets:
 			var status = "🔴" if socket.is_occupied else "⚪"
@@ -360,3 +363,38 @@ func debug_socket_status() -> String:
 			info.append("  %s %s %s %s" % [status, lock_status, socket.socket_name, socket.socket_id])
 	
 	return "\n".join(info)
+
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+func pentagon_process(delta: float) -> void:
+	super.pentagon_process(delta)
+func pentagon_input(event: InputEvent) -> void:
+	super.pentagon_input(event)
+func pentagon_sewers() -> void:
+	# Auto-generated cleanup implementation
+	super.pentagon_sewers()
+
+# ===== STATIC METHODS =====
+
+static func get_sockets_for(being: UniversalBeing) -> UniversalBeingSocketManager:
+	"""Static method to get or create socket manager for a being"""
+	if not being:
+		return null
+	
+	# Check if being already has a socket manager
+	for child in being.get_children():
+		if child is UniversalBeingSocketManager:
+			return child
+	
+	# Create new socket manager
+	var socket_manager = UniversalBeingSocketManager.new(being)
+	socket_manager.name = "SocketManager"
+	being.add_child(socket_manager)
+	
+	return socket_manager
+
+static func create_socket_manager(being: UniversalBeing) -> UniversalBeingSocketManager:
+	"""Create a new socket manager for a being"""
+	var manager = UniversalBeingSocketManager.new(being)
+	manager.name = "SocketManager_%s" % being.name
+	return manager

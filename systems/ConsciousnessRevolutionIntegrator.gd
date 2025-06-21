@@ -189,7 +189,7 @@ func _find_human_player() -> Node:
 	for being in beings:
 		if being.has_method("get"):
 
-			var being_type = being.get("being_type", "")
+			var being_type = being.get("being_type")
 			if being_type.contains("player") or being_type.contains("plasmoid"):
 
 				# Make sure it's not Gemma
@@ -252,4 +252,4 @@ func _input(event: InputEvent) -> void:
 			print("✨ Manual consciousness ripple created at: %v" % click_position)
 
 
-print("🚀 ConsciousnessRevolutionIntegrator: Class loaded - Ready to awaken the cosmos!")
+#print("🚀 ConsciousnessRevolutionIntegrator: Class loaded - Ready to awaken the cosmos!")

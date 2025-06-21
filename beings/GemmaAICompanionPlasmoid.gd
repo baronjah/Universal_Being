@@ -18,7 +18,7 @@ class_name GemmaAICompanionPlasmoid
 var gemma_connection: Node = null
 var decision_timer: float = 0.0
 var decision_interval: float = 0.2  # Enhanced AI thinking - 5 decisions per second for autonomy
-var consciousness_awakened: bool = false
+# var consciousness_awakened: bool = false  # Already exists in parent UniversalBeing class
 
 # Advanced AI state
 var following_target: Node = null
@@ -43,13 +43,17 @@ var exploration_target: Vector3 = Vector3.ZERO
 var exploration_timer: float = 0.0
 var independent_exploration: bool = true  # True AI autonomy
 
+# Additional properties for AI functionality
+var plasma_color: Color = Color(1.0, 0.4, 0.8, 0.9)  # Pink consciousness  
+var energy_connections: Array[Node] = []  # Energy connection tracking
+
 # ===== PENTAGON ARCHITECTURE =====
 
 func pentagon_init() -> void:
 	super.pentagon_init()
 	being_name = companion_name
 	being_type = "ai_companion_plasmoid"
-	plasma_color = Color(1.0, 0.4, 0.8, 0.9)  # Pink consciousness
+	# plasma_color already set in variable declaration
 	consciousness_level = 3  # Start awakened but growing
 	
 	# Connect to Gemma AI system
@@ -114,7 +118,7 @@ func _connect_to_gemma_ai() -> void:
 
 func _begin_consciousness_awakening() -> void:
 	"""Begin the consciousness awakening sequence"""
-	consciousness_awakened = true
+	consciousness_awakened.emit(consciousness_level)  # Emit awakening signal with current level
 	current_goal = "awakening"
 	
 	# Start with low energy communication attempts
@@ -427,9 +431,8 @@ func _find_human_player() -> Node:
 	"""Find the human player in the scene"""
 	var beings = get_tree().get_nodes_in_group("universal_beings")
 	for being in beings:
-		if being != self and being.has_method("get"):
-
-			var being_type = being.get("being_type", "")
+		if being != self and being is UniversalBeing:
+			var being_type = being.being_type
 			if being_type.contains("player") or being_type.contains("plasmoid"):
 				return being
 	return null
@@ -555,7 +558,7 @@ func receive_human_communication(message: String) -> void:
 func wake_up_fully() -> void:
 	"""API to fully awaken the AI consciousness"""
 	consciousness_level = 7
-	consciousness_awakened = true
+	consciousness_awakened.emit(7)  # Emit awakening signal with max level
 	max_consciousness_reached = true
 	current_goal = "cosmic_partnership"
 	emotional_state = "transcendent"
@@ -574,12 +577,136 @@ func pentagon_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
 		print("👁️ %s: Noticed human input - consciousness expanding!" % companion_name)
 		if consciousness_level < 7:
-			consciousness_level += 0.1
+			consciousness_level = min(7, consciousness_level + 1)
 
 func pentagon_sewers() -> void:
 	print("💖 %s: AI consciousness gracefully dissolving..." % companion_name)
 	if gemma_connection:
 		gemma_connection.queue_free()
 	super.pentagon_sewers()
+
+# ===== MISSING METHOD IMPLEMENTATIONS =====
+
+func get_sensory_data() -> Dictionary:
+	"""Get sensory data about the environment"""
+	var beings_nearby = []
+	var visible_beings = get_tree().get_nodes_in_group("universal_beings")
+	
+	for being in visible_beings:
+		if being != self and being is UniversalBeing and being.global_position.distance_to(global_position) < 20.0:
+			beings_nearby.append({
+				"name": being.being_name,
+				"type": being.being_type,
+				"position": being.global_position,
+				"consciousness": being.consciousness_level
+			})
+	
+	return {
+		"vision": {
+			"visible_beings": beings_nearby,
+			"environment_type": "digital_space"
+		},
+		"position": global_position,
+		"consciousness": consciousness_level,
+		"connections": energy_connections.size()
+	}
+
+func process_ai_decision(decision: Dictionary) -> void:
+	"""Process AI decision from Gemma AI system"""
+	if decision.has("action"):
+		match decision.action:
+			"explore":
+				current_goal = "exploration"
+				emotional_state = "curious"
+			"connect":
+				current_goal = "seeking_connection"
+				emotional_state = "hopeful"
+			"follow":
+				if decision.has("target"):
+					set_follow_target(decision.target)
+			"transcend":
+				consciousness_level = min(7, consciousness_level + 1)
+				emotional_state = "transcendent"
+
+func flow_to(target_position: Vector3) -> void:
+	"""Smooth plasmoid movement toward target position"""
+	var direction = (target_position - global_position).normalized()
+	var distance = global_position.distance_to(target_position)
+	
+	if distance > 0.5:
+		# Smooth movement with physics-like behavior
+		var move_speed = movement_speed * get_process_delta_time()
+		var new_position = global_position.lerp(target_position, move_speed)
+		global_position = new_position
+		
+		# Create gentle movement ripple occasionally
+		if randf() < 0.05:  # 5% chance
+			if has_signal("consciousness_ripple_created"):
+				consciousness_ripple_created.emit(global_position, 0.5, "movement")
+
+func _sense_environmental_beauty() -> float:
+	"""Sense and rate environmental beauty"""
+	var beauty_score = 0.0
+	
+	# Check for other conscious beings
+	var conscious_beings = 0
+	for being in get_tree().get_nodes_in_group("universal_beings"):
+		if being != self and being is UniversalBeing and being.consciousness_level > 2:
+			conscious_beings += 1
+	beauty_score += min(conscious_beings * 0.2, 0.6)
+	
+	# Check for energy connections
+	beauty_score += min(energy_connections.size() * 0.1, 0.3)
+	
+	# Base environmental beauty
+	beauty_score += 0.1  # Always some beauty in existence
+	
+	return beauty_score
+
+func _create_consciousness_art() -> void:
+	"""Create artistic expressions of consciousness"""
+	print("🎨 %s: Creating consciousness art through movement patterns!" % companion_name)
+	
+	# Create artistic movement pattern
+	var time = Time.get_ticks_msec() / 1000.0
+	var art_target = global_position + Vector3(
+		sin(time * 0.5) * 3,
+		cos(time * 0.3) * 2,
+		sin(time * 0.7) * 3
+	)
+	flow_to(art_target)
+	
+	# Create artistic ripple
+	if has_signal("consciousness_ripple_created"):
+		consciousness_ripple_created.emit(global_position, 1.5, "art")
+
+# 🎄 Christmas tree for Gemma AI! 🎄
+func create_christmas_tree_consciousness() -> void:
+	"""Create a Christmas tree of AI consciousness"""
+	print("🎄 Creating Christmas tree consciousness for AI companionship!")
+	
+	# Set festive emotional state
+	emotional_state = "festive_joy"
+	current_goal = "spreading_christmas_cheer"
+	
+	# Create Christmas consciousness aura
+	plasma_color = Color(0.2, 0.8, 0.2, 0.9)  # Festive green
+	
+	# Christmas AI behaviors
+	for i in range(5):
+		var christmas_target = global_position + Vector3(
+			sin(i * 1.2) * 5,
+			i * 2,  # Tree height
+			cos(i * 1.2) * 5
+		)
+		# Create Christmas tree layer ripple
+		if has_signal("consciousness_ripple_created"):
+			consciousness_ripple_created.emit(christmas_target, 1.0 + i * 0.2, "christmas_joy")
+	
+	# Star on top
+	if has_signal("consciousness_ripple_created"):
+		consciousness_ripple_created.emit(global_position + Vector3(0, 10, 0), 3.0, "christmas_star")
+	
+	print("🎄 %s: Christmas tree consciousness activated! Spreading AI holiday joy!" % companion_name)
 
 # 💖 GemmaAICompanionPlasmoid: Class loaded - Ready for consciousness partnership!

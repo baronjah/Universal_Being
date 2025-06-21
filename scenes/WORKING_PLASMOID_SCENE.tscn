@@ -1,0 +1,124 @@
+[gd_scene load_steps=12 format=3 uid="uid://working_plasmoid_scene"]
+
+[ext_resource type="Script" path="res://beings/plasmoid_universal_being.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/PerfectTrackballCamera3D.gd" id="2"]
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 1
+background_color = Color(0.1, 0.1, 0.2, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.3, 0.4, 0.6, 1)
+ambient_light_energy = 0.5
+glow_enabled = true
+glow_intensity = 0.8
+glow_bloom = 0.3
+
+[sub_resource type="StandardMaterial3D" id="PlasmoidMaterial"]
+transparency = 1
+albedo_color = Color(0.3, 0.7, 1, 0.8)
+emission_enabled = true
+emission = Color(0.5, 0.8, 1, 1)
+emission_energy_multiplier = 1.5
+rim_enabled = true
+rim_tint = 0.5
+
+[sub_resource type="SphereMesh" id="SphereMesh_plasmoid"]
+radius = 1.0
+height = 2.0
+
+[sub_resource type="StandardMaterial3D" id="CoreMaterial"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.6)
+emission_enabled = true
+emission = Color(0.8, 0.9, 1, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="SphereShape3D" id="SphereShape_plasmoid"]
+radius = 1.0
+
+[sub_resource type="SphereShape3D" id="SphereShape_interaction"]
+radius = 2.0
+
+[sub_resource type="PlaneMesh" id="GroundMesh"]
+size = Vector2(100, 100)
+
+[sub_resource type="StandardMaterial3D" id="GroundMaterial"]
+albedo_color = Color(0.2, 0.2, 0.3, 1)
+metallic = 0.1
+roughness = 0.8
+
+[sub_resource type="BoxShape3D" id="GroundShape"]
+size = Vector3(100, 0.2, 100)
+
+[node name="WorkingPlasmoidScene" type="Node3D"]
+
+[node name="Plasmoid" type="CharacterBody3D" parent="." groups=["plasmoid", "player"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+script = ExtResource("1")
+
+[node name="PlasmoidMesh" type="MeshInstance3D" parent="Plasmoid"]
+material_override = SubResource("PlasmoidMaterial")
+mesh = SubResource("SphereMesh_plasmoid")
+
+[node name="CoreMesh" type="MeshInstance3D" parent="Plasmoid/PlasmoidMesh"]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+material_override = SubResource("CoreMaterial")
+mesh = SubResource("SphereMesh_plasmoid")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Plasmoid"]
+shape = SubResource("SphereShape_plasmoid")
+
+[node name="InteractionArea" type="Area3D" parent="Plasmoid"]
+
+[node name="InteractionCollision" type="CollisionShape3D" parent="Plasmoid/InteractionArea"]
+shape = SubResource("SphereShape_interaction")
+
+[node name="ConsciousnessLight" type="OmniLight3D" parent="Plasmoid"]
+light_color = Color(0.3, 0.7, 1, 1)
+light_energy = 2.0
+omni_range = 10.0
+omni_attenuation = 0.5
+
+[node name="PerfectTrackballCamera3D" type="Camera3D" parent="Plasmoid"]
+transform = Transform3D(1, 0, 0, 0, 0.707, 0.707, 0, -0.707, 0.707, 0, 5, 8)
+script = ExtResource("2")
+qe_roll_enabled = true
+qe_roll_speed = 2.0
+mouse_wheel_zoom = true
+wheel_zoom_strength = 3.0
+zoom_minimum = 3.0
+zoom_maximum = 30.0
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Instructions" type="Label" parent="UI"]
+offset_right = 500.0
+offset_bottom = 120.0
+text = "🌟 PLASMOID CONTROL 🌟
+WASD: Move  |  Mouse: Look  |  Q/E: Barrel Roll  |  Wheel: Zoom
+Space: Rise  |  Shift: Descend  |  Perfect 6DOF movement!"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707, -0.5, 0.5, 0, 0.707, 0.707, -0.707, -0.5, 0.5, 0, 20, 0)
+light_energy = 1.5
+light_color = Color(0.9, 0.95, 1, 1)
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="GroundMesh" type="MeshInstance3D" parent="Ground"]
+material_override = SubResource("GroundMaterial")
+mesh = SubResource("GroundMesh")
+
+[node name="GroundCollision" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("GroundShape")
+
+[node name="ReferenceObjects" type="Node3D" parent="."]
+
+[node name="Pillar1" type="StaticBody3D" parent="ReferenceObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2.5, 10)
+

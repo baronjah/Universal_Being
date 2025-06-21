@@ -65,6 +65,7 @@ func _init() -> void:
 }
 
 func pentagon_init() -> void:
+    super.pentagon_init()
 	# Pentagon initialization - override in child classes
 	pass
 }
@@ -74,6 +75,7 @@ func _ready() -> void:
 }
 
 func pentagon_ready() -> void:
+    super.pentagon_ready()
 	# Pentagon setup - override in child classes
 	pass
 }
@@ -83,6 +85,7 @@ func _input(event: InputEvent) -> void:
 }
 
 func pentagon_input(event: InputEvent) -> void:
+    super.pentagon_input(event)
 	# Pentagon input handling - override in child classes
 	pass
 }
@@ -92,6 +95,7 @@ func sewers() -> void:
 }
 
 func pentagon_sewers() -> void:
+    super.pentagon_sewers()
 	# Pentagon cleanup/output - override in child classes
 	pass
 func check_all_things():
@@ -310,6 +314,10 @@ func cleanup_cache():
 
 func get_record_size(record: Dictionary) -> int:
 	# Estimate size in bytes
+func pentagon_process(delta: float) -> void:
+	super.pentagon_process(delta)
+	# Auto-generated process implementation
+
 	var size = 0
 	for key in record["data"]:
 		size += 8  # Assume 8 bytes per number/reference

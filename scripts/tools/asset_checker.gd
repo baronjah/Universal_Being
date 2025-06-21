@@ -4,6 +4,12 @@
 extends UniversalBeing
 #class_name UniversalBeingAssetChecker # Commented to avoid duplicate
 
+func pentagon_init() -> void:
+	super.pentagon_init()
+	being_name = "Generated Being"
+	being_type = "auto_generated"
+	consciousness_level = 1
+
 enum ValidationResult { VALID, WARNING, ERROR, CRITICAL
 }
 
@@ -245,6 +251,22 @@ static func validate_all_assets_in_directory(directory_path: String) -> Array[Va
 
 static func print_validation_summary(reports: Array[ValidationReport]) -> void:
 	"""Print summary of validation results"""
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+func pentagon_process(delta: float) -> void:
+	super.pentagon_process(delta)
+func pentagon_input(event: InputEvent) -> void:
+	super.pentagon_input(event)
+func pentagon_sewers() -> void:
+	# Auto-generated cleanup implementation
+	super.pentagon_sewers()
+
+	# Auto-generated input implementation
+
+	# Auto-generated process implementation
+
+	# Auto-generated ready implementation
+
 	var valid_count = 0
 	var warning_count = 0
 	var error_count = 0

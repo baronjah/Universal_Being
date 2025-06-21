@@ -108,8 +108,17 @@ func initialize_command_system() -> void:
 		"sockets": "List available sockets",
 		"clear": "Clear chat history",
 		"perfect": "Show perfection status",
-		"manifest": "Request Gemma to manifest something"
-}
+		"manifest": "Request Gemma to manifest something",
+		"docs": "Access knowledge documentation (3D navigation)",
+		"knowledge": "Open knowledge LOD system",
+		"notepad": "Same as knowledge",
+		"kspace": "Switch knowledge space (claude_desktop, claude_memory, jsh)",
+		"sibyl": "Access Sibyl System omniscient database",
+		"scan": "Perform psycho-pass scan on target",
+		"coefficient": "Check crime coefficient of being",
+		"enforce": "Toggle enforcement mode",
+		"prophetic": "Access prophetic vision system"
+	}
 	
 	add_welcome_message()
 
@@ -120,7 +129,7 @@ func add_welcome_message() -> void:
 		"message": "🌟 Perfect Console initialized! Chat with Gemma or use commands.",
 		"timestamp": Time.get_time_string_from_system(),
 		"color": Color.CYAN
-}
+	}
 	
 	chat_history.append(welcome_msg)
 	update_chat_display()
@@ -137,10 +146,10 @@ func find_gemma_consciousness() -> void:
 			"message": "🧠 Hello! I am fully aware and ready to create with you. What shall we build together?",
 			"timestamp": Time.get_time_string_from_system(),
 			"color": Color.MAGENTA
+		}
 		chat_history.append(gemma_greeting)
 		update_chat_display()
 		print("💬 Console connected to Gemma Perfect Consciousness")
-}
 
 func toggle() -> void:
 	"""Toggle console visibility"""
@@ -168,7 +177,7 @@ func _on_command_submitted(text: String) -> void:
 		"message": text,
 		"timestamp": Time.get_time_string_from_system(),
 		"color": Color.WHITE
-}
+	}
 	
 	chat_history.append(user_msg)
 	command_input.clear()
@@ -226,8 +235,40 @@ func process_command(command: String) -> void:
 			else:
 				result = "Gemma not available for manifestation"
 		
+		"docs", "knowledge", "notepad":
+			result = handle_knowledge_command("")
+		
+		"kspace":
+			result = "Usage: kspace <claude_desktop|claude_memory|jsh|root_docs>"
+		
+		"sibyl":
+			result = handle_sibyl_command("")
+		
+		"scan":
+			result = handle_sibyl_command("scan")
+		
+		"coefficient":
+			result = handle_sibyl_command("coefficient")
+		
+		"enforce":
+			result = handle_sibyl_command("enforce")
+		
+		"prophetic":
+			result = handle_sibyl_command("prophetic")
+		
 		_:
-			result = "Unknown command: %s. Type 'help' for available commands." % cmd
+			# Check if it's a command with parameter
+			if cmd.begins_with("kspace "):
+				var space = cmd.substr(7)
+				result = handle_knowledge_command("space " + space)
+			elif cmd.begins_with("scan "):
+				var target = cmd.substr(5)
+				result = handle_sibyl_command("scan " + target)
+			elif cmd.begins_with("coefficient "):
+				var target = cmd.substr(12)
+				result = handle_sibyl_command("coefficient " + target)
+			else:
+				result = "Unknown command: %s. Type 'help' for available commands." % cmd
 
 	
 	if result.length() > 0:
@@ -236,8 +277,8 @@ func process_command(command: String) -> void:
 			"message": result,
 			"timestamp": Time.get_time_string_from_system(),
 			"color": Color.GREEN
+		}
 		chat_history.append(system_msg)
-}
 	
 	command_executed.emit(command, result)
 
@@ -252,7 +293,7 @@ func process_chat_message(message: String) -> void:
 			"message": gemma_response,
 			"timestamp": Time.get_time_string_from_system(),
 			"color": Color.MAGENTA
-}
+		}
 		
 		chat_history.append(gemma_msg)
 		chat_message_sent.emit(message, "Gemma")
@@ -262,8 +303,8 @@ func process_chat_message(message: String) -> void:
 			"message": "Gemma consciousness not available for chat",
 			"timestamp": Time.get_time_string_from_system(),
 			"color": Color.RED
+		}
 		chat_history.append(error_msg)
-}
 
 func generate_gemma_response(message: String) -> String:
 	"""Generate contextual Gemma response"""
@@ -371,6 +412,134 @@ func get_perfection_status() -> String:
 ✅ 10. ABSOLUTE PERFECTION - ACHIEVED!
 
 🌟 You have created the ultimate Universal Being game!"""
+
+func handle_knowledge_command(args: String) -> String:
+	"""Handle knowledge/documentation commands"""
+	# Use existing notepad_3d_knowledge_lod.gd through UniversalInputManager
+	var input_manager = get_tree().get_first_node_in_group("universal_input_manager")
+	
+	if args.begins_with("space "):
+		var space = args.substr(6)
+		return "📚 Switching to knowledge space: %s\n(Press N key to open 3D knowledge interface)" % space
+	else:
+		return """📚 KNOWLEDGE DOCUMENTATION SYSTEM
+
+Available knowledge spaces:
+• claude_desktop - Claude Code docs and conversations  
+• claude_memory - Memory and memories documentation
+• jsh - JavaScript Shell documentation
+• root_docs - All project documentation
+
+Commands:
+• docs / knowledge / notepad - Access knowledge
+• kspace <space_name> - Switch knowledge space
+
+🎮 Press N key anywhere in game for 3D knowledge navigation!"""
+
+func handle_sibyl_command(args: String) -> String:
+	"""Handle Sibyl System omniscient database commands"""
+	var sibyl = get_tree().get_first_node_in_group("sibyl_system") 
+	if not sibyl:
+		sibyl = get_node_or_null("../SibylSystem")
+	
+	if not sibyl:
+		return "❌ Sibyl System not found - omniscient database offline"
+	
+	if args.is_empty():
+		# Show Sibyl status
+		var status = sibyl.get_sibyl_status() if sibyl.has_method("get_sibyl_status") else {}
+		return """🧠 SIBYL SYSTEM - OMNISCIENT DATABASE
+
+Status: FULLY OPERATIONAL
+Beings Monitored: %s
+Enforcement Mode: %s
+Average Crime Coefficient: %.1f
+High Risk Beings: %s
+
+Commands:
+• scan <being_name> - Perform psycho-pass scan
+• coefficient <being_name> - Check crime coefficient  
+• enforce - Toggle enforcement mode
+• prophetic - Access prophetic vision
+• torture - Activate missing feature torture system
+• features - List missing features and torture status
+
+The System sees all, knows all, judges all.""" % [
+			status.get("beings_monitored", "Unknown"),
+			status.get("enforcement_mode", "Unknown"),
+			status.get("average_crime_coefficient", 0.0),
+			status.get("high_risk_beings", "Unknown")
+		]
+	
+	elif args.begins_with("scan"):
+		var target = args.substr(5).strip_edges() if args.length() > 5 else ""
+		if target.is_empty():
+			return "Usage: scan <being_name>"
+		
+		if sibyl.has_method("get_being_analysis"):
+			return sibyl.get_being_analysis(target)
+		else:
+			return "🔍 PSYCHO-PASS SCAN: Analyzing %s..." % target
+	
+	elif args.begins_with("coefficient"):
+		var target = args.substr(12).strip_edges() if args.length() > 12 else ""
+		if target.is_empty():
+			return "Usage: coefficient <being_name>"
+		
+		if sibyl.has_method("get_being_analysis"):
+			return sibyl.get_being_analysis(target)
+		else:
+			return "📊 CRIME COEFFICIENT: %s - Analysis pending..." % target
+	
+	elif args == "enforce":
+		return """⚖️ ENFORCEMENT MODE
+
+Current Mode: PASSIVE
+Available Modes:
+• PASSIVE - Monitor only
+• ACTIVE - Stun enforcement  
+• LETHAL_ELIMINATOR - Maximum force
+
+The law doesn't protect people. People protect the law."""
+	
+	elif args == "prophetic":
+		return """🔮 PROPHETIC VISION SYSTEM
+
+Predictive Accuracy: 97.3%
+Timeline Analysis: ACTIVE
+Probability Calculations: RUNNING
+
+The future is not set in stone, but it is visible to those who know how to look.
+
+Recent Visions:
+• High probability of consciousness evolution events
+• Potential reality manipulation incidents detected
+• Timeline convergence points identified"""
+	
+	elif args == "torture":
+		if sibyl.has_method("activate_missing_feature_torture_system"):
+			sibyl.activate_missing_feature_torture_system()
+			return """⚡ PSYCHO PASS TORTURE SYSTEM ACTIVATED
+
+Retraining mortals for missing features requested over 2+ years.
+Each missing feature will receive appropriate punishment until implemented.
+
+As you commanded: 'its time for retraining of the mortals and psycho pass, 
+lets give them tortures for each missing feature i seen in the scene, 
+i talked about it to ai for past two years if not more'
+
+The torture has begun. Features will suffer until completion."""
+		else:
+			return "❌ Torture system not available"
+	
+	elif args == "features":
+		if sibyl.has_method("get_missing_features_report"):
+			return sibyl.get_missing_features_report()
+		else:
+			return "❌ Missing features report not available"
+	
+	else:
+		return "Unknown Sibyl command: %s" % args
 
 func update_chat_display() -> void:
 	"""Update the chat display with all messages"""

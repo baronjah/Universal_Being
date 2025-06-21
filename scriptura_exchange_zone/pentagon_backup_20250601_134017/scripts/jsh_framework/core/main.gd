@@ -74,6 +74,12 @@
 #   .o. 88P 8""88888P'  o888o   o888o 
 #   `Y888P
 extends UniversalBeingBase
+
+func pentagon_init() -> void:
+	super.pentagon_init()
+	being_name = "Generated Being"
+	being_type = "auto_generated"
+	consciousness_level = 1
 var jsh_console
 var cmd_terminal
 var console
@@ -530,6 +536,7 @@ func sewers() -> void:
 	pentagon_sewers()
 
 func pentagon_sewers() -> void:
+    super.pentagon_sewers()
 	# Pentagon cleanup/output - override in child classes
 	pass
 	func register_command(cmd_name, target, method_name):
@@ -9558,6 +9565,18 @@ func set_up_racing_game(container_name, visibility):
 # Hide racing game and restore previous state
 func hide_racing_game():
 	print("\n🏎️ Hiding Racing Game...\n")
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+func pentagon_process(delta: float) -> void:
+	super.pentagon_process(delta)
+func pentagon_input(event: InputEvent) -> void:
+	super.pentagon_input(event)
+	# Auto-generated input implementation
+
+	# Auto-generated process implementation
+
+	# Auto-generated ready implementation
+
 	
 	# Hide racing container
 	var racing_container = get_node_or_null("racing_game_container")

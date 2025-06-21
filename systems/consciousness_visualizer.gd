@@ -9,7 +9,7 @@ const CONSCIOUSNESS_COLORS = {
 	3: Color(0.2, 1.0, 0.2),      # Green - Connected
 	4: Color(1.0, 0.84, 0.0),     # Gold - Enlightened
 	5: Color(1.0, 1.0, 1.0)       # Glowing White - Transcendent
-
+}
 const CONSCIOUSNESS_NAMES = {
 	0: "Dormant",
 	1: "Awakening",
@@ -62,7 +62,7 @@ const VISUAL_EFFECTS = {
 		"emission_radius": 60.0,
 		"glow_strength": 1.0,
 		"pulse_speed": 3.0
-}
+}}
 
 # Apply consciousness visual to a being's scene
 static func apply_consciousness_visual(being: UniversalBeing, scene_root: Node) -> void:
@@ -165,10 +165,10 @@ uniform float glow_power : hint_range(0.0, 3.0) = 1.0;
 uniform float time_scale : hint_range(0.0, 10.0) = 3.0;
 
 void fragment() {
-    vec4 tex = texture(TEXTURE, UV);
-    float pulse = sin(TIME * time_scale) * 0.5 + 0.5;
-    vec4 glow = glow_color * pulse * glow_power;
-    COLOR = tex + glow * tex.a;
+	vec4 tex = texture(TEXTURE, UV);
+	float pulse = sin(TIME * time_scale) * 0.5 + 0.5;
+	vec4 glow = glow_color * pulse * glow_power;
+	COLOR = tex + glow * tex.a;
 """
 	
 	var material = ShaderMaterial.new()

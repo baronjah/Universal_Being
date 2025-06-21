@@ -16,6 +16,12 @@
 extends UniversalBeingBase
 class_name JSHConsoleSystem_JSHconso
 
+func pentagon_init() -> void:
+	super.pentagon_init()
+	being_name = "Generated Being"
+	being_type = "auto_generated"
+	consciousness_level = 1
+
 
 @onready var console_gui = null  # Console GUI will be created dynamically if needed
 
@@ -566,6 +572,7 @@ func _ready() -> void:
 	pentagon_ready()
 
 func pentagon_ready() -> void:
+    super.pentagon_ready()
 	# Pentagon setup - override in child classes
 	pass
 
@@ -573,6 +580,7 @@ func _process(delta: float) -> void:
 	pentagon_process(delta)
 
 func pentagon_process(delta: float) -> void:
+    super.pentagon_process(delta)
 	# Pentagon logic processing - override in child classes
 	pass
 
@@ -580,6 +588,7 @@ func sewers() -> void:
 	pentagon_sewers()
 
 func pentagon_sewers() -> void:
+    super.pentagon_sewers()
 	# Pentagon cleanup/output - override in child classes
 	pass
 func update_cursor():
@@ -5922,6 +5931,10 @@ func create_3d_letter_ne(letter: String, position: Vector3) -> Node3D:
 
 func process_command_ne(args):
 	var command_text = args[0]
+func pentagon_input(event: InputEvent) -> void:
+	super.pentagon_input(event)
+	# Auto-generated input implementation
+
 	
 	# Split by spaces for command arguments
 	var parts = command_text.split(" ")

@@ -1,0 +1,400 @@
+# EtherealEngine.gd - The Cosmic Main Controller
+# Following our established programming rules and architecture
+extends Node3D
+class_name EtherealEngine
+
+# =================== CORE MANAGERS ===================
+@onready var input_manager: InputManager
+@onready var data_manager: DataManager  
+@onready var thread_manager: ThreadManager
+@onready var container_manager: ContainerManager
+@onready var cosmic_creator: CosmicCreator
+
+# =================== SYSTEM STATE ===================
+enum EngineState {
+	INITIALIZING,
+	COSMIC_NAVIGATION,
+	WORD_CREATION,
+	TERMINAL_MODE,
+	LAYER_NAVIGATION,
+	EMERGENCY_MODE
+}
+
+var current_state = EngineState.INITIALIZING
+var previous_state = EngineState.INITIALIZING
+var state_mutex = Mutex.new()
+
+# =================== COSMIC ENTITIES ===================
+var active_containers = {}
+var floating_words = {}
+var cosmic_layers = {}
+var datapoints = {}
+
+# Mutexes for thread safety (following our rules)
+var containers_mutex = Mutex.new()
+var words_mutex = Mutex.new()
+var layers_mutex = Mutex.new()
+var datapoints_mutex = Mutex.new()
+
+# =================== PERFORMANCE TRACKING ===================
+var frame_counter = 0
+var performance_metrics = {
+	"fps": 0.0,
+	"entities_count": 0,
+	"active_threads": 0,
+	"memory_usage": 0
+}
+
+func _ready():
+	print("🌌 Ethereal Engine - Cosmic Creation Platform Starting...")
+	initialize_cosmic_engine()
+
+func initialize_cosmic_engine():
+	# Following Rule #1: Single point of initialization
+	setup_core_managers()
+	setup_signal_connections()
+	setup_initial_cosmic_state()
+	change_engine_state(EngineState.COSMIC_NAVIGATION)
+	print("✨ Ethereal Engine initialized successfully!")
+
+# =================== CORE MANAGERS SETUP ===================
+func setup_core_managers():
+	# Create manager instances following our architecture
+	input_manager = InputManager.new()
+	data_manager = DataManager.new()
+	thread_manager = ThreadManager.new()
+	container_manager = ContainerManager.new()
+	cosmic_creator = CosmicCreator.new()
+	
+	# Add as children for proper scene tree management
+	add_child(input_manager)
+	add_child(data_manager)
+	add_child(thread_manager)
+	add_child(container_manager)
+	add_child(cosmic_creator)
+
+func setup_signal_connections():
+	# Following Rule #6: Thread communication protocol
+	input_manager.input_validated.connect(_on_input_validated)
+	input_manager.input_rejected.connect(_on_input_rejected)
+	
+	thread_manager.task_completed.connect(_on_thread_task_completed)
+	thread_manager.task_failed.connect(_on_thread_task_failed)
+	
+	container_manager.container_created.connect(_on_container_created)
+	container_manager.container_destroyed.connect(_on_container_destroyed)
+	
+	cosmic_creator.word_manifested.connect(_on_word_manifested)
+	cosmic_creator.layer_activated.connect(_on_layer_activated)
+
+func setup_initial_cosmic_state():
+	# Initialize your current cosmic structure
+	create_initial_multiverses()
+	spawn_initial_word_entities()
+	setup_navigation_layers()
+
+# =================== INPUT PROCESSING ===================
+func _input(event):
+	# Following Rule #1: All inputs flow through InputManager first
+	input_manager.process_input(event, current_state)
+
+func _on_input_validated(action: String, data: Dictionary):
+	# Following Rule #2: Input context awareness
+	match current_state:
+		EngineState.COSMIC_NAVIGATION:
+			handle_navigation_input(action, data)
+		EngineState.WORD_CREATION:
+			handle_word_creation_input(action, data)
+		EngineState.TERMINAL_MODE:
+			handle_terminal_input(action, data)
+		EngineState.LAYER_NAVIGATION:
+			handle_layer_navigation_input(action, data)
+
+func handle_navigation_input(action: String, data: Dictionary):
+	match action:
+		"move_forward", "move_backward", "move_left", "move_right":
+			cosmic_creator.move_cosmic_camera(action, data)
+		"mouse_scroll":
+			cosmic_creator.adjust_layer_depth(data.delta)
+		"toggle_akashic_navigation":  # Tab key
+			change_engine_state(EngineState.TERMINAL_MODE)
+		"interact_word":  # E key
+			find_and_interact_nearest_word()
+		"generate_new_word":  # G key
+			change_engine_state(EngineState.WORD_CREATION)
+
+func handle_word_creation_input(action: String, data: Dictionary):
+	match action:
+		"create_word_at_cursor":
+			create_new_word_entity(data)
+		"cancel_creation":
+			change_engine_state(EngineState.COSMIC_NAVIGATION)
+
+func handle_terminal_input(action: String, data: Dictionary):
+	match action:
+		"terminal_command":
+			process_terminal_command(data.command)
+		"close_terminal":
+			change_engine_state(EngineState.COSMIC_NAVIGATION)
+
+# =================== STATE MANAGEMENT ===================
+func change_engine_state(new_state: EngineState):
+	state_mutex.lock()
+	previous_state = current_state
+	current_state = new_state
+	state_mutex.unlock()
+	
+	print("🔄 Engine state changed: ", EngineState.keys()[previous_state], " → ", EngineState.keys()[new_state])
+	
+	# Update UI to reflect state change
+	update_ui_for_state(new_state)
+
+func update_ui_for_state(state: EngineState):
+	# Following Rule #12: UI state synchronization
+	match state:
+		EngineState.COSMIC_NAVIGATION:
+			show_navigation_ui()
+		EngineState.WORD_CREATION:
+			show_creation_ui()
+		EngineState.TERMINAL_MODE:
+			show_terminal_ui()
+
+# =================== COSMIC ENTITY MANAGEMENT ===================
+func create_new_word_entity(data: Dictionary):
+	# Following Rule #4: Thread safety above all
+	var task_id = generate_task_id()
+	thread_manager.submit_task(
+		"create_word_entity",
+		data,
+		task_id
+	)
+
+func _on_word_manifested(word_entity: Node3D, word_data: Dictionary):
+	# Following Rule #5: Main thread sacred operations
+	words_mutex.lock()
+	floating_words[word_data.word_id] = {
+		"entity": word_entity,
+		"data": word_data,
+		"creation_time": Time.get_ticks_msec()
+	}
+	words_mutex.unlock()
+	
+	# Add to scene tree safely
+	add_child_safe(word_entity)
+
+func find_and_interact_nearest_word():
+	words_mutex.lock()
+	var nearest_word = find_nearest_word_to_camera()
+	words_mutex.unlock()
+	
+	if nearest_word:
+		interact_with_word(nearest_word)
+
+func interact_with_word(word_entity: Node3D):
+	print("🎯 Interacting with word: ", word_entity.name)
+	cosmic_creator.highlight_word_entity(word_entity)
+
+# =================== CONTAINER MANAGEMENT ===================
+func create_initial_multiverses():
+	# Following Rule #10: Container lifecycle management
+	var multiverse_data = {
+		"type": "multiverse",
+		"level": 0,
+		"position": Vector3.ZERO,
+		"scale": Vector3(100, 100, 100)
+	}
+	
+	container_manager.create_container("multiverse_root", multiverse_data)
+
+func _on_container_created(container_id: String, container: Node3D):
+	containers_mutex.lock()
+	active_containers[container_id] = {
+		"node": container,
+		"creation_time": Time.get_ticks_msec(),
+		"last_update": Time.get_ticks_msec()
+	}
+	containers_mutex.unlock()
+
+func _on_container_destroyed(container_id: String):
+	containers_mutex.lock()
+	if container_id in active_containers:
+		active_containers.erase(container_id)
+	containers_mutex.unlock()
+
+# =================== THREAD TASK MANAGEMENT ===================
+func _on_thread_task_completed(task_id: String, result: Dictionary):
+	print("✅ Thread task completed: ", task_id)
+	
+	match result.task_type:
+		"create_word_entity":
+			handle_word_creation_result(result)
+		"update_datapoint":
+			handle_datapoint_update_result(result)
+		"process_container":
+			handle_container_process_result(result)
+
+func _on_thread_task_failed(task_id: String, error: String):
+	# Following Rule #13: Graceful degradation
+	print("❌ Thread task failed: ", task_id, " - ", error)
+	attempt_task_recovery(task_id, error)
+
+func attempt_task_recovery(task_id: String, error: String):
+	# Following Rule #14: Error recovery protocols
+	var error_severity = classify_error_severity(error)
+	
+	match error_severity:
+		ErrorSeverity.COSMETIC:
+			print("⚠️ Cosmetic error ignored: ", error)
+		ErrorSeverity.FUNCTIONAL:
+			disable_feature_temporarily(task_id)
+		ErrorSeverity.CRITICAL:
+			attempt_system_recovery()
+		ErrorSeverity.CATASTROPHIC:
+			emergency_save_and_restart()
+
+# =================== TERMINAL COMMAND PROCESSING ===================
+func process_terminal_command(command: String):
+	var command_parts = command.split(" ")
+	var cmd = command_parts[0]
+	var args = command_parts.slice(1)
+	
+	match cmd:
+		"create":
+			if args.size() >= 2:
+				terminal_create_entity(args[0], args[1])
+		"navigate":
+			if args.size() >= 1:
+				terminal_navigate_to(args[0])
+		"evolve":
+			if args.size() >= 2:
+				terminal_evolve_word(args[0], args[1])
+		"ai":
+			if args.size() >= 2:
+				terminal_ai_collaborate(args[0], args[1])
+		"debug":
+			terminal_show_debug_info()
+		_:
+			print("Unknown command: ", cmd)
+
+func terminal_create_entity(entity_type: String, entity_name: String):
+	var creation_data = {
+		"type": entity_type,
+		"name": entity_name,
+		"position": get_camera_forward_position()
+	}
+	create_new_word_entity(creation_data)
+
+func terminal_navigate_to(destination: String):
+	cosmic_creator.navigate_to_cosmic_location(destination)
+
+func terminal_evolve_word(word_name: String, evolution_type: String):
+	var word_entity = find_word_by_name(word_name)
+	if word_entity:
+		cosmic_creator.evolve_word_entity(word_entity, evolution_type)
+
+# =================== PERFORMANCE MONITORING ===================
+func _process(delta):
+	frame_counter += 1
+	
+	# Update performance metrics every second
+	if frame_counter % 60 == 0:
+		update_performance_metrics()
+		
+	# Following Rule #15: LOD-based processing
+	update_entities_with_lod()
+	
+	# Following Rule #16: Resource management
+	if frame_counter % 1800 == 0:  # Every 30 seconds
+		cleanup_unused_resources()
+
+func update_performance_metrics():
+	performance_metrics.fps = Engine.get_frames_per_second()
+	performance_metrics.entities_count = get_total_entity_count()
+	performance_metrics.active_threads = thread_manager.get_active_thread_count()
+	performance_metrics.memory_usage = OS.get_static_memory_usage_by_type()
+
+func update_entities_with_lod():
+	var camera = get_viewport().get_camera_3d()
+	if not camera:
+		return
+	
+	words_mutex.lock()
+	for word_id in floating_words:
+		var word_data = floating_words[word_id]
+		var distance = camera.global_position.distance_to(word_data.entity.global_position)
+		cosmic_creator.update_word_lod(word_data.entity, distance)
+	words_mutex.unlock()
+
+# =================== UTILITY FUNCTIONS ===================
+func get_camera_forward_position() -> Vector3:
+	var camera = get_viewport().get_camera_3d()
+	if camera:
+		return camera.global_position + camera.global_transform.basis.z * -5.0
+	return Vector3.ZERO
+
+func find_nearest_word_to_camera() -> Node3D:
+	var camera = get_viewport().get_camera_3d()
+	if not camera:
+		return null
+	
+	var nearest_word = null
+	var nearest_distance = INF
+	
+	for word_id in floating_words:
+		var word_entity = floating_words[word_id].entity
+		var distance = camera.global_position.distance_to(word_entity.global_position)
+		
+		if distance < nearest_distance and distance < 5.0:  # Interaction range
+			nearest_distance = distance
+			nearest_word = word_entity
+	
+	return nearest_word
+
+func find_word_by_name(word_name: String) -> Node3D:
+	for word_id in floating_words:
+		var word_data = floating_words[word_id]
+		if word_data.data.get("name", "") == word_name:
+			return word_data.entity
+	return null
+
+func add_child_safe(child: Node):
+	# Following Rule #11: Scene tree modification protocol
+	if is_main_thread():
+		add_child(child)
+	else:
+		call_deferred("add_child", child)
+
+func generate_task_id() -> String:
+	return "task_" + str(Time.get_ticks_msec()) + "_" + str(randi() % 1000)
+
+func get_total_entity_count() -> int:
+	return floating_words.size() + active_containers.size()
+
+func is_main_thread() -> bool:
+	return OS.get_thread_caller_id() == OS.get_main_thread_id()
+
+# =================== DEBUG FUNCTIONS ===================
+func terminal_show_debug_info():
+	print("🔧 === ETHEREAL ENGINE DEBUG INFO ===")
+	print("Engine State: ", EngineState.keys()[current_state])
+	print("Active Words: ", floating_words.size())
+	print("Active Containers: ", active_containers.size())
+	print("FPS: ", performance_metrics.fps)
+	print("Active Threads: ", performance_metrics.active_threads)
+	print("========================================")
+
+func _on_input_rejected(reason: String):
+	print("❌ Input rejected: ", reason)
+
+# =================== CLEANUP ===================
+func _exit_tree():
+	print("🌌 Ethereal Engine shutting down...")
+	
+	# Cleanup all mutexes
+	state_mutex = null
+	containers_mutex = null
+	words_mutex = null
+	layers_mutex = null
+	datapoints_mutex = null
+	
+	print("✨ Ethereal Engine shutdown complete.")

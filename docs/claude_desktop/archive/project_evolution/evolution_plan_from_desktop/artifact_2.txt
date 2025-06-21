@@ -1,0 +1,327 @@
+#!/bin/bash
+# Game Evolution System Setup
+# Creates multi-language, multi-engine game development environment
+
+echo "🎮 Game Evolution System Setup"
+echo "=============================="
+
+# Create the game evolution workspace
+GAME_ROOT="/mnt/c/Users/Percision 15/claude_evolution/game_evolution"
+mkdir -p "$GAME_ROOT"/{games,templates,shared_assets,docs}
+
+cd "$GAME_ROOT"
+
+# Copy the evolution system
+cat > game_evolution_system.py << 'EOF'
+# The Python system code goes here - truncated for brevity
+# (Include the full GameEvolutionSystem class from the artifact above)
+EOF
+
+# Create quick command scripts
+cat > create_game.sh << 'EOF'
+#!/bin/bash
+# Quick game creation script
+
+if [ $# -lt 5 ]; then
+    echo "Usage: $0 <id> <n> <engine> <language> <complexity> [features...]"
+    echo ""
+    echo "Engines: godot, unity, pygame, javascript, custom"
+    echo "Languages: python, csharp, cpp, rust, javascript, gdscript"
+    echo "Complexity: simple, intermediate, advanced, expert"
+    echo ""
+    echo "Example: $0 my_3d_world \"3D World Explorer\" pygame python simple 3d_world procedural_generation"
+    exit 1
+fi
+
+python3 game_evolution_system.py create "$@"
+EOF
+
+cat > evolve_game.sh << 'EOF'
+#!/bin/bash
+# Game evolution script
+
+if [ $# -lt 4 ]; then
+    echo "Usage: $0 <source_game_id> <new_engine> <new_language> <new_complexity>"
+    echo ""
+    echo "Example: $0 my_3d_world godot gdscript intermediate"
+    exit 1
+fi
+
+python3 game_evolution_system.py evolve "$@"
+EOF
+
+cat > game_status.sh << 'EOF'
+#!/bin/bash
+# Show game evolution system status
+
+python3 game_evolution_system.py status
+echo ""
+echo "🚀 Quick Commands:"
+echo "  ./create_game.sh <id> <n> <engine> <lang> <complexity> [features]"
+echo "  ./evolve_game.sh <source> <engine> <lang> <complexity>"
+echo "  ./nav_game.sh <game_id>  # Navigate to game project"
+echo ""
+echo "💡 Available engines: godot, unity, pygame, javascript"
+echo "💡 Available languages: python, csharp, rust, javascript, gdscript"
+echo "💡 Complexity levels: simple → intermediate → advanced → expert"
+EOF
+
+cat > nav_game.sh << 'EOF'
+#!/bin/bash
+# Navigate to game project
+
+if [ $# -lt 1 ]; then
+    echo "Usage: $0 <game_id>"
+    echo ""
+    echo "Available games:"
+    python3 game_evolution_system.py list
+    exit 1
+fi
+
+GAME_ID=$1
+GAME_DIR="games/$GAME_ID"
+
+if [ ! -d "$GAME_DIR" ]; then
+    echo "❌ Game '$GAME_ID' not found"
+    echo "Available games:"
+    python3 game_evolution_system.py list
+    exit 1
+fi
+
+echo "📍 Navigating to game: $GAME_ID"
+cd "$GAME_DIR"
+
+# Show game context
+if [ -f "GAME_EVOLUTION.md" ]; then
+    echo "📖 Game Evolution Context:"
+    head -20 GAME_EVOLUTION.md
+    echo ""
+fi
+
+echo "🎮 Game Development Environment Ready!"
+echo "📁 Current directory: $(pwd)"
+echo ""
+echo "🧠 Claude AI commands for game development:"
+echo "  ultrathink 'game architecture for complex 3D world'"
+echo "  think harder 'procedural generation algorithm'"
+echo "  think hard 'performance optimization strategies'"
+echo ""
+
+# Start a new shell in the game directory
+exec bash
+EOF
+
+# Make scripts executable
+chmod +x *.sh
+
+# Create example templates
+mkdir -p templates/features
+
+cat > templates/features/procedural_generation.md << 'EOF'
+# Procedural Generation Feature Template
+
+## Core Concept
+Generate content algorithmically using noise functions and mathematical patterns.
+
+## Implementation Approaches
+
+### Simple Level
+- Basic random number generation
+- Simple tile/grid based generation
+- 2D height maps
+
+### Intermediate Level  
+- Perlin/Simplex noise
+- Layered generation (terrain + features)
+- Basic biome systems
+
+### Advanced Level
+- Multiple octave noise
+- Complex terrain generation
+- Dynamic loading/streaming
+- Procedural textures
+
+### Expert Level
+- Custom noise algorithms
+- Real-time generation
+- GPU-accelerated generation
+- Complex ecosystem simulation
+
+## Visualization Focus
+- Real-time noise preview
+- Interactive parameter adjustment
+- 3D terrain visualization
+- Texture generation preview
+
+## Code Examples by Engine/Language
+[Specific examples would be generated based on chosen engine]
+EOF
+
+cat > templates/features/3d_visualization.md << 'EOF'
+# 3D Visualization Feature Template
+
+## Core Concept
+Create immersive 3D environments with proper lighting, texturing, and camera systems.
+
+## Implementation Approaches
+
+### Simple Level
+- Basic 3D shapes
+- Orthographic projection
+- Fixed camera
+- Flat shading
+
+### Intermediate Level
+- Perspective projection
+- Free camera movement
+- Basic lighting (directional)
+- Texture mapping
+
+### Advanced Level
+- Multiple light types
+- Shadow mapping
+- Normal mapping
+- Post-processing effects
+
+### Expert Level
+- PBR (Physically Based Rendering)
+- Global illumination
+- Advanced shaders
+- Ray tracing/path tracing
+
+## Visualization Techniques
+- Wireframe mode toggle
+- Real-time lighting adjustment
+- Material property editors
+- Performance visualization
+
+## Engine-Specific Implementation
+[Generated based on chosen engine - Godot, Unity, etc.]
+EOF
+
+# Create shared assets structure
+mkdir -p shared_assets/{textures,models,audio,scripts}
+mkdir -p shared_assets/textures/{terrain,characters,ui,particles}
+mkdir -p shared_assets/models/{low_poly,high_poly,characters,environments}
+mkdir -p shared_assets/audio/{music,sfx,ambient}
+mkdir -p shared_assets/scripts/{noise,lighting,camera,utils}
+
+# Create example noise generation script
+cat > shared_assets/scripts/noise/perlin_3d.py << 'EOF'
+"""
+3D Perlin Noise Generator
+Suitable for terrain, clouds, textures
+"""
+
+import numpy as np
+from noise import pnoise3
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+class Perlin3D:
+    def __init__(self, width=64, height=64, depth=64):
+        self.width = width
+        self.height = height  
+        self.depth = depth
+        
+    def generate(self, scale=0.1, octaves=6, persistence=0.5, lacunarity=2.0, seed=0):
+        """Generate 3D Perlin noise array"""
+        noise_array = np.zeros((self.depth, self.height, self.width))
+        
+        for z in range(self.depth):
+            for y in range(self.height):
+                for x in range(self.width):
+                    noise_value = pnoise3(
+                        x * scale,
+                        y * scale, 
+                        z * scale,
+                        octaves=octaves,
+                        persistence=persistence,
+                        lacunarity=lacunarity,
+                        base=seed
+                    )
+                    noise_array[z, y, x] = noise_value
+                    
+        return noise_array
+    
+    def visualize_slice(self, noise_array, z_slice=None):
+        """Visualize a 2D slice of the 3D noise"""
+        if z_slice is None:
+            z_slice = self.depth // 2
+            
+        plt.figure(figsize=(10, 8))
+        plt.imshow(noise_array[z_slice], cmap='terrain', origin='lower')
+        plt.colorbar(label='Noise Value')
+        plt.title(f'3D Perlin Noise - Z Slice {z_slice}')
+        plt.xlabel('X')
+        plt.ylabel('Y')
+        plt.show()
+    
+    def export_for_engine(self, noise_array, format='numpy'):
+        """Export noise data for game engines"""
+        if format == 'numpy':
+            np.save('terrain_noise.npy', noise_array)
+        elif format == 'raw':
+            # Convert to 0-255 range for raw export
+            normalized = ((noise_array + 1) * 127.5).astype(np.uint8)
+            normalized.tofile('terrain_noise.raw')
+        
+        print(f"Exported noise data in {format} format")
+
+if __name__ == "__main__":
+    # Example usage
+    generator = Perlin3D(128, 128, 64)
+    noise = generator.generate(scale=0.05, octaves=4)
+    generator.visualize_slice(noise)
+    generator.export_for_engine(noise)
+EOF
+
+# Create quick access symlinks
+cd "/mnt/c/Users/Percision 15"
+ln -sf "claude_evolution/game_evolution/create_game.sh" ./create_game
+ln -sf "claude_evolution/game_evolution/evolve_game.sh" ./evolve_game
+ln -sf "claude_evolution/game_evolution/game_status.sh" ./game_status
+ln -sf "claude_evolution/game_evolution/nav_game.sh" ./nav_game
+
+# Make everything executable
+chmod +x ./create_game ./evolve_game ./game_status ./nav_game
+
+echo ""
+echo "🎉 GAME EVOLUTION SYSTEM READY!"
+echo "==============================="
+echo ""
+echo "🎮 Your Multi-Language Game Evolution Environment:"
+echo ""
+echo "🚀 Quick Commands:"
+echo "  ./create_game <id> <n> <engine> <language> <complexity> [features]"
+echo "  ./evolve_game <source> <new_engine> <new_language> <new_complexity>"
+echo "  ./game_status                    # View all games"
+echo "  ./nav_game <game_id>            # Enter game project"
+echo ""
+echo "💡 Example Workflow:"
+echo "  # Create simple Python/Pygame game"
+echo "  ./create_game world_01 'Simple World' pygame python simple 3d_world"
+echo ""  
+echo "  # Evolve it to Godot when ready"
+echo "  ./evolve_game world_01 godot gdscript intermediate"
+echo ""
+echo "  # Then to Unity for advanced features"  
+echo "  ./evolve_game world_01_godot_intermediate unity csharp advanced"
+echo ""
+echo "🌟 Special Features:"
+echo "• Cross-engine evolution (Pygame → Godot → Unity)"
+echo "• Language translation (Python → GDScript → C#)"
+echo "• Complexity progression (Simple → Expert)"
+echo "• Shared asset library"
+echo "• Procedural generation focus"
+echo "• 3D visualization emphasis"
+echo "• Claude AI integration for complex problems"
+echo ""
+echo "🎯 Perfect for:"
+echo "• Learning different game engines"
+echo "• Prototyping in simple engines, finishing in complex ones"
+echo "• Language learning through game development"
+echo "• Procedural generation experimentation"
+echo "• 3D visualization projects"
+echo ""
+echo "Start with: ./create_game my_world 'My First Evolution' pygame python simple procedural_generation 3d_world"

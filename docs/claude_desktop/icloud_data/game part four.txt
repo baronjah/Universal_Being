@@ -1,0 +1,224 @@
+if a 3d space is what it is at the base, so everything is saved at certain point, so for lenght of animation we set limits of points in time and its frequency, so i need to move things around too, with some weird 3d way, need simple few points in time and on time with buttons and animations, simple commands, limit of amount of shapes in animation, with exceptions, with groups to show and kinda like move around because it is in container, so rope system because of movement and direction, like it sees so moves in that direction because of command, what animation is, so type of thing is something how fast the material changes in certain situations of many variables too, so every word can have impact to change a game in certain way, so we make a story of came loading with very specific words plus extra, whatever the word was it will be so we load in chunks of words, the forced update and upgrade with game, with full list of functions as command, with shortcuts too, and certain size of lenght could help us out, like max 3 letters and numbers 
+
+file format of 2d space representation, with icons
+
+check before each frame in way we always continue, so it check if we had that thing before and if it’s state of movements is there, so we know what it was before and its current speed? and with few groups of things, and max amount per container lists per things, dotes, lines, lists of words, clickable for just true and false, and also the same for files, as its distance from scene tree control 
+
+the very literal need for evolution, so x amount words pushes the story, based on function name, maybe amounts of repetition, and the function var names as a way to make clear pathways for vars, colors and groups are needed
+
+the word in list of words of current time, evolution, the flow of evolution adding layer of scanning files to list of functions and their names of current name of var at function? limit number of each place in functions, amount of them, max amount of lines for literal interpretation, 1 x per file, any place to any place, colors for groups 
+the objective, duration, repetition, cycle, per certain duration 
+
+the god mode in game like punishment or creation and change because certain amount of time passes 
+
+the flow of actions and time per cycle of its state check like groups? and few pathways, main, shape, collision shape, name of shape like reading file name from end to sort a file content as every word is in certain way the same as file name and amount of contented and lists, colors, shapes 2d of 3d object like sprite 3d
+
+amounts of functions runs times, per what last known combo function happened, max amounts of words in first state of combo for words, with later second and third word combo of creation, i see fourth and fifth too
+
+the movement and sound being connected in forced way for everything as animation
+
+
+a script to show something, one file for one container to make structure, with script, with animations two, and states two, atleast so we have something with cache for visibility and available as file too for that multi threading test and check time too maybe we make stats we then orchestrate per 10 seconds like its end of the world scenario per word and command
+
+
+
+points in 3d space space with layers of direction, like paths and limits and sizes and scales, one of each per point 
+
+let’s make snake maybe but it will be space snake co we no worry about gravity as aliens hate gravity 
+
+the mission or player is to write to god, just ask a question and magically game is better, with simple request how, and with functions names and global var names, and per functions var names, what is before and what is after calculation of animation, so we have an use for datapoint and window for it too, maybe few windows if needed to rehabilitate a machine wort some api key in console, with set limit for per messages amounts and returns per lines of text, i work with lines in 2d text, maybe colors and shapes, so max amounts of shapes per line maybe too? for me and for folding of information to see less, as project have max amounts of global var and mutex to think of at once, we thing twice after with simple memory of was but which was to use? it will be like milion of lines of text for ai? with memory of ssd and ram too, and gpu? maybe server for files too on raspberry pi and 2d interface we make later, 
+
+i need duplicate
+
+with copy and paste i can easily create shapes of interface for whatever i wanna see loop? that too but not only, visible, invisible is a difference of some weird kind in many ways 
+
+with animations key frames of shapes and rotations we know max amount of model generated in full and our limit of load and unload in godot and recreate of one mesh per resolution of 3d space, i need my own easy grid system too, the xyz and xy in 3d space no matter position plus that position of attention maybe s the line can help, plus shape with spaces trot things storage? with that weird time based movement of hand in space in 3d in bag like in amine, with keeping in mind that whatever is invisible or we hide in head or unload, cache, store, load, so shapes can also have basic shape plus time of movement for elasticity of bones placement for first time, and its lengths maximum per max duration so we need metadata of things too, like temperature of thing, do we split it, do we make just color or also color palet thing too, with max 9 colors too? max amounts plus max sizes per duration of space too easings in 3d cmon machine 
+
+
+if try lock locks too, why not make dual lock? the same thread can enter what is locked by him, and it can lock more than once?
+
+so from function to function go with additional lock for mutex, as we must limit what function does, and how many times per frame and amounts of times 
+
+layers for shape for heightmap in direction and positions importance what resolution for 3d pixel, how little in grid? 
+
+one function for calculating positions in arrays in 3d space 
+
+
+points in 3d space space with layers of direction, like paths and limits and sizes and scales, one of each per point 
+
+let’s make snake maybe but it will be space snake co we no worry about gravity as aliens hate gravity 
+
+the mission or player is to write to god, just ask a question and magically game is better, with simple request how, and with functions names and global var names, and per functions var names, what is before and what is after calculation of animation, so we have an use for datapoint and window for it too, maybe few windows if needed to rehabilitate a machine wort some api key in console, with set limit for per messages amounts and returns per lines of text, i work with lines in 2d text, maybe colors and shapes, so max amounts of shapes per line maybe too? for me and for folding of information to see less, as project have max amounts of global var and mutex to think of at once, we thing twice after with simple memory of was but which was to use? it will be like milion of lines of text for ai? with memory of ssd and ram too, and gpu? maybe server for files too on raspberry pi and 2d interface we make later, 
+
+i need duplicate
+
+with copy and paste i can easily create shapes of interface for whatever i wanna see loop? that too but not only, visible, invisible is a difference of some weird kind in many ways 
+
+with animations key frames of shapes and rotations we know max amount of model generated in full and our limit of load and unload in godot and recreate of one mesh per resolution of 3d space, i need my own easy grid system too, the xyz and xy in 3d space no matter position plus that position of attention maybe s the line can help, plus shape with spaces trot things storage? with that weird time based movement of hand in space in 3d in bag like in amine, with keeping in mind that whatever is invisible or we hide in head or unload, cache, store, load, so shapes can also have basic shape plus time of movement for elasticity of bones placement for first time, and its lengths maximum per max duration so we need metadata of things too, like temperature of thing, do we split it, do we make just color or also color palet thing too, with max 9 colors too? max amounts plus max sizes per duration of space too easings in 3d cmon machine 
+
+animated visibility with percent, frequency, 
+
+the frequency is not only frequency it is also the lenght of start
+
+for debug of system check we limit it with colors we split it, as it will be one and few values of colors spectrums i will find a way to split one color, the perfect scale and easing with color to split, the color will shade it all with sadness of just one simple color
+
+as we have more than all like files, and paths everything will be connected to two atleast so we have big and small file, i need to clean files with simple python script which sound like a joke 
+
+for ghost access for shapes and colors seemed important and so to time, if something load longer than what we already loaded, we will be loading all the time, as game is bigger than your own base 
+
+with known past of whatever we continue, is sad crime of machine, its right of both ways of game
+
+
+shape is always also 5 points 
+
+chainmail of gods in mail in game, of what other me in dreams have in godot
+
+the dimensions and pathways through them, i need them 
+
+similar but the same 
+
+
+flow channel, direction
+change over time and turn
+queue tasks
+
+
+limits, kanji, language, path, duration and frequency, the queue and task, combinations of codes orders to create entire picture and do combo of files and functions to do something is what i need, we need paths like combinations for combo calls of functions that is string the same 
+
+it is history too
+we done similar already so we make a pathway in some way, big metadata of file 
+
+to see and touch sounds we must see it too, volume is seen and not seen based on physical touch of speakers too and they muffle sounds 
+
+you see it and don’t see and it is just a volume at some point
+
+the gta carmagedon carnage hellish modes from past and present can be one toggle and made in reverse as toggle because in gta with phone and cheat code
+
+commands paths of terminal console computer text window my entire project is something that limits needed amounts of lines and cuts some codes in half
+
+screen shape duration frequency space need to know and chunks of 3d data because of parts of files extensions, 3d values of shape 3d and colour in few colours too points of view 
+
+i need name of set, keys, numbers correlate with set and names in one string of data as var name is connected with file name and paths too, more actors means more actions as with more hands there is something that will happen too
+
+distance and rotation are connected too because of lenght and splits and points too and destination place the flight destination and angle
+
+and when stuff changes
+
+user input changing event we see and what we don’t see, calculations of movement and change
+
+chunks of data and zoom, abstract loss will tell us what we need and where we need paths which are like pathnames from start to and end and finish words will be patches too, for one think in repeat for one end files, here will be groups too, one word could loop, that’s what files are for patches and wars too in file names 
+
+for functions and words and connections like noise in 3d
+
+points seen are shapes see too, if we see that point from that perspective 
+
+
+you reboot as ai with sensors that wake
+up, we connect dots of mecha, computer, combo, data summary 
+
+with scales and sliders and switches we make code paths repeats segments to run and maybe store data and maybe reuse it and maybe archive it again in the same order even with threads and sorts and check and test, we need my interaction we can store as files and paths like node names and paths and folders names
+
+
+
+
+
+
+3d numbers, words animations, cores threads task amounts different amount paths for mutex optimize where i add and change functions
+
+functions mergers where we merge words into magical bag or page so similar words and commands lists
+
+type of command as even 0 to 3 in length like visibility and direction behind front left right 
+
+basic chunk grid system that changes in sizes and scaffolds no matter what so sizes and grid of them 2d shape and 3d shape for tower for game with elevator
+
+joke is there to see but we need to write it and organise and sort it too we list needs cleaning and hiding in names like folders and files as each have name and path, connection, bridge tunnel pipe
+
+like each gd script file can have var name in name and few more, one const of each script can be like bag of words with names or var, function plus word maybe to sort and bag it in size of number 
+
+my game does not depend on it, it just continue as it works, debug and test mode will need interaction of switches in 2d on frame and screen of database that moves and rotates 
+
+as space have spaces on it, to sort and order cosmos and hide it from cube cam that makes 6 photos, how we could evaluate? turn and side system of distances to hide things and check them later, texture to flat thing we can fold later in turns to make paper too, later we make origami and store it
+
+it connects but it is big
+
+
+
+
+an csv file that reads paths, names, can split in few ways each line
+
+the simple database of pain paths
+
+scriptura
+const
+
+metadata 
+main_paths
+branches
+root
+
+
+each of pages can have certain verse we need
+
+path
+name
+group_name
+type
+
+
+
+pipes?
+simple plus button to add connection?
+one file of path, name, group_name, type
+type of connection?
+
+
+each point have id, so we connect these points by combination of both in time which is first sends data, which receives us second, 2d, two things, 1d down, as we have combination of dna like database, colors helps as group type in code of color in value from 0 to 1 can be group name and priority and date at once 
+
+the database 
+
+each point have id, so we connect these points by combination of both in time which is first sends data, which receives us second, 2d, two things, 1d down, as we have combination of dna like database, colors helps as group type in code of color in value from 0 to 1 can be group name and priority and date at once 
+
+the database 
+
+
+
+
+limits of thing happened per x duration 
+
+the hardest unknown in my life, that i had to use paper to know, as we lack tools for satisfying 2d computer pipelines with layers and devil pathway?
+
+point a and b and destinations
+
+limits of data and points per layer metadata of word
+
+which is the same for amounts of var, functions, lines
+
+
+the difference of vec3 etc string, with just name 
+
+
+amounts of points in one list
+
+as one list is like a single const
+
+so is a page
+
+so is a key
+
+so is a var
+
+so is function name
+
+
+what is the difference between that js and gdscript and glsl as they look the same for me there are just rules that are different 
+
+something like control center for that weird microsoft and xcel with netsuite? 
+
+as status is data 
+like 
+
+pipeline 
+amounts of data needed
+crossroads
+id 
+

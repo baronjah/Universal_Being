@@ -195,4 +195,3 @@ func _on_dimension_transition(from_dim, to_dim):
 		turn_priority_system.save_display_files()
 
 		print("Updated turn to match dimension: " + turn_priority_system.get_turn_string())
-

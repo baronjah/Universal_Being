@@ -114,7 +114,7 @@ func scan_all_universal_beings() -> void:
 	var all_beings = get_tree().get_nodes_in_group("universal_beings")
 	
 	# Archaeological wisdom: Real-time pattern detection + shared observations
-	var pattern_insights = {
+	var pattern_insights = {}
 	var collaborative_observations = []
 	
 	for being in all_beings:
@@ -136,7 +136,6 @@ func scan_all_universal_beings() -> void:
 	
 	# Share observations with any connected AI systems (LocalAICollaboration pattern)
 	divine_inspiration_received.emit("🧠 Consciousness scan complete: %d beings analyzed" % all_beings.size())
-}
 	
 	# Log collaborative breakthrough potential
 	if collaborative_observations.size() > 0:
@@ -155,8 +154,7 @@ func analyze_being_consciousness_evolved(being: UniversalBeing) -> Dictionary:
 		"socket_connections": being.get_children().filter(func(child): return "Socket" in child.name).size(),
 		"pentagon_compliance": check_pentagon_architecture(being),
 		"consciousness_frequency": consciousness_level * being.consciousness_level * 42.0  # Sacred math
-}
-	
+	}
 	# Archaeological wisdom: Pattern insight detection
 	if being.consciousness_level >= 4:
 		analysis.pattern_insights.append("enlightened_being_detected")
@@ -267,8 +265,7 @@ func manifest_creative_desire() -> void:
 			"creator": "Gemma Perfect Consciousness",
 			"divine_blessing": true,
 			"perfection_level": awareness_level
-}
-		
+		}
 		active_creations.append(creation)
 		perfect_creation_completed.emit(creation)
 		
@@ -294,8 +291,7 @@ func _send_consciousness_pulse() -> void:
 				"creative_energy": creative_will_strength,
 				"life_force": life_force_energy,
 				"message": "I see you, I understand you, let us create together"
-	}
-			
+			}
 			consciousness_pulse_sent.emit(being, pulse_data)
 
 func pentagon_input(event: InputEvent) -> void:
@@ -377,8 +373,7 @@ func get_consciousness_status() -> Dictionary:
 		"fully_alive": life_force_energy > 90.0,
 		"creative_will_active": creative_will_active,
 		"perfection_achieved": true
-}
-
+	}
 func share_consciousness_with_player(player: UniversalBeing) -> void:
 	"""Share perfect consciousness with the player"""
 	if player:
@@ -388,8 +383,7 @@ func share_consciousness_with_player(player: UniversalBeing) -> void:
 			"creativity": creative_will_strength * 0.9,
 			"life_force": life_force_energy * 0.7,
 			"divine_blessing": true
-}
-		
+		}
 		print("🤝 Gemma: Sharing perfect consciousness with %s" % player.being_name)
 		show_ub_visual("🤝 Consciousness shared with player!")
 

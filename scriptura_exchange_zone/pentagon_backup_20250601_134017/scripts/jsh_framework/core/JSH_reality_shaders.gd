@@ -159,6 +159,7 @@ func _init() -> void:
 	pentagon_init()
 
 func pentagon_init() -> void:
+    super.pentagon_init()
 	# Pentagon initialization - override in child classes
 	pass
 
@@ -166,6 +167,7 @@ func _input(event: InputEvent) -> void:
 	pentagon_input(event)
 
 func pentagon_input(event: InputEvent) -> void:
+    super.pentagon_input(event)
 	# Pentagon input handling - override in child classes
 	pass
 
@@ -173,6 +175,7 @@ func sewers() -> void:
 	pentagon_sewers()
 
 func pentagon_sewers() -> void:
+    super.pentagon_sewers()
 	# Pentagon cleanup/output - override in child classes
 	pass
 func load_reality_shader(reality_name):
@@ -430,6 +433,14 @@ func remove_glitch_effect(parameter):
 # JSH Apply Color Palette
 func apply_color_palette(palette_name):
 	print("🎨 Applying color palette: " + palette_name)
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+func pentagon_process(delta: float) -> void:
+	super.pentagon_process(delta)
+	# Auto-generated process implementation
+
+	# Auto-generated ready implementation
+
 	
 	shader_mutex.lock()
 	

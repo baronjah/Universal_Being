@@ -90,7 +90,7 @@ func load_being_from_zip(zip_path: String) -> Dictionary:
 	
 	if not FileAccess.file_exists(zip_path):
 		push_error("📚 Akashic: ZIP file not found: " + zip_path)
-		return {
+		return {}
 	
 	# In a real implementation, this would extract and parse ZIP}
 	# For now, simulate ZIP loading with JSON
@@ -155,8 +155,8 @@ func save_being_to_zip(being: Node, zip_path: String) -> bool:
 		"components": being.get("components") if being.has("components") else [],
 		"evolution_state": being.get("evolution_state") if being.has("evolution_state") else {},
 		"consciousness_level": being.get("consciousness_level") if being.has("consciousness_level") else 0,
-		"metadata": being.get("metadata") if being.has("metadata") else {
-}
+		"metadata": being.get("metadata") if being.has("metadata") else {}
+}}
 	
 	# Ensure directory exists
 	ensure_directory_exists(zip_path)
@@ -222,7 +222,7 @@ func scan_library(library_path: String) -> Array[String]:
 			if file_name.ends_with(".ub.zip") or file_name.ends_with(".json"):
 				files.append(library_path + file_name)
 			elif dir.current_is_dir() and not file_name.begins_with("."):
-}
+
 				# Recursively scan subdirectories
 				var subdir_files = scan_library(library_path + file_name + "/")
 				files.append_array(subdir_files)
@@ -251,43 +251,43 @@ func create_basic_assets() -> void:
 	var sphere_data = create_default_being_template()
 	sphere_data.manifest.universal_being.name = "Basic Sphere"
 	sphere_data.manifest.universal_being.type = "asset"
-	sphere_data.visual = {"type": "sphere", "radius": 1.0
+	sphere_data.visual = {"type": "sphere", "radius": 1.0}
 	save_template_data(ASSETS_LIBRARY + "sphere.json", sphere_data)
-}
+
 	
 	var cube_data = create_default_being_template()
 	cube_data.manifest.universal_being.name = "Basic Cube"
 	cube_data.manifest.universal_being.type = "asset"
-	cube_data.visual = {"type": "cube", "size": Vector3(1, 1, 1)
+	cube_data.visual = {"type": "cube", "size": Vector3(1, 1, 1)}
 	save_template_data(ASSETS_LIBRARY + "cube.json", cube_data)
-}
+
 
 func create_basic_logics() -> void:
 	"""Create basic logic templates"""
 	var follow_logic = create_default_being_template()
 	follow_logic.manifest.universal_being.name = "Follow Target Logic"
 	follow_logic.manifest.universal_being.type = "logic"
-	follow_logic.behavior = {"type": "follow", "speed": 5.0, "target": null
+	follow_logic.behavior = {"type": "follow", "speed": 5.0, "target": null}
 	save_template_data(LOGICS_LIBRARY + "follow_target.json", follow_logic)
-}
+
 
 func create_basic_actions() -> void:
 	"""Create basic action templates"""
 	var move_action = create_default_being_template()
 	move_action.manifest.universal_being.name = "Linear Movement"
 	move_action.manifest.universal_being.type = "action"
-	move_action.action = {"type": "move", "direction": Vector3.FORWARD, "speed": 1.0
+	move_action.action = {"type": "move", "direction": Vector3.FORWARD, "speed": 1.0}
 	save_template_data(ACTIONS_LIBRARY + "linear_move.json", move_action)
-}
+
 
 func create_basic_interfaces() -> void:
 	"""Create basic interface templates"""
 	var button_data = create_default_being_template()
 	button_data.manifest.universal_being.name = "Basic Button"
 	button_data.manifest.universal_being.type = "interface"
-	button_data.interface = {"type": "button", "text": "Click Me", "size": Vector2(100, 40)
+	button_data.interface = {"type": "button", "text": "Click Me", "size": Vector2(100, 40)}
 	save_template_data(INTERFACES_LIBRARY + "button_basic.json", button_data)
-}
+
 
 func create_default_being_template() -> Dictionary:
 	"""Create a default Universal Being template"""
@@ -329,7 +329,7 @@ func create_default_being_template() -> Dictionary:
 		"metadata": {
 			"ai_accessible": true,
 			"gemma_can_modify": true
-}
+}}}
 
 func save_template_data(path: String, data: Dictionary) -> bool:
 	"""Save template data to file"""
@@ -448,24 +448,24 @@ func load_component_from_directory(dir_path: String) -> Dictionary:
 	# Check for manifest file
 	if not FileAccess.file_exists(manifest_path):
 		push_warning("📚 Akashic: No manifest.json in component directory: " + dir_path)
-		return {
+		return {}
 	
 	# Load manifest}
 	var file = FileAccess.open(manifest_path, FileAccess.READ)
 	if not file:
 		push_error("📚 Akashic: Cannot read manifest: " + manifest_path)
-		return {
+		return {}
 	
-	var json_string = file.get_as_text()}
+	var json_string = file.get_as_text()
 	file.close()
 	
 	var json = JSON.new()
 	var parse_result = json.parse(json_string)
 	if parse_result != OK:
 		push_error("📚 Akashic: Invalid manifest JSON in: " + manifest_path)
-		return {
+		return {}
 	
-	var manifest = json.data}
+	var manifest = json.data
 	
 	# Build component data structure
 	var component_data = {
@@ -483,7 +483,7 @@ func load_component_from_directory(dir_path: String) -> Dictionary:
 func get_beings_by_type(type: String) -> Array[String]:
 	"""Get all beings of a specific type"""
 	return query_library(['"type": "' + type + '"'])
-}
+
 
 # ===== SESSION MANAGEMENT =====
 
@@ -545,7 +545,7 @@ func migrate_being_data(data: Dictionary) -> Dictionary:
 	
 	match version:
 		"0.0.0":
-}
+
 			# Migrate from version 0 to 1
 			ub_data.version = "1.0.0"
 			if not data.has("consciousness_level"):
@@ -554,6 +554,7 @@ func migrate_being_data(data: Dictionary) -> Dictionary:
 				data.metadata = {
 					"ai_accessible": true,
 					"gemma_can_modify": true
+					}
 			if not data.has("components"):
 				data.components = []
 			if not data.has("evolution_state"):
@@ -561,12 +562,13 @@ func migrate_being_data(data: Dictionary) -> Dictionary:
 					"current_form": ub_data.get("type", "unknown"),
 					"can_become": [],
 					"evolution_history": []
+					}
 		"1.0.0":
-}
+			print("why we are even here")
 			# Current version, no migration needed
 		_:
 			push_warning("Unknown being version: %s" % version)
-}
+
 	
 	return data
 
@@ -607,7 +609,7 @@ func debug_info() -> String:
 	info.append("Total Files: %d" % get_all_library_files().size())
 	info.append("Evolution Rules: %d" % evolution_rules.size())
 	info.append("Session Beings: %d" % session_beings.size())
-}
+
 	
 	info.append("\nLibrary Contents:")
 
@@ -660,10 +662,10 @@ func load_universal_being_data(being_id: String) -> Dictionary:
 	
 	# If not found, return empty dictionary
 	print("📚 Akashic: Being data not found for ID: " + being_id)
-	return {
+	return {}
 
 func save_universal_being_data(being_id: String, data: Dictionary) -> bool:
-	"""Save Universal Being data by ID - used by chunk system"""}
+	"""Save Universal Being data by ID - used by chunk system"""
 	# Store in cache
 	zip_cache[being_id] = data
 	

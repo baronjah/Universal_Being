@@ -56,7 +56,7 @@ func _ready() -> void:
 	setup_input_handlers()
 	connect_to_akashic_records()
 	print("🎮 Game State Socket System: Active")
-}
+
 
 func setup_state_sockets() -> void:
 	"""Initialize game-level sockets like Universal Being sockets"""
@@ -82,7 +82,7 @@ func setup_state_sockets() -> void:
 		"type": "ai_communication",
 		"gemma_active": false,
 		"chat_mode": false,
-		"shared_context": {
+		"shared_context": {}
 }
 	
 	# Cursor Control Socket
@@ -102,7 +102,7 @@ func setup_state_sockets() -> void:
 }
 	
 	print("🔌 Game State Sockets: 5 sockets initialized")
-}
+
 
 func setup_input_handlers() -> void:
 	"""Setup input handlers for different states"""
@@ -246,7 +246,7 @@ func change_state(new_state: InputState) -> void:
 	state_changed.emit(old_state, new_state)
 	
 	print("🎮 State: %s → %s" % [InputState.keys()[old_state], InputState.keys()[new_state]])
-}
+
 
 func activate_console() -> void:
 	"""Activate console and lock other inputs"""
@@ -394,11 +394,11 @@ func send_message_to_gemma(message: String) -> void:
 func get_shared_akashic_data() -> Dictionary:
 	"""Get Akashic Records data that both AI and human can access"""
 	if shared_akashic_access:
-		return shared_akashic_access.get_all_data() if shared_akashic_access.has_method("get_all_data") else {
-	return {
+		return shared_akashic_access.get_all_data()  
+	return {}
 
 func update_shared_visual_data(key: String, value: Variant) -> void:
-	"""Update shared visual data for AI-Human cooperation"""}
+	"""Update shared visual data for AI-Human cooperation"""
 	shared_visual_data[key] = value
 	state_sockets["shared_data"]["human_view"][key] = value
 	state_sockets["shared_data"]["ai_view"][key] = value

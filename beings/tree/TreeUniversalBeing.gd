@@ -135,6 +135,14 @@ func grow_tree() -> void:
 
 func set_season(new_season: String) -> void:
 	season = new_season
+func pentagon_input(event: InputEvent) -> void:
+	super.pentagon_input(event)
+func pentagon_sewers() -> void:
+	# Auto-generated cleanup implementation
+	super.pentagon_sewers()
+
+	# Auto-generated input implementation
+
 	# Update all leaves
 	for leaf in leaves:
 		leaf.color = get_season_color()

@@ -166,6 +166,7 @@ func _init() -> void:
 	pentagon_init()
 
 func pentagon_init() -> void:
+    super.pentagon_init()
 	# Pentagon initialization - override in child classes
 	pass
 
@@ -173,6 +174,7 @@ func sewers() -> void:
 	pentagon_sewers()
 
 func pentagon_sewers() -> void:
+    super.pentagon_sewers()
 	# Pentagon cleanup/output - override in child classes
 	pass
 func update_entity(entity_id: String, data: Dictionary) -> void:
@@ -224,6 +226,18 @@ func _on_layer_visibility_changed(layer: int, is_visible: bool) -> void:
 # Integration with console commands
 func handle_console_command(command: String, args: Array) -> String:
 	match command:
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+func pentagon_process(delta: float) -> void:
+	super.pentagon_process(delta)
+func pentagon_input(event: InputEvent) -> void:
+	super.pentagon_input(event)
+	# Auto-generated input implementation
+
+	# Auto-generated process implementation
+
+	# Auto-generated ready implementation
+
 		"world_center":
 			if args.size() >= 2:
 				view_center = Vector2(float(args[0]), float(args[1]))

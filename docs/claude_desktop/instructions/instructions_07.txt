@@ -1,0 +1,65 @@
+the core idea of the notepad3d and akashic records being conncted are words databases that evolve over time and can change, we make them animate, change, based on interactions, states, direction, we must create shader for shapes 2d, similar to what we have in 3d from center to around, in 1 diraction , menu must be clickable on a button on and off switched
+
+
+lets also think of the way to organize and make few rules for claude to follow on computer, the creation of folders, files, new ones, modify, changes, we can make new files, based on previous ones with no change or continue work on previous ones, if the project is too big and connected to too many at once parts, so its better to try again with current databases of files, for specific parts, of the projects, so lets think also of few programming rules, mutex, multi threading rules, tasking, steps, turns for ai, and for terminal, to command it and conquer the terminal tools we have, for creation of game, for me in godot, but can be in any language with proper databases and rules of connections for files of md and txt in folders of starts, c,d, first folders, wsl emulation of linux, help me scheme whole plan for creation of games, Luno
+
+we need also clear and simple basic rules for you in terminal and for my interactions so we work better and faster and smoother too, so we all can breath, the ideas: we need a way to continue making the summaries files of claude.txt .md etc, but split them into 2 files at once, top header 100 lines being instructions for each and any of our searches, basics, and last 100 lines shall be the last turns we take and will be taking now, that we remember, then we continue to the destination of our goal to do the action, go back, think there and here, check the rules, changes, directions, settings etc to continue
+
+sometimes these terminal conversations get big and long, but they dont lag, but sometimes, the screen flicker? like home button is clicked to go up and down with end, and new windows popup for entire screen to accept something, either whole memory of terminal got switched to show something on one window, or something else
+
+
+well, we are getting somewhere, havent send yet the newest folder, ideas, files from you, but we will get there, as i need to see nice things :)
+
+
+Claude, project idea with claude code, terminall app from you, we create to folder, and from there we read files for instruction, and as we go each time, we also change stuff, so we must update previous folders, from the first we went from, we must do that like time checkers? ints? how many times we went somewhere to make project? as in folder 7 we might connecte folder 2 and 5 for new things, so folder 1 need update from start, as we start it all over again but in a way we continue and know it all at once
+
+
+the idea is that project is big enought and small enought to be splitted and interconnected to form one, also created with words and phases and steps, in a way, that we can always switch the language, program, way we wanna show it, so while we make a part of it in one language, and seen it working with certain programs, tools, modules, we might wanna see it now on new version of godot, and we must create it from beginning again, step by step, so most important is first folder, directory, and from there we go, into the creations, summaries, info files, versions, updates, limits, after tests we are here :  in file, but lets think again, in a way you, and your tools and apps can help me to create that game, with the idea of evolution and simple to hard pathways, per language can be switched and translated in time, even days if needed, what is important is visualization, of the data in some ways, like noise 3d for example
+
+
+some folders of knowledge : 
+
+C:\Users\Percision 15\12_turns_system
+C:\Users\Percision 15\15
+C:\Users\Percision 15\addons
+C:\Users\Percision 15\akashic_game_template
+C:\Users\Percision 15\claud_sh_md
+C:\Users\Percision 15\code
+C:\Users\Percision 15\code_explained
+C:\Users\Percision 15\dual_core_backup
+C:\Users\Percision 15\Eden_OS
+C:\Users\Percision 15\Godot_Eden
+C:\Users\Percision 15\Godot_Eden\Eden_May\the_palace_pf\code\gdscript\scripts
+
+
+D folders of importance
+
+D:\Eden
+D:\Eden_Backup
+D:\Godot Projects\game_blueprint
+D:\Luminus
+
+C folders of importance
+
+C:\Users\Percision 15\Godot_Eden
+C:\claude
+C:\eden
+C:\kamisama
+C:\Users
+C:\Users\Percision 15
+C:\Users\Percision 15\Desktop
+C:\Users\Percision 15\AppData
+C:\Users\Percision 15\AppData\Local\Godot
+C:\Users\Percision 15\AppData\Roaming\Godot
+C:\Users\Percision 15\AppData\Roaming\Godot\app_userdata
+C:\Users\Percision 15\12_turns_system
+C:\Users\Percision 15\15
+C:\Users\Percision 15\akashic_notepad_test
+C:\Users\Percision 15\claud_sh_md
+
+C:\Users\Percision 15\claude_testing_tools
+C:\Users\Percision 15\claude_workspace
+C:\Users\Percision 15\evolution_game_claude
+
+
+the goals were talked about many days and turns, lets continue Claude, the goal is to understand each project we done and made, the most important ones are in godot eden, now may, the next ones are the ones we created through terminal, the next ones are the created with help of other ai and yours artifacts,files  are spread out in messages of yours too, to gather it all into one database, of akashic records, so we can continue creation of games, we must gather more powers and forces, as turn 7 out of 12, will become turn 1 again, with more knowledge, more cleaned structures, files folders, paths, we will create the game of my dreams 

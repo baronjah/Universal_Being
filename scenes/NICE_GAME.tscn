@@ -1,0 +1,96 @@
+[gd_scene load_steps=4 format=3 uid="uid://nice_game_perfect"]
+
+[ext_resource type="PackedScene" uid="uid://ckgpkasr6wxkh" path="res://scenes/camera_point.tscn" id="1"]
+[ext_resource type="Script" path="res://beings/plasmoid_universal_being.gd" id="2"]
+
+[sub_resource type="GDScript" id="NiceGameController"]
+script/source = "extends Node3D
+
+# NICE GAME - Simple, Beautiful, Perfect
+# Just move around, create consciousness, have fun!
+
+var player_plasmoid: Node3D = null
+var camera_point: Node3D = null
+var nice_entities: Array = []
+
+func _ready():
+	print('🌟 NICE GAME STARTING!')
+	print('   Move: WASD')
+	print('   Look: Mouse')
+	print('   Create: Space')
+	print('   Have fun! 😊')
+	
+	# Get player
+	player_plasmoid = $PlayerPlasmoid
+	camera_point = $PlayerPlasmoid/CameraPoint
+	
+	# Create some nice entities
+	create_nice_entity(Vector3(-3, 1, 0), 'Welcome!')
+	create_nice_entity(Vector3(0, 1, -3), 'Nice Game!')
+	create_nice_entity(Vector3(3, 1, 0), 'Have Fun!')
+	
+	# Nice environment
+	RenderingServer.global_shader_parameter_set('nice_mood', 1.0)
+
+func create_nice_entity(pos: Vector3, message: String):
+	var entity = preload('res://beings/plasmoid_universal_being.gd').new()
+	entity.name = 'Nice_' + message.replace(' ', '_')
+	entity.position = pos
+	entity.consciousness_level = 5
+	entity.plasma_color = Color(randf(), randf(), randf(), 0.8)
+	entity.being_name = message
+	entity.set_meta('nice_message', message)
+	add_child(entity)
+	nice_entities.append(entity)
+	print('✨ Created nice entity: ' + message)
+
+func _input(event):
+	if event is InputEventKey and event.pressed:
+		if event.keycode == KEY_SPACE:
+			# Create new nice entity near player
+			var pos = player_plasmoid.global_position + Vector3(randf_range(-2,2), 1, randf_range(-2,2))
+			var messages = ['Amazing!', 'Beautiful!', 'Wonderful!', 'Perfect!', 'Lovely!']
+			var message = messages[randi() % messages.size()]
+			create_nice_entity(pos, message)
+			
+		elif event.keycode == KEY_C:
+			# Ask Claude for help
+			if has_node('/root/ClaudeIntegration'):
+				var claude = get_node('/root/ClaudeIntegration')
+				var response = claude.ask_claude('How can I make this game even nicer?')
+				print('🤖 Claude: ' + response)
+
+func _process(delta):
+	# Make entities glow nicely
+	for entity in nice_entities:
+		if is_instance_valid(entity):
+			# Nice floating animation
+			entity.position.y = 1.0 + sin(Time.get_time_from_start() + entity.position.x) * 0.2
+"
+
+[sub_resource type="Environment" id="NiceEnvironment"]
+background_mode = 1
+background_color = Color(0.1, 0.3, 0.6, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 0.8, 1)
+ambient_light_energy = 0.7
+
+[node name="NiceGame" type="Node3D"]
+script = SubResource("NiceGameController")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("NiceEnvironment")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 8, 0)
+light_energy = 1.2
+light_color = Color(1, 0.95, 0.8, 1)
+shadow_enabled = true
+
+[node name="PlayerPlasmoid" type="CharacterBody3D" parent="." groups=["player", "consciousness"]]
+script = ExtResource("2")
+being_name = "Nice Player"
+consciousness_level = 3
+plasma_color = Color(0.3, 0.8, 1, 0.9)
+
+[node name="CameraPoint" parent="PlayerPlasmoid" instance=ExtResource("1")]

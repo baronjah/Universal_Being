@@ -1,13 +1,13 @@
 # Consciousness Exchange System - Human + AI Collaborative Creation
 # Replaces "turns" with "consciousness exchanges" between participants
+# res://systems/consciousness_exchange_system.gd
 
 extends UniversalBeing
 class_name ConsciousnessExchangeSystem
 
 # ===== CONSCIOUSNESS EXCHANGE PROPERTIES =====
-enum ExchangePhase { LISTENING, UNDERSTANDING, MANIFESTING, REFLECTING
-enum ConsciousnessType { HUMAN_CONSCIOUSNESS, GEMMA_CONSCIOUSNESS, UNIVERSE_CONSCIOUSNESS
-}
+enum ExchangePhase { LISTENING, UNDERSTANDING, MANIFESTING, REFLECTING}
+enum ConsciousnessType { HUMAN_CONSCIOUSNESS, GEMMA_CONSCIOUSNESS, UNIVERSE_CONSCIOUSNESS}
 
 @export var current_phase: ExchangePhase = ExchangePhase.LISTENING
 @export var active_consciousness: ConsciousnessType = ConsciousnessType.UNIVERSE_CONSCIOUSNESS
@@ -123,7 +123,7 @@ class CreationSession:
 	var session_id: String
 	var start_time: int
 	var active_scenario: String = ""
-}
+
 	var participants: Array[Dictionary] = []
 	var exchange_log: Array[Dictionary] = []
 	var manifested_beings: Array[Node] = []
@@ -136,7 +136,7 @@ class CreationSession:
 
 class HumanConsciousness:
 	var name: String = "JSH"
-}
+
 	var current_intention: String = ""
 
 	var input_flow: Array[String] = []
@@ -215,7 +215,7 @@ class UniverseConsciousness:
 				"🔨 Ready to manifest! {action} is crystallizing...",
 				"⚡ Creation energy building for {action}...",
 				"🌈 Reality shifting to accommodate {action}..."
-			]
+			]}
 	
 	func express_opening_inquiry() -> String:
 		"""Express opening universe inquiry"""
@@ -234,7 +234,7 @@ class UniverseConsciousness:
 class UniversalCommandInterpreter extends Node:
 	"""Interprets consciousness intentions into Universal Being actions"""
 	
-	var consciousness_verbs: Dictionary = {}
+	var consciousness_verbs: Dictionary = {
 		# Movement consciousness
 		"move": {"type": "embodied_action", "system": "movement", "requires": ["destination"]},
 		"go": {"type": "embodied_action", "system": "movement", "requires": ["destination"]},
@@ -261,10 +261,10 @@ class UniversalCommandInterpreter extends Node:
 		# Evolution consciousness
 		"evolve": {"type": "transformation", "system": "evolution", "requires": ["target", "new_form"]},
 		"transform": {"type": "transformation", "system": "evolution", "requires": ["target", "new_form"]},
-		"upgrade": {"type": "transformation", "system": "evolution", "requires": ["target"]
+		"upgrade": {"type": "transformation", "system": "evolution", "requires": ["target"]}
 }
 	
-	var universal_being_types: Dictionary = {}
+	var universal_being_types: Dictionary = {
 		# Natural forms
 		"tree": {"class": "TreeUniversalBeing", "consciousness": 2, "features": ["growth", "seasons"]},
 		"crystal": {"class": "CrystalBeing", "consciousness": 2, "features": ["resonance", "energy"]},
@@ -278,7 +278,7 @@ class UniversalCommandInterpreter extends Node:
 		# Consciousness forms
 		"being": {"class": "UniversalBeing", "consciousness": 1, "features": ["basic", "evolving"]},
 		"ai": {"class": "AIUniversalBeing", "consciousness": 4, "features": ["intelligence", "learning"]},
-		"gemma": {"class": "GemmaUniversalBeing", "consciousness": 5, "features": ["embodied_ai", "natural_language"]
+		"gemma": {"class": "GemmaUniversalBeing", "consciousness": 5, "features": ["embodied_ai", "natural_language"]}
 }
 	
 	func interpret_consciousness_intent(intent: String) -> Dictionary:
@@ -295,7 +295,7 @@ class UniversalCommandInterpreter extends Node:
 		
 		# Find primary consciousness verb
 		var primary_verb = ""
-		var verb_data = {
+		var verb_data = {}
 		
 		for word in words:
 			if word in consciousness_verbs:
@@ -329,7 +329,7 @@ class UniversalCommandInterpreter extends Node:
 		"""Interpret creation intentions using existing FloodGates system"""
 		var being_type = ""
 		var consciousness_level = 1
-		var special_properties = {
+		var special_properties = {}
 		
 		# Find Universal Being type
 		for word in words:
@@ -340,7 +340,6 @@ class UniversalCommandInterpreter extends Node:
 				break
 		
 		if being_type != "":
-}
 			# Use existing SystemBootstrap.create_universal_being() flow!
 			result.action_flow = [
 				{
@@ -349,7 +348,7 @@ class UniversalCommandInterpreter extends Node:
 					"consciousness_level": consciousness_level,
 					"system": "SystemBootstrap.create_universal_being",
 					"properties": special_properties
-			]
+			}]
 			result.understood = true
 		else:
 			result.missing_aspects.append("being_type")
@@ -369,17 +368,145 @@ class UniversalCommandInterpreter extends Node:
 				break
 		
 		if destination != "":
-}
+
 			# Movement flow: locate -> orient -> traverse -> arrive
 			result.action_flow = [
 				{"action": "locate_destination", "target": destination},
 				{"action": "orient_toward_target", "target": destination},
 				{"action": "traverse_to_target", "target": destination, "method": movement_type},
-				{"action": "arrive_at_destination", "target": destination
+				{"action": "arrive_at_destination", "target": destination}
 			]
 			result.understood = true
 		else:
 			result.missing_aspects.append("destination")
+			result.requires_clarification = true
+		
+		return result
+	
+	func interpret_perception_consciousness(words: PackedStringArray, result: Dictionary) -> Dictionary:
+		"""Interpret perception intentions - seeing, looking, observing"""
+		var target = ""
+		var perception_type = "general"
+		var range_scope = "local"
+		
+		# Find perception target
+		for word in words:
+			if word in universal_being_types:
+				target = word
+				perception_type = "entity_observation"
+				break
+			elif word in ["around", "area", "environment", "scene"]:
+				perception_type = "environmental_scan"
+				break
+			elif word in ["far", "distant", "horizon"]:
+				range_scope = "distant"
+			elif word in ["close", "near", "detailed"]:
+				range_scope = "close"
+		
+		# Build perception action flow
+		if target != "" or perception_type == "environmental_scan":
+			result.action_flow = [
+				{"action": "orient_perception", "range": range_scope},
+				{"action": "gather_visual_data", "target": target, "type": perception_type},
+				{"action": "process_consciousness_awareness", "scope": range_scope},
+				{"action": "report_perception_results", "target": target}
+			]
+			result.understood = true
+		else:
+			result.missing_aspects.append("perception_target")
+			result.requires_clarification = true
+		
+		return result
+	
+	func interpret_communication_consciousness(words: PackedStringArray, result: Dictionary) -> Dictionary:
+		"""Interpret communication intentions - talking, speaking, connecting"""
+		var target = ""
+		var message = ""
+		var communication_mode = "direct"
+		
+		# Find communication target
+		for word in words:
+			if word in universal_being_types:
+				target = word
+				break
+			elif word in ["gemma", "ai", "consciousness"]:
+				target = "gemma_consciousness"
+				communication_mode = "consciousness_bridge"
+				break
+			elif word in ["universe", "cosmos", "reality"]:
+				target = "universe_consciousness"
+				communication_mode = "universal_inquiry"
+				break
+		
+		# Extract message content (words after "say", "tell", "ask")
+		var message_start_idx = -1
+		for i in range(words.size()):
+			if words[i] in ["say", "tell", "ask", "speak"]:
+				message_start_idx = i + 1
+				break
+		
+		if message_start_idx > -1 and message_start_idx < words.size():
+			var message_words = words.slice(message_start_idx)
+			message = " ".join(message_words)
+		
+		# Build communication action flow
+		if target != "":
+			result.action_flow = [
+				{"action": "establish_communication_link", "target": target, "mode": communication_mode},
+				{"action": "encode_consciousness_message", "message": message, "target": target},
+				{"action": "transmit_consciousness_data", "target": target, "mode": communication_mode},
+				{"action": "await_consciousness_response", "target": target}
+			]
+			result.understood = true
+		else:
+			result.missing_aspects.append("communication_target")
+			result.requires_clarification = true
+		
+		return result
+	
+	func interpret_evolution_consciousness(words: PackedStringArray, result: Dictionary) -> Dictionary:
+		"""Interpret evolution intentions - transforming, upgrading, evolving"""
+		var target = ""
+		var new_form = ""
+		var evolution_type = "natural_progression"
+		var consciousness_increase = 1
+		
+		# Find evolution target
+		for word in words:
+			if word in universal_being_types:
+				if target == "":
+					target = word
+				else:
+					new_form = word  # Second being type is the target form
+				break
+		
+		# Determine evolution type based on words
+		for word in words:
+			if word in ["upgrade", "enhance", "improve"]:
+				evolution_type = "enhancement"
+				consciousness_increase = 1
+			elif word in ["transform", "change", "become"]:
+				evolution_type = "transformation"
+				consciousness_increase = 0
+			elif word in ["evolve", "ascend", "transcend"]:
+				evolution_type = "consciousness_ascension"
+				consciousness_increase = 2
+			elif word in ["merge", "combine", "fuse"]:
+				evolution_type = "consciousness_fusion"
+				consciousness_increase = 1
+		
+		# Build evolution action flow
+		if target != "":
+			result.action_flow = [
+				{"action": "locate_evolution_target", "target": target},
+				{"action": "analyze_current_consciousness", "target": target},
+				{"action": "prepare_evolution_matrix", "evolution_type": evolution_type, "new_form": new_form},
+				{"action": "execute_consciousness_evolution", "target": target, "new_form": new_form, "consciousness_increase": consciousness_increase},
+				{"action": "stabilize_evolved_form", "target": target}
+			]
+			result.understood = true
+		else:
+			result.missing_aspects.append("evolution_target")
 			result.requires_clarification = true
 		
 		return result
@@ -432,12 +559,12 @@ func initiate_creation_flow() -> void:
 	"""Begin the consciousness exchange flow"""
 	print("🌌 Initiating Universal Being Consciousness Exchange Flow")
 	print("🎮 Session: %s" % creation_session.session_id)
-}
+
 	
 	# Universe consciousness opens the flow
 	var opening_inquiry = universe_consciousness.express_opening_inquiry()
 	universe_inquiry.emit(opening_inquiry, {"phase": "opening", "expects": "creation_intent"})
-}
+
 	
 	current_phase = ExchangePhase.LISTENING
 	active_consciousness = ConsciousnessType.UNIVERSE_CONSCIOUSNESS
@@ -481,13 +608,14 @@ func manifest_using_existing_systems(manifestation_request: Dictionary) -> Node:
 	
 	for action in action_flow:
 		if action.action == "manifest_being":
-}
+
 			# Use existing SystemBootstrap.create_universal_being()!
 			created_being = use_existing_creation_system(
 				action.being_type,
 				{
 					"consciousness_level": action.consciousness_level,
 					"name": action.being_type.capitalize() + " Being"
+					}
 			)
 			
 			if created_being:

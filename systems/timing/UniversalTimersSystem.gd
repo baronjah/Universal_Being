@@ -403,8 +403,9 @@ func get_consciousness_timer_stats() -> Dictionary:
 		"gemma_thoughts_active": gemma_thought_stream_active,
 		"console_summaries_active": console_summary_active,
 		"turn_based_active": turn_based_active
+		}
 	return stats
-}
+
 
 # ===== TIMER CALLBACK HANDLER =====
 

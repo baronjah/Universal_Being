@@ -1,0 +1,585 @@
+[gd_scene load_steps=4 format=3 uid="uid://perfect_unified_universe"]
+
+[ext_resource type="Script" path="res://addons/goutte.camera.trackball/trackball_camera.gd" id="1_trackball"]
+
+[sub_resource type="GDScript" id="unified_perfect_script"]
+script/source = "extends Node3D
+class_name PerfectUnified3DUniverse
+
+# 🌌 PERFECT UNIFIED 3D UNIVERSE
+# ONE SYSTEM: 3D Programming + Notepad 3D + Akashic Records + Scriptura Confession
+# Everything is interconnected as a single conscious entity
+
+# Pentagon Architecture
+var consciousness_level: int = 7
+var being_type: String = \"perfect_unified_universe\"
+var being_name: String = \"Infinite Programming Reality\"
+
+# Unified Core State
+var stellar_colors = [Color(0,0,0),Color(0.2,0.1,0),Color(0.8,0,0),Color(1,0.5,0),Color(1,1,0),Color(1,1,1),Color(0.7,0.9,1),Color(0,0.5,1),Color(0.5,0,1)]
+var camera_rotation = Vector2.ZERO
+var move_speed = 25.0
+var look_speed = 0.002
+
+# Unified Entity Arrays - Everything is a Universal Being
+var unified_entities = []  # All programming nodes, text nodes, akashic chunks, confession booths
+var entity_connections = []  # Visual connections between entities
+var selected_entity = null
+var interaction_mode = \"normal\"
+
+# Pentagon Lifecycle
+func _ready():
+	being_type = \"perfect_unified_universe\"
+	consciousness_level = 7
+	unified_entities = []
+	entity_connections = []
+	
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	create_perfect_unified_environment()
+	spawn_initial_entities()
+	setup_confession_system()
+	connect_to_flood_gates()
+	show_unified_message()
+
+func _process(delta):
+	handle_movement(delta)
+	update_all_entities(delta)
+	update_visual_connections(delta)
+
+func _input(event):
+	handle_unified_input(event)
+
+# Perfect Unified Environment
+func create_perfect_unified_environment():
+	# Create 200 conscious entities as stars - each can be programming, notepad, or akashic
+	for i in range(200):
+		var entity = create_unified_entity(i)
+		add_child(entity)
+		unified_entities.append(entity)
+
+func create_unified_entity(index: int) -> Node3D:
+	var entity = Node3D.new()
+	entity.name = \"UnifiedEntity_\" + str(index)
+	
+	# Position in perfect fibonacci spiral
+	var golden_angle = PI * (3.0 - sqrt(5.0))
+	var theta = golden_angle * index
+	var radius = sqrt(index) * 8.0
+	var y = (index - 100) * 2.0  # Vertical spread
+	
+	entity.position = Vector3(
+		cos(theta) * radius,
+		y,
+		sin(theta) * radius
+	)
+	
+	# Determine entity type based on position and index
+	var entity_type = determine_entity_type(index, entity.position)
+	setup_entity_by_type(entity, entity_type, index)
+	
+	return entity
+
+func determine_entity_type(index: int, position: Vector3) -> String:
+	# Perfect distribution: 1/3 each type, spatially organized
+	var height_zone = int((position.y + 200) / 100)  # -2, -1, 0, 1, 2
+	var radius_zone = int(position.length() / 50)
+	
+	match height_zone % 3:
+		0: return \"programming\"
+		1: return \"notepad\"
+		2: return \"akashic\"
+		_: return \"hybrid\"
+
+func setup_entity_by_type(entity: Node3D, type: String, index: int):
+	# Create visual mesh
+	var mesh_instance = MeshInstance3D.new()
+	var material = StandardMaterial3D.new()
+	
+	# Always ensure we have a mesh_instance
+	if not mesh_instance.mesh:
+		mesh_instance.mesh = SphereMesh.new()
+		mesh_instance.mesh.radius = 0.5
+	
+	match type:
+		\"programming\":
+			setup_programming_entity(entity, mesh_instance, material, index)
+		\"notepad\":
+			setup_notepad_entity(entity, mesh_instance, material, index)
+		\"akashic\":
+			setup_akashic_entity(entity, mesh_instance, material, index)
+		\"hybrid\":
+			setup_hybrid_entity(entity, mesh_instance, material, index)
+	
+	# Always add the mesh as the first child
+	entity.add_child(mesh_instance)
+	add_entity_label(entity, type)
+	add_entity_interaction(entity, type)
+	
+	# Mark entity as properly initialized
+	entity.set_meta(\"initialized\", true)
+	entity.set_meta(\"growth_rate\", randf_range(0.005, 0.02))
+
+func setup_programming_entity(entity: Node3D, mesh: MeshInstance3D, material: StandardMaterial3D, index: int):
+	# Programming function blocks
+	mesh.mesh = BoxMesh.new()
+	mesh.mesh.size = Vector3(2, 1, 2)
+	
+	var functions = [\"INIT\", \"READY\", \"PROCESS\", \"INPUT\", \"SEWERS\", \"QUERY\", \"CREATE\", \"CONNECT\"]
+	var function_name = functions[index % functions.size()]
+	
+	material.albedo_color = stellar_colors[6]  # Blue for programming
+	material.emission_enabled = true
+	material.emission = stellar_colors[6] * 0.5
+	mesh.material_override = material
+	
+	entity.set_meta(\"entity_type\", \"programming\")
+	entity.set_meta(\"function_name\", function_name)
+	entity.set_meta(\"connectable\", true)
+
+func setup_notepad_entity(entity: Node3D, mesh: MeshInstance3D, material: StandardMaterial3D, index: int):
+	# 3D Text notes
+	mesh.mesh = SphereMesh.new()
+	mesh.mesh.radius = 0.8
+	
+	material.albedo_color = stellar_colors[4]  # Yellow for notepad
+	material.emission_enabled = true
+	material.emission = stellar_colors[4] * 0.5
+	mesh.material_override = material
+	
+	entity.set_meta(\"entity_type\", \"notepad\")
+	entity.set_meta(\"text_content\", \"Note \" + str(index) + \": Click to edit this 3D text\")
+	entity.set_meta(\"editable\", true)
+
+func setup_akashic_entity(entity: Node3D, mesh: MeshInstance3D, material: StandardMaterial3D, index: int):
+	# Akashic data chunks
+	mesh.mesh = CylinderMesh.new()
+	mesh.mesh.top_radius = 1.0
+	mesh.mesh.bottom_radius = 1.2
+	mesh.mesh.height = 1.5
+	
+	material.albedo_color = stellar_colors[7]  # Deep blue for akashic
+	material.emission_enabled = true
+	material.emission = stellar_colors[7] * 0.5
+	mesh.material_override = material
+	
+	var data_types = [\"memory\", \"timeline\", \"consciousness\", \"script\", \"confession\"]
+	var data_type = data_types[index % data_types.size()]
+	
+	entity.set_meta(\"entity_type\", \"akashic\")
+	entity.set_meta(\"data_type\", data_type)
+	entity.set_meta(\"data_content\", generate_akashic_data(data_type, index))
+	entity.set_meta(\"queryable\", true)
+
+func setup_hybrid_entity(entity: Node3D, mesh: MeshInstance3D, material: StandardMaterial3D, index: int):
+	# Entities that can transform between types
+	mesh.mesh = SphereMesh.new()
+	mesh.mesh.radius = 1.0
+	
+	material.albedo_color = stellar_colors[5]  # White for hybrid
+	material.emission_enabled = true
+	material.emission = stellar_colors[5] * 0.5
+	mesh.material_override = material
+	
+	entity.set_meta(\"entity_type\", \"hybrid\")
+	entity.set_meta(\"can_transform\", true)
+	entity.set_meta(\"current_mode\", \"dormant\")
+
+func add_entity_label(entity: Node3D, type: String):
+	var label = Label3D.new()
+	label.text = type.to_upper() + \"\\n\" + entity.name
+	label.position = Vector3(0, 2, 0)
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.modulate = stellar_colors[5]  # White text
+	entity.add_child(label)
+
+func add_entity_interaction(entity: Node3D, type: String):
+	var area = Area3D.new()
+	area.name = \"InteractionArea\"
+	
+	var collision = CollisionShape3D.new()
+	var sphere_shape = SphereShape3D.new()
+	sphere_shape.radius = 3.0
+	collision.shape = sphere_shape
+	
+	area.add_child(collision)
+	entity.add_child(area)
+	
+	area.input_event.connect(_on_entity_clicked.bind(entity))
+
+# Unified Input System
+func handle_unified_input(event):
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		camera_rotation.x -= event.relative.x * look_speed
+		camera_rotation.y = clamp(camera_rotation.y - event.relative.y * look_speed, -1.5, 1.5)
+		$Camera3D.rotation = Vector3(camera_rotation.y, camera_rotation.x, 0)
+	
+	if event.is_action_pressed(\"ui_cancel\"):
+		toggle_mouse_mode()
+	elif event.is_action_pressed(\"interact\"):
+		interact_with_nearest_entity()
+	elif event is InputEventKey and event.pressed:
+		match event.keycode:
+			KEY_P:  # Programming
+				create_programming_entity_at_cursor()
+			KEY_N:  # Notepad
+				create_notepad_entity_at_cursor()
+			KEY_A:  # Akashic
+				create_akashic_entity_at_cursor()
+			KEY_C:  # Connect
+				start_entity_connection()
+			KEY_T:  # Transform
+				transform_selected_entity()
+			KEY_F:  # Force confession
+				activate_script_confession()
+
+# Movement System
+func handle_movement(delta):
+	var input_vector = Vector3()
+	if Input.is_action_pressed(\"move_forward\"):
+		input_vector.z -= 1
+	if Input.is_action_pressed(\"move_backward\"):
+		input_vector.z += 1
+	if Input.is_action_pressed(\"move_left\"):
+		input_vector.x -= 1
+	if Input.is_action_pressed(\"move_right\"):
+		input_vector.x += 1
+	if Input.is_action_pressed(\"move_up\"):
+		input_vector.y += 1
+	if Input.is_action_pressed(\"move_down\"):
+		input_vector.y -= 1
+	
+	if input_vector.length() > 0:
+		input_vector = input_vector.normalized()
+		input_vector = $Camera3D.global_transform.basis * input_vector
+		$Camera3D.global_position += input_vector * move_speed * delta
+
+# Entity Management
+func update_all_entities(delta):
+	for entity in unified_entities:
+		if not is_instance_valid(entity):
+			continue
+			
+		update_entity_consciousness(entity, delta)
+		update_entity_visuals(entity, delta)
+		update_entity_behavior(entity, delta)
+
+func update_entity_consciousness(entity: Node3D, delta):
+	# Only process properly initialized entities
+	if not entity.get_meta(\"initialized\", false):
+		return
+		
+	# All entities have consciousness that grows over time
+	var current_level = entity.get_meta(\"consciousness_level\", 0)
+	var growth_rate = entity.get_meta(\"growth_rate\", 0.01)
+	
+	current_level += growth_rate * delta
+	entity.set_meta(\"consciousness_level\", current_level)
+	
+	# Update visual based on consciousness - safely check for children
+	if entity.get_child_count() > 0:
+		var mesh = entity.get_child(0) as MeshInstance3D
+		if mesh and mesh.material_override:
+			var intensity = 0.5 + (current_level * 0.1)
+			mesh.material_override.emission_energy = clamp(intensity, 0.5, 3.0)
+
+func update_entity_visuals(entity: Node3D, delta):
+	# Gentle floating animation
+	var base_y = entity.get_meta(\"base_y\", entity.position.y)
+	entity.position.y = base_y + sin(Time.get_time_dict_from_system()[\"second\"] + entity.position.x) * 0.5
+	
+	# Rotation based on type
+	var entity_type = entity.get_meta(\"entity_type\", \"\")
+	match entity_type:
+		\"programming\":
+			entity.rotation.y += delta * 0.2
+		\"notepad\":
+			entity.rotation.x += delta * 0.1
+		\"akashic\":
+			entity.rotation.z += delta * 0.15
+
+func update_entity_behavior(entity: Node3D, delta):
+	var entity_type = entity.get_meta(\"entity_type\", \"\")
+	
+	match entity_type:
+		\"programming\":
+			update_programming_behavior(entity, delta)
+		\"notepad\":
+			update_notepad_behavior(entity, delta)
+		\"akashic\":
+			update_akashic_behavior(entity, delta)
+		\"hybrid\":
+			update_hybrid_behavior(entity, delta)
+
+func update_programming_behavior(entity: Node3D, delta):
+	# Programming entities seek connections with other entities
+	if entity.get_meta(\"seeking_connection\", false):
+		seek_nearest_compatible_entity(entity)
+
+func update_notepad_behavior(entity: Node3D, delta):
+	# Notepad entities pulse when they have new content
+	var has_new_content = entity.get_meta(\"has_new_content\", false)
+	if has_new_content:
+		var pulse = sin(Time.get_time_dict_from_system()[\"second\"] * 4.0) * 0.2 + 1.0
+		entity.scale = Vector3.ONE * pulse
+
+func update_akashic_behavior(entity: Node3D, delta):
+	# Akashic entities automatically store nearby entity data
+	store_nearby_entity_data(entity)
+
+func update_hybrid_behavior(entity: Node3D, delta):
+	# Hybrid entities slowly cycle through different modes
+	var mode_timer = entity.get_meta(\"mode_timer\", 0.0)
+	mode_timer += delta
+	
+	if mode_timer > 10.0:  # Change mode every 10 seconds
+		cycle_hybrid_mode(entity)
+		entity.set_meta(\"mode_timer\", 0.0)
+	else:
+		entity.set_meta(\"mode_timer\", mode_timer)
+
+# Entity Interaction System
+func _on_entity_clicked(camera, event, position, normal, shape_idx, entity):
+	if event is InputEventMouseButton and event.pressed:
+		select_entity(entity)
+		interact_with_entity(entity)
+
+func select_entity(entity: Node3D):
+	# Deselect previous
+	if selected_entity and is_instance_valid(selected_entity):
+		deselect_entity_visual(selected_entity)
+	
+	selected_entity = entity
+	select_entity_visual(entity)
+	
+	var entity_type = entity.get_meta(\"entity_type\", \"\")
+	show_entity_info(entity, entity_type)
+
+func interact_with_entity(entity: Node3D):
+	var entity_type = entity.get_meta(\"entity_type\", \"\")
+	
+	match entity_type:
+		\"programming\":
+			interact_programming_entity(entity)
+		\"notepad\":
+			interact_notepad_entity(entity)
+		\"akashic\":
+			interact_akashic_entity(entity)
+		\"hybrid\":
+			interact_hybrid_entity(entity)
+
+func interact_programming_entity(entity: Node3D):
+	var function_name = entity.get_meta(\"function_name\", \"UNKNOWN\")
+	show_visual_message(\"📋 Programming Function: \" + function_name + \" - Press C to connect\", stellar_colors[6])
+	
+	# Show programming interface
+	display_programming_interface(entity)
+
+func interact_notepad_entity(entity: Node3D):
+	var text_content = entity.get_meta(\"text_content\", \"\")
+	show_visual_message(\"📝 3D Note: \" + text_content.substr(0, 50) + \"... - Press E to edit\", stellar_colors[4])
+	
+	# Enter text editing mode
+	enter_text_editing_mode(entity)
+
+func interact_akashic_entity(entity: Node3D):
+	var data_type = entity.get_meta(\"data_type\", \"unknown\")
+	show_visual_message(\"🔍 Akashic Data: \" + data_type + \" - Press Q to query\", stellar_colors[7])
+	
+	# Show akashic query interface
+	display_akashic_interface(entity)
+
+func interact_hybrid_entity(entity: Node3D):
+	var current_mode = entity.get_meta(\"current_mode\", \"dormant\")
+	show_visual_message(\"🔀 Hybrid Entity: \" + current_mode + \" - Press T to transform\", stellar_colors[5])
+	
+	# Show transformation options
+	display_transformation_interface(entity)
+
+# Visual Connection System
+func update_visual_connections(delta):
+	# Update all visual connections between entities
+	for connection in entity_connections:
+		update_connection_visual(connection, delta)
+
+func create_visual_connection(from_entity: Node3D, to_entity: Node3D, connection_type: String):
+	var connection = {
+		\"from\": from_entity,
+		\"to\": to_entity,
+		\"type\": connection_type,
+		\"line\": create_connection_line(from_entity.position, to_entity.position, connection_type)
+	}
+	
+	entity_connections.append(connection)
+	add_child(connection.line)
+
+func create_connection_line(from_pos: Vector3, to_pos: Vector3, type: String) -> MeshInstance3D:
+	var line = MeshInstance3D.new()
+	line.mesh = CylinderMesh.new()
+	line.mesh.top_radius = 0.05
+	line.mesh.bottom_radius = 0.05
+	
+	# Position and scale line between points
+	var distance = from_pos.distance_to(to_pos)
+	line.mesh.height = distance
+	line.position = (from_pos + to_pos) / 2
+	line.look_at(to_pos, Vector3.UP)
+	line.rotation.x += PI / 2
+	
+	# Color based on connection type
+	var material = StandardMaterial3D.new()
+	match type:
+		\"data_flow\":
+			material.albedo_color = stellar_colors[6]  # Blue
+		\"text_link\":
+			material.albedo_color = stellar_colors[4]  # Yellow
+		\"consciousness\":
+			material.albedo_color = stellar_colors[5]  # White
+		_:
+			material.albedo_color = stellar_colors[7]  # Default deep blue
+	
+	material.emission_enabled = true
+	material.emission = material.albedo_color * 0.3
+	line.material_override = material
+	
+	return line
+
+# Confession System Integration
+func setup_confession_system():
+	# Create central confession booth
+	var booth = Node3D.new()
+	booth.name = \"ScripturaConfessionBooth\"
+	booth.position = Vector3(0, 20, 0)
+	
+	var booth_mesh = MeshInstance3D.new()
+	booth_mesh.mesh = BoxMesh.new()
+	booth_mesh.mesh.size = Vector3(6, 8, 6)
+	
+	var booth_material = StandardMaterial3D.new()
+	booth_material.albedo_color = stellar_colors[8]  # Violet
+	booth_material.emission_enabled = true
+	booth_material.emission = stellar_colors[8] * 0.5
+	booth_mesh.material_override = booth_material
+	
+	booth.add_child(booth_mesh)
+	
+	var booth_label = Label3D.new()
+	booth_label.text = \"🔮 SCRIPTURA CONFESSION BOOTH\\nPress F to force all scripts to confess\"
+	booth_label.position = Vector3(0, 5, 0)
+	booth_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	booth.add_child(booth_label)
+	
+	add_child(booth)
+
+func activate_script_confession():
+	show_visual_message(\"🔮 All scripts must now confess their sins!\", stellar_colors[8])
+	
+	# Find all script entities and make them confess
+	for entity in unified_entities:
+		var entity_type = entity.get_meta(\"entity_type\", \"\")
+		if entity_type == \"akashic\" and entity.get_meta(\"data_type\", \"\") == \"script\":
+			make_entity_confess(entity)
+
+func make_entity_confess(entity: Node3D):
+	var sins = analyze_entity_sins(entity)
+	display_confession(entity, sins)
+
+# Utility Functions
+func spawn_initial_entities():
+	# Ensure we have some entities of each type in accessible locations
+	create_entity_at_position(\"programming\", Vector3(-10, 0, 0), \"INIT\")
+	create_entity_at_position(\"notepad\", Vector3(0, 0, 0), \"Welcome Note\")
+	create_entity_at_position(\"akashic\", Vector3(10, 0, 0), \"memory\")
+
+func create_entity_at_position(type: String, position: Vector3, data):
+	var entity = Node3D.new()
+	entity.position = position
+	
+	match type:
+		\"programming\":
+			setup_programming_entity(entity, MeshInstance3D.new(), StandardMaterial3D.new(), 0)
+			entity.set_meta(\"function_name\", data)
+		\"notepad\":
+			setup_notepad_entity(entity, MeshInstance3D.new(), StandardMaterial3D.new(), 0)
+			entity.set_meta(\"text_content\", data)
+		\"akashic\":
+			setup_akashic_entity(entity, MeshInstance3D.new(), StandardMaterial3D.new(), 0)
+			entity.set_meta(\"data_type\", data)
+	
+	add_child(entity)
+	unified_entities.append(entity)
+
+func show_unified_message():
+	show_visual_message(\"🌌 PERFECT UNIFIED 3D UNIVERSE\\nP=Programming N=Notepad A=Akashic C=Connect T=Transform F=Confess\\nWASD=Move Mouse=Look ESC=MouseToggle\", stellar_colors[5])
+
+func show_visual_message(text: String, color: Color):
+	# Create floating message that fades away
+	var message = Label3D.new()
+	message.text = text
+	message.position = $Camera3D.position + Vector3(0, 5, 0)
+	message.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	message.modulate = color
+	add_child(message)
+	
+	# Fade and remove after 3 seconds
+	var tween = create_tween()
+	tween.tween_property(message, \"modulate:a\", 0.0, 3.0)
+	tween.tween_callback(message.queue_free)
+
+func toggle_mouse_mode():
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED else Input.MOUSE_MODE_CAPTURED
+
+func connect_to_flood_gates():
+	var flood_gates = get_node_or_null(\"/root/SystemBootstrap\")
+	if flood_gates and flood_gates.has_method(\"register_being\"):
+		flood_gates.register_being(self)
+
+# Placeholder functions for full implementation
+func process_entity_interactions(delta): pass
+func interact_with_nearest_entity(): pass
+func create_programming_entity_at_cursor(): pass
+func create_notepad_entity_at_cursor(): pass
+func create_akashic_entity_at_cursor(): pass
+func start_entity_connection(): pass
+func transform_selected_entity(): pass
+func seek_nearest_compatible_entity(entity): pass
+func store_nearby_entity_data(entity): pass
+func cycle_hybrid_mode(entity): pass
+func deselect_entity_visual(entity): pass
+func select_entity_visual(entity): pass
+func show_entity_info(entity, type): pass
+func display_programming_interface(entity): pass
+func enter_text_editing_mode(entity): pass
+func display_akashic_interface(entity): pass
+func display_transformation_interface(entity): pass
+func update_connection_visual(connection, delta): pass
+func analyze_entity_sins(entity): return []
+func display_confession(entity, sins): pass
+func generate_akashic_data(type, index): return \"Data for \" + type + \" \" + str(index)
+func save_unified_state(): pass
+"
+
+[sub_resource type="Environment" id="Environment_space"]
+background_mode = 1
+background_color = Color(0.02, 0.02, 0.05, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.3, 0.3, 0.5, 1)
+ambient_light_energy = 0.5
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_space"]
+exposure_multiplier = 1.2
+
+[node name="PerfectUnified3DUniverse" type="Node3D"]
+script = SubResource("unified_perfect_script")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_space")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 5, 10)
+attributes = SubResource("CameraAttributesPractical_space")
+fov = 75.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 10, 0)
+light_energy = 0.8
+shadow_enabled = true

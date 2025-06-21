@@ -142,7 +142,8 @@ func setup_generation_rules() -> void:
 			"features": ["stars", "cosmic_entities", "void_structures", "dimensional_rifts"],
 			"density": 0.1,
 			"consciousness_level": 4
-}
+		}
+	}
 
 func setup_chunk_templates() -> void:
 	"""Setup templates for different chunk types"""
@@ -160,7 +161,8 @@ func setup_chunk_templates() -> void:
 		"special": {
 			"features": ["unique_generation", "artifacts"],
 			"consciousness_level": 3
-}
+		}
+	}
 
 # ===== ENTITY TRACKING =====
 
@@ -204,7 +206,6 @@ func track_entity(entity: Node, entity_type: String) -> void:
 				ai_companion_beings.append(entity)
 		
 		print("🎯 Now tracking %s: %s" % [entity_type, entity.name])
-}
 
 func update_observer_positions() -> void:
 	"""Update positions of all tracked entities"""
@@ -434,7 +435,6 @@ func make_entity_generator(entity: Node, generator_type: String = "basic") -> vo
 	
 	# Add generator component to the entity
 	if entity.has_method("add_component"):
-}
 		var component_path = "res://components/chunk_generator_%s.ub.zip" % generator_type
 		entity.add_component(component_path)
 		print("🎨 Made %s into a %s chunk generator" % [entity.name, generator_type])

@@ -3,6 +3,7 @@ extends Camera3D
 
 ## Responds to actions and input from mouse, keyboard, joystick and touch,
 ## in order to rotate around its parent node while continuously facing it.
+## that one was in folder with .DISABLED in name, what are differences beside this line?
 
 #  _______             _    _           _ _  _____
 # |__   __|           | |  | |         | | |/ ____|
@@ -189,7 +190,7 @@ extends Camera3D
 @export var pitch_soft_limit_strength := 1.0
 
 #enum PitchLimitMode {
-}
+
 #	SOFT,
 #	HARD,
 #	BOTH,

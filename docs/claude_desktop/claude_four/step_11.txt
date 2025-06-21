@@ -1,0 +1,250 @@
+# Graphics & Sound Settings Implementation
+
+## Features from Recipe:
+- GraphicsMenu with resolution, screen type options
+- ScreenType: Fullscreen, Borderless, Windowed
+- Anti-aliasing settings
+- SoundsMenu with layer controls
+- Sound layers: music, voice, animals, sound effects
+- Settings persistence
+
+## Implementation Steps:
+
+### Step 1: Graphics Settings Manager
+```gdscript
+# GraphicsSettings.gd
+extends Node
+
+var current_settings: Dictionary = {
+    "resolution": Vector2(1920, 1080),
+    "screen_type": "windowed",
+    "vsync": true,
+    "anti_aliasing": "MSAA_4X",
+    "shadow_quality": "high",
+    "texture_quality": "high",
+    "render_scale": 1.0
+}
+
+signal settings_changed()
+```
+
+### Step 2: Graphics Menu UI
+```gdscript
+class GraphicsMenu:
+    var resolution_dropdown: OptionButton
+    var screen_type_dropdown: OptionButton
+    var aa_dropdown: OptionButton
+    var quality_presets: OptionButton
+    
+    func populate_resolutions():
+        var resolutions = [
+            "3840x2160", "2560x1440", "1920x1080",
+            "1600x900", "1366x768", "1280x720"
+        ]
+    
+    func populate_screen_types():
+        var types = [
+            "Fullscreen",
+            "Borderless Fullscreen", 
+            "Windowed"
+        ]
+```
+
+### Step 3: Sound System Architecture
+```gdscript
+# SoundManager.gd
+extends Node
+
+var audio_buses: Dictionary = {
+    "Master": 0,
+    "Music": 1,
+    "Voice": 2,
+    "Animals": 3,
+    "SoundEffects": 4
+}
+
+var volume_settings: Dictionary = {
+    "master": 1.0,
+    "music": 0.8,
+    "voice": 1.0,
+    "animals": 0.7,
+    "sound_effects": 0.9
+}
+```
+
+### Step 4: Sound Menu Implementation
+```gdscript
+class SoundMenu:
+    var master_slider: HSlider
+    var music_slider: HSlider
+    var voice_slider: HSlider
+    var animals_slider: HSlider
+    var effects_slider: HSlider
+    
+    func _ready():
+        # Connect sliders to audio buses
+        # Load saved values
+        # Add preview sounds
+```
+
+### Step 5: Settings Application
+```gdscript
+func apply_graphics_settings():
+    # Resolution
+    DisplayServer.window_set_size(current_settings.resolution)
+    
+    # Screen Type
+    match current_settings.screen_type:
+        "fullscreen":
+            DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+        "borderless":
+            DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+        "windowed":
+            DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+    
+    # Anti-aliasing
+    var viewport = get_viewport()
+    viewport.msaa_3d = current_settings.anti_aliasing
+```
+
+## Testing Procedures:
+
+### Test 1: Graphics Settings
+- [ ] Change resolution
+- [ ] Switch screen modes
+- [ ] Test anti-aliasing levels
+- [ ] Verify immediate application
+- [ ] Test settings persistence
+
+### Test 2: Sound Settings
+- [ ] Adjust master volume
+- [ ] Test individual channels
+- [ ] Verify channel isolation
+- [ ] Test preview sounds
+- [ ] Check 3D sound positioning
+
+### Test 3: Performance Impact
+- [ ] Test low-end settings
+- [ ] Test high-end settings
+- [ ] Monitor FPS changes
+- [ ] Check memory usage
+- [ ] Verify smooth transitions
+
+### Test 4: Edge Cases
+- [ ] Invalid resolution handling
+- [ ] Multi-monitor support
+- [ ] Audio device switching
+- [ ] Settings corruption recovery
+- [ ] Default settings restoration
+
+## Settings UI Layout:
+
+### Graphics Menu:
+```
+Graphics Settings
+├── Display
+│   ├── Resolution: [1920x1080 ▼]
+│   ├── Screen Type: [Windowed ▼]
+│   └── VSync: [✓]
+├── Quality
+│   ├── Preset: [High ▼]
+│   ├── Anti-Aliasing: [MSAA 4x ▼]
+│   ├── Shadows: [High ▼]
+│   └── Textures: [High ▼]
+└── Advanced
+    ├── Render Scale: [100% ═══]
+    └── Apply | Reset
+```
+
+### Sound Menu:
+```
+Sound Settings
+├── Master Volume: [80% ═══════]
+├── Sound Channels
+│   ├── Music: [80% ═══════]
+│   ├── Voice: [100% ══════════]
+│   ├── Animals: [70% ═══════]
+│   └── Effects: [90% ═════════]
+├── Advanced
+│   ├── 3D Audio: [✓]
+│   └── Audio Device: [Default ▼]
+└── Test Sound | Apply | Reset
+```
+
+## Configuration Storage:
+
+### Graphics Config:
+```gdscript
+# user://graphics_config.cfg
+[display]
+resolution_x=1920
+resolution_y=1080
+screen_type="windowed"
+vsync=true
+
+[quality]
+anti_aliasing="MSAA_4X"
+shadow_quality="high"
+texture_quality="high"
+render_scale=1.0
+```
+
+### Audio Config:
+```gdscript
+# user://audio_config.cfg
+[volume]
+master=1.0
+music=0.8
+voice=1.0
+animals=0.7
+sound_effects=0.9
+
+[settings]
+audio_device="Default"
+enable_3d_audio=true
+```
+
+## Performance Presets:
+
+```gdscript
+var quality_presets = {
+    "Low": {
+        "anti_aliasing": "DISABLED",
+        "shadow_quality": "low",
+        "texture_quality": "low",
+        "render_scale": 0.75
+    },
+    "Medium": {
+        "anti_aliasing": "FXAA",
+        "shadow_quality": "medium",
+        "texture_quality": "medium",
+        "render_scale": 0.9
+    },
+    "High": {
+        "anti_aliasing": "MSAA_4X",
+        "shadow_quality": "high",
+        "texture_quality": "high",
+        "render_scale": 1.0
+    },
+    "Ultra": {
+        "anti_aliasing": "MSAA_8X",
+        "shadow_quality": "ultra",
+        "texture_quality": "ultra",
+        "render_scale": 1.0
+    }
+}
+```
+
+## Dependencies:
+- Godot display server
+- Audio bus system
+- Configuration file system
+- UI components
+- Performance monitoring
+
+## Expected Outcomes:
+- Flexible graphics options
+- Granular audio control
+- Smooth setting changes
+- Performance optimization
+- Persistent configurations

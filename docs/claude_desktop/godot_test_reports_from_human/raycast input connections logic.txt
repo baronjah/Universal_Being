@@ -1,0 +1,357 @@
+
+## main script functions
+
+func _input(event: InputEvent):
+	_input_event(event)
+#
+
+
+
+
+#
+func _input_event(event: InputEvent):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if event.pressed:
+				mouse_status.x = 1
+				var current_ray_points = get_ray_points(event.position)
+			else:
+				mouse_status.x = 0
+				process_ray_cast(event.position)
+		if event.button_index == MOUSE_BUTTON_RIGHT:
+			if event.pressed:
+				mouse_status.y = 1
+			else:
+				mouse_status.y = 0
+	if event is InputEventMouseMotion:
+		pass
+		process_ray_cast(event.position)
+	
+	camera.input(event)
+#
+
+
+
+
+
+
+
+
+
+############
+## main script begining of raycast
+
+
+func get_ray_points(mouse_position: Vector2):
+	var from = camera.project_ray_origin(mouse_position)
+	var ray_normal = camera.project_ray_normal(mouse_position)
+	var to = from + ray_normal * ray_distance_set
+	var space_state = get_world_3d().direct_space_state
+	var query = PhysicsRayQueryParameters3D.create(from, to)
+	var result = space_state.intersect_ray(query)
+	var data : Array = []
+	data.append(result)
+	data.append(to)
+	data.append(from)
+	another_ray_cast(result)
+	create_new_task("ray_cast_data_preparer", data) 
+	print("ray_cast_stuff are we even at begining? ", data)
+
+
+
+
+func ray_cast_data_preparer(data_ray_cast):
+	var results = data_ray_cast[0]
+	var tos = data_ray_cast[1]
+	var froms = data_ray_cast[2]
+	multi_threaded_ray_cast(results, tos, froms)
+	print("ray_cast_stuff are we even at begining?")
+
+func multi_threaded_ray_cast(result, to, from):
+	if result:
+		to = result.position
+		var collider = result.collider
+		var container_path = result.collider.get_path()
+		var container_name_split = str(container_path).split("/")
+		var container_name = container_name_split[3]
+		var thing_name = container_name_split[4]
+		print(" ray_cast_stufff container_name : " , container_name, " andu za thingu : " , thing_name)
+		var datapoint
+		var datapoint_path_ray_cast
+		tree_mutex.lock()
+		if scene_tree_jsh["main_root"]["branches"].has(container_name):
+			datapoint_path_ray_cast = scene_tree_jsh["main_root"]["branches"][container_name]["datapoint"]["datapoint_path"]
+		tree_mutex.unlock()
+		if datapoint_path_ray_cast:
+			datapoint = jsh_tree_get_node(datapoint_path_ray_cast)
+		if datapoint is Node:
+			var returned_data = datapoint.thing_interaction(thing_name)
+	var line_node_now = jsh_tree_get_node("akashic_records/thing_3")
+	if line_node_now:
+		var start_end_points : Array = [from, to]
+		if line_node_now.has_method("change_points_of_line"):
+			line_node_now.change_points_of_line(start_end_points)
+			return [from, to]
+
+
+
+
+
+
+
+######
+## datapoint scripts parts
+
+
+func thing_interaction(thing):
+	things_dictionary.lock()
+	var maybe_that_copy = datapoint_things_dictionary.duplicate(true)
+	things_dictionary.unlock()
+	if maybe_that_copy.has(thing):
+		var array_of_things = check_possible_interactions(thing)
+		return array_of_things
+	else:
+		print("ray_cast_stufff it does not have that thing? ")
+
+
+
+
+
+
+func check_possible_interactions(thing):
+	print("Action 2.0 newest thingies here 2")
+	var first_results = check_possible_actions(thing)
+	print(" Action 2.0 results : " , first_results)
+	var array_of_things = null
+	if first_results != null:
+		array_of_things = do_action_found(first_results, thing)
+	return array_of_things
+
+
+
+func check_possible_actions(thing):
+	print("newest thingies here 1")
+	var found_interaction = null
+	interactions_mutex.lock()
+	var actions_possible = Interactions_array.duplicate(true) 
+	interactions_mutex.unlock()
+	for possible_action in actions_possible:
+		var possible_scenes = possible_action[1][0]
+		for one_scene in possible_scenes:
+			if current_scene == one_scene[0]:
+				var possible_things = possible_action[1][1]
+				for one_thing in possible_things:
+					if thing == one_thing[0]:
+						found_interaction = possible_action
+						return found_interaction
+
+func do_action_found(action_page, thing_name):
+	print("newest thingies here 0")
+	var actions = action_page[1]
+	var the_actions_to_do = actions[2]
+	var specifics_in_action = actions[3]
+	var counter_one : int = -1
+	for singular_action in the_actions_to_do:
+		counter_one +=1
+		var action_current = specifics_in_action[counter_one][0]
+		match the_actions_to_do[counter_one][0]:
+			"change_scene":
+				if action_current is String:
+					var split_for_number = action_current.split("_")
+					if split_for_number.size() > 1:
+						var inty_numba = int(split_for_number[1])
+						move_things_around(inty_numba)
+			"add_scene":
+				print("catch Action 2.0 add_scene ", action_current)
+				main_node.create_new_task("three_stages_of_creation", action_current)
+				
+			"change_text": 
+				print(" Action 2.0 change_text ", action_current)
+				
+			"call_function": 
+				print(" Action 2.0 call_function ", action_current)
+				var function_name = action_current
+				main_node.callv(function_name, [])
+				
+			"unload_container": 
+				var container_name = action_current
+				var send_type_of_unload = "container"
+				main_node.fifth_dimensional_magic(send_type_of_unload, container_name)
+				
+			"write":
+				var name_of_action : String = "call_function_get_node"
+				var node_to_get : String = "keyboard_container/thing_24"
+				var name_of_the_function : String = "handle_key_press"
+				name_of_the_function = name_of_the_function + "|" + str(thing_name)
+				main_node.sixth_dimensional_magic(name_of_action, node_to_get, name_of_the_function, action_current)
+				return "write"
+				
+			"shift_keyboard": 
+				var name_of_action : String = "move_things_around"
+				var node_to_get_0 : String = "keyboard_left_container/thing_34"
+				var node_to_get_1 : String = "keyboard_right_container/thing_53"
+				var array_of_nodes : Array = []
+				array_of_nodes.append(node_to_get_0)
+				array_of_nodes.append(node_to_get_1)
+				var type_of_action : String = "get_nodes_call_function"
+				var data_to_send = int(action_current)
+				main_node.sixth_dimensional_magic(type_of_action, array_of_nodes, name_of_action, data_to_send)
+				
+			"number_letter":
+				var name_of_action : String = "move_things_around"
+				var node_to_get_0 : String = "keyboard_left_container/thing_34"
+				var node_to_get_1 : String = "keyboard_right_container/thing_53"
+				var array_of_nodes : Array = []
+				array_of_nodes.append(node_to_get_0)
+				array_of_nodes.append(node_to_get_1)
+				var type_of_action : String = "get_nodes_call_function"
+				var data_to_send = int(action_current)
+				main_node.sixth_dimensional_magic(type_of_action, array_of_nodes, name_of_action, data_to_send)
+				
+			"return_string":
+				print("Action: return_string ", action_current)
+				var keyboard_dp_path = "keyboard_container/thing_24"
+				var keyboard_dp = main_node.jsh_tree_get_node(keyboard_dp_path)
+				if keyboard_dp:
+					keyboard_dp.return_string_from_keyboards()
+				else:
+					print("Keyboard datapoint not found using JSH tree: ", keyboard_dp_path)
+				
+				
+			"undo_char":
+				var function_name_to_call : String = "handle_backspace"
+				function_name_to_call = function_name_to_call + "|" + str(thing_name)
+				var node_to_get : String = "keyboard_container/thing_24"
+				var name_of_action : String = "call_function_single_get_node"
+				main_node.sixth_dimensional_magic(name_of_action, node_to_get, function_name_to_call)
+				return "undo_char"
+				
+			"load_file":
+				print(" Action 2.0 load_file ", action_current)
+				var splitter_of_one = action_current.split("ø")
+				print(" Action 2.0 load_file splitter_of_one ", splitter_of_one)
+				var name_of_action = "load_a_file"
+				var container_name = splitter_of_one[0]
+				var file_to_load = splitter_of_one[1]
+				print(" Action 2.0 load_file splitter_of_one ", name_of_action , " , " , container_name , " , " , file_to_load)
+				main_node.eight_dimensional_magic(name_of_action, file_to_load, container_name)
+				
+				
+			"key_interaction":
+				print(" newest thingies here key interaction")
+			"value_interaction":
+				print(" newest thingies here value interaction")
+			"dunno_yet":
+				print(" Action 2.0 dunno_yet ", action_current)
+			"connect_keyboard":
+				print("Action: connect_keyboard for ", action_current)
+				var target_container = self.get_parent().name
+				var target_thing = action_current
+				main_node.eight_dimensional_magic("keyboard_connection", [target_container, target_thing, self.name], "")
+				
+			_:
+				print(" Action 2.0 we didnt find it ", action_current)
+
+
+################ 
+## other main script parts
+## this is for checking combo, of input, can be also combo for functions in specific type
+##
+
+func another_ray_cast(result):
+	reset_debug_colors()
+	if result and result.collider:
+		highlight_collision_shape(result.collider)
+
+func process_ray_cast(stuff):
+	var from = camera.project_ray_origin(stuff)
+	var ray_normal = camera.project_ray_normal(stuff)
+	var to = from + ray_normal * ray_distance_set
+	var space_state = get_world_3d().direct_space_state
+	var query = PhysicsRayQueryParameters3D.create(from, to)
+	var result = space_state.intersect_ray(query)
+	reset_debug_colors()
+	if result and result.collider:
+		highlight_collision_shape(result.collider)
+
+func reset_debug_colors():
+	if _highlighted_colliders:
+		for collider in _highlighted_colliders:
+			if is_instance_valid(collider):
+				reset_collider_debug_color(collider)
+		_highlighted_colliders.clear()
+
+func reset_collider_debug_color(collider):
+	for child in collider.get_children():
+		if child is CollisionShape3D:
+			child.debug_color = Color(0, 0, 1, 0.4) 
+			child.debug_fill = true
+
+func highlight_collision_shape(collider):
+	var found_shape = false
+	for child in collider.get_children():
+		if child is CollisionShape3D:
+			if mouse_status.x == 0:
+				print(" testing_ray 0 ")
+				child.debug_color = Color(1, 0, 0, 1)  
+				child.debug_fill = true
+				found_shape = true
+				combo_checker(child, mouse_status.x)
+			elif mouse_status.x == 1:
+				print(" testing_ray 1 ")
+				child.debug_color = Color(0, 1, 0, 1)  
+				child.debug_fill = true
+				found_shape = true
+				combo_checker(child, mouse_status.x)
+	if found_shape:
+		_highlighted_colliders.append(collider)
+	if collider is CollisionShape3D:
+		if mouse_status.x == 0:
+			print(" testing_ray 2 ")
+			collider.debug_color = Color(1, 0, 0, 1) 
+			collider.debug_fill = true
+			_highlighted_colliders.append(collider)
+		elif mouse_status.x == 1:
+			print(" testing_ray 3 ")
+			collider.debug_color = Color(0, 1, 0, 1)  
+			collider.debug_fill = true
+			_highlighted_colliders.append(collider)
+
+func combo_checker(node_to_check, state_of_button):
+	var current_time = Time.get_ticks_msec()
+	if combo_array.is_empty() or (current_time - combo_array[-1][2]) > 1000: 
+		combo_array = [[node_to_check, state_of_button, current_time]]
+		return
+	if combo_array[-1][0] == node_to_check:
+		if combo_array[-1][1] != state_of_button:
+			combo_array.append([node_to_check, state_of_button, current_time])
+			check_combo_patterns()
+	else:
+		combo_array = [[node_to_check, state_of_button, current_time]]
+	if combo_array.size() > 10:
+		combo_array.pop_front()
+	print("COMBO Current combo: ", format_combo_for_display())
+
+func format_combo_for_display():
+	var display = []
+	for entry in combo_array:
+		var node_name = entry[0].get_parent().name if entry[0].get_parent() else "unknown"
+		var action = "release" if entry[1] == 0 else "press"
+		display.append(node_name + ":" + action)
+	return display
+
+func check_combo_patterns():
+	if combo_array.size() >= 2:
+		var last_two = [combo_array[-2][1], combo_array[-1][1]]
+		if last_two == [1, 0] and combo_array[-2][0] == combo_array[-1][0]:
+			print("COMBO: Click completed on ", combo_array[-1][0].get_parent().name)
+	if combo_array.size() >= 3:
+		var last_three_states = [combo_array[-3][1], combo_array[-2][1], combo_array[-1][1]]
+		var same_object = (combo_array[-3][0] == combo_array[-2][0] and combo_array[-2][0] == combo_array[-1][0])
+		if last_three_states == [1, 1, 0] and same_object:
+			var hold_duration = combo_array[-1][2] - combo_array[-3][2]
+			if hold_duration > 500:  # Held for 500ms
+				print("COMBO: Long press detected on ", combo_array[-1][0].get_parent().name)
+
+############
+

@@ -10,7 +10,7 @@ func _ready():
 func auto_discover_and_register_fallbacks():
 	print("🔍 Auto-discovering fallback implementations...")
 	
-	var class_files = {
+	var class_files = {}
 	scan_directory_for_classes("res://", class_files)
 	
 	# Register all implementations of each class

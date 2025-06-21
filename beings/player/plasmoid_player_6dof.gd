@@ -4,6 +4,7 @@ class_name PlasmoidPlayer6DOF
 ## 6DOF PLASMOID PLAYER - Perfect Universal Being movement
 ## WASD + mouse = 6 degrees of freedom movement
 ## Crosshair interface, socket system, perfect rotation
+# res://beings/player/plasmoid_player_6dof.gd
 
 signal crosshair_target_changed(target: Node3D)
 signal socket_interaction(socket: Node3D, distance: float)

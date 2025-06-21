@@ -1,0 +1,107 @@
+[gd_scene load_steps=3 format=3 uid="uid://player_plasmoid_scene"]
+
+[ext_resource type="Script" path="res://beings/plasmoid/PlayerPlasmoid.gd" id="1_player_plasmoid"]
+[ext_resource type="PackedScene" path="res://scenes/main/camera_point.tscn" id="2_camera"]
+
+[node name="PlayerPlasmoid" type="CharacterBody3D"]
+script = ExtResource("1_player_plasmoid")
+movement_speed = 15.0
+sprint_multiplier = 2.5
+socket_glow_intensity = 2.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+
+[node name="PlasmoidCameraPoint" parent="." instance=ExtResource("2_camera")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 8)
+
+[node name="MovementHelper" type="Node3D" parent="."]
+
+[node name="SocketSystem" type="Node3D" parent="."]
+
+[node name="ConsciousnessAura" type="GPUParticles3D" parent="."]
+emitting = true
+amount = 100
+lifetime = 5.0
+visibility_aabb = AABB(-10, -10, -10, 20, 20, 20)
+
+[node name="InteractionArea" type="Area3D" parent="."]
+
+[node name="InteractionShape" type="CollisionShape3D" parent="InteractionArea"]
+
+[node name="PlasmoidHUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="SocketStatus" type="VBoxContainer" parent="PlasmoidHUD"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = -20.0
+grow_vertical = 0
+
+[node name="StatusTitle" type="Label" parent="PlasmoidHUD/SocketStatus"]
+layout_mode = 2
+text = "🌟 PLAYER PLASMOID STATUS"
+theme_override_font_sizes/font_size = 14
+
+[node name="ConsciousnessLevel" type="Label" parent="PlasmoidHUD/SocketStatus"]
+layout_mode = 2
+text = "Consciousness Level: 5"
+theme_override_font_sizes/font_size = 12
+
+[node name="ActiveSockets" type="Label" parent="PlasmoidHUD/SocketStatus"]
+layout_mode = 2
+text = "Active Sockets: 8"
+theme_override_font_sizes/font_size = 12
+
+[node name="Movement" type="Label" parent="PlasmoidHUD/SocketStatus"]
+layout_mode = 2
+text = "Movement: WASD + QF | Sprint: Shift"
+theme_override_font_sizes/font_size = 10
+
+[node name="SocketControls" type="Label" parent="PlasmoidHUD/SocketStatus"]
+layout_mode = 2
+text = "Sockets: TAB toggle | Ctrl+G glow | Ctrl+P status"
+theme_override_font_sizes/font_size = 10
+
+[node name="PlasmoidControls" type="VBoxContainer" parent="PlasmoidHUD"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -350.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 200.0
+grow_horizontal = 0
+
+[node name="ControlsTitle" type="Label" parent="PlasmoidHUD/PlasmoidControls"]
+layout_mode = 2
+text = "🎮 PLASMOID CONTROLS"
+theme_override_font_sizes/font_size = 14
+
+[node name="CameraNote" type="Label" parent="PlasmoidHUD/PlasmoidControls"]
+layout_mode = 2
+text = "📹 TRACKBALL CAMERA ACTIVE"
+theme_override_font_sizes/font_size = 12
+
+[node name="TrackballControls" type="Label" parent="PlasmoidHUD/PlasmoidControls"]
+layout_mode = 2
+text = "Right Click + Drag: Rotate
+Scroll: Zoom In/Out
+Middle Click + Drag: Pan"
+theme_override_font_sizes/font_size = 10
+
+[node name="MovementControls" type="Label" parent="PlasmoidHUD/PlasmoidControls"]
+layout_mode = 2
+text = "WASD: Move Horizontally
+Q: Move Up | F: Move Down
+Shift: Sprint"
+theme_override_font_sizes/font_size = 10

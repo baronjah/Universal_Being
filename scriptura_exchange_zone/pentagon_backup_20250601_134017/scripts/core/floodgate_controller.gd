@@ -210,6 +210,7 @@ func _init() -> void:
 	pentagon_init()
 
 func pentagon_init() -> void:
+    super.pentagon_init()
 	# Pentagon initialization - override in child classes
 	pass
 
@@ -217,6 +218,7 @@ func _input(event: InputEvent) -> void:
 	pentagon_input(event)
 
 func pentagon_input(event: InputEvent) -> void:
+    super.pentagon_input(event)
 	# Pentagon input handling - override in child classes
 	pass
 
@@ -224,6 +226,7 @@ func sewers() -> void:
 	pentagon_sewers()
 
 func pentagon_sewers() -> void:
+    super.pentagon_sewers()
 	# Pentagon cleanup/output - override in child classes
 	pass
 func each_blimp_of_delta():
@@ -1778,6 +1781,14 @@ func queue_transform_universal_being(node_path: String, new_form: String, transf
 
 func queue_connect_universal_beings(source_path: String, target_path: String, connection_type: String, connection_data: Dictionary = {}) -> String:
 	"""Queue a connection between Universal Beings"""
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+func pentagon_process(delta: float) -> void:
+	super.pentagon_process(delta)
+	# Auto-generated process implementation
+
+	# Auto-generated ready implementation
+
 	return queue_operation(OperationType.CONNECT_UNIVERSAL_BEINGS, {
 		"source_path": source_path,
 		"target_path": target_path,

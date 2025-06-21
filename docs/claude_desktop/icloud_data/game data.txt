@@ -1,0 +1,629 @@
+so how we can make an icosphere with shaders? we shall definitely use fast noise lite library with it, that golden ration for offsetting one of three coordinates for subdivision to work wonders
+
+// Create a 3D position from the 2D UV
+    vec2 uv = UV * 2.0 - 1.0;
+    float d = length(uv);
+
+
+  // Calculate separate distances for each layer
+    float core_d = d / core_scale;
+    float blob_d = d / blob_scale;
+    float flare_d = d;
+    vec3 p = vec3(uv, sqrt(max(0.0, 1.0 - d * d)));
+
+    // Apply rotation
+    p = rotation_matrix * p;
+
+// Generate noise for base star appearance
+    float n = fnlGetNoise3D(noise_state, p.x * noise_scale, p.y * noise_scale, p.z * noise_scale);
+
+// Core layer
+	if (core_d <= 1.0) {
+		core_layer = mix(final_color, base_color, base_color.a);
+	    core_layer.a = smoothstep(1.0, 0.99, core_d);
+	}
+
+	final_color = mix(final_color, core_layer, core_layer.a);
+
+this is how we made flat sphere, on w single texture and so i think we would need to use the same noise for it, with similar parameters without too much care about some kind of rotation as we will be using it this time on three dimensional thing, not two dimensional 
+
+
+
+
+
+
+edekty specjalne z shaderów wcale nie muszą być ciągle, można dodać timera na x ilość czasu i będą znikać 
+
+
+
+
+
+żyjemy w śnie, w jednym z wielu snów, a te wszyscy sny to jeden sen, każdy ten sen pamiętasz jak całe swoje życie tutaj, w każdym śnie pamiętasz inne, w śnie gdzie pamiętasz każdy sen pamiętasz każde swoje inne życie, stąd też pamiętasz każde życie
+
+
+
+
+just a game idea, my real life here is already a dream and fast
+the npcs talk, think, it is just a single book, where stuff happen instantly yet in one dream it is smoothed out, each word has meaning and even many meanings 
+
+
+
+height map for water, when wavy? needs more than single 2d net of data, add a plain mesh over it maybe sprite
+
+
+
+server model doing it all
+
+client side just being able to produce a model from txt file, animate? from txt file 
+
+
+
+server with folders and text files? another server that controls physics and stuff on server, and another that shows it as client 
+
+just text files, right now: thing, 
+
+
+3d spaces and coordinates, being like many dimensions? like these 3d spaces can be several at once? it could make the server being loaded few at once! to travel between 
+
+in godot the Node3D have its own family, cords, the local transform of that and its global stuff, i would see the client having several ways to interact with the space, imagine 27 spaces that is possible to be connected into! with that we can make few version of the game with that in mind, and even each of these spaces could potentially be a server? to roam freely between
+
+
+a 3d scene could also be like piece of programing? as we got a 3d scene, here things could interact from time to time, like blood running through veins, from time to time, checking if everything works, if we have no obstacles, so a thing, transform into different thing, it could get a new parameter, that manifest different way, like clicking a button would make something spin, these scenes could have like priority? for like lod, so some stuff is being checked more often and faster than others, could help with priority when we add some ai, adding words and files so we see shapes and textures one day, but these scenes as a 3d space with thing interacting, and we having input and output manifesting in different scene? hmm
+
+
+i guess spaces where we store spaces, and points of data, and creating scenarios to transform data into different data, and it being in many places at once is kinda similar to ai? but here it is more about video game, it can repeat and cycle through scenarios over single scene, so it would look like movie, at starters very bare, just data, later some kind of visual representation, with self evolving stuff, where we make it all but itself, it could be like a way for ai to train and create, and have many points of databases?
+
+
+
+
+serwer z bazą danych co kontaktuje się z innym serwerem co oblicza czy coś robi coś, i serwer danych wysyła informacje bo serwer co oblicza coś obliczył i gracz jest albo nie jest w pobliżu 
+
+
+
+
+kilka serwerów 
+-świat jako baza danych
+-świat jako symulacja czynności 
+-gracz automatyczny (na ify, sceny, plus ai przemyślenia i dodawanie nowych scen)
+-ai które widzi, rozumie przestrzenie co widzi, też w sumie wie co czyta bo to notatnik 3d i napisze zwykłym tekstem który inne ai przeanalizuje czy wygląda coś ok itp
+czyli recognition image ai
+-przeczytanie, zrozumienie, odpowiedź względem theme(powtarzalność względem scen, bo to notatnik 4d też trochę)
+-ai które ogarnia całą historię świata w skrócie 
+-ai które ogarnia jak napisać kształt w naszym języku co opracowałem, chyba się da, powtarzalność, może cyfry będą dla ai trudne?
+-ai z wikipedią, może dużo zajmować ale musi też działać szybko
+
+
+
+
+
+
+
+notatnik 3d
+barebones godot needs
+main node makes nodes as scene, thing, it needs to hide then, unload them, save them before unloading,
+
+like it just makes parent node named “3dscene_0” as first one, and because of something we edit this now! so new things are added there, then we can add new 3d scene in that scene so we need to adres in text that saves priority of saving files and it needs to kinda always be in background if needed, multitasking from start 
+
+how to dumb down stuff, like we need a csv file for each thing and its coordinates and maybe few data all the time, for game to experience existence? for me to call it alive, and this way it is easiest way to access data with these csv and 2d ways of storing files? it could evolve? we check if this group have reached max number, then we add on top on it, then it will be created? after long time? after hear it will be a lot of data that repeated on pc, so it is new dwarf fortress but done right in data in txt so it is easy to translate on quest, game loads on as text, the. maybe even we generate a image and mode on pc and send file into quest? as server? maybe some files are needed for starters but most shall be creatable, notepad 3d
+
+spaces 3d, things, it’s group and some parameters, as little of roots to different root or maybe branch of data flow, as possible? as sometimes we call that branch a day? an blueprint we read, as we create? we make game as just point of light and write? on pc? then on console we play as player? easy to control and see it both ways at once? and doable on both at once? just more load on pc? one day on server with many drives and cpus and gpus like times 3 then 6 then 9 then even 12 each of like what tesla talked about and in few version of priority, few senses of ai scenario and need, image, voice, video, text and it being each trained in our names of our function and server calls, it is lan database akashic records that can connect in future to more than just known devices, mostly lan, thing, group and its parameter, model, texture with three layers, as i wanna also that anime vector game, with few pcs i can make it one day, wanna see it in vr! in deja vu in vr i can see and replay if in while? kinda, and add stuff while? so i need add and freeze button? and that is also in creator write stuff? in my game as it is notepad after all but in 3d? 4d even? if i create perfect log? and in future i make it just like a loading screen, with functions on 1 pc it takes some hours to even like it, it needs to generate :(
+
+3 6 9
+
+at lowest layer the node is just data of coordinates, number, direction, look direction, task, scenario, these data at core, plus it needs also two things? number of thing and priority to check? for my perfect task manager thing so it is low resource and it can have next layers of data as i add devices?
+
+
+
+
+
+
+po notatniku 3d, system połączeń, wymiany danych, stworzenie scenariuszy, space 3d, repetition of cycle, i tend to guzik evolve ai
+
+czyli dobra baza danych, podpinanie się, zapisywanie, dodawanie, zmienianie, pobieranie, w wersji pliku txt dna, evolve, just make backup? żeby nie usuwać 
+
+scenes 3d being connected to some kind of scenario of creation, made in 2 ways, visible and invisible? so it is made with scripts that i can see as visible and invisible? with outcomes as text? as a oven to bake texture? click by click? maybe one version where we just make texture?
+as in programing that tool as oven is physical space with words, inputs and outputs is just data, can have physical points of creation, interaction to click stuff, and just faster that we cannot see? made from punch cards of shaders instructions later?
+barebones node: id, coordinations, current task, scenario
+scene being a scenario? both visible and invisible in background? as we shift data 
+
+
+3d notepad having element of 3d as space and data, 4d as scenarios that repeats and is created from 3d data, it can create, model, texture, parameters of thing, 5d of creation, from parameters model and texture, animation sound,
+so as node the 3d node is a folder, script is folder structure, a way to add more things that either cpu or gpu calculates to make texture, model, animation, sound, texture 
+
+
+notatnik 3d, początek to wczytanie interfejsu z notatnika, i jego plików, główne pliki? to też ważne żeby każde okienko było tworzone z niego, kontynuacja z niego, scenę 3d, kilka ich na raz, widoczność zmienna, powtarzalność scenariuszy
+
+max ilość scen
+max ilość rzeczy na scenę
+max ilość połączeń na scenę 
+
+
+
+
+deja vu snu w notatniku 3d, kilka perspektyw sceny co jest grana? pojedyncze akcje? dodatkowo tworzenie nowych scen, z kilku? pojedyncza linia kreacji i dodawania elementów, z czego gracz jest takim punktem co patrzy i dodaje, albo jest postacią i trzeba pamiętać że gracz bije i podnosi rzeczy albo kładzie rzeczy, może zatrzymać scenę i puścić inną? w trakcie trwania sceny, chyba że rzecz będzie na value 0, rzecz śpi 
+
+notatnik 3d może mieć sceny jako cykle kreacji, z kilkoma ai do analizy i rozumowaniem scenariuszy tych punch card, historia pisze się sama, kilka scen, kilka tuneli energi, żeby napisać nową historię, wraz z story summarizer, która potem może być przeanalizowana przez kilka ai i udoskonalona jak gracz pozwoli na łaskę miejsca i zmiany 
+
+scena co ma replay, musi mieć koniec i pauzę w każdym momencie? tasks of the scene are just played, priority layers
+
+for later we need to combine several nodes and move them like one node? saving resources, so several nodes can become a one node with more variables? like a party in isekai changed into a node with possibilities and variables of power etc, and cities could evolve into that to? the text game of story telling
+
+first few npcs and ghost so everything repeats and can appear 
+
+notepad 3d of data, that always is transformed? there is a need for thing 1 to change into thing 2? so everything is always there? it is just used when needed? everything on planet changed into statistic of how much there is of what, so we know what next scene is needed to have less or more of something 
+
+
+
+
+
+zrobienie cyklu z kilku scen, krok po kroku, robi różne rzeczy aby stworzyć jedną większą scenę? i robi to kilka razy od początku do końca, dodając nowy element sceny 
+
+
+
+
+
+baza danych, która może się sama załadować, czyli log? lista taskow wysłana, można analizować ai na innym core pokolei w tle, dlatego 2 sceny na raz, modele do x shapes, jeden kolor, jeden transparency,
+
+each word will be a thing, dna of words with some lod, we don’t load if we didn’t used it since start of game
+
+with that and each device in system being able to calculate just physics? and generate its own models and 2d shapes, in several 3d spaces, can lead to what i wanna see? best graphics for vr game, on your own server we maybe add simple models, textures, pictures later if we use 1tb? first we invent akashic records with word = thing, and we generate scenarios with just words? and their connection, needed for spell casting in dumb game one day, notepad 3d, understands input, but we store it our own way? so logging what we done needs to be translated in detail but also in small way? dna of evolution of words? and its limit? my own auto correct of words? with few lines of text at once? these will be lines of text, scenarios, scenes 3d why and how we connect and evolve them may depend and vary?
+
+
+
+
+
+notepad 3d
+each word that is new, is an entry, project needs to be the first forever scene, layers of creation? text game to 3d spaces game 
+godot nodes trees for coordinates, how many at once, 
+
+
+
+
+
+based on csv, just value plus data
+
+filename 
+name
+description
+coordination vec3
+priority
+model (few shapes, words, so Array(name of shape), (coordinates so 3 x 0.0)vec3, (rotations)vec3, (3 sizes)vec3, (dig or place)bool)-(from that 2d and 3d viewer)
+sound (dunno)
+rotation vec3
+direction vec3
+color value 0 to 1 (i will make points of colors, and make single line of my favourite colors pointed!)
+transparency
+energy
+
+
+
+
+x circle(coordinates)(perspective)(size)
+2/3 point line (thickness)(direction)[straight/curve[3 points of bend?[dara] two in, center of line bend?]]
+3 triangle
+4 square
+4 rectangle
+5 pyramid square plus point in center of each point plus height?
+6 crystal like pyramid plus both directions?
+6 two triangles? height might wary?
+
+
+multi threaded node, creator, reusage, thing viewer, mover, tasks, priority
+
+
+
+
+a folder will have main file, we have a main file of each folder and file
+
+preview of that file 
+like csv viewer, with 3 different arrays as preview, name, coded name 
+
+
+
+
+
+learn 3d
+array mesh
+shapes
+textures
+connecting textures 
+animation
+
+learn 2d
+shapes
+connecting them
+start with array mesh too
+
+square - voxel
+rectangle - box
+circle - circle/sphere
+triangle(circle divider) - tube(circle divider)
+
+layer system
+windows divider (size, scale, position)
+
+sheet file system
+Array
+Dictionary
+
+
+
+
+
+moving(speeding up, slowing down)
+changing direction
+area noticed
+calculate impact
+
+
+header lines
+
+
+
+
+
+run once
+check first run
+
+run delta
+input checker - mouse, keyboard
+
+check directory - if D:/Eden  exist
+check if directory have folders files
+check what folders and files are there
+
+two for loops with break after finding the file we are looking for, here we check 
+which file was found
+which files are missing
+
+checks which things are there and which are missing 
+
+create a file, either all, some, none 
+
+load all files
+
+loads a file into a var
+[file]
+[a|b|c
+1|2|3|4]
+splits var into arrays of lines of the file
+[line_0]=[a|b|c]
+[line_1]=[1|2|3|4]
+arrays are checked and new split versions are created 
+[metadata_0]=[[a],[b],[c]]
+[metadata_1]=[[1],[2],[3],[4]]
+information about file is created 
+[metadata_0_info_0]=[a or 1]
+[metadata_1_info_1]=[3 or 4]
+
+Loaded file, data parsed to be analyzed
+metadata_0 split into vars 
+
+checked type of thing
+create a thing and set its parameters
+
+node name change, coordination, rotation, adding to scene
+
+
+
+
+
+datapoint being created, we create 3d node
+attach script to it
+send data to that node and script, that node and data got organised and we send back information 
+
+what we will need
+when we go to process, we shall make first simple function sending data back and forth between two scripts, first shall be just asking about priority, turn, then we go back to main, we either skip the datapoint and go to next one, or we go to that datapoint again we can check on all things in certain layer, then we come back with their coordinates
+
+later
+datapoints priority
+lod system with layers and groups
+
+
+Global search (334)
+Perform a global search to search for specific resources across all Regions for which your account is enabled
+
+scenes to create:
+
+console with log, and bracket to write
+
+keyboard 
+
+I want to create a block diagram of a system using ASCII art, where I can specify the system’s components, connections, and hierarchy. The diagram should include:
+
+
+
+
+sceny, sceny 
+
+shift = big letters on both keyboards
+
+numbers = numbers on both of keyboards
+
+shift on numbers = more special characters
+
+
+so shift needs to cycle throught 2 scenes of two scene sets, letters and numbers 
+
+numbers needs to cycle through two scenes, letters and numbers 
+
+both needs to work on two keyboards :)
+
+writing on them use the bracket, so we make new two functions, numbers, shift
+
+then they go to two containers to write :)
+
+
+
+
+var array_somthin : Array = [some processed array]
+
+list of things
+records of things
+
+
+
+soo, is it like 
+
+for a in b
+
+if we use a, it is copy, and we can do with it whatever, and if we address properly b, we like, use these bits?
+
+
+
+
+name
+ metadata
+ name of type
+  header
+  content
+ additional_containers
+  metadata
+  1
+  2
+
+
+
+
+
+
+
+
+counter of set load cache
+
+additional set scene = that counter 
+
+interaction per set = that scene
+
+soo
+
+click on files path the settings menu appears
+
+here we also add more additional sets, 
+
+while doing so, 
+
+we are also loading a file, a line per set
+
+
+
+
+my programing understanding knowledge levels
+
+level 0 arduino era
+what is if
+what is int
+what is boolean
+what is while loop
+what is ==
+
+level 1 now godot
+what is for
+what is match 
+what is ready like a main loop of file
+what is delta
+how to make functions
+how to call functions
+what is return, break, continue, pass
+variants type so what is, int, str, array, dictionary, float
+what is class file, calling things from them, to them
+more of them ==, like <,>, <=, >=, and&, 
+
+also or| ||, xor but don’t really use it, nor too
+
+differences between , and .
+export thing, @
+function in function and calling it
+telling what is var :, and assigning an basic value  = someting 
+if not ,if !someting 
+creating and addressing Dictionaries, arrays
+understanding what we edit, and what we copy .duplicate(true)
+the clear(), erase(), .has(), size(), 
+
+
+
+
+
+scene tree start up =
+create scene tree jsh with its main node 
+
+tasker children 
+adds branches to scene tree jsh
+
+jsh, main root, container name, branch?
+
+
+
+
+we got them pathy, pathy, yeah, 
+
+soo i guess we gotta check if it last thingy 
+
+yeah, with that we should also check if one previous is there as node 
+
+yeah if it is not, we shall reparent it first and then try to reparent the current one 
+
+hmm it can be even better 
+
+
+
+
+
+
+var layer_0 = tree_jsh[main_root][branches]
+
+var array_of_pussynaries : Array = []
+var array_of_containers : Array = []
+var array_of_nodes : Array = []
+
+
+for i in layer_0:
+    array_of_pussynaries.append(i)
+    array_of_containers.append(
+[[layer_0[i][„node”]],
+[layer_0[i][„name?”]]]
+)
+    for nodes in layer_0[i][„children”]:
+        array_of_nodes.append(     
+        layer_0[i][„children”][nodes][„node”],
+        layer_0[i][„children”][nodes][„name”]
+        )
+
+
+
+
+
+
+
+
+as Terry said, we must conquer lighter tree system 
+
+
+hmm
+
+main/akashic_records/thing_5/mesh_thing_5/collision_mesh_thing_5
+ 
+scene_tree_jsh[main][akashic_records][thing_5][mesh_thing_5]
+
+
+
+
+by knowing what nodes are, we can know what nodes we will create and when to place them
+
+now we shall make jsh scene tree 
+before we go to load cashed memories 
+
+so we will have all the data we need
+
+after that we shall also make new children tasker, that will just add nodes to a scene tree, 
+
+then after we all all children, we shall make reparenting sheduler, which will organise node reparenting in order of paths, from shortest to longest and also with the same nodes at the beggining 
+
+
+
+let’s change the scripts about wasting money, gambling, and instead i shall buy crypto, the ones that will grow a lot and i earn money from them 
+
+
+
+in a task, when we send data, before we do that, we copy the var? we kinda do in function i guess 
+hmm
+
+mutex? sophomore?
+
+initialise menu
+create memories
+send memories to make scene tree, 
+add nodes, 
+all nodes added 
+reparent nodes,
+
+by knowing how many nodes there are, in records sets, we can check if all nodes are there already in some threaded while loop?
+
+
+all nodes needs to be at 0.0.0 at the beginning of its creation 
+
+as we make aura and physical shapes for them
+
+
+
+#          oooo     .oooooo..o        ooooo       ooooo 
+#          `888    d8P'       `Y8      `888'        `888' 
+#            888      Y88bo.               888           888    
+#            888       `"Y8888o.        888ooooo888    
+#            888              `"Y88b       888           888    
+#            888      oo        .d8P        888           888                    
+#   .o.     88P      8""88888P'      o888o      o888o 
+#   `Y888P                            
+
+
+npcs, like reaction timer, to make them more alive
+
+
+
+
+task, creation 
+
+
+stuff i need to understand and do
+
+we shall always aim, to do it way, where we won’t get error, we won’t get stuck
+
+so we shall use if !someting:
+so if it exist we can process it further instead of getting errors, and we can like, just do prints for what is not 
+
+
+
+
+
+
+
+self.get_node(parent path).call_deferred(„add_child”, child)
+
+
+
+
+
+we collected all nodes
+
+we can run though them all and send them
+we can also check if they are here, and change their status into active
+
+later we shall repair all other functions to be compatible with multi threading 
+
+we shall use await get tree to let them touch childs 
+
+
+voxel block made of more voxels when we dig it, like each of it being an array mesh when edited
+
+it is my idea
+
+
+npc system of creation and cycles where we look we render and do things
+
+
+
+
+
+name of function | set string | time
+
+create records sets
+
+load cache data
+
+load cache data 2
+
+
+
+
+let’s add to tasked children new helper function so we add children in easier way that always works
+
+the same as activate thingy 
+
+
+
+
+
+new move things around and interactions functions, we shall do it with tasks
+
+as they are already on scene it shall be easy 
+

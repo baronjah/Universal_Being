@@ -96,6 +96,14 @@ func set_butterfly_color(new_color: Color) -> void:
 
 func create_butterfly_visuals() -> void:
 	"""Create the visual representation of the butterfly"""
+func pentagon_input(event: InputEvent) -> void:
+	super.pentagon_input(event)
+func pentagon_sewers() -> void:
+	# Auto-generated cleanup implementation
+	super.pentagon_sewers()
+
+	# Auto-generated input implementation
+
 	# Create body
 	body = Polygon2D.new()
 	body.polygon = PackedVector2Array([

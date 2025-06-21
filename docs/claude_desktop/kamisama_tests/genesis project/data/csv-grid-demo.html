@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Grid View - Galaxies System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #1e1e1e;
+            --bg-darker: #151515;
+            --bg-light: #252525;
+            --text-primary: #f0f0f0;
+            --text-secondary: #a0a0a0;
+            --accent-blue: #0078d7;
+            --accent-green: #6a9955;
+            --accent-red: #f14c4c;
+            --accent-yellow: #dcdcaa;
+            --accent-purple: #c586c0;
+            --border-color: #454545;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #app-header {
+            height: 40px;
+            background-color: var(--bg-darker);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            justify-content: space-between;
+        }
+        
+        .app-logo {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+        }
+        
+        .app-logo i {
+            margin-right: 8px;
+            color: var(--accent-blue);
+        }
+        
+        .app-controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .app-controls button {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 4px 8px;
+            cursor: pointer;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .app-controls button:hover {
+            background-color: var(--bg-light);
+        }
+        
+        #app-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        #app-sidebar {
+            width: 250px;
+            background-color: var(--bg-darker);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .sidebar-section {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sidebar-header {
+            padding: 10px;
+            font-weight: bold;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-header button {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .sidebar-content {
+            flex: 1;
+            overflow: auto;
+            padding: 10px;
+        }
+        
+        .file-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .file-list-item {
+            padding: 6px 8px;
+            display: flex;
+            align-items: center;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-bottom: 2px;
+        }
+        
+        .file-list-item:hover {
+            background-color: var(--bg-light);
+        }
+        
+        .file-list-item.active {
+            background-color: var(--accent-blue);
+        }
+        
+        .file-list-item i {
+            margin-right: 8px;
+            width: 16px;
+            text-align: center;
+        }
+        
+        #app-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .content-tabs {
+            display: flex;
+            background-color: var(--bg-darker);
+            border-bottom: 1px solid var(--border-color);
+            height: 32px;
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+        
+        .content-tab {
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            border-right: 1px solid var(--border-color);
+            background-color: var(--bg-darker);
+            min-width: 120px;
+            height: 100%;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        
+        .content-tab.active {
+            background-color: var(--bg-light);
+            border-bottom: 2px solid var(--accent-blue);
+        }
+        
+        .content-tab i {
+            margin-right: 8px;
+        }
+        
+        .content-tab .close-tab {
+            margin-left: 8px;
+            opacity: 0.5;
+        }
+        
+        .content-tab:hover .close-tab {
+            opacity: 1;
+        }
+        
+        .content-panel {
+            flex: 1;
+            display: none;
+            overflow: hidden;
+        }
+        
+        .content-panel.active {
+            display: flex;
+        }
+        
+        .visualization-container {
+            position: relative;
+            flex: 1;
+        }
+        
+        #app-footer {
+            height: 25px;
+            background-color: var(--bg-darker);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            justify-content: space-between;
+        }
+        
+        /* Connection modal */
+        .connection-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .connection-modal.visible {
+            display: flex;
+        }
+        
+        .connection-dialog {
+            background-color: var(--bg-darker);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            width: 500px;
+            max-width: 90%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .connection-header {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .connection-close {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .connection-body {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .connection-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .connection-form-group label {
+            color: var(--text-secondary);
+        }
+        
+        .connection-select {
+            padding: 8px;
+            background-color: var(--bg-light);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: 3px;
+        }
+        
+        .connection-footer {
+            padding: 15px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .connection-btn {
+            padding: 8px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .connection-btn-secondary {
+            background-color: var(--bg-light);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .connection-btn-primary {
+            background-color: var(--accent-blue);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- App Header -->
+    <header id="app-header">
+        <div class="app-logo">
+            <i class="fas fa-project-diagram"></i>
+            <span>Galaxies System</span>
+        </div>
+        
+        <div class="app-controls">
+            <button id="btn-new-file">
+                <i class="fas fa-plus"></i> New
+            </button>
+            <button id="btn-open-file">
+                <i class="fas fa-folder-open"></i> Open
+            </button>
+            <button id="btn-save-file">
+                <i class="fas fa-save"></i> Save
+            </button>
+            <button id="btn-connect">
+                <i class="fas fa-link"></i> Connect
+            </button>
+            <button id="btn-view-galaxy">
+                <i class="fas fa-star"></i> Galaxy View
+            </button>
+            <button id="btn-settings">
+                <i class="fas fa-cog"></i> Settings
+            </button>
+        </div>
+    </header>
+    
+    <!-- App Container -->
+    <div id="app-container">
+        <!-- Sidebar -->
+        <aside id="app-sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-header">
+                    <span>Files</span>
+                    <button id="btn-refresh-files">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+                <div class="sidebar-content">
+                    <ul class="file-list" id="file-list">
+                        <li class="file-list-item active" data-file="sample1.csv">
+                            <i class="fas fa-table"></i> sample1.csv
+                        </li>
+                        <li class="file-list-item" data-file="sample2.csv">
+                            <i class="fas fa-table"></i> sample2.csv
+                        </li>
+                        <li class="file-list-item" data-file="connections.csv">
+                            <i class="fas fa-link"></i> connections.csv
+                        </li>
+                        <li class="file-list-item" data-file="metadata.json">
+                            <i class="fas fa-code"></i> metadata.json
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-header">
+                    <span>Connections</span>
+                </div>
+                <div class="sidebar-content">
+                    <ul class="file-list" id="connection-list">
+                        <li class="file-list-item" data-connection="sample1-to-sample2">
+                            <i class="fas fa-project-diagram"></i> sample1 → sample2
+                        </li>
+                        <li class="file-list-item" data-connection="sample1-to-metadata">
+                            <i class="fas fa-project-diagram"></i> sample1 → metadata
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main id="app-content">
+            <div class="content-tabs" id="content-tabs">
+                <div class="content-tab active" data-panel="sample1-panel">
+                    <i class="fas fa-table"></i> sample1.csv
+                    <span class="close-tab">×</span>
+                </div>
+                <div class="content-tab" data-panel="sample2-panel">
+                    <i class="fas fa-table"></i> sample2.csv
+                    <span class="close-tab">×</span>
+                </div>
+            </div>
+            
+            <div class="content-panel active" id="sample1-panel">
+                <div id="csv-viewer-1" class="visualization-container"></div>
+            </div>
+            
+            <div class="content-panel" id="sample2-panel">
+                <div id="csv-viewer-2" class="visualization-container"></div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- App Footer -->
+    <footer id="app-footer">
+        <div>Ready | Galaxies System v0.1 | Genesis Core</div>
+        <div id="position-info">Row: 1, Col: 1</div>
+    </footer>
+    
+    <!-- Connection Modal -->
+    <div class="connection-modal" id="connection-modal">
+        <div class="connection-dialog">
+            <div class="connection-header">
+                <span>Create Connection</span>
+                <button class="connection-close" id="connection-close">×</button>
+            </div>
+            <div class="connection-body">
+                <div class="connection-form-group">
+                    <label for="source-file">Source File</label>
+                    <select id="source-file" class="connection-select">
+                        <option value="sample1.csv">sample1.csv</option>
+                        <option value="sample2.csv">sample2.csv</option>
+                        <option value="connections.csv">connections.csv</option>
+                        <option value="metadata.json">metadata.json</option>
+                    </select>
+                </div>
+                <div class="connection-form-group">
+                    <label for="source-field">Source Field</label>
+                    <select id="source-field" class="connection-select">
+                        <option value="id">id</option>
+                        <option value="name">name</option>
+                        <option value="type">type</option>
+                        <option value="date">date</option>
+                        <option value="value">value</option>
+                    </select>
+                </div>
+                <div class="connection-form-group">
+                    <label for="target-file">Target File</label>
+                    <select id="target-file" class="connection-select">
+                        <option value="sample1.csv">sample1.csv</option>
+                        <option value="sample2.csv" selected>sample2.csv</option>
+                        <option value="connections.csv">connections.csv</option>
+                        <option value="metadata.json">metadata.json</option>
+                    </select>
+                </div>
+                <div class="connection-form-group">
+                    <label for="target-field">Target Field</label>
+                    <select id="target-field" class="connection-select">
+                        <option value="id">id</option>
+                        <option value="reference">reference</option>
+                        <option value="category">category</option>
+                        <option value="status">status</option>
+                        <option value="amount">amount</option>
+                    </select>
+                </div>
+                <div class="connection-form-group">
+                    <label for="connection-type">Connection Type</label>
+                    <select id="connection-type" class="connection-select">
+                        <option value="reference">Reference</option>
+                        <option value="dependency">Dependency</option>
+                        <option value="inheritance">Inheritance</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+            </div>
+            <div class="connection-footer">
+                <button class="connection-btn connection-btn-secondary" id="connection-cancel">Cancel</button>
+                <button class="connection-btn connection-btn-primary" id="connection-create">Create Connection</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add the Genesis and CSV Grid Viewer scripts -->
+    <script src="Genesis.js"></script>
+    <script src="CSVGridViewer.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sample data for CSV grids
+            const sampleData1 = {
+                headers: ['id', 'name', 'type', 'date', 'value'],
+                rows: [
+                    { id: '1', name: 'Item 1', type: 'Type A', date: '2025-01-01', value: '100' },
+                    { id: '2', name: 'Item 2', type: 'Type B', date: '2025-01-02', value: '200' },
+                    { id: '3', name: 'Item 3', type: 'Type A', date: '2025-01-03', value: '300' },
+                    { id: '4', name: 'Item 4', type: 'Type C', date: '2025-01-04', value: '400' },
+                    { id: '5', name: 'Item 5', type: 'Type B', date: '2025-01-05', value: '500' }
+                ]
+            };
+            
+            const sampleData2 = {
+                headers: ['id', 'reference', 'category', 'status', 'amount'],
+                rows: [
+                    { id: '101', reference: '1', category: 'Category X', status: 'Active', amount: '150' },
+                    { id: '102', reference: '2', category: 'Category Y', status: 'Pending', amount: '250' },
+                    { id: '103', reference: '3', category: 'Category X', status: 'Active', amount: '350' },
+                    { id: '104', reference: '4', category: 'Category Z', status: 'Inactive', amount: '450' },
+                    { id: '105', reference: '5', category: 'Category Y', status: 'Active', amount: '550' }
+                ]
+            };
+            
+            // Initialize CSV Grid Viewers
+            const csvViewer1 = new CSVGridViewer({
+                container: document.getElementById('csv-viewer-1'),
+                data: sampleData1,
+                editable: true,
+                resizable: true,
+                showLineNumbers: true,
+                onSelectCell: function(row, col, header, value) {
+                    document.getElementById('position-info').textContent = `Row: ${row + 1}, Col: ${col + 1} (${header}: ${value || ''})`;
+                }
+            });
+            
+            const csvViewer2 = new CSVGridViewer({
+                container: document.getElementById('csv-viewer-2'),
+                data: sampleData2,
+                editable: true,
+                resizable: true,
+                showLineNumbers: true,
+                onSelectCell: function(row, col, header, value) {
+                    document.getElementById('position-info').textContent = `Row: ${row + 1}, Col: ${col + 1} (${header}: ${value || ''})`;
+                }
+            });
+            
+            // Initialize CSV viewers
+            csvViewer1.initialize();
+            csvViewer2.initialize();
+            
+            // Tab functionality
+            const tabs = document.querySelectorAll('.content-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Deactivate all tabs and panels
+                    document.querySelectorAll('.content-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
+                    
+                    // Activate selected tab and panel
+                    this.classList.add('active');
+                    const panelId = this.dataset.panel;
+                    document.getElementById(panelId).classList.add('active');
+                });
+                
+                // Close button
+                const closeBtn = tab.querySelector('.close-tab');
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        // TODO: Implement tab closing logic
+                        alert('Close tab functionality would be implemented here');
+                    });
+                }
+            });
+            
+            // File list functionality
+            const fileList = document.getElementById('file-list');
+            const fileItems = fileList.querySelectorAll('.file-list-item');
+            
+            fileItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Deactivate all items
+                    fileItems.forEach(i => i.classList.remove('active'));
+                    
+                    // Activate clicked item
+                    this.classList.add('active');
+                    
+                    // TODO: Load the selected file
+                    const fileName = this.dataset.file;
+                    console.log('Selected file:', fileName);
+                });
+            });
+            
+            // Connection modal functionality
+            const connectBtn = document.getElementById('btn-connect');
+            const connectionModal = document.getElementById('connection-modal');
+            const connectionClose = document.getElementById('connection-close');
+            const connectionCancel = document.getElementById('connection-cancel');
+            const connectionCreate = document.getElementById('connection-create');
+            
+            connectBtn.addEventListener('click', function() {
+                connectionModal.classList.add('visible');
+            });
+            
+            connectionClose.addEventListener('click', function() {
+                connectionModal.classList.remove('visible');
+            });
+            
+            connectionCancel.addEventListener('click', function() {
+                connectionModal.classList.remove('visible');
+            });
+            
+            connectionCreate.addEventListener('click', function() {
+                // Get form values
+                const sourceFile = document.getElementById('source-file').value;
+                const sourceField = document.getElementById('source-field').value;
+                const targetFile = document.getElementById('target-file').value;
+                const targetField = document.getElementById('target-field').value;
+                const connectionType = document.getElementById('connection-type').value;
+                
+                console.log('Creating connection:', {
+                    sourceFile,
+                    sourceField,
+                    targetFile,
+                    targetField,
+                    connectionType
+                });
+                
+                // Add to connections list
+                const connectionList = document.getElementById('connection-list');
+                const newConnection = document.createElement('li');
+                newConnection.className = 'file-list-item';
+                newConnection.dataset.connection = `${sourceFile}-to-${targetFile}`;
+                newConnection.innerHTML = `
+                    <i class="fas fa-project-diagram"></i> ${sourceFile} → ${targetFile}
+                `;
+                
+                connectionList.appendChild(newConnection);
+                
+                // Close the modal
+                connectionModal.classList.remove('visible');
+                
+                // Show success message
+                alert('Connection created successfully!');
+            });
+            
+            // Initialize Genesis system if available
+            if (window.genesis) {
+                window.genesis.initialize({
+                    rootPath: './',
+                    defaultVisualization: 'grid'
+                });
+            }
+        });
+    </script>
+</body>
+</html>

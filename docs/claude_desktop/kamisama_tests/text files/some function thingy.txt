@@ -1,0 +1,3 @@
+                if data_to_be_parsed_2 is String:
+                    for pattern in patterns:
+                        if data_to_be_parsed_2.begins_with(pattern):

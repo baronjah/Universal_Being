@@ -34,7 +34,7 @@ var state_input_filters: Dictionary = {
 	GameState.GRAB_MODE: ["grab_movement", "grab_placement"],
 	GameState.SOCKET_MODE: ["socket_targeting", "connection_commands"],
 	GameState.MENU_MODE: ["menu_navigation", "menu_selection"]
-}
+	}
 
 func _ready() -> void:
 	add_to_group("universal_input_manager")
@@ -63,7 +63,7 @@ func parse_input_event(event: InputEvent) -> Dictionary:
 		"mouse_relative": Vector2.ZERO,
 		"pressed": false,
 		"timestamp": Time.get_unix_time_from_system()
-}
+	}
 	
 	if event is InputEventKey:
 		input_data.type = "key"
@@ -146,6 +146,8 @@ func check_state_transitions(input_data: Dictionary) -> void:
 				transition_to_state(GameState.CREATION)
 			KEY_G:
 				transition_to_state(GameState.GRAB_MODE)
+			KEY_N:
+				handle_notepad_toggle()
 
 func handle_escape_key() -> void:
 	"""Universal escape - return to navigation or previous state"""
@@ -253,3 +255,22 @@ func pop_state() -> void:
 		transition_to_state(previous_state)
 	else:
 		transition_to_state(GameState.NAVIGATION)
+
+func handle_notepad_toggle() -> void:
+	"""Handle N key for knowledge/notepad access"""
+	print("📚 Knowledge access requested - use existing systems")
+	# Access knowledge through existing console system
+	var console = get_tree().get_first_node_in_group("perfect_console_system")
+	if console:
+		console.toggle()
+		# Add knowledge info to console
+		var knowledge_msg = {
+			"sender": "System",
+			"message": "📚 Knowledge Navigation: Use 'docs', 'knowledge', or 'kspace <space>' commands",
+			"timestamp": Time.get_time_string_from_system(),
+			"color": Color.CYAN
+		}
+		console.chat_history.append(knowledge_msg)
+		console.update_chat_display()
+	else:
+		print("Console not found - notepad toggle failed")

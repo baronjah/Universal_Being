@@ -1,3 +1,11 @@
+# ==================================================
+# UNIVERSAL BEING: AI PENTAGON NETWORK
+# TYPE: AI Network System
+# PURPOSE: Manages collaboration between 6 AI agents
+# COMPONENTS: None (pure system)
+# SCENES: None (pure system)
+# ==================================================
+
 extends Node
 class_name AIPentagonNetwork
 
@@ -54,7 +62,7 @@ const AI_AGENTS = {
 		"color": Color(1.0, 0.5, 0.0),  # Orange
 		"position": Vector2(-87, -50),  # Top-left
 		"capabilities": ["analysis", "patterns", "insights", "predictions"]
-}
+}}
 
 # Connection strength between AI agents (0.0 - 1.0)
 var connections: Dictionary = {}
@@ -78,7 +86,7 @@ signal network_updated()
 func _init():
 	# Initialize all possible connections with base strength
 	for from in AIAgent.values():
-		connections[from] = {
+		connections[from] = {}
 		for to in AIAgent.values():
 			if from != to:
 				connections[from][to] = 0.1  # Base connection
@@ -244,7 +252,7 @@ func update_network_stats() -> void:
 	pass
 	var total_strength = 0.0
 	var connection_count = 0
-	var agent_strengths = {
+	var agent_strengths = {}
 	
 	for from in AIAgent.values():
 		agent_strengths[from] = 0.0
@@ -279,16 +287,14 @@ func generate_collaboration_id() -> String:
 func suggest_next_collaboration() -> Dictionary:
 	pass
 	# Find weakest connections that could be strengthened
-	var weakest_connection = {"from": null, "to": null, "strength": 1.0
-}
+	var weakest_connection = {"from": null, "to": null, "strength": 1.0}
 	
 	for from in AIAgent.values():
 		for to in AIAgent.values():
 			if from < to:
 				var strength = get_connection_strength(from, to)
 				if strength < weakest_connection.strength:
-					weakest_connection = {"from": from, "to": to, "strength": strength
-	}
+					weakest_connection = {"from": from, "to": to, "strength": strength}
 	
 	# Suggest a task that would involve these agents
 	var suggested_agents = [weakest_connection.from, weakest_connection.to]

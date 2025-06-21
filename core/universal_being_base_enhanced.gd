@@ -12,15 +12,20 @@ class_name UniversalBeingEnhanced
 func pentagon_init() -> void:
 	super.pentagon_init()
 	
-	# Auto-register with LogicConnector if this object implements Debuggable
-	if self is Debuggable:
-		LogicConnector.register(self)
-		print("🔌 Auto-registered %s with LogicConnector" % being_name)
+	# Auto-register with LogicConnector if it exists and this object has debug methods
+	if has_node("/root/LogicConnector") and has_method("get_debug_payload"):
+		var logic_connector = get_node("/root/LogicConnector")
+		if logic_connector.has_method("register"):
+			logic_connector.register(self)
+			print("🔌 Auto-registered %s with LogicConnector" % being_name)
 
 func pentagon_sewers() -> void:
-	# Auto-deregister from LogicConnector
-	LogicConnector.deregister(self)
-	print("🔌 Auto-deregistered %s from LogicConnector" % being_name)
+	# Auto-deregister from LogicConnector if it exists
+	if has_node("/root/LogicConnector"):
+		var logic_connector = get_node("/root/LogicConnector")
+		if logic_connector.has_method("deregister"):
+			logic_connector.deregister(self)
+			print("🔌 Auto-deregistered %s from LogicConnector" % being_name)
 	
 	super.pentagon_sewers()
 
@@ -33,7 +38,7 @@ func get_debug_payload() -> Dictionary:
 		# Core Universal Being properties
 		"being_name": being_name,
 		"being_type": being_type,
-		"consciousness_level": consciousness_level,}
+		"consciousness_level": consciousness_level,
 		
 		# Node3D properties (if applicable)
 		"global_position": global_position if self is Node3D else Vector3.ZERO,
@@ -45,7 +50,7 @@ func get_debug_payload() -> Dictionary:
 		# Evolution properties
 		"can_evolve": evolution_state.can_become.size() > 0 if evolution_state else false,
 		"evolution_paths": evolution_state.can_become if evolution_state else []
-
+	}
 
 func set_debug_field(key: String, value) -> void:
 	"""Handle debug field changes"""
@@ -163,11 +168,37 @@ func evolve_to_first_path() -> void:
 
 func list_components() -> void:
 	"""List attached components"""
-	if has_method("get_components"):
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+func pentagon_process(delta: float) -> void:
+	super.pentagon_process(delta)
+func pentagon_input(event: InputEvent) -> void:
+	super.pentagon_input(event)
+	# Auto-generated input implementation
 
-		var components = get_components()
-		print("🧩 Components attached to %s:" % being_name)
-		for component in components:
-			print("  - %s" % component.name)
+	# Auto-generated process implementation
+
+	# Auto-generated ready implementation
+
+	# Check if component_data exists (from UniversalBeing)
+	if has_method("get") and get("component_data"):
+		var component_data = get("component_data")
+		if component_data is Dictionary and component_data.size() > 0:
+			print("🧩 Components attached to %s:" % being_name)
+			for comp_name in component_data.keys():
+				print("  - %s" % comp_name)
+		else:
+			print("🧩 No components attached to %s" % being_name)
 	else:
-		print("🧩 Component system not available")
+		# Fallback: check children for Component nodes
+		var components = []
+		for child in get_children():
+			if child.get_script() and str(child.get_script()).contains("Component"):
+				components.append(child)
+		
+		if components.size() > 0:
+			print("🧩 Component children of %s:" % being_name)
+			for component in components:
+				print("  - %s" % component.name)
+		else:
+			print("🧩 No components found for %s" % being_name)

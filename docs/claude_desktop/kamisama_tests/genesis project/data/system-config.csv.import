@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://b4eqjjfbltvui"
+
+[deps]
+
+files=["res://docs/claude_desktop/kamisama_tests/genesis project/data/system-config.value.translation", "res://docs/claude_desktop/kamisama_tests/genesis project/data/system-config.description.translation"]
+
+source_file="res://docs/claude_desktop/kamisama_tests/genesis project/data/system-config.csv"
+dest_files=["res://docs/claude_desktop/kamisama_tests/genesis project/data/system-config.value.translation", "res://docs/claude_desktop/kamisama_tests/genesis project/data/system-config.description.translation"]
+
+[params]
+
+compress=true
+delimiter=0

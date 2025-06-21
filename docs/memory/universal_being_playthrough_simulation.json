@@ -1,0 +1,2724 @@
+{
+  "timestamp": "2025-06-20T20:14:24.531417",
+  "session_duration": 0.0008609294891357422,
+  "final_player_state": {
+    "position": [
+      -1.6941670338222714,
+      0.3689651545597946,
+      -10.448690601851409
+    ],
+    "consciousness_level": 1.0,
+    "plasmoid_form": "basic",
+    "abilities": [
+      "movement",
+      "interaction"
+    ],
+    "inventory": [],
+    "knowledge": [],
+    "timeline_access": false,
+    "creation_power": 0.0
+  },
+  "world_state": {
+    "programming_entities": [
+      {
+        "type": "programming",
+        "consciousness": 3.868002156913578,
+        "position": [
+          3.4421369174546435,
+          1.0,
+          -4.64186968400505
+        ],
+        "created_by_player": true,
+        "timestamp": "2025-06-20T20:14:24.530494"
+      }
+    ],
+    "notepad_entities": [
+      {
+        "type": "notepad",
+        "consciousness": 1.5599457769993927,
+        "position": [
+          1.0078088450883822,
+          1.0,
+          4.453632706983203
+        ],
+        "created_by_player": true,
+        "timestamp": "2025-06-20T20:14:24.530550"
+      }
+    ],
+    "akashic_entities": [
+      {
+        "type": "akashic",
+        "consciousness": 1.4827221168076608,
+        "position": [
+          3.920603641449892,
+          1.0,
+          1.157383844360714
+        ],
+        "created_by_player": true,
+        "timestamp": "2025-06-20T20:14:24.530565"
+      }
+    ],
+    "timeline_branches": [],
+    "active_portals": [],
+    "consciousness_fields": []
+  },
+  "consciousness_milestones": [
+    {
+      "level": 1,
+      "name": "awareness_awakening",
+      "time": 0.0,
+      "abilities_unlocked": 2,
+      "knowledge_gained": 0,
+      "creation_power": 0.0
+    }
+  ],
+  "playthrough_events": [
+    {
+      "time": 0.0,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 0.25,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 0.5,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 0.75,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 1.0,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 1.25,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 1.5,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 1.75,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 2.0,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 2.25,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 2.5,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 2.75,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 3.0,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 3.25,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 3.5,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 3.75,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 4.0,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 4.25,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 4.5,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 4.75,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 5.0,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 5.25,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 5.5,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 5.75,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 6.0,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 6.25,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 6.5,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 6.75,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 7.0,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 7.25,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 7.5,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 7.75,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 8.0,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 8.25,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 8.5,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 8.75,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 9.0,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 9.25,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 9.5,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 9.75,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 10.0,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 10.25,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 10.5,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 10.75,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 11.0,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 11.25,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 11.5,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 11.75,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 12.0,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 12.25,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 12.5,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 12.75,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 13.0,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 13.25,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 13.5,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 13.75,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 14.0,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 14.25,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 14.5,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 14.75,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 15.0,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 15.25,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 15.5,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 15.75,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 16.0,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 16.25,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 16.5,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 16.75,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 17.0,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 17.25,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 17.5,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 17.75,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 18.0,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 18.25,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 18.5,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 18.75,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 19.0,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 19.25,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 19.5,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 19.75,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 20.0,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 20.25,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 20.5,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 20.75,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 21.0,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 21.25,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 21.5,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 21.75,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 22.0,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 22.25,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 22.5,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 22.75,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 23.0,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 23.25,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 23.5,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 23.75,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 24.0,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 24.25,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 24.5,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 24.75,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 25.0,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 25.25,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 25.5,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 25.75,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 26.0,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 26.25,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 26.5,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 26.75,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 27.0,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 27.25,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 27.5,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 27.75,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 28.0,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 28.25,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 28.5,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 28.75,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 29.0,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 29.25,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 29.5,
+      "action": "interaction",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    },
+    {
+      "time": 29.75,
+      "action": "movement",
+      "player_state": {
+        "position": [
+          -1.6941670338222714,
+          0.3689651545597946,
+          -10.448690601851409
+        ],
+        "consciousness_level": 1.0,
+        "plasmoid_form": "basic",
+        "abilities": [
+          "movement",
+          "interaction"
+        ],
+        "inventory": [],
+        "knowledge": [],
+        "timeline_access": false,
+        "creation_power": 0.0
+      },
+      "consciousness_level": 1.0
+    }
+  ],
+  "statistics": {
+    "total_events": 120,
+    "consciousness_evolution": 1.0,
+    "abilities_unlocked": 2,
+    "knowledge_acquired": 0,
+    "creation_power": 0.0
+  }
+}

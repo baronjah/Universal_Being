@@ -35,7 +35,7 @@ var line_height: float = 0.8
 var char_width: float = 0.4
 
 # Pentagon lifecycle
-func pentagon_init():
+func pentagon_init() -> void:
 	super.pentagon_init()
 	being_type = "text_editor_3d"
 	being_name = "3D Text Editor Universal Being"
@@ -43,24 +43,24 @@ func pentagon_init():
 	print("📝 3D Text Editor: Initializing spatial text interface...")
 
 
-func pentagon_ready():
+func pentagon_ready() -> void:
 	super.pentagon_ready()
 	create_3d_text_editor_interface()
 	load_default_content()
 	print("✨ 3D Text Editor: Ready for spatial text creation!")
 
 
-func pentagon_process(delta: float):
+func pentagon_process(delta: float) -> void:
 	super.pentagon_process(delta)
 	update_cursor_blink(delta)
 	handle_spatial_text_input()
 
-func pentagon_input(event: InputEvent):
+func pentagon_input(event: InputEvent) -> void:
 	super.pentagon_input(event)
 	if event is InputEventKey and event.pressed:
 		handle_text_input(event)
 
-func pentagon_sewers():
+func pentagon_sewers() -> void:
 	save_current_work()
 	super.pentagon_sewers()
 
@@ -467,3 +467,4 @@ func get_cursor_info() -> Dictionary:
 		"line": cursor_line,
 		"column": cursor_column,
 		"total_lines": text_lines.size()
+	}

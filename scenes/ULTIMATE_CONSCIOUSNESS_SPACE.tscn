@@ -1,0 +1,91 @@
+[gd_scene load_steps=8 format=3 uid="uid://consciousness_space_ultimate"]
+
+[ext_resource type="Script" path="res://scripts/ultimate_consciousness_space.gd" id="1_consciousness"]
+[ext_resource type="PackedScene" path="res://scenes/main/camera_point.tscn" id="2_camera"]
+[ext_resource type="Script" path="res://systems/consciousness_particle_manager.gd" id="3_particles"]
+[ext_resource type="Script" path="res://systems/pentagon_geometry_visualizer.gd" id="4_pentagon"]
+[ext_resource type="Shader" path="res://shaders/consciousness_space.gdshader" id="5_shader"]
+
+[sub_resource type="ProceduralSkyMaterial" id="consciousness_sky_material"]
+sky_top_color = Color(0.05, 0.1, 0.3, 1)
+sky_horizon_color = Color(0.1, 0.2, 0.5, 1)
+ground_bottom_color = Color(0.02, 0.05, 0.15, 1)
+ground_horizon_color = Color(0.05, 0.1, 0.25, 1)
+
+[sub_resource type="Sky" id="consciousness_sky"]
+sky_material = SubResource("consciousness_sky_material")
+
+[sub_resource type="Environment" id="consciousness_environment"]
+background_mode = 2
+sky = SubResource("consciousness_sky")
+ambient_light_source = 2
+ambient_light_color = Color(0.4, 0.6, 1, 1)
+ambient_light_energy = 0.3
+
+[node name="UltimateConsciousnessSpace" type="Node3D"]
+script = ExtResource("1_consciousness")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("consciousness_environment")
+
+[node name="TrackballCameraPoint" parent="." instance=ExtResource("2_camera")]
+
+[node name="ConsciousnessParticleManager" type="Node3D" parent="."]
+script = ExtResource("3_particles")
+
+[node name="PentagonGeometryVisualizer" type="Node3D" parent="."]
+script = ExtResource("4_pentagon")
+
+[node name="InfiniteGrid" type="MeshInstance3D" parent="."]
+transform = Transform3D(1000, 0, 0, 0, 1, 0, 0, 0, 1000, 0, 0, 0)
+
+[node name="ConsciousnessAmbientSystem" type="AudioStreamPlayer3D" parent="."]
+
+[node name="LightingSystem" type="Node3D" parent="."]
+
+[node name="TranscendentSun" type="DirectionalLight3D" parent="LightingSystem"]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 50, 0)
+light_energy = 1.5
+light_color = Color(1, 0.95, 0.8, 1)
+
+[node name="ConsciousnessGlow" type="OmniLight3D" parent="LightingSystem"]
+light_energy = 2.0
+light_color = Color(0.8, 0.9, 1, 1)
+omni_range = 100.0
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ConsciousnessHUD" type="VBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -120.0
+offset_right = 400.0
+offset_bottom = -20.0
+
+[node name="ConsciousnessLevel" type="Label" parent="UI/ConsciousnessHUD"]
+layout_mode = 2
+text = "Consciousness Level: Transcendent"
+theme_override_font_sizes/font_size = 16
+
+[node name="NavigationInfo" type="Label" parent="UI/ConsciousnessHUD"]
+layout_mode = 2
+text = "TRACKBALL CAMERA: Right Click + Drag to rotate | Scroll to zoom | Middle Click + Drag to pan"
+theme_override_font_sizes/font_size = 12
+
+[node name="GeometryInfo" type="Label" parent="UI/ConsciousnessHUD"]
+layout_mode = 2
+text = "Pentagon Structures: 0 | Consciousness Particles: 0"
+theme_override_font_sizes/font_size = 12
+
+[node name="ArchitectStatus" type="Label" parent="UI/ConsciousnessHUD"]
+layout_mode = 2
+text = "Architect #2: Reality Engineer - ACTIVE"
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.8, 1, 0.8, 1)

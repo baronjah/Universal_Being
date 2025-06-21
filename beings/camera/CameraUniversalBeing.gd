@@ -28,7 +28,7 @@ var effects_enabled: bool = true
 
 func pentagon_init() -> void:
 	# Call parent init first
-	super()
+	super.pentagon_init()
 	
 	# Set camera-specific properties
 	being_type = "camera"
@@ -39,7 +39,7 @@ func pentagon_init() -> void:
 
 func pentagon_ready() -> void:
 	# Call parent ready
-	super()
+	super.pentagon_ready()
 	
 	# Find and setup trackball camera
 	setup_trackball_camera()
@@ -50,7 +50,7 @@ func pentagon_ready() -> void:
 
 func pentagon_process(delta: float) -> void:
 	# Call parent process
-	super(delta)
+	super.pentagon_process(delta)
 	
 	# Camera-specific processing
 	if trackball_camera and pentagon_camera_active:
@@ -58,7 +58,7 @@ func pentagon_process(delta: float) -> void:
 
 func pentagon_input(event: InputEvent) -> void:
 	# Call parent input
-	super(event)
+	super.pentagon_input(event)
 	
 	# Forward camera input to trackball script
 	if trackball_camera and camera_input_enabled and pentagon_camera_active:
@@ -68,10 +68,9 @@ func pentagon_sewers() -> void:
 	# Camera cleanup
 	if trackball_camera:
 		print("🎥 CameraUniversalBeing: Cleaning up camera")
-
 	
 	# Call parent cleanup
-	super()
+	super.pentagon_sewers()
 
 # ===== CAMERA SETUP =====
 
@@ -194,7 +193,6 @@ func set_camera_enabled(enabled: bool) -> void:
 
 
 func get_camera_info() -> Dictionary:
-	pass
 	# Get camera information for AI/debug
 	var info = {
 		"has_camera": trackball_camera != null,
@@ -216,9 +214,8 @@ func get_camera_info() -> Dictionary:
 # ===== AI INTEGRATION =====
 
 func ai_interface() -> Dictionary:
-	pass
 	# Enhanced AI interface for camera beings
-	var base_interface = super()
+	var base_interface = super.ai_interface()
 	
 	# Add camera-specific information
 	base_interface["camera_info"] = get_camera_info()
@@ -262,7 +259,6 @@ func ai_invoke_method(method_name: String, args: Array = []) -> Variant:
 # ===== CAMERA EFFECTS INTEGRATION =====
 
 func _on_consciousness_changed(new_level: int) -> void:
-	pass
 	# Override consciousness change to update effects
 	var old_level = consciousness_level  # Store old level before parent changes it
 	super._on_consciousness_changed(new_level)
@@ -288,7 +284,6 @@ func reset_camera_position() -> void:
 # ===== DEBUG FUNCTIONS =====
 
 func debug_camera_info() -> String:
-	pass
 	# Get camera debug information
 	var info = []
 	info.append("=== Camera Universal Being Debug ===")

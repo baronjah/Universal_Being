@@ -1,0 +1,144 @@
+memory_system
+in it:
+concepts, functions, metadata, scripts folders and index.txt file
+
+[[memory_system/index.txt] :
+[MEMORY SYSTEM INDEX
+==================
+
+This is the main navigation file for our memory system. Each section contains links to specific subdirectories and files.
+
+FORMAT CONVENTION:
+- Each file reference starts with @
+- Each directory reference starts with #
+- Line numbers are referenced with :
+- Tags are marked with []
+
+DIRECTORY STRUCTURE:
+#scripts/    - Contains documentation about complete scripts
+#functions/  - Contains documentation about specific functions
+#concepts/   - Contains documentation about general concepts and designs
+#metadata/   - Contains system-level metadata and configuration
+
+QUICK NAVIGATION:
+@scripts/index.txt     - Index of all scripts
+@functions/index.txt   - Index of all functions
+@concepts/index.txt    - Index of all concepts
+@metadata/config.txt   - System configuration and settings
+
+HOW TO USE:
+1. Start by reading this file
+2. Navigate to the appropriate section using the file references
+3. Use line numbers for precise reference
+4. Tags help with quick searching and categorization
+
+Version: 1.0
+Last Updated: 2025-01-31]]
+
+[[memory_system/concepts/index.txt] :
+[CONCEPTS INDEX
+=============
+
+This file contains references to all concept documentation.
+
+FORMAT:
+concept_name [tags] - Brief description
+    Location: @concepts/concept_name.txt
+    Related: @concepts/related1.txt, @functions/related_func.txt
+
+No concepts documented yet. Add new entries as they are created.]]
+
+[[memory_system/functions/index.txt] :
+[FUNCTIONS INDEX
+==============
+
+This file contains references to all function documentation.
+
+FORMAT:
+function_name() [tags] - Brief description
+    Location: @functions/function_name.txt
+    Used in: @scripts/script1.txt, @scripts/script2.txt
+
+No functions documented yet. Add new entries as they are created.]]
+
+[[memory_system/metadata/config.txt] :
+[SYSTEM CONFIGURATION
+===================
+
+Version: 1.0
+Created: 2025-01-31
+
+FILE NAMING CONVENTIONS:
+- All filenames should be lowercase
+- Use underscores for spaces
+- Use .txt extension for all files
+- Use descriptive names
+
+TAG CONVENTIONS:
+[core] - Core system functionality
+[util] - Utility functions/scripts
+[doc] - Documentation related
+[experimental] - Experimental features
+[deprecated] - Deprecated items
+
+LINE NUMBER CONVENTIONS:
+- Lines 1-5: Header information
+- Lines 6-10: Overview
+- Lines 11+: Main content
+
+REFERENCE CONVENTIONS:
+@file.txt - Direct file reference
+#directory/ - Directory reference
+:XX - Line number reference
+[tag] - Category/type tag]]
+
+[[memory_system/scripts/index.txt] :
+[SCRIPTS INDEX
+============
+
+This file contains references to all Godot project scripts.
+
+FORMAT:
+[File Name]
+Path: res://scripts/filename.gd
+Description: Brief description of what the script does
+Documentation: @scripts/detailed/filename_doc.txt
+Tags: [tag1][tag2]
+
+--- Script Entries ---
+
+Example entry:
+[example.gd]
+Path: res://scripts/example.gd
+Description: Example script that demonstrates the documentation format
+Documentation: @scripts/detailed/example_doc.txt
+Tags: [example][template]
+
+=== Active Scripts ===
+(Add your Godot scripts here)]]
+
+[[memory_system/scripts/detailed/template_doc.txt] :
+[SCRIPTS INDEX
+============
+
+This file contains references to all Godot project scripts.
+
+FORMAT:
+[File Name]
+Path: res://scripts/filename.gd
+Description: Brief description of what the script does
+Documentation: @scripts/detailed/filename_doc.txt
+Tags: [tag1][tag2]
+
+--- Script Entries ---
+
+Example entry:
+[example.gd]
+Path: res://scripts/example.gd
+Description: Example script that demonstrates the documentation format
+Documentation: @scripts/detailed/example_doc.txt
+Tags: [example][template]
+
+=== Active Scripts ===
+(Add your Godot scripts here)]]
+ 

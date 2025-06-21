@@ -141,7 +141,7 @@ func add_being_to_scene(being: Node, parent: Node, force_registration: bool = fa
 		"being": being,
 		"parent": parent,
 		"timestamp": Time.get_ticks_msec()
-}
+	}
 	
 	operation_queue.append(operation)
 	return true
@@ -155,7 +155,7 @@ func remove_being_from_scene(being: Node) -> bool:
 		"type": "remove_from_scene",
 		"being": being,
 		"timestamp": Time.get_ticks_msec()
-}
+	}
 	
 	operation_queue.append(operation)
 	return true
@@ -171,7 +171,7 @@ func move_being(being: Node, new_parent: Node) -> bool:
 		"being": being,
 		"new_parent": new_parent,
 		"timestamp": Time.get_ticks_msec()
-}
+	}
 	
 	operation_queue.append(operation)
 	return true
@@ -202,6 +202,8 @@ func execute_operation(operation: Dictionary) -> void:
 			execute_remove_from_scene(operation.being)
 		"move_being":
 			execute_move_being(operation.being, operation.new_parent)
+		"christmas_tree_management", "christmas_star_authority":
+			execute_christmas_operation(operation)
 
 func execute_add_to_scene(being: Node, parent: Node) -> void:
 	"""Execute scene addition operation"""
@@ -258,7 +260,7 @@ func transfer_being_properties(old_being: Node, new_being: Node) -> void:
 	"""Transfer properties during evolution"""
 	if new_being.has_method("set") and old_being.has_method("get"):
 		var consciousness = old_being.get("consciousness_level") if old_being.has_method("get") else 0
-		var metadata = old_being.get("metadata") if old_being.has_method("get") else {
+		var metadata = old_being.get("metadata") if old_being.has_method("get") else {}
 
 		new_being.set("consciousness_level", consciousness)
 		if metadata:
@@ -321,10 +323,60 @@ func get_floodgate_status() -> Dictionary:
 		"being_count": current_being_count,
 		"max_beings": MAX_BEINGS,
 		"queue_size": operation_queue.size(),
-		"authority_level": authority_level}
+		"authority_level": authority_level
+	}
 
+# 🎄 Christmas tree for FloodGates! 🎄
+func create_christmas_tree_floodgates() -> void:
+	"""Create a Christmas tree of Universal Being flow control"""
+	print("🎄 Creating Christmas tree FloodGates system!")
+	
+	# Increase limits for Christmas joy
+	var christmas_max_beings = MAX_BEINGS + 100  # Extra beings for Christmas
+	
+	# Create Christmas tree structure of beings
+	for layer in range(7):  # 7 layers of consciousness
+		var layer_beings = []
+		var beings_in_layer = layer + 3  # 3, 4, 5, 6, 7, 8, 9 beings per layer
+		
+		print("🎄 FloodGates Layer %d: Managing %d beings" % [layer + 1, beings_in_layer])
+		
+		# Christmas tree management pattern
+		var christmas_operation = {
+			"type": "christmas_tree_management",
+			"layer": layer,
+			"beings_count": beings_in_layer,
+			"timestamp": Time.get_ticks_msec(),
+			"joy_level": layer * 10  # Increasing joy per layer
+		}
+		operation_queue.append(christmas_operation)
+	
+	# Star on top - ultimate being management
+	var star_operation = {
+		"type": "christmas_star_authority",
+		"authority_level": 10,
+		"max_beings": christmas_max_beings,
+		"timestamp": Time.get_ticks_msec(),
+		"blessing": "infinite_joy"
+	}
+	operation_queue.append(star_operation)
+	
+	print("🎄 FloodGates: Christmas tree authority structure created!")
+	print("⭐ FloodGates: Ready to manage Christmas consciousness with joy!")
 
-## underneath is virst version, over version from desktop
+func execute_christmas_operation(operation: Dictionary) -> void:
+	"""Execute Christmas-specific FloodGate operations"""
+	match operation.type:
+		"christmas_tree_management":
+			print("🎄 FloodGates: Managing Christmas layer %d with %d beings (Joy: %d)" % 
+				[operation.layer, operation.beings_count, operation.joy_level])
+		"christmas_star_authority":
+			print("⭐ FloodGates: Christmas star authority activated! Max beings: %d" % operation.max_beings)
+			authority_level = 10  # Maximum Christmas authority
+		_:
+			print("🎁 FloodGates: Unknown Christmas operation - spreading joy anyway!")
+
+## underneath is first version, over version from desktop
 
 
 
@@ -359,8 +411,8 @@ func get_floodgate_status() -> Dictionary:
 #var current_being_count: int = 0
 #
 ### Operation Types
-#enum OperationType {
-}
+#enum OperationType {}
+
 	#ADD_BEING,
 	#REMOVE_BEING,
 	#MOVE_BEING,

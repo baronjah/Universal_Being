@@ -41,6 +41,7 @@ func pentagon_init() -> void:
 			_manifest_data = json.get_data()
 		else:
 			push_error("Failed to parse camera effects manifest: %s" % json.get_error_message())
+		manifest_file.close()
 
 	
 	# Initialize shader materials dictionary
@@ -334,5 +335,5 @@ func ai_interface() -> Dictionary:
 		"performance_mode": performance_mode,
 		"use_subviewport": use_subviewport,
 		"current_effects": _current_effects
+	}
 	return base_interface
-}

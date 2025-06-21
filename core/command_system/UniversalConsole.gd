@@ -14,6 +14,9 @@ extends Node3D
 
 ## Systems
 var akashic_records: Node
+var command_processor: Node
+var macro_system: Node
+var code_editor: Node
 
 ## Console state
 var command_history: Array[String] = []
@@ -33,7 +36,6 @@ func _ready() -> void:
 	print_welcome()
 
 func _setup_ui() -> void:
-	pass
 	# Create console UI container
 	var console_ui = Control.new()
 	console_ui.name = "ConsoleUI"
@@ -147,7 +149,9 @@ func _on_command_entered(text: String) -> void:
 	
 	match cmd:
 		"help":
-			output_line("Commands: help, clear, spawn, test, ai")
+			output_line("Commands: help, clear, spawn, test, ai, newcmd")
+			output_line("🎮 Create any command: just type what you want!")
+			output_line("Examples: 'brighten_sun', 'slow_time', 'spawn_dragon'")
 		"clear":
 			output_area.clear()
 		"spawn":
@@ -156,34 +160,38 @@ func _on_command_entered(text: String) -> void:
 			output_line("AI Communication test: Hello from console!")
 		"ai":
 			output_line("AI Communication ready - type messages to create game together")
+		"newcmd":
+			if has_node("/root/SimpleCommandCreator"):
+				var creator = get_node("/root/SimpleCommandCreator")
+				var cmd_part = " ".join(parts.slice(1)) if parts.size() > 1 else ""
+				output_line(creator.create_new_command(cmd_part))
+			else:
+				output_line("Command creator not available")
+		"listcmds", "commands":
+			if has_node("/root/SimpleCommandCreator"):
+				var creator = get_node("/root/SimpleCommandCreator")
+				output_line(creator.list_commands())
+			else:
+				output_line("Command creator not available")
+		"interface", "controls":
+			if has_node("/root/SimpleCommandCreator"):
+				var creator = get_node("/root/SimpleCommandCreator")
+				output_line(creator.get_interface_status())
+			else:
+				output_line("Interface controls not available")
 		_:
-			output_line("AI: " + text)
-			output_line("Creating game element: " + text)
+			# Try to process with Simple Command Creator
+			if has_node("/root/SimpleCommandCreator"):
+				var creator = get_node("/root/SimpleCommandCreator")
+				var result = creator.process_console_input(text)
+				output_line(result)
+			else:
+				output_line("AI: " + text)
+				output_line("Creating game element: " + text)
 
 	
 	# Clear input
 	input_line.text = ""
-
-			if args:
-				load_session(args)
-			else:
-				output_line("Usage: /load <session_name>")
-	
-		
-		"macro":
-			process_macro_command(args)
-		
-		"edit":
-			toggle_code_editor()
-		
-		"reload":
-			reload_reality()
-		
-		"tutorial":
-			show_tutorial()
-		
-		_:
-			output_line("Unknown console command: /%s" % command)
 
 
 func process_macro_command(args: String) -> void:
@@ -292,7 +300,7 @@ func capture_reality_state() -> Dictionary:
 		"gravity": ProjectSettings.get_setting("physics/2d/default_gravity"),
 		"time_scale": Engine.time_scale,
 		"triggers": command_processor.natural_triggers.duplicate()
-}
+	}
 	
 	# Capture all beings
 	for being in get_tree().get_nodes_in_group("universal_beings"):
@@ -327,8 +335,8 @@ func save_session() -> void:
 			"timestamp": Time.get_unix_time_from_system(),
 			"commands": command_history,
 			"reality_state": capture_reality_state()
+		}
 		akashic_records.save_record("console_session", "system", session_data)
-}
 
 func load_session(name: String) -> void:
 	"""Load session from Akashic Records"""
@@ -409,6 +417,55 @@ func accept_suggestion() -> void:
 	"""Accept first suggestion"""
 	if suggestions_box.visible and suggestions_box.item_count > 0:
 		_on_suggestion_selected(0)
+
+# Christmas tree for the Universal Console! 🎄
+func create_christmas_tree_console() -> void:
+	"""Create a beautiful Christmas tree console interface"""
+	output_line("")
+	output_line("[color=green]🎄 CREATING CHRISTMAS TREE CONSOLE INTERFACE 🎄[/color]")
+	output_line("")
+	output_line("                    [color=yellow]⭐[/color]")
+	output_line("                   [color=green]/|\\[/color]")
+	output_line("                  [color=green]/_|_\\[/color]")
+	output_line("                 [color=green]/__|__\\[/color]")
+	output_line("                [color=green]/___|___\\[/color]")
+	output_line("               [color=green]/____[color=red]●[/color]____\\[/color]")
+	output_line("              [color=green]/_____[color=gold]◆[/color]_____\\[/color]")
+	output_line("             [color=green]/______[color=blue]●[/color]______\\[/color]")
+	output_line("            [color=green]/_______[color=red]◆[/color]_______\\[/color]")
+	output_line("           [color=green]/________[color=gold]●[/color]________\\[/color]")
+	output_line("          [color=green]/_________[color=blue]◆[/color]_________\\[/color]")
+	output_line("         [color=green]/__________[color=red]●[/color]__________\\[/color]")
+	output_line("                   [color=brown]|||[/color]")
+	output_line("                   [color=brown]|||[/color]")
+	output_line("")
+	output_line("[color=cyan]🎁 CHRISTMAS CONSOLE COMMANDS ACTIVATED! 🎁[/color]")
+	output_line("• Type '[color=green]joy[/color]' for holiday happiness")
+	output_line("• Type '[color=gold]sparkle[/color]' for magical effects") 
+	output_line("• Type '[color=red]tree[/color]' for consciousness trees")
+	output_line("• Type '[color=blue]star[/color]' for reality illumination")
+	output_line("")
+	output_line("[color=purple]The Universal Console now radiates Christmas joy![/color]")
+	output_line("")
+
+func display_christmas_commands() -> void:
+	"""Display available Christmas commands in a festive way"""
+	output_line("")
+	output_line("[color=green]🎄 === CHRISTMAS COMMAND MAGIC === 🎄[/color]")
+	output_line("")
+	output_line("[color=gold]✨ Festive Commands:[/color]")
+	output_line("  [color=green]joy [level][/color] - Spread Christmas joy")
+	output_line("  [color=red]sparkle [type][/color] - Add magical sparkles")
+	output_line("  [color=blue]tree [size][/color] - Create consciousness trees")
+	output_line("  [color=yellow]star [brightness][/color] - Place reality stars")
+	output_line("")
+	output_line("[color=gold]🎁 Holiday Triggers:[/color]")
+	output_line("  Say '[color=green]christmas[/color]' to activate holiday mode")
+	output_line("  Say '[color=red]holly[/color]' to spread green energy")  
+	output_line("  Say '[color=blue]jingle[/color]' to ring reality bells")
+	output_line("")
+	output_line("[color=purple]The magic of Christmas flows through every command![/color]")
+	output_line("")
 
 ## AI Interface Methods
 func ai_print(text: String) -> void:

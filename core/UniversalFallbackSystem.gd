@@ -6,31 +6,30 @@
 extends RefCounted
 class_name UniversalFallbackSystem
 
-static var class_registry = {
+static var class_registry = {}
 
 # Register multiple implementations of the same class name
-static func register_class_implementation(class_name: String, script_path: String, priority: int = 0):
-	if not class_registry.has(class_name):
-		class_registry[class_name] = []
-}
+static func register_class_implementation(class_names: String, script_path: String, priority: int = 0):
+	if not class_registry.has(class_names):
+		class_registry[class_names] = []
 	
 	var implementation = {
 		"script_path": script_path,
 		"script": load(script_path),
 		"priority": priority
-}
+	}
 	
-	class_registry[class_name].append(implementation)
+	class_registry[class_names].append(implementation)
 	# Sort by priority (higher priority first)
-	class_registry[class_name].sort_custom(func(a, b): return a.priority > b.priority)
+	class_registry[class_names].sort_custom(func(a, b): return a.priority > b.priority)
 
 # Create instance with fallback method resolution
-static func create_fallback_instance(class_name: String):
-	if not class_registry.has(class_name):
-		push_error("No implementations registered for class: " + class_name)
+static func create_fallback_instance(class_names: String):
+	if not class_registry.has(class_names):
+		push_error("No implementations registered for class: " + class_names)
 		return null
 	
-	var implementations = class_registry[class_name]
+	var implementations = class_registry[class_names]
 	if implementations.is_empty():
 		return null
 	
@@ -49,7 +48,7 @@ class FallbackProxy:
 	
 	var primary_instance
 	var implementations: Array
-	var method_cache = {
+	var method_cache = {}
 	
 	func _init(primary: Object, impls: Array):
 		primary_instance = primary
@@ -80,8 +79,8 @@ class FallbackProxy:
 		push_error("Method '" + method_name + "' not found in any implementation")
 		return null
 	
-	# Forward common Object methods
-	func has_method(method: String) -> bool:
+	# Forward common Object methods (renamed to avoid native conflicts)
+	func proxy_has_method(method: StringName) -> bool:
 		if primary_instance.has_method(method):
 			return true
 		
@@ -91,5 +90,5 @@ class FallbackProxy:
 				return true
 		return false
 	
-	func get_class() -> String:
+	func proxy_get_class() -> String:
 		return primary_instance.get_class()

@@ -50,7 +50,7 @@ class_name UniversalBeingDNA
 @export var mutation_rates: Dictionary = {}
 
 ## Scene Analysis (for beings that control scenes)
-@export var scene_analysis: Dictionary = {}
+@export var scene_structure_analysis: Dictionary = {}
 @export var node_catalog: Dictionary = {}
 @export var interaction_points: Array[Dictionary] = []
 @export var modifiable_elements: Dictionary = {}
@@ -107,7 +107,7 @@ func _extract_genetic_markers(being: UniversalBeing) -> void:
 		"is_composite": being.is_composite,
 		"has_physics": being.physics_enabled,
 		"interaction_radius": being.interaction_radius
-}
+	}
 	
 	# Extract parent lineage if available
 	if being.metadata.has("parent_uuid"):
@@ -122,7 +122,7 @@ func _analyze_scene_structure(being: UniversalBeing) -> void:
 
 	
 	scene_path = being.scene_path
-	scene_analysis = {
+	scene_structure = {
 		"scene_name": being.controlled_scene.name,
 		"scene_class": being.controlled_scene.get_class(),
 		"node_count": being.scene_nodes.size(),
@@ -130,7 +130,7 @@ func _analyze_scene_structure(being: UniversalBeing) -> void:
 		"analyzable_components": [],
 		"extractable_features": [],
 		"reusable_patterns": []
-}
+	}
 	
 	# Catalog all nodes
 	_catalog_scene_nodes(being.controlled_scene, "")
@@ -155,7 +155,7 @@ func _catalog_scene_nodes(node: Node, path_prefix: String = "") -> void:
 		"methods": [],
 		"children_count": node.get_children().size(),
 		"is_reusable": true
-}
+	}
 	
 	# Extract key properties
 	var property_list = node.get_property_list()
@@ -164,7 +164,7 @@ func _catalog_scene_nodes(node: Node, path_prefix: String = "") -> void:
 			node_info.properties[prop.name] = {
 				"type": prop.type,
 				"value": node.get(prop.name) if node.has_method("get") else null
-	}
+			}
 	
 	# Extract available signals
 	var signal_list = node.get_signal_list()
@@ -213,23 +213,22 @@ func _identify_interaction_points(being: UniversalBeing) -> void:
 			"node_name": node.name,
 			"interaction_type": "unknown",
 			"accessibility": "public",
-			"parameters": {
-}
+			"parameters": {}
+		}
 		
 		# Determine interaction type based on node class
 		if node.is_class("Button"):
 			interaction_point.interaction_type = "clickable"
-			interaction_point.parameters = {"text": node.text if node.has_method("get") else ""
+			interaction_point.parameters = {"text": node.text if node.has_method("get") else ""}
 		elif node.is_class("LineEdit") or node.is_class("TextEdit"):
 			interaction_point.interaction_type = "text_input"
-			interaction_point.parameters = {"placeholder": node.placeholder_text if node.has_method("get") else ""
+			interaction_point.parameters = {"placeholder": node.placeholder_text if node.has_method("get") else ""}
 		elif node.is_class("Area3D"):
 			interaction_point.interaction_type = "spatial_trigger"
-			interaction_point.parameters = {"collision_enabled": true
+			interaction_point.parameters = {"collision_enabled": true}
 		elif node.is_class("Camera3D"):
 			interaction_point.interaction_type = "viewpoint"
-			interaction_point.parameters = {"fov": node.fov if node.has_method("get") else 60
-}
+			interaction_point.parameters = {"fov": node.fov if node.has_method("get") else 60}
 		
 		if interaction_point.interaction_type != "unknown":
 			interaction_points.append(interaction_point)
@@ -259,7 +258,7 @@ func _analyze_modifiable_elements(being: UniversalBeing) -> void:
 				"modifiable_properties": modifications,
 				"current_values": {},
 				"evolution_potential": _calculate_evolution_potential(node, modifications)
-	}
+			}
 
 func _extract_scene_patterns(being: UniversalBeing) -> void:
 	"""Extract reusable patterns from the scene"""
@@ -297,7 +296,7 @@ func _extract_scene_patterns(being: UniversalBeing) -> void:
 			"evolution_value": "high"
 		})
 	
-	scene_analysis.reusable_patterns = patterns
+	scene_structure_analysis["reusable_patterns"] = patterns
 
 func _analyze_behavioral_patterns(being: UniversalBeing) -> void:
 	"""Analyze behavioral patterns and preferences"""
@@ -306,8 +305,8 @@ func _analyze_behavioral_patterns(being: UniversalBeing) -> void:
 		"time_in_current_state": being.state_timer,
 		"state_transitions": being.state_history.size(),
 		"preferred_states": _calculate_preferred_states(being),
-		"state_durations": {
-}
+		"state_durations": {}
+	}
 	
 	interaction_patterns = {
 		"nearby_beings_count": being.nearby_beings.size(),
@@ -315,7 +314,7 @@ func _analyze_behavioral_patterns(being: UniversalBeing) -> void:
 		"collision_responsiveness": being.physics_enabled,
 		"proximity_sensitivity": being.interaction_radius,
 		"social_tendency": _calculate_social_tendency(being)
-}
+	}
 
 func _analyze_consciousness_profile(being: UniversalBeing) -> void:
 	"""Analyze consciousness-related characteristics"""
@@ -325,7 +324,7 @@ func _analyze_consciousness_profile(being: UniversalBeing) -> void:
 		"aura_radius": 32 + 8 * being.consciousness_level,
 		"visual_layer": being.visual_layer,
 		"awakening_timestamp": being.metadata.get("created_at", 0)
-}
+	}
 	
 	# Calculate resonance frequencies
 	resonance_frequencies = []
@@ -338,12 +337,13 @@ func _analyze_consciousness_profile(being: UniversalBeing) -> void:
 		"evolution_readiness": _calculate_evolution_readiness(being),
 		"transcendence_markers": _identify_transcendence_markers(being),
 		"growth_rate": _calculate_growth_rate(being)
-}
+	}
 
 func _analyze_creation_capabilities(being: UniversalBeing) -> void:
 	"""Analyze what this being can create"""
 	can_create = []
 	creation_templates = {
+	}
 	
 	# Determine creation capabilities based on consciousness level
 	match being.consciousness_level:
@@ -363,8 +363,8 @@ func _analyze_creation_capabilities(being: UniversalBeing) -> void:
 			"template_type": _determine_component_type(component_path),
 			"replication_cost": _calculate_replication_cost(component_path),
 			"mutation_potential": _calculate_mutation_potential(component_path)
+		}
 		creation_templates[component_path] = template_info
-}
 
 func _analyze_component_system(being: UniversalBeing) -> void:
 	"""Analyze the component system"""
@@ -508,7 +508,7 @@ func get_total_trait_count() -> int:
 	"""Get total number of catalogued traits"""
 	var count = 0
 	count += evolutionary_traits.size()
-	count += scene_analysis.size()
+	count += scene_structure_analysis.size()
 	count += node_catalog.size()
 	count += interaction_points.size()
 	count += modifiable_elements.size()
@@ -526,7 +526,7 @@ func get_evolution_blueprint() -> Dictionary:
 		"evolution_paths": _calculate_evolution_paths(),
 		"required_resources": _calculate_evolution_requirements(),
 		"success_probability": _calculate_evolution_success_rate()
-}
+	}
 
 func _identify_mutation_points() -> Array[Dictionary]:
 	"""Identify points where mutations can occur"""
@@ -601,7 +601,7 @@ func _calculate_evolution_requirements() -> Dictionary:
 		"component_stability": component_list.size() * 2,
 		"time_investment": 30.0,  # seconds
 		"collaboration_support": consciousness_level >= 4
-}
+	}
 
 func _calculate_evolution_success_rate() -> float:
 	"""Calculate probability of successful evolution"""
@@ -635,8 +635,7 @@ func create_clone_blueprint() -> Dictionary:
 		},
 		"clone_cost": _calculate_clone_cost(),
 		"clone_time": _calculate_clone_time()
-}
-
+	}
 func _calculate_clone_cost() -> float:
 	"""Calculate resource cost for cloning"""
 	var base_cost = consciousness_level * 5
@@ -681,19 +680,15 @@ func get_summary() -> String:
 	summary.append("Consciousness: Level %d" % consciousness_level)
 	summary.append("Generation: %d" % generation)
 	summary.append("Total Traits: %d" % get_total_trait_count())
-}
 	
 	if not scene_path.is_empty():
 		summary.append("Controlled Scene: %s" % scene_path.get_file())
 		summary.append("Scene Nodes: %d" % node_catalog.size())
-}
 	
 	summary.append("Components: %d" % component_list.size())
 	summary.append("Evolution Readiness: %.1f%%" % (evolution_potential.get("evolution_readiness", 0.0) * 100))
-}
 	
 	if not transcendence_markers.is_empty():
 		summary.append("Transcendence Markers: %s" % ", ".join(transcendence_markers))
-}
 	
 	return "\n".join(summary)

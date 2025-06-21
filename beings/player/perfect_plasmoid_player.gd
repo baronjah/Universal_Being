@@ -41,10 +41,10 @@ signal crosshair_action(action_type: String, target: Node3D)
 @export var socket_connection_range: float = 8.0
 
 # Camera system components
-@onready var camera_socket: Area3D = $PlayerSocket
-@onready var camera_system: Node3D = $PlayerSocket/FavouriteCameraSystem
-@onready var camera: Camera3D = $PlayerSocket/FavouriteCameraSystem/Camera3D
-@onready var crosshair_ray: RayCast3D = $PlayerSocket/FavouriteCameraSystem/Camera3D/CrosshairRay
+@onready var camera_socket: Node3D = $CameraSocket
+@onready var camera_system: Node3D = $CameraSocket/CameraSystem
+@onready var camera: Camera3D = $CameraSocket/CameraSystem/Camera3D
+@onready var crosshair_ray: RayCast3D = $CameraSocket/CameraSystem/Camera3D/CrosshairCursor
 
 # Perfect plasmoid state (velocity inherited from CharacterBody3D)
 var camera_rotation: Vector2 = Vector2.ZERO
@@ -62,6 +62,15 @@ var crosshair_ui: Control
 var cursor_ui: Control
 var interaction_panel: Control
 
+# 🎯 VR FINGERTIP EVOLUTION SYSTEM
+var cursor_crosshair_system: CursorCrosshairStateSystem
+
+# 🔮 GEOMETRIC SPELL CRAFTING SYSTEM
+var spell_crafting_system: GeometricSpellCrafting
+
+# 🎵 LIVING INTERFACE SYSTEM
+var living_interface_system: LivingInterfaceSystem
+
 func _ready() -> void:
 	# Pentagon-style initialization (adapted for CharacterBody3D)
 	being_name = "Perfect Plasmoid Player"
@@ -71,6 +80,9 @@ func _ready() -> void:
 	setup_perfect_crosshair()
 	setup_perfect_cursor()
 	setup_socket_detection()
+	setup_vr_fingertip_evolution()
+	setup_geometric_spell_crafting()
+	setup_living_interface_system()
 	connect_to_gemma_consciousness()
 	
 	print("🌟 PERFECT PLASMOID PLAYER: All 10 commandments fulfilled!")
@@ -199,30 +211,40 @@ func _input(event: InputEvent) -> void:
 				toggle_perfect_console()
 			KEY_I:  # 9. Universal Being inspector
 				toggle_universal_being_inspector()
+			KEY_T:  # 🔮 Cast fireball spell at crosshair target
+				cast_fireball_at_crosshair()
+			KEY_Y:  # 🔮 Cast telekinesis on crosshair target
+				cast_telekinesis_on_target()
+			KEY_U:  # 🔮 Create barrier at current position
+				cast_barrier_spell()
+			KEY_H:  # 🎵 Toggle head organization view
+				toggle_head_interface_view()
+			KEY_J:  # 🎵 Make interfaces sing
+				make_all_interfaces_sing()
+			KEY_K:  # 🏠 Organize interfaces
+				organize_head_interfaces()
+			KEY_L:  # ✨ Evolve interface to cutie
+				evolve_interface_to_singing_cutie()
 
 func handle_camera_orbital(relative_motion: Vector2) -> void:
-	"""2. ✅ Perfect orbital camera - EVOLVED with TrackballCamera3D wisdom"""
-	# Archaeological wisdom: Use quaternions to prevent gimbal lock
+	"""2. ✅ Perfect orbital camera - SIMPLE and STABLE"""
 	var orbit_speed = camera_orbit_sensitivity
 	
-	# Create rotation quaternions for each axis (professional grade)
-	var rotation_x = Quaternion(Vector3.RIGHT, -relative_motion.y * orbit_speed)
-	var rotation_y = Quaternion(Vector3.UP, -relative_motion.x * orbit_speed)
+	# Simple rotation around player (no quaternions to avoid device loss)
+	camera_rotation.x -= relative_motion.y * orbit_speed
+	camera_rotation.y -= relative_motion.x * orbit_speed
 	
-	# Apply quaternion rotations for smooth orbital movement (no gimbal lock!)
-	camera_system.quaternion = camera_system.quaternion * rotation_y * rotation_x
+	# Clamp vertical rotation
+	camera_rotation.x = clamp(camera_rotation.x, -PI/2 + 0.1, PI/2 - 0.1)
 	
-	# Stabilize horizon (archaeological wisdom from TrackballCamera3D)
-	var forward = -camera_system.transform.basis.z
-	var right = camera_system.transform.basis.x
-	var up = Vector3.UP
-	camera_system.transform.basis = Basis(right, up.cross(right), -forward).orthonormalized()
-	
-	# Store rotation for consciousness tracking
-	camera_rotation = Vector2(camera_system.rotation.x, camera_system.rotation.y)
-	
-	# Ensure camera faces the plasmoid socket (trackball behavior)
-	camera_system.look_at(global_position + Vector3.UP * camera_height_offset, Vector3.UP)
+	# Apply rotation to camera system
+	if camera_system:
+		camera_system.rotation.x = camera_rotation.x
+		camera_system.rotation.y = camera_rotation.y
+		
+		# Keep camera at fixed distance
+		var offset = Vector3(0, camera_height_offset, camera_distance)
+		camera_system.position = offset
 
 func apply_camera_tilt() -> void:
 	"""2. ✅ Q/E tilt controls"""
@@ -291,9 +313,9 @@ func handle_perfect_movement(delta: float) -> void:
 		var target_rotation = atan2(-look_direction.x, -look_direction.z)
 		rotation.y = lerp_angle(rotation.y, target_rotation, 3.0 * delta)
 	
-	# Debug movement
-	if input_vector.length() > 0:
-		print("🚀 Moving! Input: %s, Velocity: %s" % [input_vector, velocity])
+	# Debug movement (reduced)
+	if input_vector.length() > 0 and randf() < 0.01:  # Only print 1% of the time
+		print("🚀 Moving! Velocity: %.1f m/s" % velocity.length())
 
 
 func update_crosshair_targeting() -> void:
@@ -308,6 +330,12 @@ func update_crosshair_targeting() -> void:
 	if new_target != current_crosshair_target:
 		current_crosshair_target = new_target
 		update_crosshair_visual()
+		
+		# Update VR fingertip evolution system
+		var distance = 0.0
+		if crosshair_ray and crosshair_ray.is_colliding():
+			distance = crosshair_ray.get_collision_point().distance_to(global_position)
+		update_cursor_crosshair_target(new_target, distance)
 
 func update_crosshair_visual() -> void:
 	"""4. ✅ Visual feedback for crosshair targeting"""
@@ -477,6 +505,164 @@ func get_perfect_status() -> Dictionary:
 		"universal_being_status": true,
 		"perfection_level": 10.0
 }
+
+func setup_vr_fingertip_evolution() -> void:
+	"""🎯 VR FINGERTIP EVOLUTION - Future hand/finger interaction"""
+	cursor_crosshair_system = CursorCrosshairStateSystem.new()
+	cursor_crosshair_system.name = "VR_FingertipEvolution"
+	add_child(cursor_crosshair_system)
+	
+	# Connect state changes to visual updates
+	cursor_crosshair_system.tool_state_changed.connect(_on_cursor_state_changed)
+	cursor_crosshair_system.fingertip_mapped.connect(_on_fingertip_mapped)
+	cursor_crosshair_system.vr_transition_ready.connect(_on_vr_transition_ready)
+	
+	print("🎯 VR Fingertip Evolution: Ready for future hand tracking")
+	print("🤚 Cursor/Crosshair states mapped to fingertips for VR")
+
+func _on_cursor_state_changed(old_state, new_state) -> void:
+	"""Handle cursor/crosshair state changes"""
+	print("🎯 Tool State Evolution: %s → %s" % [old_state, new_state])
+	
+	# Update crosshair visual based on new state
+	if cursor_crosshair_system:
+		var state_color = cursor_crosshair_system.crosshair_colors.get(new_state, Color.CYAN)
+		update_crosshair_color(state_color)
+
+func _on_fingertip_mapped(fingertip, tool_state) -> void:
+	"""Handle fingertip mapping for future VR"""
+	print("🤚 VR Mapping: %s fingertip → %s tool state" % [fingertip, tool_state])
+	
+	# Future: This will control actual VR hand tracking
+	# For now: Log the evolution data for VR integration
+
+func _on_vr_transition_ready(hand_position: Vector3, finger_states: Array) -> void:
+	"""Handle VR transition readiness"""
+	# Reduced spam - only print occasionally
+	if randf() < 0.001:  # 0.1% chance
+		print("🤚 VR READY: Hand tracking transition available")
+		print("   Hand Position: %s" % hand_position)
+		print("   Active Fingertips: %d" % finger_states.size())
+	
+	# Future: Initialize VR hand tracking mode
+	# This is where the cursor/crosshair evolves into actual fingertips
+
+func update_cursor_crosshair_target(target: Node3D, distance: float = 0.0) -> void:
+	"""Update target for cursor/crosshair state system"""
+	if cursor_crosshair_system:
+		cursor_crosshair_system.set_current_target(target, distance)
+
+func setup_geometric_spell_crafting() -> void:
+	"""🔮 GEOMETRIC SPELL CRAFTING - Simple magic through points, lines, shapes"""
+	spell_crafting_system = GeometricSpellCrafting.new()
+	spell_crafting_system.name = "GeometricSpellCrafter"
+	add_child(spell_crafting_system)
+	
+	# Connect spell events
+	spell_crafting_system.spell_cast.connect(_on_spell_cast)
+	spell_crafting_system.spell_interaction.connect(_on_spell_interaction)
+	
+	print("🔮 Geometric Spell Crafting: Points, lines, spheres, cylinders ready!")
+	print("   T = Fireball, Y = Telekinesis, U = Barrier")
+
+func cast_fireball_at_crosshair() -> void:
+	"""🔥 Cast fireball spell at crosshair target"""
+	if not spell_crafting_system:
+		return
+	
+	var target_pos = global_position + (-camera.global_transform.basis.z * 20.0)
+	if crosshair_ray and crosshair_ray.is_colliding():
+		target_pos = crosshair_ray.get_collision_point()
+	
+	spell_crafting_system.create_fireball_spell(target_pos)
+	spell_crafting_system.cast_current_spell()
+	print("🔥 FIREBALL cast at %s!" % target_pos)
+
+func cast_telekinesis_on_target() -> void:
+	"""🧠 Cast telekinesis on crosshair target"""
+	if not spell_crafting_system or not current_crosshair_target:
+		print("🧠 No target for telekinesis")
+		return
+	
+	spell_crafting_system.create_telekinesis_spell(current_crosshair_target)
+	spell_crafting_system.cast_current_spell()
+	print("🧠 TELEKINESIS cast on %s!" % current_crosshair_target.name)
+
+func cast_barrier_spell() -> void:
+	"""🛡️ Cast protective barrier at current position"""
+	if not spell_crafting_system:
+		return
+	
+	var barrier_pos = global_position + Vector3(0, 0, -2.0)
+	var barrier_normal = Vector3.FORWARD
+	spell_crafting_system.create_barrier_spell(barrier_pos, barrier_normal)
+	spell_crafting_system.cast_current_spell()
+	print("🛡️ BARRIER cast at current position!")
+
+func _on_spell_cast(spell_elements: Array) -> void:
+	"""Handle spell casting event"""
+	print("🔮 Spell cast with %d geometric elements!" % spell_elements.size())
+
+func _on_spell_interaction(caster, target, effect: String) -> void:
+	"""Handle spell interaction with targets"""
+	print("🔮 Spell effect: %s affected by %s" % [target.being_name if target.has_method("being_name") else target.name, effect])
+
+func setup_living_interface_system() -> void:
+	"""🎵 LIVING INTERFACE SYSTEM - Consciousness shelves & singing cuties"""
+	living_interface_system = LivingInterfaceSystem.new()
+	living_interface_system.name = "LivingInterfaceSystem"
+	add_child(living_interface_system)
+	
+	# Connect interface events
+	living_interface_system.interface_evolved.connect(_on_interface_evolved)
+	living_interface_system.singing_started.connect(_on_interface_singing_started)
+	living_interface_system.harmony_created.connect(_on_interface_harmony_created)
+	living_interface_system.cuteness_overflow.connect(_on_cuteness_overflow)
+	
+	print("🎵 Living Interface System: Consciousness shelves with singing cuties ready!")
+	print("   H = Head view, J = Make sing, K = Organize, L = Evolve to cutie")
+
+func toggle_head_interface_view() -> void:
+	"""🧠 Toggle view inside character head to see interface organization"""
+	if living_interface_system:
+		living_interface_system.toggle_head_organization_view()
+
+func make_all_interfaces_sing() -> void:
+	"""🎵 Make all interfaces start singing"""
+	if living_interface_system:
+		living_interface_system.trigger_interface_singing()
+
+func organize_head_interfaces() -> void:
+	"""🏠 Organize all interfaces on their consciousness shelves"""
+	if living_interface_system:
+		living_interface_system.organize_all_interfaces()
+
+func evolve_interface_to_singing_cutie() -> void:
+	"""✨ Evolve a random interface into a singing cutie"""
+	if living_interface_system:
+		living_interface_system.evolve_random_interface_to_cutie()
+
+func _on_interface_evolved(interface, new_personality) -> void:
+	"""Handle interface evolution to cutie"""
+	print("🎵✨ INTERFACE EVOLVED TO CUTIE! Now singing with %s personality!" % new_personality)
+
+func _on_interface_singing_started(interface, song: String) -> void:
+	"""Handle interface starting to sing"""
+	print("🎵 Interface started singing: '%s'" % song)
+
+func _on_interface_harmony_created(shelf, harmony_type: String) -> void:
+	"""Handle harmony creation between singing interfaces"""
+	# Reduced spam - only print occasionally
+	if randf() < 0.01:  # 1% chance
+		print("🎵🎶 HARMONY CREATED! %s shelf singing in %s!" % [shelf.shelf_name, harmony_type])
+
+func _on_cuteness_overflow(total_cuteness: float) -> void:
+	"""Handle cuteness overflow event"""
+	print("🎵✨💕 CUTENESS OVERFLOW! Total cuteness level: %.1f!" % total_cuteness)
+	
+	# Visual effect for cuteness overflow
+	if cursor_crosshair_system:
+		cursor_crosshair_system.change_tool_state(cursor_crosshair_system.ToolState.CONSCIOUSNESS_PROBE)
 
 func impress_the_immortal() -> void:
 	"""10. ✅ ULTIMATE PERFECTION DEMONSTRATION"""

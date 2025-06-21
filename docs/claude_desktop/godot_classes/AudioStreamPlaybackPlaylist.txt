@@ -1,0 +1,4 @@
+AudioStreamPlaybackPlaylist
+Inherits: AudioStreamPlayback < RefCounted < Object
+
+Playback class used for AudioStreamPlaylist.

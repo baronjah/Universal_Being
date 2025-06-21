@@ -11,6 +11,7 @@ class_name DoorBeing
 @export var required_word: String = "potato"
 
 func pentagon_init() -> void:
+    super.pentagon_init()
     super()
     being_name = "MagicDoor"
     being_type = "door"
@@ -26,6 +27,22 @@ func on_trigger(word: String, data: Dictionary, speaker: UniversalBeing) -> void
 
 func toggle_door() -> void:
     is_open = not is_open
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+func pentagon_process(delta: float) -> void:
+	super.pentagon_process(delta)
+func pentagon_input(event: InputEvent) -> void:
+	super.pentagon_input(event)
+func pentagon_sewers() -> void:
+	# Auto-generated cleanup implementation
+	super.pentagon_sewers()
+
+	# Auto-generated input implementation
+
+	# Auto-generated process implementation
+
+	# Auto-generated ready implementation
+
     if is_open:
         modulate.a = 0.3  # Make transparent
         set_collision_layer_value(1, false)  # Disable collision

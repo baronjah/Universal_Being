@@ -1,0 +1,10 @@
+the pathways system for databases scenarios have rules, the creation of folder, means there is one file that is like metadata that keeps entire structure in check and synergy, entrances and exits, needs to be logged and understood in place of the folder, that was affected, to know how the entire project evolved is evolving, and where is going, where was going and how was guided, spread of files, folders, to even understood whole project and structure and its parts and blocks of whole, we must know how to enter it, where is what, and what we worked on, and to what parts and its function its all connected
+
+that is the whole point of turns , checking, to dos, for project, turns system needs to be calibrated as we work on project too, as it could change here and there
+
+
+the godot structure and architecture is simple at basics and fundamental levels, so it can be connected in easy way with words to what we seen, can see here, the nodes, scenes, trees, signals, scripts, shaders, classes, autoload, very easy and simple to know how to translate different projects o godot project
+
+as we know the whole goal, we also can just make many smaler projects where we test bits and parts, then stitch them into bigger parts and segments, to make one day whole game too
+
+we shall even make summaries and notes and marks, after we even test few project combination and evolution, to evolve faster each time

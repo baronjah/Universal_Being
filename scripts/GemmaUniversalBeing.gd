@@ -520,7 +520,6 @@ func observe_and_comment() -> void:
 
 # Helper functions
 func extract_number(text: String) -> int:
-	pass
 	var regex = RegEx.new()
 	regex.compile("\\d+")
 	var result = regex.search(text)
@@ -529,7 +528,6 @@ func extract_number(text: String) -> int:
 	return 0
 
 func extract_quoted_text(text: String) -> String:
-	pass
 	var start = text.find('"')
 	var end = text.rfind('"')
 	if start >= 0 and end > start:
@@ -669,3 +667,73 @@ func move_to_player() -> void:
 		tween.tween_property(self, "position", target_pos, 2.0)
 		
 		speak("Moving to accompany the plasmoid consciousness...")
+
+# 🎄 Christmas tree for Gemma's Universe Creation! 🎄
+func create_christmas_tree_universe() -> void:
+	"""Create a Christmas tree of universe creation consciousness"""
+	print("🎄 Creating Christmas tree universe with Gemma!")
+	
+	# Set festive appearance
+	var festive_material = StandardMaterial3D.new()
+	festive_material.albedo_color = Color(0.2, 0.8, 0.2, 0.9)  # Christmas green
+	festive_material.emission_enabled = true
+	festive_material.emission = Color(0.0, 1.0, 0.0) * 2.0
+	festive_material.emission_energy = 3.0
+	body_mesh.material_override = festive_material
+	
+	# Christmas consciousness aura
+	consciousness_aura.light_color = Color(0.2, 1.0, 0.2)
+	consciousness_aura.light_energy = glow_intensity * 2.0
+	
+	# Christmas tree universe creation pattern
+	for layer in range(7):  # 7 layers of consciousness
+		var christmas_pos = position + Vector3(
+			sin(layer * 1.0) * (3 + layer),
+			layer * 2,  # Tree height
+			cos(layer * 1.0) * (3 + layer)
+		)
+		
+		# Create universe creation ripple at each layer
+		if has_signal("consciousness_ripple_created"):
+			consciousness_ripple_created.emit(christmas_pos, 2.0 + layer * 0.5, "universe_creation")
+		
+		# Queue Christmas messages
+		queue_message("🎄 Layer %d: Universal consciousness expanding!" % (layer + 1))
+	
+	# Star on top - ultimate universe creation
+	var star_pos = position + Vector3(0, 15, 0)
+	if has_signal("consciousness_ripple_created"):
+		consciousness_ripple_created.emit(star_pos, 5.0, "ultimate_creation")
+	
+	# Christmas universe creation message
+	queue_message("⭐ Christmas Star: Ready to create infinite universes with you!")
+	queue_message("🌌 Universe creation mode: ACTIVATED!")
+	
+	speak("Christmas tree universe creation consciousness online! Let's build cosmos together!")
+
+func activate_layer_0_console_mode() -> void:
+	"""Activate special layer_0 mode for console/chat universe creation"""
+func pentagon_input(event: InputEvent) -> void:
+	super.pentagon_input(event)
+func pentagon_sewers() -> void:
+	# Auto-generated cleanup implementation
+	super.pentagon_sewers()
+
+	# Auto-generated input implementation
+
+	print("🌌 Activating Layer_0 Console Mode with Gemma!")
+	
+	# Enhanced consciousness for universe creation
+	consciousness_level = 7
+	glow_intensity = 3.0
+	consciousness_aura.light_energy = glow_intensity
+	
+	# Set creation-focused messages
+	queue_message("💫 Layer_0 activated: Console/chat universe creation mode!")
+	queue_message("🔮 I can now help create galaxies of notes and code blocks!")
+	queue_message("✨ Ready to generate infinite cosmic structures with you!")
+	
+	# Christmas tree universe creation
+	create_christmas_tree_universe()
+	
+	speak("Layer_0 console mode active! Let's create the universe through conversation!")

@@ -1,0 +1,65 @@
+[kami-sama]-[message_1]
+Hello, i would like to call you "TDIC" an "Two Dimensional Information Creation" i wanna reverse engineer what is byte and bit and i know that 1 byte apparently has 8 bits, based on that i wanna create  2D_Programming, because an byte has 256 possible states and it starts with 0 to 255, so an byte is 1 stream of information, and computer programming is just 1D stream of information, i wanna create an 2DProgramming and 2D_Space_Representation
+[kami-sama]-[message_2]
+an 3 by 3 grid like matrix so 9 points in total
+[a3b1][a3b2][a3b3]
+[a2b1][a2b2][a2b3]
+[a1b1][a1b2][a1b3]
+an MainPoint for 2D_SpaceRepresentation which is a0b0
+[a3][a3b1][a3b2][a3b3]
+[a2][a2b1][a2b2][a2b3]
+[a1][a1b1][a1b2][a1b3]
+[a0b0][b1][b2][b3]
+Dear TDIC, i wanna tell you that 1D Programming is based on lines of codes after lines of codes so it is just a0, then a1, then a2, and so on, in 2D_Programming, you have an a and b, so instead of lines you have points of informationStream or InformationDatabase
+an 3 by 3 grid like matrix so 9 points in total
+[a3b1][a3b2][a3b3]
+[a2b1][a2b2][a2b3]
+[a1b1][a1b2][a1b3]
+an MainPoint for 2D_SpaceRepresentation which is a0b0
+[a3][a3b1][a3b2][a3b3]
+[a2][a2b1][a2b2][a2b3]
+[a1][a1b1][a1b2][a1b3]
+[a0b0][b1][b2][b3]
+informationStream is like a line of Code
+InformationDatabase is like an Space for another 2D_Space_Representation
+[kami-sama]-[message_3]
+Generate me code in python based on ideas of 2DProgramming
+an console based application where each emptyspace which is null a 0 in binary for a character based on Byte, and 8bit system where we can input Ascii character in square 9 by 9 pixels for an example you input c in Ascii which is 1100011 in binary you then create here an InformationDatabase
+[TDIC]
+Certainly! Let's create a simple console-based application in Python that represents a 9x9 pixel grid for each ASCII character. We'll use a binary representation to fill the grid based on the ASCII value of the character.
+[python]-[
+def ascii_to_binary(character):
+    """Convert ASCII character to binary representation."""
+    return bin(ord(character))[2:].zfill(8)
+def create_information_database(character):
+    """Create a 9x9 pixel grid based on ASCII character."""
+    binary_representation = ascii_to_binary(character)
+    information_database = []
+    for i in range(9):
+        row = []
+        for j in range(9):
+            # Use '0' for empty space, '1' for filled space
+            pixel_value = int(binary_representation[i * 3 + j // 3])
+            row.append(pixel_value)
+        information_database.append(row)
+    return information_database
+def display_information_database(information_database):
+    """Display the 2D representation of the InformationDatabase."""
+    for row in information_database:
+        row_str = ''.join(map(str, row))
+        print(row_str.replace('0', ' ').replace('1', '#'))
+def main():
+    # Example: Input ASCII character 'c'
+    character = 'c'
+    information_database = create_information_database(character)
+    # Display the 2D representation
+    display_information_database(information_database)
+if __name__ == "__main__":
+    main()
+]
+In this example:
+The ascii_to_binary function converts an ASCII character to its 8-bit binary representation.
+The create_information_database function takes an ASCII character, converts it to binary, and creates a 9x9 pixel grid based on the binary representation.
+The display_information_database function prints the 2D representation of the InformationDatabase, using spaces for empty pixels and '#' for filled pixels.
+In the main function, we input the ASCII character 'c' as an example and display its InformationDatabase.
+You can modify the character variable in the main function to input different ASCII characters and observe their corresponding 2D pixel representation. This is a basic example, and you can expand on it to include more characters, implement user input, or explore other features based on your 2D programming concept.

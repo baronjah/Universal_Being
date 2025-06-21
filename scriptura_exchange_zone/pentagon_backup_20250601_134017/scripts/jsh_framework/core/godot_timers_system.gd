@@ -30,6 +30,12 @@
 extends UniversalBeingBase
 #
 class_name GodotTimersSystem_godottim
+
+func pentagon_init() -> void:
+	super.pentagon_init()
+	being_name = "Generated Being"
+	being_type = "auto_generated"
+	consciousness_level = 1
 #
 #
 # Storage for all timers
@@ -91,6 +97,7 @@ func _process(delta: float) -> void:
 	pentagon_process(delta)
 
 func pentagon_process(delta: float) -> void:
+    super.pentagon_process(delta)
 	# Pentagon logic processing - override in child classes
 	pass
 
@@ -98,6 +105,7 @@ func _input(event: InputEvent) -> void:
 	pentagon_input(event)
 
 func pentagon_input(event: InputEvent) -> void:
+    super.pentagon_input(event)
 	# Pentagon input handling - override in child classes
 	pass
 
@@ -105,6 +113,7 @@ func sewers() -> void:
 	pentagon_sewers()
 
 func pentagon_sewers() -> void:
+    super.pentagon_sewers()
 	# Pentagon cleanup/output - override in child classes
 	pass
 func create_timer(timer_id: String, duration: float, callback: Callable = Callable(), repeating: bool = false, user_data: Variant = null) -> Error:
@@ -244,3 +253,7 @@ func _on_timer_timeout(timer_id: String) -> void:
 
 func _exit_tree() -> void:
 	clear_all_timers()
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+	# Auto-generated ready implementation
+

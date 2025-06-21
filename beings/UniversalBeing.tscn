@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/UniversalBeing.gd" id="1"]
+[ext_resource type="Shader" path="res://shaders/UniversalBeing.gdshader" id="2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1"]
+shader = ExtResource("2")
+shader_parameter/consciousness = 1.0
+shader_parameter/time_alive = 0.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_1"]
+material = SubResource("ShaderMaterial_1")
+radial_segments = 32
+height_segments = 16
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1"]
+
+[node name="UniversalBeing" type="Node3D"]
+script = ExtResource("1")
+
+[node name="Body" type="StaticBody3D" parent="."]
+collision_layer = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Body"]
+mesh = SubResource("SphereMesh_1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
+shape = SubResource("SphereShape3D_1")

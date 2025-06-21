@@ -1,0 +1,69 @@
+yesterday we made new project "talking_ragdoll_game" but we still need to work on it
+
+console at launch : 
+
+
+Godot Engine v4.5.dev4.mono.official (c) 2007-present Juan Linietsky, Ariel Manzur & Godot Contributors.
+--- Debug adapter server started on port 6006 ---
+--- GDScript language server started on port 6005 ---
+  ERROR: res://scripts/core/debug_3d_screen.gd:357 - Parse Error: Cannot assign a new value to a constant.
+  ERROR: res://scripts/core/debug_3d_screen.gd:362 - Parse Error: Cannot assign a new value to a constant.
+  ERROR: res://scripts/autoload/console_manager.gd:0 - Compile Error: Failed to compile depended scripts.
+  ERROR: modules/gdscript/gdscript.cpp:3024 - Failed to load script "res://scripts/autoload/console_manager.gd" with error "Parse error".
+
+
+
+at play scene: 
+
+res://scripts/core/debug_3d_screen.gd
+
+Line 357:Cannot assign a new value to a constant.
+Line 362:Cannot assign a new value to a constant.
+
+
+[Ignore]Line 92 (UNUSED_PARAMETER):The parameter "label" is never used in the function "_create_axis_indicator()". If this is intended, prefix it with an underscore: "_label".
+[Ignore]Line 129 (UNUSED_PARAMETER):The parameter "delta" is never used in the function "_process()". If this is intended, prefix it with an underscore: "_delta".
+[Ignore]Line 185 (SHADOWED_VARIABLE_BASE_CLASS):The local variable "name" is shadowing an already-declared property in the base class "Node".
+[Ignore]Line 307 (UNUSED_PARAMETER):The parameter "character" is never used in the function "_draw_char()". If this is intended, prefix it with an underscore: "_character".
+[Ignore]Line 336 (SHADOWED_VARIABLE_BASE_CLASS):The local function parameter "position" is shadowing an already-declared property in the base class "Node3D".
+[Ignore]Line 348 (SHADOWED_VARIABLE_BASE_CLASS):The local function parameter "rotation" is shadowing an already-declared property in the base class "Node3D".
+[Ignore]Line 360 (SHADOWED_VARIABLE_BASE_CLASS):The local function parameter "scale" is shadowing an already-declared property in the base class "Node3D".
+[Ignore]Line 384 (SHADOWED_VARIABLE_BASE_CLASS):The local function parameter "name" is shadowing an already-declared property in the base class "Node".
+
+
+
+next file 
+
+
+res://scripts/autoload/console_manager.gd
+
+Parser Error: Failed to compile depended scripts.
+
+yellow
+
+[Ignore]Line 467 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_help()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 588 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_create_tree()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 592 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_create_rock()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 596 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_create_box()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 600 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_create_ball()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 604 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_create_ramp()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 608 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_clear_objects()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 612 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_list_objects()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 710 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_ragdoll_walk()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 729 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_spawn_ragdoll()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 733 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_create_sun()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 737 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_create_astral_being()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 741 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_create_pathway()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 745 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_create_bush()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 749 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_create_fruit()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 943 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_timing_info()". If this is intended, prefix it with an underscore: "_args".
+[Ignore]Line 1303 (UNUSED_PARAMETER):The parameter "args" is never used in the function "_cmd_balance_workload()". If this is intended, prefix it with an underscore: "_args".
+
+
+file res://scripts/autoload/windows_console_fix.gd
+
+Invalid assignment of property or key '_print_to_console' with value of type 'Callable' on a base object of type 'Node (console_manager.gd)'.
+
+
+[Ignore]Line 111 (SHADOWED_GLOBAL_IDENTIFIER):The variable "char" has the same name as a built-in function.
+

@@ -9,6 +9,12 @@
 extends Node
 class_name PentagonManager
 
+func pentagon_init() -> void:
+	super.pentagon_init()
+	being_name = "Generated Being"
+	being_type = "auto_generated"
+	consciousness_level = 1
+
 # ===== PENTAGON ARCHITECTURE ENFORCEMENT =====
 
 # Pentagon compliance tracking
@@ -97,7 +103,7 @@ func register_for_pentagon_monitoring(being: Node) -> void:
 		"compliance_status": check_pentagon_compliance(being),
 		"last_checked": Time.get_ticks_msec(),
 		"violation_count": 0,
-		"method_call_counts": {
+		"method_call_counts": {}
 }
 	
 	# Initialize method call tracking
@@ -120,7 +126,7 @@ func unregister_from_pentagon_monitoring(being: Node) -> void:
 	if being in monitored_beings:
 		monitored_beings.erase(being)
 		print("🔺 Unregistered from Pentagon monitoring: %s" % being.name)
-}
+
 
 func check_pentagon_compliance(being: Node) -> Dictionary:
 	"""Check if a Universal Being follows Pentagon Architecture correctly"""
@@ -129,7 +135,7 @@ func check_pentagon_compliance(being: Node) -> Dictionary:
 		"missing_methods": [],
 		"method_signatures": {},
 		"inheritance_check": false,
-		"call_super_check": {
+		"call_super_check": {}
 }
 	
 	# Check if all required methods exist
@@ -203,7 +209,7 @@ func _handle_pentagon_violation(being: Node, compliance: Dictionary) -> void:
 		pentagon_violation_detected.emit(being, missing_method, "missing_method")
 		
 		print("🔺 Pentagon violation: %s missing method '%s'" % [being.name, missing_method])
-}
+
 	
 	# Update violation count
 	if being in monitored_beings:
@@ -331,6 +337,22 @@ func print_pentagon_status() -> void:
 
 func is_pentagon_compliant(being: Node) -> bool:
 	"""Quick check if a being is Pentagon compliant"""
+func pentagon_ready() -> void:
+	super.pentagon_ready()
+func pentagon_process(delta: float) -> void:
+	super.pentagon_process(delta)
+func pentagon_input(event: InputEvent) -> void:
+	super.pentagon_input(event)
+func pentagon_sewers() -> void:
+	# Auto-generated cleanup implementation
+	super.pentagon_sewers()
+
+	# Auto-generated input implementation
+
+	# Auto-generated process implementation
+
+	# Auto-generated ready implementation
+
 	if being in monitored_beings:
 		return monitored_beings[being].compliance_status.compliant
 	else:

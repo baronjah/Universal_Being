@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+cull_mode = 0
+albedo_color = Color(0.8, 0.9, 1, 0.8)
+emission_enabled = true
+emission = Color(0.4, 0.6, 1, 1)
+emission_energy = 0.5
+transparency = 1
+no_depth_test = false
+shading_mode = 0
+vertex_color_use_as_albedo = true
+grow_amount = 0.1

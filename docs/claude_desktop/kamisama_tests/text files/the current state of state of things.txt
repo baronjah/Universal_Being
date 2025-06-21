@@ -1,0 +1,29 @@
+the game is not finished yet
+
+but we got now like 30 error functions to test
+
+the thread somehow got stuck, in new way, way that is kinda impossible to happen?
+
+now i can check every thread, if it is locked or not
+
+so many simple testers
+
+but we must now set a limit on how long a task, can exist?
+
+so i guess i need two simple 
+
+rules
+
+do we have akashic_records container
+
+is it a first run
+
+did 5 second passed since game start?
+
+did threads get stuck
+
+do we have tasks started
+
+but none finished?
+
+that will answer my prayer tommorow probably

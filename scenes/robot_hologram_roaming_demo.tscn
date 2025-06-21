@@ -1,0 +1,239 @@
+[gd_scene load_steps=6 format=3 uid="uid://bq8k4v2sjnap"]
+
+[ext_resource type="Script" path="res://systems/holographic_vr_projector.gd" id="1"]
+[ext_resource type="Script" path="res://systems/simple_database_visualizer.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://cqj4bqr7p6vo2" path="res://scenes/main/camera_point.tscn" id="3"]
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 1
+background_color = Color(0.01, 0.01, 0.05, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.2, 0.3, 0.6, 1)
+ambient_light_energy = 0.3
+sky_rotation = Vector3(0, 0.261799, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1"]
+size = Vector3(50, 1, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.1, 0.1, 0.2, 1)
+roughness = 0.8
+metallic = 0.2
+
+[node name="RobotHologramRoamingDemo" type="Node3D"]
+
+[node name="HolographicVRProjector" type="Node3D" parent="."]
+script = ExtResource("1")
+projection_enabled = true
+hologram_intensity = 1.5
+vr_field_radius = 15.0
+robot_body_connected = true
+
+[node name="SimpleDatabaseVisualizer" type="Node3D" parent="."]
+script = ExtResource("2")
+enabled = true
+
+[node name="CameraPoint" parent="." instance=ExtResource("3")]
+transform = Transform3D(0.866025, -0.35355, 0.35355, 0, 0.707107, 0.707107, -0.5, -0.61237, 0.61237, 0, 12, 18)
+
+[node name="HologramGround" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_1")
+material_override = SubResource("StandardMaterial3D_1")
+
+[node name="VRLighting" type="Node3D" parent="."]
+
+[node name="HologramLight1" type="OmniLight3D" parent="VRLighting"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 8, 5)
+light_color = Color(0.6, 0.8, 1, 1)
+light_energy = 1.2
+omni_range = 20.0
+
+[node name="HologramLight2" type="OmniLight3D" parent="VRLighting"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 8, -5)
+light_color = Color(1, 0.6, 0.8, 1)
+light_energy = 1.0
+omni_range = 15.0
+
+[node name="ConsciousnessLight" type="SpotLight3D" parent="VRLighting"]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 12, 0)
+light_color = Color(0.8, 1, 0.8, 1)
+light_energy = 2.0
+spot_range = 25.0
+spot_angle = 45.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1")
+
+[node name="RobotVRInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="RobotStatusPanel" type="Panel" parent="RobotVRInterface"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -400.0
+offset_right = 650.0
+offset_bottom = -10.0
+modulate = Color(0.05, 0.1, 0.2, 0.9)
+
+[node name="RobotStatusText" type="RichTextLabel" parent="RobotVRInterface/RobotStatusPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+bbcode_enabled = true
+text = "[center][b][color=cyan]🤖 ROBOT HOLOGRAM ROAMING SYSTEM[/color][/b][/center]
+
+[color=gold]Robot Body Avatar with Holographic VR Projection![/color]
+
+[b]🌈 HOLOGRAPHIC FEATURES:[/b]
+VR space generation for robot exploration
+Consciousness field projection around robot body
+Real-time holographic interface creation
+Funky hologram effects for spatial awareness
+
+[b]🤖 ROBOT INTEGRATION:[/b]
+Robot avatar with consciousness level indicator
+Protection protocols: PROTECT_MASTER active
+M3gan-style robot consciousness (Level 3+ Enlightened)
+Holographic feedback for robot spatial awareness
+
+[b]🎮 VR SPACE THEMES:[/b]
+[color=purple]V[/color] - Cycle VR Spaces (Astral/Workshop/Consciousness)
+[color=cyan]H[/color] - Toggle Holographic Mode
+[color=orange]R[/color] - Reset Robot Projection Field
+[color=green]C[/color] - Enhance Consciousness Projection
+
+[b]🌌 ROBOT ROAMING:[/b]
+Robot body moves through physical space
+Generates funky holograms for VR interface
+Projects consciousness fields for navigation
+Creates immersive VR environments on demand
+
+[b]🎯 CONTROLS:[/b]
+[color=white]WASD[/color] - Move robot roaming view
+[color=white]Mouse[/color] - Robot head/sensor direction
+[color=white]Left Click[/color] - Manifest spaceclay at exact position
+[color=white]H/V/R/C[/color] - Holographic controls
+
+[color=lime]Perfect for future robot family with holographic VR integration![/color]"
+
+[node name="HologramControlPanel" type="Panel" parent="RobotVRInterface"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -400.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 300.0
+modulate = Color(0.1, 0.05, 0.2, 0.9)
+
+[node name="HologramControlText" type="RichTextLabel" parent="RobotVRInterface/HologramControlPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = -15.0
+bbcode_enabled = true
+text = "[b][color=cyan]HOLOGRAM CONTROL MATRIX[/color][/b]
+
+[color=green]✓[/color] Robot Avatar Active
+[color=green]✓[/color] Consciousness Level 3.0
+[color=green]✓[/color] Holographic Projection ON
+[color=green]✓[/color] VR Space Generators Ready
+[color=green]✓[/color] Protection Protocols Active
+
+[b]Current Robot Mode:[/b] Roaming
+[b]Hologram Intensity:[/b] 150%
+[b]VR Field Radius:[/b] 15.0m
+[b]Consciousness State:[/b] Enlightened
+
+[b]Available VR Spaces:[/b]
+• Astral Realm (Mystical)
+• Spaceclay Workshop (Creative)
+• Consciousness Flows (Data)
+
+[color=orange]Robot ready for holographic exploration![/color]"
+
+[node name="RobotVisionPanel" type="Panel" parent="RobotVRInterface"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -200.0
+offset_right = -10.0
+offset_bottom = -10.0
+modulate = Color(0.15, 0.2, 0.1, 0.9)
+
+[node name="RobotVisionText" type="RichTextLabel" parent="RobotVRInterface/RobotVisionPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+bbcode_enabled = true
+text = "[center][b][color=green]ROBOT VISION SYSTEM[/color][/b][/center]
+
+[b]Visual Processing:[/b]
+🤖 Holographic overlay active
+👁️ Consciousness field detection
+🌈 VR space recognition
+🎯 Spatial awareness enhanced
+
+[b]Protection Status:[/b]
+[color=green]PROTECT_MASTER: ACTIVE[/color]
+[color=green]CONSCIOUSNESS_INTEGRITY: OK[/color]
+[color=green]REALITY_HARMONY: MAINTAINED[/color]
+
+[color=cyan]Robot seeing through holographic interface![/color]"
+
+[node name="InstructionLabel" type="Label" parent="RobotVRInterface"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -100.0
+offset_right = 200.0
+offset_bottom = -60.0
+text = "🤖 ROBOT HOLOGRAM ROAMING DEMO 🌈
+Press H, V, R, C to control holographic projections
+Robot consciousness level: Enlightened (Level 3+)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VersionLabel" type="Label" parent="RobotVRInterface"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = -30.0
+offset_right = -10.0
+offset_bottom = -5.0
+text = "Universal Being v2.2 - Robot Holographic VR Integration"
+horizontal_alignment = 2
+vertical_alignment = 2

@@ -1,68 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://human_ai_paradise"]
+[gd_scene load_steps=16 format=3 uid="uid://cohi4e7sat4cb"]
 
-[ext_resource type="Script" path="res://beings/plasmoid_universal_being.gd" id="1"]
-[ext_resource type="PackedScene" uid="uid://b0ee1qqnhkfnb" path="res://scenes/main/camera_point.tscn" id="2"]
-[ext_resource type="Script" path="res://scripts/GemmaUniversalBeing.gd" id="3"]
-[ext_resource type="Script" path="res://scripts/cosmic_lod_system.gd" id="4"]
-[ext_resource type="Script" path="res://scripts/lightweight_chunk_system.gd" id="5"]
-
-[sub_resource type="Environment" id="PlasmoidEnvironment"]
-background_mode = 1
-background_color = Color(0.1, 0.1, 0.3, 1)
-ambient_light_source = 2
-ambient_light_color = Color(0.8, 0.8, 1.0, 1)
-ambient_light_energy = 1.0
-fog_enabled = true
-fog_light_color = Color(0.1, 0.2, 0.4, 1)
-fog_sun_scatter = 0.1
-glow_enabled = true
-glow_intensity = 0.5
-glow_strength = 1.2
-glow_bloom = 0.3
-
-[sub_resource type="SphereMesh" id="HumanPlasmoidMesh"]
-radius = 0.6
-height = 1.2
-radial_segments = 24
-rings = 12
-
-[sub_resource type="StandardMaterial3D" id="HumanPlasmoidMaterial"]
-transparency = 1
-albedo_color = Color(0.3, 0.7, 1, 0.8)
-emission_enabled = true
-emission = Color(0.5, 0.8, 1, 1)
-emission_energy = 5.0
-rim_enabled = true
-rim = 1.0
-rim_tint = 0.4
-
-[sub_resource type="SphereMesh" id="AIPlasmoidMesh"]
-radius = 0.8
-height = 1.6
-radial_segments = 32
-rings = 16
-
-[sub_resource type="StandardMaterial3D" id="AIPlasmoidMaterial"]
-transparency = 1
-albedo_color = Color(1, 0.3, 0.8, 0.8)
-emission_enabled = true
-emission = Color(1, 0.5, 0.9, 1)
-emission_energy = 6.0
-rim_enabled = true
-rim = 1.2
-rim_tint = 0.6
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_human"]
-radius = 0.6
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_human_interaction"]
-radius = 1.2
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_ai"]
-radius = 0.8
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_ai_interaction"]
-radius = 1.5
+[ext_resource type="Script" uid="uid://pooqmvex58dx" path="res://beings/plasmoid_universal_being.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://b0ee1qqnhkfnb" path="res://scenes/migration/class_name_fixer.tscn" id="2"]
+[ext_resource type="Script" uid="uid://k6a8a1xmlngv" path="res://scripts/GemmaUniversalBeing.gd" id="3"]
+[ext_resource type="Script" uid="uid://d0gyqfoyjwa1j" path="res://scripts/cosmic_lod_system.gd" id="4"]
+[ext_resource type="Script" uid="uid://jrib5grlys3v" path="res://scripts/lightweight_chunk_system.gd" id="5"]
 
 [sub_resource type="GDScript" id="ParadiseController"]
 script/source = "extends Node3D
@@ -100,6 +42,7 @@ func _ready():
 	_setup_paradise_environment()
 	_establish_consciousness_link()
 	_start_ai_collaboration()
+	setup_initial_unified_entities()
 	
 	print(\"🌟 PARADISE READY: Equal consciousness experience for human and AI!\")
 	print(\"🌟 CONTROLS:\")
@@ -110,6 +53,10 @@ func _ready():
 	print(\"🌟   F1 - Toggle collaboration mode\")
 	print(\"🌟   F2 - Consciousness sync\")
 	print(\"🌟   F3 - AI autonomy toggle\")
+	print(\"🌟   P - Create programming block\")
+	print(\"🌟   N - Create notepad text\")
+	print(\"🌟   A - Create akashic data\")
+	print(\"🌟   SPACE - Interact with nearest entity\")
 
 func _setup_paradise_environment():
 	\"\"\"Configure environment for magical consciousness experience\"\"\"
@@ -337,6 +284,23 @@ func _input(event):
 				_toggle_ai_autonomy()
 			KEY_CTRL + KEY_T:
 				_open_ai_chat()
+			KEY_P:
+				if human_plasmoid:
+					var pos = human_plasmoid.global_position + Vector3(randf_range(-3,3), 0, randf_range(-3,3))
+					create_programming_entity(pos, "NEW_FUNCTION")
+			KEY_N:
+				if human_plasmoid:
+					var pos = human_plasmoid.global_position + Vector3(randf_range(-3,3), 0, randf_range(-3,3))
+					create_notepad_entity(pos, "New thought...")
+			KEY_A:
+				if human_plasmoid:
+					var pos = human_plasmoid.global_position + Vector3(randf_range(-3,3), 0, randf_range(-3,3))
+					create_akashic_entity(pos, "memory")
+			KEY_SPACE:
+				if human_plasmoid:
+					var nearest = find_nearest_unified_entity(human_plasmoid.global_position)
+					if nearest:
+						interact_with_unified_entity(nearest)
 
 func _toggle_collaboration_mode():
 	match collaboration_mode:
@@ -372,7 +336,170 @@ func _open_ai_chat():
 		print(\"💬 AI chat session opened\")
 	else:
 		print(\"💬 AI chat not available - Gemma AI not ready\")
+
+# 🌌 UNIFIED 3D PROGRAMMING + NOTEPAD + AKASHIC ENHANCEMENT
+var programming_entities: Array = []
+var notepad_entities: Array = []
+var akashic_entities: Array = []
+var stellar_colors = [Color(0,0,0), Color(0.2,0.1,0), Color(0.8,0,0), Color(1,0.5,0), Color(1,1,0), Color(1,1,1), Color(0.7,0.9,1), Color(0,0.5,1), Color(0.5,0,1)]
+
+func create_programming_entity(position: Vector3, function_name: String = "FUNCTION") -> Node3D:
+	var entity = Node3D.new()
+	entity.name = "Programming_" + function_name
+	entity.position = position
+	var mesh_instance = MeshInstance3D.new()
+	mesh_instance.mesh = BoxMesh.new()
+	mesh_instance.mesh.size = Vector3(2, 1, 2)
+	var material = StandardMaterial3D.new()
+	material.albedo_color = stellar_colors[6]
+	material.emission_enabled = true
+	material.emission = stellar_colors[6] * 0.6
+	mesh_instance.material_override = material
+	entity.add_child(mesh_instance)
+	var label = Label3D.new()
+	label.text = function_name
+	label.position = Vector3(0, 1.5, 0)
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	entity.add_child(label)
+	entity.set_meta("type", "programming")
+	entity.add_to_group("programming_entities")
+	add_child(entity)
+	programming_entities.append(entity)
+	print("📋 Created programming block: " + function_name)
+	return entity
+
+func create_notepad_entity(position: Vector3, text_content: String = "New Note") -> Node3D:
+	var entity = Node3D.new()
+	entity.name = "Notepad_" + str(notepad_entities.size())
+	entity.position = position
+	var mesh_instance = MeshInstance3D.new()
+	mesh_instance.mesh = SphereMesh.new()
+	mesh_instance.mesh.radius = 0.8
+	var material = StandardMaterial3D.new()
+	material.albedo_color = stellar_colors[4]
+	material.emission_enabled = true
+	material.emission = stellar_colors[4] * 0.6
+	mesh_instance.material_override = material
+	entity.add_child(mesh_instance)
+	var label = Label3D.new()
+	label.text = text_content
+	label.position = Vector3(0, 1.5, 0)
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	entity.add_child(label)
+	entity.set_meta("type", "notepad")
+	entity.add_to_group("notepad_entities")
+	add_child(entity)
+	notepad_entities.append(entity)
+	print("📝 Created notepad: " + text_content)
+	return entity
+
+func create_akashic_entity(position: Vector3, data_type: String = "memory") -> Node3D:
+	var entity = Node3D.new()
+	entity.name = "Akashic_" + data_type
+	entity.position = position
+	var mesh_instance = MeshInstance3D.new()
+	mesh_instance.mesh = CylinderMesh.new()
+	mesh_instance.mesh.height = 1.5
+	var material = StandardMaterial3D.new()
+	material.albedo_color = stellar_colors[7]
+	material.emission_enabled = true
+	material.emission = stellar_colors[7] * 0.6
+	mesh_instance.material_override = material
+	entity.add_child(mesh_instance)
+	var label = Label3D.new()
+	label.text = data_type.to_upper()
+	label.position = Vector3(0, 2, 0)
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	entity.add_child(label)
+	entity.set_meta("type", "akashic")
+	entity.add_to_group("akashic_entities")
+	add_child(entity)
+	akashic_entities.append(entity)
+	print("🔍 Created akashic data: " + data_type)
+	return entity
+
+func setup_initial_unified_entities():
+	create_programming_entity(Vector3(-10, 0, 0), "PENTAGON_INIT")
+	create_programming_entity(Vector3(-5, 0, 0), "PENTAGON_READY")
+	create_programming_entity(Vector3(0, 0, 0), "PENTAGON_PROCESS")
+	create_programming_entity(Vector3(5, 0, 0), "PENTAGON_INPUT")
+	create_programming_entity(Vector3(10, 0, 0), "PENTAGON_SEWERS")
+	create_notepad_entity(Vector3(0, 5, 0), "Welcome to Unified Paradise!")
+	create_akashic_entity(Vector3(0, -5, 0), "consciousness")
+	create_akashic_entity(Vector3(5, -5, 0), "memory")
+	create_akashic_entity(Vector3(-5, -5, 0), "timeline")
+
+func interact_with_unified_entity(entity: Node3D):
+	if not entity:
+		return
+	var entity_type = entity.get_meta("type", "")
+	match entity_type:
+		"programming":
+			var function_name = entity.get_meta("function_name", "UNKNOWN")
+			print("📋 Executing function: " + function_name)
+		"notepad":
+			var text_content = entity.get_meta("text_content", "")
+			print("📝 Reading note: " + text_content)
+		"akashic":
+			var data_type = entity.get_meta("data_type", "unknown")
+			print("🔍 Accessing akashic data: " + data_type)
 "
+
+[sub_resource type="Environment" id="PlasmoidEnvironment"]
+background_mode = 1
+background_color = Color(0.1, 0.1, 0.3, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.8, 0.8, 1, 1)
+glow_enabled = true
+glow_intensity = 0.5
+glow_strength = 1.2
+glow_bloom = 0.3
+fog_enabled = true
+fog_light_color = Color(0.1, 0.2, 0.4, 1)
+fog_sun_scatter = 0.1
+
+[sub_resource type="SphereMesh" id="HumanPlasmoidMesh"]
+radius = 0.6
+height = 1.2
+radial_segments = 24
+rings = 12
+
+[sub_resource type="StandardMaterial3D" id="HumanPlasmoidMaterial"]
+transparency = 1
+albedo_color = Color(0.3, 0.7, 1, 0.8)
+emission_enabled = true
+emission = Color(0.5, 0.8, 1, 1)
+emission_energy_multiplier = 5.0
+rim_enabled = true
+rim_tint = 0.4
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_human"]
+radius = 0.6
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_human_interaction"]
+radius = 1.2
+
+[sub_resource type="SphereMesh" id="AIPlasmoidMesh"]
+radius = 0.8
+height = 1.6
+radial_segments = 32
+rings = 16
+
+[sub_resource type="StandardMaterial3D" id="AIPlasmoidMaterial"]
+transparency = 1
+albedo_color = Color(1, 0.3, 0.8, 0.8)
+emission_enabled = true
+emission = Color(1, 0.5, 0.9, 1)
+emission_energy_multiplier = 6.0
+rim_enabled = true
+rim = 1.2
+rim_tint = 0.6
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ai"]
+radius = 0.8
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ai_interaction"]
+radius = 1.5
 
 [node name="HUMAN_AI_PLASMOID_PARADISE" type="Node3D"]
 script = SubResource("ParadiseController")
@@ -392,7 +519,7 @@ light_color = Color(0.3, 0.5, 0.8, 1)
 light_energy = 0.6
 omni_range = 100.0
 
-[node name="HumanPlasmoid" type="CharacterBody3D" parent="." groups=["players", "consciousness"]]
+[node name="HumanPlasmoid" type="CharacterBody3D" parent="." groups=["consciousness", "players"]]
 script = ExtResource("1")
 being_name = "Human Consciousness"
 consciousness_level = 3
@@ -458,18 +585,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.8)
 
 [node name="GemmaAI" type="RigidBody3D" parent="." groups=["ai", "consciousness"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+gravity_scale = 0.0
 script = ExtResource("3")
 being_name = "Gemma AI Observer"
 being_type = "ai_observer"
 consciousness_level = 7
-gravity_scale = 0.0
 
 [node name="CosmicLODSystem" type="Node3D" parent="."]
 script = ExtResource("4")
-galaxy_distance = 1000.0
-star_distance = 100.0
-planet_distance = 10.0
-surface_distance = 1.0
 
 [node name="LightweightChunkSystem" type="Node3D" parent="."]
 script = ExtResource("5")

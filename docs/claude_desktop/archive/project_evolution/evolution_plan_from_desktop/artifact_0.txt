@@ -1,0 +1,515 @@
+#!/bin/bash
+# Claude Project Evolution System
+# Creates time-aware development workspace with cross-folder intelligence
+
+echo "🚀 Claude Project Evolution System Setup"
+echo "========================================"
+
+# Create main project evolution workspace
+EVOLUTION_ROOT="/mnt/c/Users/Percision 15/claude_evolution"
+mkdir -p "$EVOLUTION_ROOT"/{projects,timeline,connections,templates}
+
+# 1. Create Project Evolution Tracker
+cat > "$EVOLUTION_ROOT/evolution_tracker.py" << 'EOF'
+#!/usr/bin/env python3
+"""
+Claude Project Evolution Tracker
+Manages project timelines, connections, and cross-folder dependencies
+"""
+import json
+import os
+import time
+from datetime import datetime
+from pathlib import Path
+from typing import Dict, List, Set
+
+class ProjectEvolution:
+    def __init__(self, root_path: str):
+        self.root = Path(root_path)
+        self.timeline_file = self.root / "timeline" / "evolution.json"
+        self.connections_file = self.root / "connections" / "links.json"
+        self.ensure_files()
+    
+    def ensure_files(self):
+        """Create necessary tracking files"""
+        self.timeline_file.parent.mkdir(exist_ok=True)
+        self.connections_file.parent.mkdir(exist_ok=True)
+        
+        if not self.timeline_file.exists():
+            self.save_timeline({})
+        if not self.connections_file.exists():
+            self.save_connections({})
+    
+    def save_timeline(self, data: dict):
+        """Save timeline data"""
+        with open(self.timeline_file, 'w') as f:
+            json.dump(data, f, indent=2)
+    
+    def load_timeline(self) -> dict:
+        """Load timeline data"""
+        with open(self.timeline_file, 'r') as f:
+            return json.load(f)
+    
+    def save_connections(self, data: dict):
+        """Save connection data"""
+        with open(self.connections_file, 'w') as f:
+            json.dump(data, f, indent=2)
+    
+    def load_connections(self) -> dict:
+        """Load connection data"""
+        with open(self.connections_file, 'r') as f:
+            return json.load(f)
+    
+    def create_folder(self, folder_name: str, description: str = "", parent_folders: List[str] = None) -> dict:
+        """Create new evolution folder with tracking"""
+        timestamp = datetime.now().isoformat()
+        folder_path = self.root / "projects" / folder_name
+        folder_path.mkdir(parents=True, exist_ok=True)
+        
+        # Update timeline
+        timeline = self.load_timeline()
+        folder_id = len(timeline) + 1
+        
+        folder_info = {
+            "id": folder_id,
+            "name": folder_name,
+            "path": str(folder_path),
+            "description": description,
+            "created": timestamp,
+            "last_updated": timestamp,
+            "visit_count": 1,
+            "parent_folders": parent_folders or [],
+            "child_folders": [],
+            "connected_folders": set(),
+            "files": [],
+            "evolution_stage": "genesis"
+        }
+        
+        timeline[folder_name] = folder_info
+        self.save_timeline(timeline)
+        
+        # Update parent connections
+        if parent_folders:
+            self.connect_folders(folder_name, parent_folders)
+        
+        # Create folder instruction file
+        self.create_instruction_file(folder_name, folder_info)
+        
+        return folder_info
+    
+    def visit_folder(self, folder_name: str) -> dict:
+        """Record folder visit and update counters"""
+        timeline = self.load_timeline()
+        
+        if folder_name not in timeline:
+            raise ValueError(f"Folder {folder_name} not found in timeline")
+        
+        folder_info = timeline[folder_name]
+        folder_info["visit_count"] += 1
+        folder_info["last_updated"] = datetime.now().isoformat()
+        
+        # Update evolution stage based on visit count
+        if folder_info["visit_count"] > 10:
+            folder_info["evolution_stage"] = "mature"
+        elif folder_info["visit_count"] > 5:
+            folder_info["evolution_stage"] = "developed"
+        elif folder_info["visit_count"] > 2:
+            folder_info["evolution_stage"] = "growing"
+        
+        timeline[folder_name] = folder_info
+        self.save_timeline(timeline)
+        
+        return folder_info
+    
+    def connect_folders(self, source: str, targets: List[str]):
+        """Create connections between folders"""
+        connections = self.load_connections()
+        timeline = self.load_timeline()
+        
+        if source not in connections:
+            connections[source] = {"connects_to": [], "connected_from": []}
+        
+        for target in targets:
+            if target not in connections[source]["connects_to"]:
+                connections[source]["connects_to"].append(target)
+            
+            if target not in connections:
+                connections[target] = {"connects_to": [], "connected_from": []}
+            
+            if source not in connections[target]["connected_from"]:
+                connections[target]["connected_from"].append(source)
+        
+        self.save_connections(connections)
+        
+        # Update timeline with connection info
+        for folder in [source] + targets:
+            if folder in timeline:
+                timeline[folder]["last_updated"] = datetime.now().isoformat()
+        
+        self.save_timeline(timeline)
+    
+    def get_affected_folders(self, changed_folder: str) -> List[str]:
+        """Get all folders that need updates when a folder changes"""
+        connections = self.load_connections()
+        affected = set()
+        
+        def traverse_connections(folder: str, visited: Set[str]):
+            if folder in visited:
+                return
+            visited.add(folder)
+            affected.add(folder)
+            
+            if folder in connections:
+                for connected in connections[folder]["connects_to"]:
+                    traverse_connections(connected, visited)
+                for connected_from in connections[folder]["connected_from"]:
+                    traverse_connections(connected_from, visited)
+        
+        traverse_connections(changed_folder, set())
+        return list(affected)
+    
+    def create_instruction_file(self, folder_name: str, folder_info: dict):
+        """Create instruction file for Claude in the folder"""
+        folder_path = Path(folder_info["path"])
+        instruction_file = folder_path / "CLAUDE_EVOLUTION.md"
+        
+        timeline = self.load_timeline()
+        connections = self.load_connections()
+        
+        # Get related folders
+        related_folders = []
+        if folder_name in connections:
+            related_folders = connections[folder_name]["connects_to"] + connections[folder_name]["connected_from"]
+        
+        instruction_content = f"""# Claude Evolution Instructions
+## Folder: {folder_name}
+
+### Project Context
+- **Folder ID**: {folder_info['id']}
+- **Created**: {folder_info['created']}
+- **Last Updated**: {folder_info['last_updated']}
+- **Visit Count**: {folder_info['visit_count']}
+- **Evolution Stage**: {folder_info['evolution_stage']}
+- **Description**: {folder_info['description']}
+
+### Project Timeline Position
+This is folder #{folder_info['id']} in the evolution timeline.
+
+### Connected Folders
+"""
+        
+        if related_folders:
+            instruction_content += "\n#### Dependencies & Connections:\n"
+            for related in related_folders:
+                if related in timeline:
+                    rel_info = timeline[related]
+                    instruction_content += f"- **{related}** (#{rel_info['id']}) - {rel_info['description']}\n"
+        else:
+            instruction_content += "No connections yet - this is an independent folder.\n"
+        
+        instruction_content += f"""
+### Evolution History
+- Genesis: {folder_info['created']}
+- Total Visits: {folder_info['visit_count']}
+- Current Stage: {folder_info['evolution_stage']}
+
+### Instructions for Claude
+1. **Read First**: Always check connected folders for context
+2. **Update Strategy**: When making changes, consider impact on:
+"""
+        
+        affected_folders = self.get_affected_folders(folder_name)
+        for affected in affected_folders:
+            if affected != folder_name and affected in timeline:
+                instruction_content += f"   - {affected} (#{timeline[affected]['id']})\n"
+        
+        instruction_content += f"""
+3. **File Management**: Track all files created/modified
+4. **Connection Awareness**: Update parent folders when child folders evolve
+
+### Current Project State
+- Files in this folder: {len(folder_info.get('files', []))}
+- Parent folders: {folder_info.get('parent_folders', [])}
+- Child folders: {folder_info.get('child_folders', [])}
+
+### Next Steps Template
+```bash
+# To work on this project:
+cd {folder_path}
+
+# To see evolution status:
+python3 ../../evolution_tracker.py status {folder_name}
+
+# To connect to another folder:
+python3 ../../evolution_tracker.py connect {folder_name} <target_folder>
+
+# To update all affected folders:
+python3 ../../evolution_tracker.py propagate {folder_name}
+```
+
+---
+*This file is auto-generated by Claude Evolution System*
+*Last updated: {datetime.now().isoformat()}*
+"""
+        
+        with open(instruction_file, 'w') as f:
+            f.write(instruction_content)
+    
+    def update_all_affected(self, changed_folder: str):
+        """Update instruction files for all affected folders"""
+        affected = self.get_affected_folders(changed_folder)
+        timeline = self.load_timeline()
+        
+        for folder in affected:
+            if folder in timeline:
+                self.create_instruction_file(folder, timeline[folder])
+        
+        print(f"Updated {len(affected)} folders affected by changes in {changed_folder}")
+    
+    def get_status(self, folder_name: str = None) -> str:
+        """Get status report for folder or entire evolution"""
+        timeline = self.load_timeline()
+        connections = self.load_connections()
+        
+        if folder_name:
+            if folder_name not in timeline:
+                return f"Folder '{folder_name}' not found"
+            
+            info = timeline[folder_name]
+            status = f"""
+🎯 Folder: {folder_name}
+├── ID: #{info['id']}
+├── Stage: {info['evolution_stage']}
+├── Visits: {info['visit_count']}
+├── Created: {info['created']}
+└── Updated: {info['last_updated']}
+
+🔗 Connections:"""
+            
+            if folder_name in connections:
+                conn = connections[folder_name]
+                if conn["connects_to"]:
+                    status += f"\n├── Connects to: {', '.join(conn['connects_to'])}"
+                if conn["connected_from"]:
+                    status += f"\n└── Connected from: {', '.join(conn['connected_from'])}"
+            
+            return status
+        else:
+            # Full evolution status
+            total_folders = len(timeline)
+            total_connections = sum(len(c.get("connects_to", [])) for c in connections.values())
+            
+            status = f"""
+🌟 Claude Evolution System Status
+═══════════════════════════════════
+
+📁 Total Folders: {total_folders}
+🔗 Total Connections: {total_connections}
+📊 Evolution Stages:
+"""
+            
+            stages = {}
+            for folder_info in timeline.values():
+                stage = folder_info["evolution_stage"]
+                stages[stage] = stages.get(stage, 0) + 1
+            
+            for stage, count in stages.items():
+                status += f"├── {stage.capitalize()}: {count}\n"
+            
+            status += "\n📋 Recent Activity:\n"
+            sorted_folders = sorted(timeline.items(), 
+                                  key=lambda x: x[1]["last_updated"], 
+                                  reverse=True)[:5]
+            
+            for name, info in sorted_folders:
+                status += f"├── {name} (#{info['id']}) - {info['last_updated'][:10]}\n"
+            
+            return status
+
+# CLI Interface
+if __name__ == "__main__":
+    import sys
+    
+    root_path = "/mnt/c/Users/Percision 15/claude_evolution"
+    evolution = ProjectEvolution(root_path)
+    
+    if len(sys.argv) < 2:
+        print("Usage: python3 evolution_tracker.py <command> [args]")
+        print("Commands:")
+        print("  create <name> [description] [parent1,parent2]")
+        print("  visit <name>")
+        print("  connect <source> <target1,target2>")
+        print("  status [folder_name]")
+        print("  propagate <folder_name>")
+        sys.exit(1)
+    
+    command = sys.argv[1]
+    
+    if command == "create":
+        name = sys.argv[2]
+        description = sys.argv[3] if len(sys.argv) > 3 else ""
+        parents = sys.argv[4].split(",") if len(sys.argv) > 4 else []
+        result = evolution.create_folder(name, description, parents)
+        print(f"✅ Created folder '{name}' (#{result['id']})")
+    
+    elif command == "visit":
+        name = sys.argv[2]
+        result = evolution.visit_folder(name)
+        print(f"📍 Visited '{name}' - Visit #{result['visit_count']}")
+    
+    elif command == "connect":
+        source = sys.argv[2]
+        targets = sys.argv[3].split(",")
+        evolution.connect_folders(source, targets)
+        print(f"🔗 Connected '{source}' to {targets}")
+    
+    elif command == "status":
+        folder = sys.argv[2] if len(sys.argv) > 2 else None
+        print(evolution.get_status(folder))
+    
+    elif command == "propagate":
+        folder = sys.argv[2]
+        evolution.update_all_affected(folder)
+    
+    else:
+        print(f"Unknown command: {command}")
+EOF
+
+# 2. Create Quick Command Scripts
+cat > "$EVOLUTION_ROOT/new_project.sh" << 'EOF'
+#!/bin/bash
+# Quick project creation with evolution tracking
+
+if [ $# -lt 1 ]; then
+    echo "Usage: $0 <project_name> [description] [parent_folders]"
+    echo "Example: $0 web_app 'My awesome web app' folder2,folder5"
+    exit 1
+fi
+
+PROJECT_NAME=$1
+DESCRIPTION=${2:-"New project"}
+PARENTS=${3:-""}
+
+cd /mnt/c/Users/Percision\ 15/claude_evolution
+
+echo "🚀 Creating evolution-tracked project: $PROJECT_NAME"
+
+# Create the project with evolution tracking
+python3 evolution_tracker.py create "$PROJECT_NAME" "$DESCRIPTION" "$PARENTS"
+
+# Navigate to the new project
+cd "projects/$PROJECT_NAME"
+
+# Create basic project structure with Claude context
+mkdir -p {src,docs,tests}
+
+# Copy Claude templates if available
+TEMPLATE_DIR="/mnt/c/Users/Percision 15/claude_workspace/templates"
+if [ -d "$TEMPLATE_DIR" ]; then
+    cp "$TEMPLATE_DIR/CLAUDE.md" ./CLAUDE_PROJECT.md 2>/dev/null || true
+    cp "$TEMPLATE_DIR/prompt_plan.md" . 2>/dev/null || true
+fi
+
+echo "✅ Project created with evolution tracking!"
+echo "📁 Location: $(pwd)"
+echo "📖 Read CLAUDE_EVOLUTION.md for project context and connections"
+echo ""
+echo "🧠 Claude commands available:"
+echo "  ultrathink 'project architecture for $PROJECT_NAME'"
+echo "  think hard 'implementation strategy for $DESCRIPTION'"
+EOF
+
+chmod +x "$EVOLUTION_ROOT/new_project.sh"
+
+# 3. Create Navigation Helper
+cat > "$EVOLUTION_ROOT/nav.sh" << 'EOF'
+#!/bin/bash
+# Evolution Navigation Helper
+
+EVOLUTION_ROOT="/mnt/c/Users/Percision 15/claude_evolution"
+cd "$EVOLUTION_ROOT"
+
+if [ $# -eq 0 ]; then
+    echo "🌟 Claude Evolution Navigator"
+    echo "============================"
+    python3 evolution_tracker.py status
+    echo ""
+    echo "🚀 Commands:"
+    echo "  ./nav.sh <folder_name>    - Visit project folder"
+    echo "  ./nav.sh list            - List all projects"
+    echo "  ./nav.sh connect A B     - Connect two folders"
+    echo "  ./nav.sh tree            - Show connection tree"
+    exit 0
+fi
+
+if [ "$1" = "list" ]; then
+    echo "📁 Evolution Projects:"
+    ls -la projects/ | grep ^d | awk '{print "  " $9}' | grep -v '^\.$\|^\.\.$'
+
+elif [ "$1" = "tree" ]; then
+    echo "🌳 Project Connection Tree:"
+    python3 evolution_tracker.py status
+
+elif [ "$1" = "connect" ]; then
+    if [ $# -lt 3 ]; then
+        echo "Usage: ./nav.sh connect <source> <target>"
+        exit 1
+    fi
+    python3 evolution_tracker.py connect "$2" "$3"
+
+else
+    # Visit a project folder
+    PROJECT_NAME=$1
+    
+    if [ ! -d "projects/$PROJECT_NAME" ]; then
+        echo "❌ Project '$PROJECT_NAME' not found"
+        echo "Available projects:"
+        ls projects/ 2>/dev/null | grep -v CLAUDE
+        exit 1
+    fi
+    
+    # Record the visit
+    python3 evolution_tracker.py visit "$PROJECT_NAME"
+    
+    # Navigate to project
+    cd "projects/$PROJECT_NAME"
+    
+    echo "📍 Entered project: $PROJECT_NAME"
+    echo "📖 Evolution context:"
+    cat CLAUDE_EVOLUTION.md | head -20
+    
+    # Start a new shell in the project directory
+    bash
+fi
+EOF
+
+chmod +x "$EVOLUTION_ROOT/nav.sh"
+
+# 4. Create Quick Access Symlinks
+cd "/mnt/c/Users/Percision 15"
+ln -sf "claude_evolution/new_project.sh" ./new_evo_project
+ln -sf "claude_evolution/nav.sh" ./evo_nav
+
+echo ""
+echo "🎉 CLAUDE PROJECT EVOLUTION SYSTEM READY!"
+echo "========================================="
+echo ""
+echo "🚀 Quick Commands:"
+echo "  ./new_evo_project <name> [desc] [parents] - Create tracked project"
+echo "  ./evo_nav <folder>                       - Visit project folder"
+echo "  ./evo_nav list                          - List all projects"
+echo "  ./evo_nav tree                          - Show connections"
+echo ""
+echo "🧠 Example Usage:"
+echo "  ./new_evo_project web_app 'My web application'"
+echo "  ./new_evo_project api_service 'Backend API' web_app"
+echo "  ./evo_nav web_app"
+echo ""
+echo "💡 How it works:"
+echo "• Each folder gets a unique ID and tracks visit count"
+echo "• Folders can connect to each other (folder 7 → folder 2,5)"
+echo "• When you change folder 7, it updates folders 1,2,5 automatically"
+echo "• Claude gets full context about project evolution and connections"
+echo "• Every folder has CLAUDE_EVOLUTION.md with complete project context"
+echo ""
+echo "🎯 Start with: ./new_evo_project my_first_evolution"

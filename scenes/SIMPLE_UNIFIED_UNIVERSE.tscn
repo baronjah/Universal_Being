@@ -1,0 +1,412 @@
+[gd_scene load_steps=3 format=3 uid="uid://simple_unified_universe"]
+
+[sub_resource type="GDScript" id="simple_unified_script"]
+script/source = "extends Node3D
+class_name SimpleUnifiedUniverse
+
+# 🌌 SIMPLE UNIFIED UNIVERSE
+# Clean, working version of 3D Programming + Notepad 3D + Akashic Records
+# Focus on functionality over complexity
+
+# Core State
+var consciousness_level: int = 5
+var being_type: String = \"simple_unified_universe\"
+var being_name: String = \"Simple Programming Reality\"
+
+# Visual Configuration
+var stellar_colors = [
+	Color(0,0,0),Color(0.2,0.1,0),Color(0.8,0,0),Color(1,0.5,0),
+	Color(1,1,0),Color(1,1,1),Color(0.7,0.9,1),Color(0,0.5,1),Color(0.5,0,1)
+]
+
+# Camera and Movement
+var camera_rotation = Vector2.ZERO
+var move_speed = 15.0
+var look_speed = 0.002
+
+# Unified Entities
+var unified_entities = []
+var selected_entity = null
+var interaction_mode = \"normal\"
+
+func _ready():
+	being_type = \"simple_unified_universe\"
+	consciousness_level = 5
+	unified_entities = []
+	
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	create_simple_environment()
+	spawn_core_entities()
+	show_welcome_message()
+
+func _process(delta):
+	handle_movement(delta)
+	update_entities(delta)
+
+func _input(event):
+	handle_simple_input(event)
+
+# Simple Environment Creation
+func create_simple_environment():
+	# Create 50 entities in a spiral pattern
+	for i in range(50):
+		var entity = create_simple_entity(i)
+		add_child(entity)
+		unified_entities.append(entity)
+
+func create_simple_entity(index: int) -> Node3D:
+	var entity = Node3D.new()
+	entity.name = \"Entity_\" + str(index)
+	
+	# Spiral positioning
+	var angle = index * 0.5
+	var radius = index * 2.0
+	entity.position = Vector3(
+		cos(angle) * radius,
+		sin(index * 0.3) * 5.0,
+		sin(angle) * radius
+	)
+	
+	# Create visual mesh
+	var mesh_instance = MeshInstance3D.new()
+	var mesh_type = index % 3
+	
+	match mesh_type:
+		0: # Programming blocks
+			mesh_instance.mesh = BoxMesh.new()
+			mesh_instance.mesh.size = Vector3(1.5, 1, 1.5)
+			entity.set_meta(\"type\", \"programming\")
+		1: # Notepad spheres
+			mesh_instance.mesh = SphereMesh.new()
+			mesh_instance.mesh.radius = 0.8
+			entity.set_meta(\"type\", \"notepad\")
+		2: # Akashic cylinders
+			mesh_instance.mesh = CylinderMesh.new()
+			mesh_instance.mesh.height = 1.5
+			entity.set_meta(\"type\", \"akashic\")
+	
+	# Color based on type
+	var material = StandardMaterial3D.new()
+	var color_index = 6 if mesh_type == 0 else (4 if mesh_type == 1 else 7)
+	material.albedo_color = stellar_colors[color_index]
+	material.emission_enabled = true
+	material.emission = stellar_colors[color_index] * 0.5
+	mesh_instance.material_override = material
+	
+	entity.add_child(mesh_instance)
+	
+	# Add simple label
+	var label = Label3D.new()
+	var entity_type = entity.get_meta(\"type\", \"unknown\")
+	label.text = entity_type.to_upper() + \"\\n\" + str(index)
+	label.position = Vector3(0, 2, 0)
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.modulate = stellar_colors[5] # White
+	entity.add_child(label)
+	
+	# Store metadata
+	entity.set_meta(\"initialized\", true)
+	entity.set_meta(\"growth_rate\", randf_range(0.01, 0.03))
+	entity.set_meta(\"base_y\", entity.position.y)
+	
+	return entity
+
+func spawn_core_entities():
+	# Create some special entities near the origin
+	create_core_entity(\"INIT\", Vector3(-5, 0, 0), \"programming\")
+	create_core_entity(\"READY\", Vector3(0, 0, 0), \"programming\")
+	create_core_entity(\"PROCESS\", Vector3(5, 0, 0), \"programming\")
+	create_core_entity(\"Welcome Note\", Vector3(0, 5, 0), \"notepad\")
+	create_core_entity(\"Memory Bank\", Vector3(0, -5, 0), \"akashic\")
+
+func create_core_entity(name: String, position: Vector3, type: String):
+	var entity = Node3D.new()
+	entity.name = \"Core_\" + name
+	entity.position = position
+	
+	# Create appropriate mesh
+	var mesh_instance = MeshInstance3D.new()
+	match type:
+		\"programming\":
+			mesh_instance.mesh = BoxMesh.new()
+			mesh_instance.mesh.size = Vector3(2, 1.5, 2)
+		\"notepad\":
+			mesh_instance.mesh = SphereMesh.new()
+			mesh_instance.mesh.radius = 1.0
+		\"akashic\":
+			mesh_instance.mesh = CylinderMesh.new()
+			mesh_instance.mesh.height = 2.0
+	
+	# Color based on type
+	var material = StandardMaterial3D.new()
+	var color_index = 6 if type == \"programming\" else (4 if type == \"notepad\" else 7)
+	material.albedo_color = stellar_colors[color_index]
+	material.emission_enabled = true
+	material.emission = stellar_colors[color_index] * 0.8
+	mesh_instance.material_override = material
+	
+	entity.add_child(mesh_instance)
+	
+	# Add label
+	var label = Label3D.new()
+	label.text = name
+	label.position = Vector3(0, 2.5, 0)
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.modulate = stellar_colors[5]
+	entity.add_child(label)
+	
+	entity.set_meta(\"type\", type)
+	entity.set_meta(\"name\", name)
+	entity.set_meta(\"initialized\", true)
+	
+	add_child(entity)
+	unified_entities.append(entity)
+
+# Simple Input Handling
+func handle_simple_input(event):
+	# Mouse look
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		camera_rotation.x -= event.relative.x * look_speed
+		camera_rotation.y = clamp(camera_rotation.y - event.relative.y * look_speed, -1.5, 1.5)
+		$Camera3D.rotation = Vector3(camera_rotation.y, camera_rotation.x, 0)
+	
+	# Simple key controls
+	if event is InputEventKey and event.pressed:
+		match event.keycode:
+			KEY_ESCAPE:
+				toggle_mouse_mode()
+			KEY_P:
+				create_entity_at_camera(\"programming\")
+			KEY_N:
+				create_entity_at_camera(\"notepad\")
+			KEY_A:
+				create_entity_at_camera(\"akashic\")
+			KEY_C:
+				connect_nearest_entities()
+			KEY_DELETE:
+				delete_nearest_entity()
+			KEY_SPACE:
+				interact_with_nearest_entity()
+
+# Movement System
+func handle_movement(delta):
+	var input_vector = Vector3()
+	
+	# Simple WASD movement
+	if Input.is_key_pressed(KEY_W):
+		input_vector.z -= 1
+	if Input.is_key_pressed(KEY_S):
+		input_vector.z += 1
+	if Input.is_key_pressed(KEY_A):
+		input_vector.x -= 1
+	if Input.is_key_pressed(KEY_D):
+		input_vector.x += 1
+	if Input.is_key_pressed(KEY_Q):
+		input_vector.y += 1
+	if Input.is_key_pressed(KEY_E):
+		input_vector.y -= 1
+	
+	if input_vector.length() > 0:
+		input_vector = input_vector.normalized()
+		input_vector = $Camera3D.global_transform.basis * input_vector
+		$Camera3D.global_position += input_vector * move_speed * delta
+
+# Entity Management
+func update_entities(delta):
+	for entity in unified_entities:
+		if not is_instance_valid(entity):
+			continue
+		
+		if not entity.get_meta(\"initialized\", false):
+			continue
+		
+		# Gentle floating animation
+		var base_y = entity.get_meta(\"base_y\", entity.position.y)
+		entity.position.y = base_y + sin(Time.get_time_dict_from_system()[\"second\"] + entity.position.x) * 0.3
+		
+		# Slow rotation based on type
+		var entity_type = entity.get_meta(\"type\", \"\")
+		match entity_type:
+			\"programming\":
+				entity.rotation.y += delta * 0.1
+			\"notepad\":
+				entity.rotation.x += delta * 0.05
+			\"akashic\":
+				entity.rotation.z += delta * 0.08
+		
+		# Update emission intensity
+		if entity.get_child_count() > 0:
+			var mesh = entity.get_child(0) as MeshInstance3D
+			if mesh and mesh.material_override:
+				var time_factor = sin(Time.get_time_dict_from_system()[\"second\"] * 0.5) * 0.2 + 0.8
+				mesh.material_override.emission_energy = time_factor
+
+# Entity Creation
+func create_entity_at_camera(type: String):
+	var camera_pos = $Camera3D.global_position
+	var camera_forward = -$Camera3D.global_transform.basis.z
+	var spawn_pos = camera_pos + camera_forward * 5.0
+	
+	var entity = Node3D.new()
+	entity.name = type + \"_\" + str(unified_entities.size())
+	entity.position = spawn_pos
+	
+	# Create mesh based on type
+	var mesh_instance = MeshInstance3D.new()
+	match type:
+		\"programming\":
+			mesh_instance.mesh = BoxMesh.new()
+			mesh_instance.mesh.size = Vector3(1.5, 1, 1.5)
+		\"notepad\":
+			mesh_instance.mesh = SphereMesh.new()
+			mesh_instance.mesh.radius = 0.8
+		\"akashic\":
+			mesh_instance.mesh = CylinderMesh.new()
+			mesh_instance.mesh.height = 1.5
+	
+	# Apply color
+	var material = StandardMaterial3D.new()
+	var color_index = 6 if type == \"programming\" else (4 if type == \"notepad\" else 7)
+	material.albedo_color = stellar_colors[color_index]
+	material.emission_enabled = true
+	material.emission = stellar_colors[color_index] * 0.6
+	mesh_instance.material_override = material
+	
+	entity.add_child(mesh_instance)
+	
+	# Add label
+	var label = Label3D.new()
+	label.text = type.to_upper()
+	label.position = Vector3(0, 2, 0)
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	entity.add_child(label)
+	
+	entity.set_meta(\"type\", type)
+	entity.set_meta(\"initialized\", true)
+	entity.set_meta(\"base_y\", entity.position.y)
+	
+	add_child(entity)
+	unified_entities.append(entity)
+	
+	show_message(\"Created \" + type + \" entity\", stellar_colors[color_index])
+
+# Utility Functions
+func toggle_mouse_mode():
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED else Input.MOUSE_MODE_CAPTURED
+
+func find_nearest_entity(position: Vector3) -> Node3D:
+	var nearest: Node3D = null
+	var min_distance = INF
+	
+	for entity in unified_entities:
+		if is_instance_valid(entity):
+			var distance = position.distance_to(entity.global_position)
+			if distance < min_distance and distance < 10.0:
+				min_distance = distance
+				nearest = entity
+	
+	return nearest
+
+func interact_with_nearest_entity():
+	var camera_pos = $Camera3D.global_position
+	var nearest = find_nearest_entity(camera_pos)
+	
+	if nearest:
+		var entity_type = nearest.get_meta(\"type\", \"unknown\")
+		var entity_name = nearest.get_meta(\"name\", nearest.name)
+		
+		match entity_type:
+			\"programming\":
+				show_message(\"Programming: \" + entity_name + \" - Function ready to execute\", stellar_colors[6])
+			\"notepad\":
+				show_message(\"Notepad: \" + entity_name + \" - Text ready to edit\", stellar_colors[4])
+			\"akashic\":
+				show_message(\"Akashic: \" + entity_name + \" - Data ready to query\", stellar_colors[7])
+		
+		# Highlight the entity briefly
+		if nearest.get_child_count() > 0:
+			var mesh = nearest.get_child(0) as MeshInstance3D
+			if mesh and mesh.material_override:
+				mesh.material_override.emission_energy = 2.0
+				create_tween().tween_property(mesh.material_override, \"emission_energy\", 1.0, 1.0)
+
+func connect_nearest_entities():
+	var camera_pos = $Camera3D.global_position
+	var nearby_entities = []
+	
+	for entity in unified_entities:
+		if is_instance_valid(entity):
+			var distance = camera_pos.distance_to(entity.global_position)
+			if distance < 15.0:
+				nearby_entities.append(entity)
+	
+	if nearby_entities.size() >= 2:
+		create_connection_line(nearby_entities[0], nearby_entities[1])
+		show_message(\"Connected entities\", stellar_colors[5])
+
+func create_connection_line(entity1: Node3D, entity2: Node3D):
+	var line = MeshInstance3D.new()
+	line.mesh = CylinderMesh.new()
+	line.mesh.top_radius = 0.05
+	line.mesh.bottom_radius = 0.05
+	
+	var distance = entity1.global_position.distance_to(entity2.global_position)
+	line.mesh.height = distance
+	line.position = (entity1.global_position + entity2.global_position) / 2
+	line.look_at(entity2.global_position, Vector3.UP)
+	line.rotation.x += PI / 2
+	
+	var material = StandardMaterial3D.new()
+	material.albedo_color = stellar_colors[5]
+	material.emission_enabled = true
+	material.emission = stellar_colors[5] * 0.3
+	line.material_override = material
+	
+	add_child(line)
+
+func delete_nearest_entity():
+	var camera_pos = $Camera3D.global_position
+	var nearest = find_nearest_entity(camera_pos)
+	
+	if nearest:
+		unified_entities.erase(nearest)
+		nearest.queue_free()
+		show_message(\"Deleted entity\", stellar_colors[2])
+
+func show_welcome_message():
+	show_message(\"🌌 SIMPLE UNIFIED UNIVERSE\\nP=Programming N=Notepad A=Akashic\\nWASD=Move Mouse=Look SPACE=Interact ESC=MouseToggle\\nC=Connect DELETE=Delete\", stellar_colors[5])
+
+func show_message(text: String, color: Color):
+	var message = Label3D.new()
+	message.text = text
+	message.position = $Camera3D.position + Vector3(0, 3, 0)
+	message.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	message.modulate = color
+	add_child(message)
+	
+	var tween = create_tween()
+	tween.tween_property(message, \"modulate:a\", 0.0, 3.0)
+	tween.tween_callback(message.queue_free)
+"
+
+[sub_resource type="Environment" id="Environment_simple"]
+background_mode = 1
+background_color = Color(0.02, 0.02, 0.08, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.3, 0.3, 0.6, 1)
+ambient_light_energy = 0.4
+
+[node name="SimpleUnifiedUniverse" type="Node3D"]
+script = SubResource("simple_unified_script")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_simple")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 5, 10)
+fov = 75.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 8, 0)
+light_energy = 0.6
+shadow_enabled = true
