@@ -13,6 +13,7 @@ config_version=5
 global_classes={
 "ConsoleBaseUniversalBeing": "*res://debug/console_base.gd",
 "GemmaNaturalLanguageUniversalBeing": "*res://debug/gemma_natural_language.gd",
+"DIVINE_LIVING_NOTEPAD_3D": "*res://DIVINE_LIVING_NOTEPAD_3D.gd",
 "UniversalBeing": "*res://core/UniversalBeing.gd"
 }
 
@@ -33,6 +34,7 @@ GemmaAI="*res://autoloads/GemmaAI.gd"
 UBPrint="*res://systems/UBPrintCollector.gd"
 FallbackRegistry="*res://core/AutoRegisterFallbacks.gd"
 FloodGatesSystem="*res://core/FloodGates.gd"
+DIVINE_LIVING_NOTEPAD_3D="*res://DIVINE_LIVING_NOTEPAD_3D.tscn"
 SimpleCommandCreator="*res://systems/simple_command_creator.gd"
 
 [build]
