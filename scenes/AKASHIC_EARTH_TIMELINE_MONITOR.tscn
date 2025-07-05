@@ -1,0 +1,243 @@
+[gd_scene load_steps=8 format=3 uid="uid://akashic_earth_timeline_monitor"]
+
+[ext_resource type="Script" path="res://systems/akashic_timeline_earth_monitor.gd" id="1_earth_monitor"]
+[ext_resource type="Script" path="res://beings/player/perfect_plasmoid_player.gd" id="2_player"]
+
+[sub_resource type="Environment" id="Environment_earth_monitor"]
+background_mode = 1
+background_color = Color(0.05, 0.05, 0.15, 1)
+ambient_light_source = 1
+ambient_light_color = Color(0.2, 0.3, 0.5, 1)
+ambient_light_energy = 0.3
+fog_enabled = true
+fog_light_color = Color(0.2, 0.4, 0.8, 1)
+fog_sun_scatter = 0.1
+fog_density = 0.001
+glow_enabled = true
+glow_intensity = 2.0
+glow_strength = 1.5
+glow_bloom = 0.6
+
+[sub_resource type="SphereMesh" id="plasmoid_mesh"]
+radius = 1.0
+height = 2.0
+radial_segments = 16
+rings = 12
+
+[sub_resource type="StandardMaterial3D" id="plasmoid_material"]
+albedo_color = Color(0.8, 0.3, 1, 0.9)
+metallic = 0.8
+roughness = 0.1
+emission_enabled = true
+emission = Color(0.6, 0.2, 0.8, 1)
+emission_energy = 2.0
+transparency = 1
+flags_transparent = true
+
+[sub_resource type="CylinderShape3D" id="plasmoid_shape"]
+height = 2.0
+top_radius = 1.0
+bottom_radius = 0.8
+
+[sub_resource type="GDScript" id="earth_timeline_camera"]
+script/source = "extends Camera3D
+
+@export var orbit_speed: float = 1.0
+@export var zoom_speed: float = 5.0
+@export var min_distance: float = 15.0
+@export var max_distance: float = 100.0
+
+var orbit_distance: float = 30.0
+var orbit_angle: float = 0.0
+var orbit_height: float = 10.0
+var earth_center: Vector3 = Vector3.ZERO
+
+func _ready():
+	name = \"EarthTimelineCamera\"
+	fov = 75.0
+	update_camera_position()
+
+func _process(delta):
+	handle_input(delta)
+	update_camera_position()
+
+func handle_input(delta):
+	# Mouse orbit controls
+	if Input.is_action_pressed(\"ui_left\"):
+		orbit_angle += orbit_speed * delta
+	if Input.is_action_pressed(\"ui_right\"):
+		orbit_angle -= orbit_speed * delta
+	
+	if Input.is_action_pressed(\"ui_up\"):
+		orbit_height += orbit_speed * 10 * delta
+	if Input.is_action_pressed(\"ui_down\"):
+		orbit_height -= orbit_speed * 10 * delta
+	
+	# Zoom controls
+	if Input.is_action_just_pressed(\"zoom_in\"):
+		orbit_distance = max(min_distance, orbit_distance - zoom_speed)
+	if Input.is_action_just_pressed(\"zoom_out\"):
+		orbit_distance = min(max_distance, orbit_distance + zoom_speed)
+
+func update_camera_position():
+	var x = earth_center.x + orbit_distance * cos(orbit_angle)
+	var z = earth_center.z + orbit_distance * sin(orbit_angle)
+	var y = earth_center.y + orbit_height
+	
+	position = Vector3(x, y, z)
+	look_at(earth_center, Vector3.UP)
+"
+
+[node name="AKASHIC_EARTH_TIMELINE_MONITOR" type="Node3D"]
+script = ExtResource("1_earth_monitor")
+timeline_length_years = 200.0
+earth_radius = 10.0
+globe_detail_level = 128
+event_visibility_range = 100.0
+disaster_glow_intensity = 4.0
+consciousness_event_scale = 3.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_earth_monitor")
+
+[node name="EarthTimelineCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.7, 0.71, 0, -0.71, 0.7, 0, 15, 30)
+script = SubResource("earth_timeline_camera")
+fov = 75.0
+
+[node name="AkashicTimelinePlayer" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0)
+script = ExtResource("2_player")
+movement_speed = 30.0
+
+[node name="PlasmoidMesh" type="MeshInstance3D" parent="AkashicTimelinePlayer"]
+mesh = SubResource("plasmoid_mesh")
+surface_material_override/0 = SubResource("plasmoid_material")
+
+[node name="PlasmoidCollision" type="CollisionShape3D" parent="AkashicTimelinePlayer"]
+shape = SubResource("plasmoid_shape")
+
+[node name="TimelineUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="TimelineControls" type="VBoxContainer" parent="TimelineUI"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -200.0
+offset_right = 400.0
+offset_bottom = -20.0
+
+[node name="TimelineTitle" type="Label" parent="TimelineUI/TimelineControls"]
+layout_mode = 2
+text = "🌍 AKASHIC EARTH TIMELINE MONITOR"
+label_settings = SubResource("LabelSettings_1")
+
+[node name="AddEventPanel" type="HBoxContainer" parent="TimelineUI/TimelineControls"]
+layout_mode = 2
+
+[node name="EventTypeButton" type="OptionButton" parent="TimelineUI/TimelineControls/AddEventPanel"]
+layout_mode = 2
+text = "Add Event"
+
+[node name="LocationInput" type="LineEdit" parent="TimelineUI/TimelineControls/AddEventPanel"]
+layout_mode = 2
+placeholder_text = "Location (lat,lon,alt)"
+
+[node name="AddButton" type="Button" parent="TimelineUI/TimelineControls/AddEventPanel"]
+layout_mode = 2
+text = "ADD"
+
+[node name="VideoPanel" type="HBoxContainer" parent="TimelineUI/TimelineControls"]
+layout_mode = 2
+
+[node name="VideoURLInput" type="LineEdit" parent="TimelineUI/TimelineControls/VideoPanel"]
+layout_mode = 2
+placeholder_text = "TikTok/Video URL"
+
+[node name="VideoTitleInput" type="LineEdit" parent="TimelineUI/TimelineControls/VideoPanel"]
+layout_mode = 2
+placeholder_text = "Video Title"
+
+[node name="AddVideoButton" type="Button" parent="TimelineUI/TimelineControls/VideoPanel"]
+layout_mode = 2
+text = "ADD VIDEO"
+
+[node name="DisasterPanel" type="HBoxContainer" parent="TimelineUI/TimelineControls"]
+layout_mode = 2
+
+[node name="DisasterTypeButton" type="OptionButton" parent="TimelineUI/TimelineControls/DisasterPanel"]
+layout_mode = 2
+text = "Disaster Type"
+
+[node name="IntensitySpinBox" type="SpinBox" parent="TimelineUI/TimelineControls/DisasterPanel"]
+layout_mode = 2
+min_value = 1.0
+max_value = 10.0
+value = 5.0
+
+[node name="AddDisasterButton" type="Button" parent="TimelineUI/TimelineControls/DisasterPanel"]
+layout_mode = 2
+text = "ADD DISASTER"
+
+[node name="RealityEditPanel" type="VBoxContainer" parent="TimelineUI/TimelineControls"]
+layout_mode = 2
+
+[node name="RealityEditLabel" type="Label" parent="TimelineUI/TimelineControls/RealityEditPanel"]
+layout_mode = 2
+text = "✏️ REALITY EDIT:"
+
+[node name="RealityEditInput" type="TextEdit" parent="TimelineUI/TimelineControls/RealityEditPanel"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 60)
+placeholder_text = "Describe your symbolic intervention in Earth's timeline..."
+
+[node name="RealityEditButton" type="Button" parent="TimelineUI/TimelineControls/RealityEditPanel"]
+layout_mode = 2
+text = "APPLY REALITY EDIT"
+
+[node name="StatsPanel" type="VBoxContainer" parent="TimelineUI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 200.0
+
+[node name="StatsTitle" type="Label" parent="TimelineUI/StatsPanel"]
+layout_mode = 2
+text = "📊 TIMELINE STATS"
+
+[node name="EventCount" type="Label" parent="TimelineUI/StatsPanel"]
+layout_mode = 2
+text = "Events: 0"
+
+[node name="DisasterCount" type="Label" parent="TimelineUI/StatsPanel"]
+layout_mode = 2
+text = "Disasters: 0"
+
+[node name="VideoCount" type="Label" parent="TimelineUI/StatsPanel"]
+layout_mode = 2
+text = "Videos: 0"
+
+[node name="BranchCount" type="Label" parent="TimelineUI/StatsPanel"]
+layout_mode = 2
+text = "Timeline Branches: 0"
+
+[node name="ConsciousnessLevel" type="Label" parent="TimelineUI/StatsPanel"]
+layout_mode = 2
+text = "Global Consciousness: 3.5"
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.7, -0.5, 0.5, 0, 0.7, 0.7, -0.7, -0.5, 0.5, 0, 20, 0)
+light_energy = 2.0
+light_color = Color(0.9, 0.95, 1, 1)
+shadow_enabled = true

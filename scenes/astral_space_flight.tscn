@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://astral_space_game"]
+
+[ext_resource type="Script" path="res://scenes/astral_space_flight.gd" id="1_astral_space"]
+
+[node name="AstralSpaceFlight" type="Node3D"]
+script = ExtResource("1_astral_space")
+flight_speed = 25.0
+boost_multiplier = 4.0
+star_density = 2000

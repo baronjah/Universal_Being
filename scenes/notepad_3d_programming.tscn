@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://notepad_3d_programming"]
+
+[ext_resource type="Script" path="res://scenes/notepad_3d_programming.gd" id="1_notepad_3d"]
+
+[node name="Notepad3DProgramming" type="Node3D"]
+script = ExtResource("1_notepad_3d")

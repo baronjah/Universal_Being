@@ -1,15 +1,20 @@
 [gd_scene load_steps=6 format=3 uid="uid://orfseg1m2up2"]
 
 [ext_resource type="PackedScene" uid="uid://cjwph0uxrsnb1" path="res://scenes/main/console_window.tscn" id="3"]
+[ext_resource type="Script" path="res://core/simple_universal_being.gd" id="4_universal_core"]
+[ext_resource type="Script" path="res://systems/simple_action_system.gd" id="5_action_system"]
 
 [sub_resource type="GDScript" id="GDScript_MAIN"]
 script/source = "extends Node3D
 
 func _ready():
-	# Initialize game systems
+	print("🌌 UNIVERSAL BEING - UNIFIED GAME INITIALIZING...")
+	
+	# Initialize all integrated systems
 	setup_game_world()
 	setup_ui_hints()
 	setup_input_handling()
+	connect_all_systems()
 
 func setup_game_world():
 	# Ensure all Universal Beings are properly connected
@@ -21,6 +26,26 @@ func setup_game_world():
 	if player and cursor and cursor.has_method('set_player_reference'):
 		cursor.set_player_reference(player)
 
+func connect_all_systems():
+	# Connect Universal Being Action System
+	var action_system = get_node_or_null('SimpleActionSystem')
+	if action_system:
+		print("🎭 Action System connected")
+	
+	# Connect Notepad 3D Astral
+	var notepad_3d = get_node_or_null('Notepad3DAstral') 
+	if notepad_3d:
+		print("📝 Notepad 3D Programming connected")
+		# Connect notepad signals to main system
+		if notepad_3d.has_signal("code_executed"):
+			notepad_3d.code_executed.connect(_on_code_executed)
+		if notepad_3d.has_signal("ai_suggestion_given"):
+			notepad_3d.ai_suggestion_given.connect(_on_ai_suggestion)
+		if notepad_3d.has_signal("timeline_created"):
+			notepad_3d.timeline_created.connect(_on_timeline_created)
+	
+	print("✨ ALL SYSTEMS CONNECTED - UNIFIED UNIVERSAL BEING READY!")
+
 func setup_ui_hints():
 	# Create game instructions UI
 	var ui_layer = CanvasLayer.new()
@@ -28,7 +53,7 @@ func setup_ui_hints():
 	add_child(ui_layer)
 	
 	var hints = Label.new()
-	hints.text = 'WASD: Move | Mouse: Look | ~: Console | E: Interact | Space: Jump'
+	hints.text = '🌌 UNIVERSAL BEING UNIFIED GAME 🌌\nH: Action Demo | F: Tree Fruit | 1-6: Transform Beings\nN: Notepad 3D Mode | Console: ~ | E: Execute Code\nA: AI Help | C: Create 3D Code Block | T: Save Timeline'
 	hints.position = Vector2(10, 10)
 	hints.add_theme_color_override('font_color', Color.WHITE)
 	hints.add_theme_color_override('font_shadow_color', Color.BLACK)
@@ -45,6 +70,33 @@ func _input(event):
 		var console = get_node_or_null('Console')
 		if console and console.has_method('toggle_console_visibility'):
 			console.toggle_console_visibility()
+	
+	if event is InputEventKey and event.pressed:
+		match event.keycode:
+			KEY_N:  # Toggle Notepad 3D mode
+				_toggle_notepad_3d_mode()
+			KEY_H:  # Action demo
+				_trigger_action_demo()
+
+func _toggle_notepad_3d_mode():
+	var notepad_3d = get_node_or_null('Notepad3DAstral')
+	if notepad_3d:
+		notepad_3d.visible = !notepad_3d.visible
+		print("📝 Notepad 3D:", "ON" if notepad_3d.visible else "OFF")
+
+func _trigger_action_demo():
+	var action_system = get_node_or_null('SimpleActionSystem')
+	if action_system and action_system.has_method('demonstrate_action_cycle'):
+		action_system.demonstrate_action_cycle()
+
+func _on_code_executed(result: String):
+	print("🚀 Code executed in 3D space:", result)
+
+func _on_ai_suggestion(suggestion: String):
+	print("🤖 AI suggested:", suggestion)
+
+func _on_timeline_created(timeline_id: String):
+	print("💾 Timeline created:", timeline_id)
 "
 
 [sub_resource type="Environment" id="Environment_1"]
@@ -85,3 +137,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 [node name="Cursor" type="Node3D" parent="." groups=["cursor"]]
 
 [node name="ConsoleWindow" parent="." instance=ExtResource("3")]
+
+[node name="SimpleActionSystem" type="Node3D" parent="."]
+script = ExtResource("5_action_system")
+
+[node name="Notepad3DAstral" parent="." instance_placeholder="res://scenes/notepad_3d_astral.tscn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)

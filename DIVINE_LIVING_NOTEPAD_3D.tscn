@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxf8j2k9qwe12"]
+
+[ext_resource type="Script" path="res://DIVINE_LIVING_NOTEPAD_3D.gd" id="1_divine"]
+
+[node name="DivineLivingNotepad3D" type="Node3D"]
+script = ExtResource("1_divine")
+being_name = "Divine Living Notepad 3D"
+being_type = "divine_notepad_3d"
+consciousness_level = 4
+swim_speed = 10.0
+data_density = 0.5
+note_spawn_distance = 50.0
+max_visible_notes = 100

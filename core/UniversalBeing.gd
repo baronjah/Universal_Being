@@ -282,6 +282,23 @@ func pentagon_input(event: InputEvent) -> void:
 	"""Input phase - ALWAYS CALL SUPER FIRST in subclasses"""
 	pass
 
+func _open_cosmic_debug_chamber():
+	"""Open the cosmic debug chamber to see EVERYTHING running"""
+	print("🌌 Opening Cosmic Debug Chamber - See all scripts as stars!")
+	
+	# Load and instantiate the cosmic debug chamber
+	var cosmic_chamber_scene = preload("res://scripts/CosmicDebugChamber.gd")
+	var cosmic_chamber = cosmic_chamber_scene.new()
+	
+	# Add to current scene
+	get_tree().current_scene.add_child(cosmic_chamber)
+	
+	# Set camera to look at the cosmic view
+	var camera = get_viewport().get_camera_3d() if get_viewport() else null
+	if camera:
+		camera.position = Vector3(0, 50, 100)
+		camera.look_at(Vector3.ZERO, Vector3.UP)
+
 func pentagon_sewers() -> void:
 	"""Cleanup phase - ALWAYS CALL SUPER LAST in subclasses"""
 	being_destroyed.emit()
@@ -2076,36 +2093,279 @@ func create_from_dna(dna: UniversalBeingDNA, parent: Node = null) -> UniversalBe
 # These methods are called by specific Universal Being types but implemented as stubs in the base class
 
 func _initialize_movement_system() -> void:
-	"""Virtual method - override in subclasses for custom movement initialization"""
-	pass
+	"""Initialize movement system with consciousness-driven physics"""
+	if not has_method("set_physics_process"):
+		return
+	
+	# Create movement controller based on consciousness level
+	var movement_controller = Node.new()
+	movement_controller.name = "ConsciousnessMovementController"
+	add_child(movement_controller)
+	
+	# Set movement sensitivity based on consciousness
+	var movement_sensitivity = consciousness_level * 0.2
+	set_meta("movement_sensitivity", movement_sensitivity)
+	
+	# Initialize 6DOF movement for high consciousness beings
+	if consciousness_level > 3.0:
+		set_meta("movement_mode", "6dof")
+		set_meta("can_fly", true)
+	else:
+		set_meta("movement_mode", "ground")
+		set_meta("can_fly", false)
+	
+	show_ub_visual("⚡ Movement system initialized: %s mode" % get_meta("movement_mode", "basic"))
 
 func _scan_for_energy_connections() -> void:
-	"""Virtual method - override in subclasses for energy scanning"""
-	pass
+	"""Scan for energy connections with other Universal Beings"""
+	var scan_radius = consciousness_level * 10.0
+	var nearby_beings = get_tree().get_nodes_in_group("universal_beings")
+	
+	var energy_connections = []
+	for being in nearby_beings:
+		if being == self or not being is UniversalBeing:
+			continue
+		
+		var distance = global_position.distance_to(being.global_position)
+		if distance <= scan_radius:
+			# Calculate energy resonance
+			var consciousness_diff = abs(consciousness_level - being.consciousness_level)
+			var resonance = 1.0 - (consciousness_diff / 5.0)
+			
+			if resonance > 0.3:  # Minimum resonance threshold
+				energy_connections.append({
+					"being": being,
+					"distance": distance,
+					"resonance": resonance,
+					"energy_flow": resonance * (scan_radius - distance) / scan_radius
+				})
+	
+	set_meta("energy_connections", energy_connections)
+	if energy_connections.size() > 0:
+		show_ub_visual("🔗 Found %d energy connections" % energy_connections.size())
 
 func _update_plasma_shader(delta: float) -> void:
-	"""Virtual method - override in subclasses for plasma shader updates"""
-	pass
+	"""Update plasma shader effects based on consciousness state"""
+	if not has_method("get_surface_override_material"):
+		return
+	
+	# Find mesh instances in this being
+	var mesh_instances = _find_mesh_instances(self)
+	for mesh_instance in mesh_instances:
+		var material = mesh_instance.get_surface_override_material(0)
+		if not material:
+			material = StandardMaterial3D.new()
+			mesh_instance.set_surface_override_material(0, material)
+		
+		# Update plasma effect based on consciousness
+		var plasma_intensity = consciousness_level / 5.0
+		var time_factor = Time.get_ticks_msec() * 0.001
+		
+		# Emission pulse effect
+		material.emission_enabled = true
+		material.emission_energy = 0.5 + sin(time_factor * 2.0) * plasma_intensity * 0.3
+		
+		# Color shift based on consciousness
+		var hue = (consciousness_level * 0.2 + time_factor * 0.1)
+		material.emission_color = Color.from_hsv(hue, 0.8, 0.9)
+		
+		# Rim lighting for high consciousness
+		if consciousness_level > 3.0:
+			material.rim_enabled = true
+			material.rim = 0.5 + sin(time_factor * 3.0) * 0.2
+			material.rim_tint = plasma_intensity
 
 func _update_energy_connections(delta: float) -> void:
-	"""Virtual method - override in subclasses for energy connection updates"""
-	pass
+	"""Update energy connections and visualize energy flow"""
+	var connections = get_meta("energy_connections", [])
+	if connections.is_empty():
+		return
+	
+	# Update connection strengths and create visual effects
+	for connection in connections:
+		var target_being = connection["being"]
+		if not is_instance_valid(target_being):
+			continue
+		
+		# Calculate current distance and energy flow
+		var current_distance = global_position.distance_to(target_being.global_position)
+		connection["distance"] = current_distance
+		
+		# Create energy beam effect
+		var beam_name = "EnergyBeam_" + target_being.being_uuid
+		var existing_beam = find_child(beam_name)
+		
+		if not existing_beam and connection["energy_flow"] > 0.5:
+			# Create new energy beam
+			var beam = MeshInstance3D.new()
+			beam.name = beam_name
+			
+			# Create beam geometry
+			var beam_mesh = create_energy_beam_mesh(target_being.global_position)
+			beam.mesh = beam_mesh
+			
+			# Create beam material
+			var beam_material = StandardMaterial3D.new()
+			beam_material.flags_transparent = true
+			beam_material.emission_enabled = true
+			beam_material.emission_color = Color(0.3, 0.8, 1.0, 0.6)
+			beam_material.albedo_color = Color(1, 1, 1, 0.3)
+			beam.material_override = beam_material
+			
+			add_child(beam)
+		elif existing_beam:
+			# Update existing beam
+			existing_beam.mesh = create_energy_beam_mesh(target_being.global_position)
 
 func _update_trail_particles() -> void:
-	"""Virtual method - override in subclasses for trail particle updates"""
-	pass
+	"""Update trail particles for movement visualization"""
+	var trail_particles = find_child("TrailParticles")
+	if not trail_particles:
+		# Create trail particle system
+		trail_particles = GPUParticles3D.new()
+		trail_particles.name = "TrailParticles"
+		add_child(trail_particles)
+		
+		# Configure particle system
+		trail_particles.emitting = false
+		trail_particles.amount = int(20 + consciousness_level * 10)
+		trail_particles.lifetime = 1.0 + consciousness_level * 0.5
+		
+		# Create particle material
+		var material = ParticleProcessMaterial.new()
+		material.direction = Vector3(0, 0, -1)
+		material.initial_velocity_min = 0.5
+		material.initial_velocity_max = 2.0
+		material.scale_min = 0.1
+		material.scale_max = 0.3
+		material.color = Color.from_hsv(consciousness_level * 0.2, 0.8, 1.0)
+		
+		trail_particles.process_material = material
+	
+	# Update trail based on movement
+	var current_velocity = get_meta("current_velocity", Vector3.ZERO)
+	if current_velocity.length() > 0.1:
+		trail_particles.emitting = true
+		trail_particles.process_material.initial_velocity_min = current_velocity.length() * 0.5
+		trail_particles.process_material.initial_velocity_max = current_velocity.length() * 1.5
+	else:
+		trail_particles.emitting = false
 
 func _update_consciousness_particles() -> void:
-	"""Virtual method - override in subclasses for consciousness particle updates"""
-	pass
+	"""Update consciousness particle effects around the being"""
+	var consciousness_particles = find_child("ConsciousnessParticles")
+	if not consciousness_particles:
+		# Create consciousness particle system
+		consciousness_particles = GPUParticles3D.new()
+		consciousness_particles.name = "ConsciousnessParticles"
+		add_child(consciousness_particles)
+		
+		# Configure based on consciousness level
+		consciousness_particles.emitting = true
+		consciousness_particles.amount = int(consciousness_level * 25)
+		consciousness_particles.lifetime = 2.0 + consciousness_level * 0.5
+		
+		# Create consciousness-specific material
+		var material = ParticleProcessMaterial.new()
+		material.direction = Vector3(0, 1, 0)
+		material.initial_velocity_min = 0.2
+		material.initial_velocity_max = 1.0
+		material.gravity = Vector3(0, -0.1, 0)
+		material.scale_min = 0.05
+		material.scale_max = 0.2
+		
+		# Consciousness-level color mapping
+		var consciousness_color = get_consciousness_color(consciousness_level)
+		material.color = consciousness_color
+		
+		consciousness_particles.process_material = material
+	
+	# Pulse effect based on consciousness activity
+	var time_factor = Time.get_ticks_msec() * 0.001
+	var pulse = 0.8 + sin(time_factor * consciousness_level) * 0.2
+	consciousness_particles.process_material.scale_min = 0.05 * pulse
+	consciousness_particles.process_material.scale_max = 0.2 * pulse
 
 func _emit_movement_burst() -> void:
-	"""Virtual method - override in subclasses for movement burst effects"""
-	pass
+	"""Emit movement burst particles for dramatic effect"""
+	# Create temporary burst particle system
+	var burst_particles = GPUParticles3D.new()
+	burst_particles.name = "MovementBurst"
+	add_child(burst_particles)
+	
+	# Configure burst effect
+	burst_particles.emitting = true
+	burst_particles.amount = int(50 + consciousness_level * 20)
+	burst_particles.lifetime = 0.5
+	burst_particles.one_shot = true
+	
+	# Create burst material
+	var material = ParticleProcessMaterial.new()
+	material.direction = Vector3(0, 0, 0)  # Omnidirectional
+	material.initial_velocity_min = 2.0
+	material.initial_velocity_max = 5.0 + consciousness_level
+	material.scale_min = 0.1
+	material.scale_max = 0.4
+	material.color = Color.from_hsv(consciousness_level * 0.2, 1.0, 1.0)
+	
+	burst_particles.process_material = material
+	
+	# Remove burst after completion
+	var timer = Timer.new()
+	timer.wait_time = 1.0
+	timer.one_shot = true
+	timer.timeout.connect(func(): burst_particles.queue_free())
+	add_child(timer)
+	timer.start()
+	
+	show_ub_visual("💥 Movement burst! Consciousness level: %.1f" % consciousness_level)
 
 func _emit_birth_particles() -> void:
-	"""Virtual method - override in subclasses for birth particle effects"""
-	pass
+	"""Emit spectacular birth particles when being is created"""
+	# Create birth celebration particle system
+	var birth_particles = GPUParticles3D.new()
+	birth_particles.name = "BirthCelebration"
+	add_child(birth_particles)
+	
+	# Configure birth effect
+	birth_particles.emitting = true
+	birth_particles.amount = int(100 + consciousness_level * 50)
+	birth_particles.lifetime = 2.0
+	birth_particles.one_shot = true
+	
+	# Create spectacular birth material
+	var material = ParticleProcessMaterial.new()
+	material.direction = Vector3(0, 1, 0)
+	material.initial_velocity_min = 1.0
+	material.initial_velocity_max = 8.0
+	material.gravity = Vector3(0, -2.0, 0)
+	material.scale_min = 0.1
+	material.scale_max = 0.6
+	
+	# Rainbow birth colors
+	var birth_gradient = Gradient.new()
+	birth_gradient.add_point(0.0, Color.RED)
+	birth_gradient.add_point(0.2, Color.ORANGE)
+	birth_gradient.add_point(0.4, Color.YELLOW)
+	birth_gradient.add_point(0.6, Color.GREEN)
+	birth_gradient.add_point(0.8, Color.BLUE)
+	birth_gradient.add_point(1.0, Color.MAGENTA)
+	
+	var gradient_texture = GradientTexture1D.new()
+	gradient_texture.gradient = birth_gradient
+	material.color_ramp = gradient_texture
+	
+	birth_particles.process_material = material
+	
+	# Remove birth particles after celebration
+	var timer = Timer.new()
+	timer.wait_time = 3.0
+	timer.one_shot = true
+	timer.timeout.connect(func(): birth_particles.queue_free())
+	add_child(timer)
+	timer.start()
+	
+	show_ub_visual("🌟 BIRTH CELEBRATION! %s has awakened!" % being_name)
 
 func _get_energy_sense_data() -> Dictionary:
 	"""Virtual method - override in subclasses for energy sensing"""
@@ -2126,6 +2386,90 @@ func _find_being_by_uuid(uuid: String) -> UniversalBeing:
 		if being is UniversalBeing and being.being_uuid == uuid:
 			return being
 	return null
+
+# ===== HELPER FUNCTIONS FOR VIRTUAL METHODS =====
+
+func _find_mesh_instances(node: Node) -> Array[MeshInstance3D]:
+	"""Find all MeshInstance3D nodes in a given node tree"""
+	var mesh_instances: Array[MeshInstance3D] = []
+	
+	if node is MeshInstance3D:
+		mesh_instances.append(node)
+	
+	for child in node.get_children():
+		mesh_instances.append_array(_find_mesh_instances(child))
+	
+	return mesh_instances
+
+func create_energy_beam_mesh(target_position: Vector3) -> ArrayMesh:
+	"""Create a mesh for energy beam between this being and target position"""
+	var array_mesh = ArrayMesh.new()
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+	
+	var vertices = PackedVector3Array()
+	var normals = PackedVector3Array()
+	var uvs = PackedVector2Array()
+	var indices = PackedInt32Array()
+	
+	# Create beam from origin to target
+	var direction = (target_position - global_position).normalized()
+	var distance = global_position.distance_to(target_position)
+	var beam_width = 0.1
+	
+	# Create beam segments
+	var segments = 10
+	for i in range(segments + 1):
+		var t = float(i) / segments
+		var pos = direction * distance * t
+		var radius = beam_width * (1.0 - t * 0.5)  # Taper the beam
+		
+		# Create ring of vertices
+		for j in range(8):
+			var angle = j * TAU / 8
+			var local_x = Vector3.UP.cross(direction).normalized()
+			var local_y = direction.cross(local_x).normalized()
+			
+			var ring_pos = pos + (local_x * cos(angle) + local_y * sin(angle)) * radius
+			vertices.append(ring_pos)
+			normals.append((local_x * cos(angle) + local_y * sin(angle)).normalized())
+			uvs.append(Vector2(float(j) / 8, t))
+	
+	# Create triangles
+	for i in range(segments):
+		for j in range(8):
+			var current = i * 8 + j
+			var next_ring = (i + 1) * 8 + j
+			var next_in_ring = i * 8 + (j + 1) % 8
+			var next_both = (i + 1) * 8 + (j + 1) % 8
+			
+			# Two triangles per quad
+			indices.append_array([current, next_ring, next_in_ring])
+			indices.append_array([next_in_ring, next_ring, next_both])
+	
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	arrays[Mesh.ARRAY_NORMAL] = normals
+	arrays[Mesh.ARRAY_TEX_UV] = uvs
+	arrays[Mesh.ARRAY_INDEX] = indices
+	
+	array_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	return array_mesh
+
+func get_consciousness_color(level: float) -> Color:
+	"""Get color based on consciousness level"""
+	# Map consciousness levels to colors (matching the system from other files)
+	if level < 1.0:
+		return Color(0.5, 0.5, 0.5)  # Gray - Dormant
+	elif level < 2.0:
+		return Color(0.9, 0.9, 0.9)  # Pale - Awakening
+	elif level < 3.0:
+		return Color(0.2, 0.4, 1.0)  # Blue - Aware
+	elif level < 4.0:
+		return Color(0.2, 1.0, 0.2)  # Green - Connected
+	elif level < 5.0:
+		return Color(1.0, 0.84, 0.0)  # Gold - Enlightened
+	else:
+		return Color(1.0, 1.0, 1.0)  # White - Transcendent
 
 func _initiate_interaction(other_being: UniversalBeing) -> void:
 	"""Initiate interaction with another being"""

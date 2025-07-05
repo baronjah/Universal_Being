@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://bq8vjn1xrj45y"]
+
+[ext_resource type="Script" path="res://ULTIMATE_NOTEPAD_3D.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/main/camera_point.tscn" id="2"]
+
+[node name="UltimateNotepad3DScene" type="Node3D"]
+
+[node name="UltimateNotepad3D" type="Node3D" parent="."]
+script = ExtResource("1")
+notepad_consciousness_level = 4.2
+max_pages = 999999
+tessellation_detail_level = 8
+ai_assistance_enabled = true
+reality_bending_mode = true
+
+[node name="CameraSystem" parent="." instance=ExtResource("2")]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 5, 10)
+
+[node name="EnvironmentLighting" type="Node3D" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="EnvironmentLighting"]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 10, 0)
+light_energy = 0.8
+
+[node name="Environment" type="Environment" parent="EnvironmentLighting"]
+background_mode = 1
+background_color = Color(0.1, 0.1, 0.15, 1)
+ambient_light_color = Color(0.3, 0.3, 0.4, 1)
+ambient_light_energy = 0.3
+
+[node name="ConsciousnessAmbient" type="GPUParticles3D" parent="."]
+amount = 100
+lifetime = 5.0
+visibility_aabb = AABB(-10, -10, -10, 20, 20, 20)
+
+[node name="QuantumBackgroundGrid" type="MeshInstance3D" parent="."]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, 0, -2, 0)
+
+[connection signal="ready" from="UltimateNotepad3D" to="UltimateNotepad3D" method="_on_ready"]

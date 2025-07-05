@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://ultimate_creation_game"]
+
+[ext_resource type="Script" path="res://scenes/simple_astral_space.gd" id="1_space"]
+[ext_resource type="Script" path="res://systems/universal_creation_engine.gd" id="2_creation"]
+
+[node name="UltimateCreationGame" type="Node3D"]
+
+[node name="AstralSpace" type="Node3D" parent="."]
+script = ExtResource("1_space")
+
+[node name="UniversalCreationEngine" type="Node3D" parent="."]
+script = ExtResource("2_creation")
+creation_power = 100.0
+timeline_enabled = true
+multiverse_mode = true

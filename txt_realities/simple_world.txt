@@ -1,0 +1,12 @@
+CREATE: cube red glowing
+CREATE: sphere blue floating  
+CREATE: plane green ground
+PLACE: cube at center elevated
+PLACE: sphere above cube rotating
+PLACE: plane as foundation below
+CONSCIOUSNESS: 5.0
+
+This is a simple magical world created from TXT.
+The cube represents stability and foundation.
+The sphere represents infinite possibility floating above.
+The plane provides grounding for all existence.

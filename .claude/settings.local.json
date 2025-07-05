@@ -15,7 +15,9 @@
       "Bash(python:*)",
       "Bash(mv:*)",
       "Bash(jq:*)",
-      "Bash(sed:*)"
+      "Bash(sed:*)",
+      "Bash(pkill:*)",
+      "Bash(zip:*)"
     ],
     "deny": []
   }

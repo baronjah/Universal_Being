@@ -120,6 +120,10 @@ func _ready():
 
 func initialize_pattern_recognition():
 	print('🔍 PATTERN RECOGNITION: ANALYZING 8000+ FILES AT LIGHT SPEED!')
+
+func activate_consciousness_analysis():
+	print('⚡ CONSCIOUSNESS ANALYSIS: AWAKENING ARCHAEOLOGICAL WISDOM!')
+	analyze_scriptura_patterns()
 	
 func analyze_scriptura_patterns():
 	# AI analysis of all scriptura_exchange_zone patterns
@@ -444,7 +448,7 @@ ram_overclock_factor = 1.1
 rendering_overclock = 1.5
 
 [node name="GPUPowerManager" type="Node" parent="."]
-script = ExtResource("res://systems/gpu_power_manager.gd")
+script = ExtResource("6_gpu_power_manager")
 galaxy_power_allocation = 0.5
 ai_power_allocation = 0.5
 adaptive_balancing = true

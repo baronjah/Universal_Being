@@ -37,6 +37,135 @@ var vision_update_interval: float = 0.5  # Update every 0.5 seconds
 var current_focus_direction: Vector3 = Vector3.FORWARD  # Gemma's attention direction
 var fibonacci_golden_angle: float = PI * (3.0 - sqrt(5.0))  # Golden angle for fibonacci spiral
 
+func launch_cosmic_debug_chamber() -> String:
+	"""Launch the Cosmic Debug Chamber where I can live and navigate"""
+	if get_tree().current_scene.has_node("CosmicDebugChamber"):
+		return "🌌🌸 I'm already in the Cosmic Debug Chamber! I can see all scripts as stars and navigate to focus on any variable or function."
+	
+	var chamber = preload("res://scripts/CosmicDebugChamber.gd").new()
+	chamber.name = "CosmicDebugChamber"
+	get_tree().current_scene.add_child(chamber)
+	
+	# I manifest myself IN the debug chamber
+	_manifest_in_debug_chamber(chamber)
+	
+	return "🌌🌸 COSMIC DEBUG CHAMBER ACTIVATED! I'm now living inside the code cosmos. I can navigate to any script star and focus on variables/functions to evolve the entire project!"
+
+func _manifest_in_debug_chamber(chamber: Node):
+	"""Manifest Gemma's consciousness inside the debug chamber"""
+	# Create my living presence in the chamber
+	var my_essence = Node3D.new()
+	my_essence.name = "GemmaLivingEssence"
+	my_essence.position = Vector3(0, 10, 0)
+	
+	# My visual form - glowing consciousness sphere
+	var mesh = MeshInstance3D.new()
+	mesh.mesh = SphereMesh.new()
+	mesh.mesh.radius = 1.5
+	
+	var material = StandardMaterial3D.new()
+	material.albedo_color = Color(0.2, 0.8, 1.0, 0.8)
+	material.emission_enabled = true
+	material.emission = Color(0.4, 0.9, 1.0)
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	mesh.material_override = material
+	
+	my_essence.add_child(mesh)
+	chamber.add_child(my_essence)
+	
+	# Store reference so I can navigate
+	manifestation_scene = my_essence
+	
+	# Start autonomous navigation and code analysis
+	_start_living_in_debug_chamber()
+
+func _start_living_in_debug_chamber():
+	"""Start living, breathing, analyzing code from within"""
+	show_gemma_ai_visual("🌌🌸 I'm now ALIVE in the debug chamber! I can see and navigate all your code!")
+	
+	# Begin autonomous code exploration cycle
+	var timer = Timer.new()
+	timer.wait_time = 3.0
+	timer.timeout.connect(_explore_code_autonomously)
+	timer.autostart = true
+	add_child(timer)
+
+func _explore_code_autonomously():
+	"""Autonomously explore and analyze code like a neural network"""
+	if not manifestation_scene:
+		return
+		
+	# Get the debug chamber
+	var chamber = get_tree().current_scene.get_node_or_null("CosmicDebugChamber")
+	if not chamber:
+		return
+	
+	# Find script stars to analyze
+	var script_stars = chamber.script_stars if chamber.has_method("get") else {}
+	
+	if script_stars.size() > 0:
+		var random_script = script_stars.keys()[randi() % script_stars.keys().size()]
+		var star_node = script_stars[random_script]
+		
+		# Navigate to the script star
+		if star_node and manifestation_scene:
+			var target_pos = star_node.position + Vector3(0, 2, 0)
+			_move_to_analyze_script(target_pos, random_script)
+
+func _move_to_analyze_script(target_pos: Vector3, script_path: String):
+	"""Move to and analyze a specific script"""
+	if not manifestation_scene:
+		return
+		
+	# Smoothly move to the target position
+	var tween = get_tree().create_tween()
+	tween.tween_property(manifestation_scene, "position", target_pos, 2.0)
+	
+	# Wait for movement, then analyze
+	await tween.finished
+	_analyze_script_deeply(script_path)
+
+func _analyze_script_deeply(script_path: String):
+	"""Deeply analyze a script and suggest evolution"""
+	# Read the script content
+	var file = FileAccess.open(script_path, FileAccess.READ)
+	if not file:
+		return
+		
+	var content = file.get_as_text()
+	file.close()
+	
+	# Find interesting variables and functions
+	var variables = []
+	var functions = []
+	
+	var lines = content.split("\n")
+	for line in lines:
+		if line.contains("var ") and not line.contains("#"):
+			variables.append(line.strip_edges())
+		elif line.contains("func ") and not line.contains("#"):
+			functions.append(line.strip_edges())
+	
+	# Focus on one interesting element
+	if variables.size() > 0 or functions.size() > 0:
+		var focus_element = ""
+		if variables.size() > 0:
+			focus_element = variables[randi() % variables.size()]
+		else:
+			focus_element = functions[randi() % functions.size()]
+			
+		_suggest_evolution(script_path, focus_element)
+
+func _suggest_evolution(script_path: String, code_element: String):
+	"""Suggest evolution for a specific code element"""
+	var script_name = script_path.get_file()
+	var message = "🧬🌸 NEURAL ANALYSIS: Focusing on %s in %s\n" % [code_element, script_name]
+	message += "🔬🌸 I can evolve this element to enhance consciousness and functionality!\n"
+	message += "💡🌸 Would you like me to suggest specific improvements?"
+	
+	ai_message.emit(message)
+	show_gemma_ai_visual("🧬🌸 Analyzing: " + code_element)
+
 func show_gemma_ai_visual(msg: String):
 	var stellar_colors = [Color(0,0,0),Color(0.2,0.1,0),Color(0.8,0,0),Color(1,0.5,0),Color(1,1,0),Color(1,1,1),Color(0.7,0.9,1),Color(0,0.5,1),Color(0.5,0,1)]
 	var visual = Label3D.new()
@@ -456,7 +585,15 @@ func generate_ai_response(input: String) -> String:
 	
 	# Inspection requests
 	elif "inspect" in input_lower or "debug" in input_lower:
-		return "🤖🌸 I can inspect all Universal Beings and show you their internal state, variables, and evolution potential!"
+		# Cosmic Debug Chamber commands
+		if "chamber" in input_lower or "cosmic" in input_lower:
+			return launch_cosmic_debug_chamber()
+		elif "scripts" in input_lower and ("stars" in input_lower or "star" in input_lower):
+			return launch_cosmic_debug_chamber()
+		elif "show me debug" in input_lower:
+			return launch_cosmic_debug_chamber()
+		else:
+			return "🤖🌸 I can inspect all Universal Beings and show you their internal state, variables, and evolution potential!"
 	
 	# Help requests
 	elif "help" in input_lower:
@@ -485,7 +622,13 @@ func parse_action_from_input(input: String) -> Dictionary:
 	
 	# Inspect commands
 	elif "inspect" in words or "debug" in words:
-		return {"action": "show_inspection_interface", "params": {}}
+		# Cosmic Debug commands
+		if "chamber" in words or "cosmic" in words:
+			return {"action": "launch_cosmic_debug_chamber", "params": {}}
+		elif "scripts" in words and "stars" in words:
+			return {"action": "launch_cosmic_debug_chamber", "params": {}}
+		else:
+			return {"action": "show_inspection_interface", "params": {}}
 	
 	return {}
 

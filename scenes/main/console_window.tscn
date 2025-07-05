@@ -1,4 +1,10 @@
-[gd_scene format=3 uid="uid://cjwph0uxrsnb1"]
+[gd_scene load_steps=3 format=3 uid="uid://cjwph0uxrsnb1"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_1"]
+size = Vector2(2, 1.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1"]
+size = Vector3(2, 1.5, 0.1)
 
 [node name="ConsoleWindow" type="Node3D"]
 
@@ -12,9 +18,3 @@ shape = SubResource("BoxShape3D_1")
 
 [node name="CameraSocket" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
-
-[sub_resource type="QuadMesh" id="QuadMesh_1"]
-size = Vector2(2, 1.5)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_1"]
-size = Vector3(2, 1.5, 0.1)

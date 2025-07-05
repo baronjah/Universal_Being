@@ -134,8 +134,8 @@ func apply_archaeological_optimizations() -> void:
 		"no_gimbal_lock": true,
 		"optimized_orbit": true,
 		"performance_gain": 1.3
+	}
 	print("   📹 TrackballCamera3D: Quaternion optimizations (+30% performance)")
-}
 	
 	# LocalAICollaboration pattern optimizations
 	archaeological_optimizations["ai_collaboration"] = {
@@ -143,8 +143,8 @@ func apply_archaeological_optimizations() -> void:
 		"pattern_caching": true,
 		"consciousness_pooling": true,
 		"performance_gain": 1.25
+	}
 	print("   🤖 AI Collaboration: Pattern caching (+25% performance)")
-}
 	
 	# DimensionalColorSystem frequency optimizations
 	archaeological_optimizations["consciousness_visualization"] = {
@@ -152,8 +152,8 @@ func apply_archaeological_optimizations() -> void:
 		"color_palette_caching": true,
 		"gpu_color_calculation": true,
 		"performance_gain": 1.4
+	}
 	print("   🌈 Consciousness Visualization: Frequency precompute (+40% performance)")
-}
 	
 	# Pentagon Architecture optimizations
 	archaeological_optimizations["pentagon_architecture"] = {
@@ -161,8 +161,8 @@ func apply_archaeological_optimizations() -> void:
 		"super_call_optimization": true,
 		"method_pooling": true,
 		"performance_gain": 1.2
+	}
 	print("   🏗️ Pentagon Architecture: Lifecycle caching (+20% performance)")
-}
 	
 	archaeological_wisdom_applied.emit("all_systems")
 
@@ -180,8 +180,8 @@ func activate_quantum_optimizations() -> void:
 		"quantum_lod": true,
 		"entangled_instances": true,
 		"performance_multiplier": 2.0
+	}
 	print("   🌌 Quantum Rendering: Superposition culling (2x performance)")
-}
 	
 	# Quantum consciousness calculations
 	quantum_state_optimizations["consciousness"] = {
@@ -189,8 +189,8 @@ func activate_quantum_optimizations() -> void:
 		"consciousness_superposition": true,
 		"entangled_beings": true,
 		"performance_multiplier": 1.8
+	}
 	print("   🧠 Quantum Consciousness: Awareness superposition (1.8x performance)")
-}
 	
 	# Quantum galaxy navigation
 	quantum_state_optimizations["galaxy_navigation"] = {
@@ -198,8 +198,8 @@ func activate_quantum_optimizations() -> void:
 		"spacetime_compression": true,
 		"warp_field_optimization": true,
 		"performance_multiplier": 2.5
+	}
 	print("   🌌 Quantum Galaxy: Space-time compression (2.5x performance)")
-}
 	
 	quantum_optimization_unlocked.emit("all_quantum_systems")
 

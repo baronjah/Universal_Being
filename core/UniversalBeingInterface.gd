@@ -425,17 +425,220 @@ func get_interface_state() -> InterfaceState:
 	"""Get current interface state"""
 	return current_interface_state
 
-# ===== SOCKET STUB METHODS =====
-# TODO: Integrate with UniversalBeingSocketManager
+# ===== SOCKET INTEGRATION METHODS =====
+# Integrated with UniversalBeingSocketManager
+
+var socket_manager: UniversalBeingSocketManager
+
+func _initialize_socket_system():
+	"""Initialize socket system for this interface"""
+	if not socket_manager:
+		socket_manager = UniversalBeingSocketManager.new(parent_being)
+		add_child(socket_manager)
+		
+		# Connect socket signals
+		socket_manager.socket_added.connect(_on_socket_added)
+		socket_manager.socket_removed.connect(_on_socket_removed)
+		socket_manager.component_mounted.connect(_on_component_mounted)
+		socket_manager.component_unmounted.connect(_on_component_unmounted)
 
 func add_socket(name: String, direction: String, type: String) -> void:
-	"""Stub method for socket creation"""
-	pass
+	"""Create a new socket for the interface"""
+	if not socket_manager:
+		_initialize_socket_system()
+	
+	# Convert string type to SocketType enum
+	var socket_type = _string_to_socket_type(type)
+	if socket_type == -1:
+		show_ub_visual("❌ Invalid socket type: %s" % type)
+		return
+	
+	var socket = socket_manager.add_typed_socket(socket_type, name)
+	if socket:
+		show_ub_visual("🔌 Socket created: %s (%s)" % [name, type])
+		_create_socket_visual(socket, direction)
 
 func connect_socket(from_socket: String, other_interface: Node, to_socket: String) -> bool:
-	"""Stub method for socket connection"""
-	return false
+	"""Connect this socket to another interface's socket"""
+	if not socket_manager:
+		_initialize_socket_system()
+		return false
+	
+	# Find the socket
+	var socket = socket_manager.get_socket_by_name(from_socket)
+	if not socket:
+		show_ub_visual("❌ Socket not found: %s" % from_socket)
+		return false
+	
+	# Check if other interface has socket manager
+	var other_socket_manager = null
+	if other_interface.has_method("get_socket_manager"):
+		other_socket_manager = other_interface.get_socket_manager()
+	elif other_interface.find_child("UniversalBeingSocketManager"):
+		other_socket_manager = other_interface.find_child("UniversalBeingSocketManager")
+	
+	if not other_socket_manager:
+		show_ub_visual("❌ Target interface has no socket manager")
+		return false
+	
+	var target_socket = other_socket_manager.get_socket_by_name(to_socket)
+	if not target_socket:
+		show_ub_visual("❌ Target socket not found: %s" % to_socket)
+		return false
+	
+	# Create connection
+	var connection_success = socket_manager.connect_sockets(socket, target_socket)
+	if connection_success:
+		show_ub_visual("🔗 Sockets connected: %s → %s" % [from_socket, to_socket])
+		_create_connection_visual(socket, target_socket)
+	
+	return connection_success
 
 func set_socket_value(socket_name: String, value: Variant) -> void:
-	"""Stub method for setting socket values"""
-	pass
+	"""Set value on a socket"""
+	if not socket_manager:
+		_initialize_socket_system()
+		return
+	
+	var socket = socket_manager.get_socket_by_name(socket_name)
+	if not socket:
+		show_ub_visual("❌ Socket not found: %s" % socket_name)
+		return
+	
+	socket.set_value(value)
+	show_ub_visual("📡 Socket value set: %s = %s" % [socket_name, str(value)])
+	_update_socket_visual(socket, value)
+
+func get_socket_manager() -> UniversalBeingSocketManager:
+	"""Get the socket manager for this interface"""
+	if not socket_manager:
+		_initialize_socket_system()
+	return socket_manager
+
+# ===== SOCKET HELPER METHODS =====
+
+func _string_to_socket_type(type_string: String) -> int:
+	"""Convert string to SocketType enum"""
+	match type_string.to_lower():
+		"visual":
+			return UniversalBeingSocket.SocketType.VISUAL
+		"script":
+			return UniversalBeingSocket.SocketType.SCRIPT
+		"shader":
+			return UniversalBeingSocket.SocketType.SHADER
+		"action":
+			return UniversalBeingSocket.SocketType.ACTION
+		"memory":
+			return UniversalBeingSocket.SocketType.MEMORY
+		"interface":
+			return UniversalBeingSocket.SocketType.INTERFACE
+		_:
+			return -1
+
+func _create_socket_visual(socket: UniversalBeingSocket, direction: String):
+	"""Create visual representation of socket"""
+	var socket_visual = MeshInstance3D.new()
+	socket_visual.name = "SocketVisual_" + socket.socket_name
+	
+	# Create socket geometry
+	var socket_mesh = SphereMesh.new()
+	socket_mesh.radius = 0.1
+	socket_visual.mesh = socket_mesh
+	
+	# Socket material based on type
+	var material = StandardMaterial3D.new()
+	material.albedo_color = _get_socket_type_color(socket.socket_type)
+	material.emission_enabled = true
+	material.emission_color = material.albedo_color * 0.5
+	socket_visual.material_override = material
+	
+	# Position based on direction
+	var offset = Vector3.ZERO
+	match direction.to_lower():
+		"left":
+			offset = Vector3(-1.5, 0, 0)
+		"right":
+			offset = Vector3(1.5, 0, 0)
+		"top":
+			offset = Vector3(0, 1.5, 0)
+		"bottom":
+			offset = Vector3(0, -1.5, 0)
+		"front":
+			offset = Vector3(0, 0, 1.5)
+		"back":
+			offset = Vector3(0, 0, -1.5)
+	
+	socket_visual.position = offset
+	interface_container.add_child(socket_visual)
+
+func _get_socket_type_color(socket_type: int) -> Color:
+	"""Get color for socket type"""
+	match socket_type:
+		UniversalBeingSocket.SocketType.VISUAL:
+			return Color.CYAN
+		UniversalBeingSocket.SocketType.SCRIPT:
+			return Color.GREEN
+		UniversalBeingSocket.SocketType.SHADER:
+			return Color.MAGENTA
+		UniversalBeingSocket.SocketType.ACTION:
+			return Color.ORANGE
+		UniversalBeingSocket.SocketType.MEMORY:
+			return Color.YELLOW
+		UniversalBeingSocket.SocketType.INTERFACE:
+			return Color.WHITE
+		_:
+			return Color.GRAY
+
+func _create_connection_visual(from_socket: UniversalBeingSocket, to_socket: UniversalBeingSocket):
+	"""Create visual connection line between sockets"""
+	var connection_line = MeshInstance3D.new()
+	connection_line.name = "Connection_%s_to_%s" % [from_socket.socket_name, to_socket.socket_name]
+	
+	# Create line mesh (simplified - would need proper line rendering)
+	var line_mesh = ArrayMesh.new()
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+	
+	var vertices = PackedVector3Array()
+	vertices.append(Vector3.ZERO)
+	vertices.append(Vector3(0, 0, 5))  # Placeholder - would calculate actual target position
+	
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	line_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_LINES, arrays)
+	
+	connection_line.mesh = line_mesh
+	interface_container.add_child(connection_line)
+
+func _update_socket_visual(socket: UniversalBeingSocket, value: Variant):
+	"""Update socket visual based on value"""
+	var socket_visual = interface_container.find_child("SocketVisual_" + socket.socket_name)
+	if socket_visual and socket_visual is MeshInstance3D:
+		var material = socket_visual.material_override
+		if material is StandardMaterial3D:
+			# Pulse effect when value changes
+			var pulse_tween = create_tween()
+			pulse_tween.tween_property(material, "emission_energy", 2.0, 0.2)
+			pulse_tween.tween_property(material, "emission_energy", 0.5, 0.3)
+
+# ===== SOCKET SIGNAL HANDLERS =====
+
+func _on_socket_added(socket: UniversalBeingSocket):
+	"""Handle socket added signal"""
+	show_ub_visual("🔌 Socket system: %s added" % socket.socket_name)
+
+func _on_socket_removed(socket: UniversalBeingSocket):
+	"""Handle socket removed signal"""
+	show_ub_visual("🔌 Socket system: %s removed" % socket.socket_name)
+	
+	# Remove visual
+	var socket_visual = interface_container.find_child("SocketVisual_" + socket.socket_name)
+	if socket_visual:
+		socket_visual.queue_free()
+
+func _on_component_mounted(socket: UniversalBeingSocket, component: Resource):
+	"""Handle component mounted to socket"""
+	show_ub_visual("🔧 Component mounted: %s → %s" % [component.get_class(), socket.socket_name])
+
+func _on_component_unmounted(socket: UniversalBeingSocket, component: Resource):
+	"""Handle component unmounted from socket"""
+	show_ub_visual("🔧 Component unmounted: %s ← %s" % [component.get_class(), socket.socket_name])

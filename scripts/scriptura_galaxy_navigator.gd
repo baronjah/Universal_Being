@@ -87,7 +87,8 @@ func initialize_galaxy_coordinates() -> void:
 			"radius": 150.0,
 			"files": [],
 			"description": "Hidden gems and forgotten knowledge"
-}
+		}
+	}
 
 func count_scriptura_files() -> int:
 	"""Count total files in scriptura_exchange_zone"""
@@ -95,7 +96,6 @@ func count_scriptura_files() -> int:
 	var dir = DirAccess.open("res://scriptura_exchange_zone/")
 	if dir:
 		file_count = count_files_recursive("res://scriptura_exchange_zone/")
-}
 	
 	# Also count main project files
 	file_count += count_files_recursive("res://")
@@ -195,8 +195,8 @@ func map_files_recursive(path: String, base_pos: Vector3, region: String, index:
 				"star_class": determine_star_class(file_name),
 				"brightness": calculate_file_importance(full_path),
 				"index": index
+			}
 			index += 1
-}
 		
 		file_name = dir.get_next()
 	

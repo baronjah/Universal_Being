@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Eden_May/eden_core.gd" type="Script" id=1]
-[ext_resource path="res://Eden_May/game_project.gd" type="Script" id=2]
-[ext_resource path="res://Eden_May/word_manager.gd" type="Script" id=3]
-[ext_resource path="res://Eden_May/line_processor.gd" type="Script" id=4]
+[ext_resource type="Script" uid="uid://8hrwbjh1ir8j" path="res://scriptura_exchange_zone/Godot_Eden/Eden_May/the_palace_pf/CORE/eden_core.gd" id="1"]
+[ext_resource type="Script" uid="uid://bxjaen5n4ag1r" path="res://scriptura_exchange_zone/Godot_Eden/Eden_May/the_palace_pf/CORE/game_project.gd" id="2"]
+[ext_resource type="Script" uid="uid://q4pnkuyf8wn5" path="res://scriptura_exchange_zone/Godot_Eden/Eden_May/the_palace_pf/CORE/word_manager.gd" id="3"]
+[ext_resource type="Script" uid="uid://cvvihiwo3xhoh" path="res://scriptura_exchange_zone/Godot_Eden/Eden_May/the_palace_pf/CORE/line_processor.gd" id="4"]
 
 [node name="EdenMayGame" type="Node"]
 
