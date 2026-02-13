@@ -26,6 +26,7 @@ var command_history: Array[String] = []
 var history_index: int = -1
 var output_lines: Array[String] = []
 var console_commands: Dictionary = {}
+var dream_calculator := DreamCalculator.new()
 
 # Animation State
 var prompt_pulse_timer: float = 0.0
@@ -78,6 +79,7 @@ func register_console_commands() -> void:
 		"pentagon": "Pentagon of Creation commands",
 		"consciousness": "Consciousness level commands",
 		"timers": "Universal Timers System commands",
+		"calc": "Run dumb calculator (format: calc mul,6,7 or calc div,20,5)",
 		"turns": "Turn-based collaboration commands",
 		"genesis": "Biblical genesis pattern commands",
 		"cosmic": "Cosmic insight commands",
@@ -365,6 +367,8 @@ func process_command(command: String) -> void:
 			harmony_command(args)
 		"timers":
 			timers_command(args)
+		"calc":
+			calculator_command(args)
 		"turns":
 			turns_command(args)
 		"exit":
@@ -373,6 +377,29 @@ func process_command(command: String) -> void:
 			print_to_console("❌ Unknown command: " + cmd + " (type 'help' for commands)", "error")
 	
 	is_processing_command = false
+
+func calculator_command(args: Array) -> void:
+	"""Simple calculator: one function per command using comma separators."""
+	if args.is_empty():
+		print_to_console("🧮 Usage: calc mul,6,7 (or calc div,20,5)", "system")
+		return
+
+	var calculator_input := " ".join(args)
+	var result := dream_calculator.evaluate(calculator_input)
+	if not result.get("ok", false):
+		print_to_console("❌ %s" % result.get("error", "Unknown calculator error"), "error")
+		return
+
+	var symbol := "×" if result.operation == DreamCalculator.COMMAND_MULTIPLY else "÷"
+	print_to_console(
+		"🧮 %s %s %s = %s" % [
+			str(result.a),
+			symbol,
+			str(result.b),
+			str(result.result)
+		],
+		"ai"
+	)
 
 func show_help() -> void:
 	"""Show available commands"""
